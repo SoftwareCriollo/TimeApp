@@ -1,7 +1,16 @@
 //= require jquery
 //= require jquery_ujs
 //= require angular/angular
-//= require_tree time_angular
+//= require angular-messages/angular-messages
+//= require angular-resource/angular-resource
+//= require angular-route/angular-route
+//= require angular-sanitize/angular-sanitize
+//= require_tree ./time_angular
 
-// NO CODE HERE!
 // This File is only for angular
+
+// ----------------
+//  NO CODE HERE!
+// ----------------
+
+// Use the folder time_angular
