@@ -5,7 +5,6 @@
     "angular-messages": "latest",
     "angular-resource": "latest",
     "angular-route": "latest",
-    "angular-sanitize": "latest",
-    "bootstrap-sass-official": "latest"
+    "angular-sanitize": "latest"
   }
 }
