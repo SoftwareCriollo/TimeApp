@@ -1,0 +1,15 @@
+<section class="container-new-iteration">
+  <h1> green light - crm </h1>
+  <p>ADD NEW ITERATION</p>
+  <div class="iteration">
+	<div class="section_left">
+	  <p><input type="text" name="login" value="" placeholder="Amount of hours"></p>
+	</div>
+	<div class="section_left">
+	  <p><input type="text" name="login" value="" placeholder="Start date"></p>
+	</div>
+	<div class="section_left">
+	  <p><input type="text" name="login" value="" placeholder="Invoce #"></p>
+  	</div>
+  </div>
+</section>
