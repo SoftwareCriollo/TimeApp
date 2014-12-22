@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'home#index'
 
+  get '/login' => 'users#login'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
