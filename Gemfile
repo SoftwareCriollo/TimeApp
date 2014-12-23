@@ -15,13 +15,8 @@ gem 'devise'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'activeadmin-mongoid', github: 'elia/activeadmin-mongoid', branch: 'rails4'
 
-
 gem 'bower-rails'
-
-group :development do
-  gem 'xray-rails'
-end
-
+gem 'quiet_assets', group: :development
 group :test do
   gem 'rspec-rails'
   gem 'rspec-autotest'
