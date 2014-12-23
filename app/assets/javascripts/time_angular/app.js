@@ -1,17 +1,21 @@
 'use strict';
-angular
-  .module('timeFrontendApp', [
+(function() {
+  var app = angular.module('timeFrontendApp', [
+    'timeFrontendApp-authentication',
     'ngMessages',
     'ngResource',
     'ngRoute',
     'ngSanitize'
-  ]).config(function ($routeProvider) {
+  ]);
+
+  app.config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: 'templates/hello2.html',
+      .when('/log-in', {
+        templateUrl: 'templates/authentication/login.html',
         controller: 'LoginController'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/log-in'
       });
   });
+})();

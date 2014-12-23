@@ -5,7 +5,8 @@
 //= require angular-resource/angular-resource
 //= require angular-route/angular-route
 //= require angular-sanitize/angular-sanitize
-//= require_tree ./time_angular
+//= require ./time_angular/app
+//= require ./time_angular/modules/authentication
 
 // This File is only for angular
 

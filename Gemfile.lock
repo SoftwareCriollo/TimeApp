@@ -150,6 +150,8 @@ GEM
       activerecord (>= 3.0)
     puma (2.10.2)
       rack (>= 1.1, < 2.0)
+    quiet_assets (1.0.3)
+      railties (>= 3.1, < 5.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -240,9 +242,6 @@ GEM
     websocket-extensions (0.1.1)
     xpath (2.0.0)
       nokogiri (~> 1.3)
-    xray-rails (0.1.14)
-      coffee-rails
-      rails (>= 3.1.0)
 
 PLATFORMS
   ruby
@@ -259,6 +258,7 @@ DEPENDENCIES
   mongoid
   poltergeist
   puma
+  quiet_assets
   rails (= 4.1.8)
   rails-api
   rspec-autotest
@@ -267,4 +267,3 @@ DEPENDENCIES
   simplecov
   slim
   uglifier (>= 1.3.0)
-  xray-rails

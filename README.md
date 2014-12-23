@@ -6,18 +6,37 @@
     rails s
   ```
 
-## Coding Server
+## Development
+
+###Views
+  * Angular
+    * All views should be in the folder **/templates/\[:resources]/file.html**
+    * The view do not need all layout
+  * Ruby server: Normally
   
-### Controllers for Angular
+###Controllers
+  * Angular
+    * Should be in the folder: **/assets/javascripts/time_angular/modules/\[:resources\]/action.js**
 
-This controllers should be use ApiController
+  * Api controllers
+    * The controller should be in the namespace **api**
+    * You need create the controller with **ApiController**
+  * Server Controllers
+    * Normally
 
-## Coding Angular
+###Models
+  * Angular: 
+    * All models should be created with 
+```javascript
+  var TimeApp = window.TimeApp ||= {}
+  var myObject = TimeApp.myObject = {};
+  myObject = function(attributes){
+    attributes ||= {};
+    this.my_attribute = attributes.my_attribute; //Initializacion
 
-* **Html**: All this code should be in the folder public/templates
-
-* **Angular code**:  All this code should be app/assets/javascripts/time_angular
-
+    this.my_function = function(){};
+  }
+```
 
 ## Dependencies
 
