@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  get '/login' => 'users#login'
-  get '/new_iteration' => 'users#new_iteration'
+  devise_for :mongoid_users, path: '/users',controllers: {
+    sessions: 'sessions',
+    passwords: 'passwords',
+    registrations: 'registrations'
+  }
 
-  
 end
