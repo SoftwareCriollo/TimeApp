@@ -10,6 +10,7 @@
 //= require ./time_angular/app
 //= require_tree ./time_angular/models
 //= require ./time_angular/modules/authentication
+//= require ./time_angular/services/session
 
 // This File is only for angular
 

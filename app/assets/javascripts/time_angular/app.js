@@ -4,6 +4,7 @@
   window.TimeApp = {};
   var app = angular.module('timeFrontendApp', [
     'Devise',
+    'CacheStore',
     'timeFrontendApp-authentication',
     'ngMessages',
     'ngResource',
@@ -27,12 +28,10 @@
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
     var interceptor = ['$location', '$rootScope', '$q', function($location, $rootScope, $q) {
       function success(response) {
-        console.log(response)
         return response
       };
 
       function error(response) {
-        console.log('HERE');
         if (response.status == 401) {
           $rootScope.$broadcast('event:unauthorized');
           $location.path('/users/login');
@@ -46,6 +45,7 @@
     }];
     $httpProvider.interceptors.push(interceptor);
   }]);
+  
   app.config(function ($routeProvider) {
     $routeProvider
       .when('/', {

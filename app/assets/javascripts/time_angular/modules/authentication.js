@@ -1,27 +1,20 @@
 'use strict';
 (function(){
-  var app = angular.module('timeFrontendApp-authentication',['Devise'])
+  var app = angular.module('timeFrontendApp-authentication',['Devise','CacheStore'])
 
-  app.controller('LoginController',['$scope','Auth', function($scope,Auth){
+  app.controller('LoginController',['$scope','Auth','CurrentUser', function($scope,Auth,currentUser){
     var controller = this;
-    var scope = $scope;
-    this.user = new TimeApp.User({email: "test@email.com",password:"123qweasd"});
-    
     this.signIn = function(){
       Auth.login(controller.user.credentials()).then(function(user) {
-
+        currentUser.changeUser(user);
+        currentUser.saveCache();
       }, function(error) {
-        console.log(error);
+        // TO-DO show messages errors
       });
     }
+    this.user = new TimeApp.User({email: "test@email.com",password:"123qweasd"});
+    currentUser.checkAuth();
 
-    $scope.$on('devise:login', function(event, currentUser) {
-
-    });
-
-    $scope.$on('devise:new-session', function(event, currentUser) {
-
-    });
   }]);
 
 })();
