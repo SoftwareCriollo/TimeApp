@@ -12,7 +12,7 @@
         // TO-DO show messages errors
       });
     }
-    this.user = new TimeApp.User({email: "test@email.com",password:"123qweasd"});
+    this.user = new TimeApp.User();
     currentUser.checkAuth();
 
   }]);
