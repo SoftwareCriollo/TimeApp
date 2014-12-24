@@ -1,4 +1,4 @@
-class Passwords::ConfirmationsController < Devise::ConfirmationsController
+class Api::ConfirmationsController < Devise::ConfirmationsController
   # GET /resource/confirmation/new
   # def new
   #   super

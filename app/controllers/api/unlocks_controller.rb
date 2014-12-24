@@ -1,4 +1,4 @@
-class Passwords::UnlocksController < Devise::UnlocksController
+class Api::UnlocksController < Devise::UnlocksController
   # GET /resource/unlock/new
   # def new
   #   super

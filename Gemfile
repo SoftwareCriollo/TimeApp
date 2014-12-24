@@ -17,6 +17,7 @@ gem 'activeadmin-mongoid', github: 'elia/activeadmin-mongoid', branch: 'rails4'
 
 gem 'bower-rails'
 gem 'quiet_assets', group: :development
+
 group :test do
   gem 'rspec-rails'
   gem 'rspec-autotest'
@@ -26,4 +27,5 @@ group :test do
   gem 'launchy'
   gem 'simplecov', require: false
   gem 'shoulda-matchers'
+  gem 'database_cleaner'
 end

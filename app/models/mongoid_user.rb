@@ -33,5 +33,27 @@ class MongoidUser
   # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
+
+  field :token_authentication, type: String
+
+  before_save do
+    change_token
+    self
+  end
+
+  private
+
+  def change_token
+    if sign_in_count_changed?
+      self.token_authentication = generate_token
+    else
+      false
+    end
+  end
+
+  def generate_token
+    Devise.friendly_token
+  end
+
 end
 User = MongoidUser

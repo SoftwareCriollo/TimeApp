@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  devise_for :mongoid_users, path: '/users',controllers: {
-    sessions: 'sessions',
-    passwords: 'passwords',
-    registrations: 'registrations'
-  }
+#  namespace :api do
+    devise_for :mongoid_users,controllers: {
+      sessions: "sessions"
+    }
+    
+ # end
+
 
 end
