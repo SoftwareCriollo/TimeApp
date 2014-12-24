@@ -1,6 +1,20 @@
+'use strict';
 (function(){
-  'use strict';
-  var app = angular.module('timeFrontendApp-authentication',[]);
-  app.controller('LoginController', function () {
-  });
+  var app = angular.module('timeFrontendApp-authentication',['Devise','CacheStore'])
+
+  app.controller('LoginController',['$scope','Auth','CurrentUser', function($scope,Auth,currentUser){
+    var controller = this;
+    this.signIn = function(){
+      Auth.login(controller.user.credentials()).then(function(user) {
+        currentUser.changeUser(user);
+        currentUser.saveCache();
+      }, function(error) {
+        // TO-DO show messages errors
+      });
+    }
+    this.user = new TimeApp.User({email: "test@email.com",password:"123qweasd"});
+    currentUser.checkAuth();
+
+  }]);
+
 })();

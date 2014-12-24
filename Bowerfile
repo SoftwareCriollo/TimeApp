@@ -3,4 +3,5 @@ asset "angular-messages"
 asset "angular-resource"
 asset "angular-route"
 asset "angular-sanitize"
+asset "angular-devise"
 # vim: ft=ruby
