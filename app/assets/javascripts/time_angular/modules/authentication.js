@@ -9,7 +9,7 @@
         currentUser.changeUser(user);
         currentUser.saveCache();
       }, function(error) {
-        // TO-DO show messages errors
+
       });
     }
     this.user = new TimeApp.User();

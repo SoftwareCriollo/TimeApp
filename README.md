@@ -2,10 +2,21 @@
   * mongodb
 
 ## Run application in development
+  * First config your file .env with the keys for [trello](https://trello.com/docs/gettingstarted/authorize.html)
+    ```
+      TRELLO_KEY=YOUR_KEY
+      TRELLO_SECRET=YOURSECRETKEYGOESHERE
+    ```
+
   ```
     rails s
   ```
+## Run test suite
+  * First config your file .env.test with the keys for [trello](https://trello.com/docs/gettingstarted/authorize.html) (all call should be stubbed)
 
+  ```shell
+    rspec
+  ```
 ## Development
 
 ###Views

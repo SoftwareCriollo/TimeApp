@@ -14,9 +14,12 @@ gem 'slim'
 gem 'devise'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'activeadmin-mongoid', github: 'elia/activeadmin-mongoid', branch: 'rails4'
+gem 'ruby-trello'
 
 gem 'bower-rails'
 gem 'quiet_assets', group: :development
+
+gem 'dotenv-rails', :groups => [:development, :test]
 
 group :test do
   gem 'rspec-rails'
