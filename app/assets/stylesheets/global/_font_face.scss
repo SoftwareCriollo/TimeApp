@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'MuseoSans';
-  font-weight: normal;
+  font-weight: 500;
   src: asset-url('museosans_500-webfont.eot');
   src: asset-url('museosans_500-webfont.eot?#iefix') format('embedded-opentype'),
        asset-url('museosans_500-webfont.woff') format('woff'),
@@ -10,10 +10,10 @@
 
 @font-face {
   font-family: 'MuseoSans';
-  font-weight: light;
-  src: asset-url('museosans_500-webfont.eot');
-  src: asset-url('museosans_500-webfont.eot?#iefix') format('embedded-opentype'),
-       asset-url('museosans_500-webfont.woff') format('woff'),
-       asset-url('museosans_500-webfont.ttf')  format('truetype'),
-       asset-url('museosans_500-webfont.svg#svgFontName') format('svg');
+  font-weight: 300;
+  src: asset-url('museo300.eot');
+  src: asset-url('museo300.eot?#iefix') format('embedded-opentype'),
+       asset-url('museo300.woff') format('woff'),
+       asset-url('museo300.ttf')  format('truetype'),
+       asset-url('museo300.svg#svgFontName') format('svg');
 }

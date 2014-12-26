@@ -1,17 +1,14 @@
 <section class="container-login">
-  <div class="login">
-    <form method="post" novalidate ng-submit="auth.signIn()">
-      <div class="fields">
-        <input type="email" name="email" ng-model="auth.user.email" placeholder="Email">
-        <input type="password" name="password" ng-model="auth.user.password" placeholder="Password">
-      </div>
-      <div class="btn-login">
-        <input class="btn-primary" name="commit" value="LOG IN">
-      </div>
-      <div class="login-help">
-        <a href="#">Forgot password?</a>
-      </div>
-    </form>
-
-</div>
+  <form method="post" novalidate ng-submit="auth.signIn()" class='login'>
+    <div class="fields">
+      <input type="email" name="email" ng-model="auth.user.email" placeholder="Email">
+      <input type="password" name="password" ng-model="auth.user.password" placeholder="Password">
+    </div>
+    <div class="btn-login">
+      <input class="btn-primary" name="commit" value="LOG IN">
+    </div>
+    <div class="login-help">
+      <a href="#">Forgot password?</a>
+    </div>
+  </form>
 </section>
