@@ -7,6 +7,19 @@ input
   border-width: $border-width-primary
   font-size: $font-size-primary
 
+
+input[type='text'], input[type='email'], input[type='password'],input[type='search'], input[type='tel'], input[type='url'],
+  margin-bottom: 1.8em
+  line-height: 1.5em
+  width: 100%
+  position: relative
+  display: block
+  box-sizing: border-box
+
+  &:focus
+    outline: none
+    box-shadow: 0px 3px 1px 0px #eee
+
 .section_left
   float: $float-left
   margin-right: 1.875em
