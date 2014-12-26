@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'MuseoSans';
+  font-weight: normal;
+  src: asset-url('museosans_500-webfont.eot');
+  src: asset-url('museosans_500-webfont.eot?#iefix') format('embedded-opentype'),
+       asset-url('museosans_500-webfont.woff') format('woff'),
+       asset-url('museosans_500-webfont.ttf')  format('truetype'),
+       asset-url('museosans_500-webfont.svg#svgFontName') format('svg');
+}
+
+@font-face {
+  font-family: 'MuseoSans';
+  font-weight: light;
+  src: asset-url('museosans_500-webfont.eot');
+  src: asset-url('museosans_500-webfont.eot?#iefix') format('embedded-opentype'),
+       asset-url('museosans_500-webfont.woff') format('woff'),
+       asset-url('museosans_500-webfont.ttf')  format('truetype'),
+       asset-url('museosans_500-webfont.svg#svgFontName') format('svg');
+}

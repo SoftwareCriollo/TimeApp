@@ -26,8 +26,7 @@ module TimeApp
     # config.i18n.default_locale = :de
 
     config.middleware.use ActionDispatch::Flash
-
-
+    config.assets.paths << Rails.root.join("app","assets","typography")
     config.assets.paths << Rails.root.join("vendor","assets","bower_components")
     config.assets.paths << Rails.root.join("vendor","assets","bower_components","bootstrap-sass-official","assets","fonts")
  
