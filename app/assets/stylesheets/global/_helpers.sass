@@ -1,0 +1,11 @@
+@mixin box-shadow()
+  -webkit-transition: box-shadow 0.2s
+  transition: box-shadow 0.2s
+  &:focus
+    outline: none
+    box-shadow: 0px 3px 1px 0px #eee
+
+@mixin ellipsis()
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
