@@ -8,7 +8,7 @@
       Auth.login(controller.user.credentials()).then(function(user) {
         currentUser.changeUser(user);
         currentUser.saveCache();
-        $location('/projects')
+        $location.path('/projects')
       }, function(error) {
 
       });
