@@ -5,7 +5,6 @@ development:
       hosts:
         - localhost:27017
       options:
-
   options:
 test:
   sessions:
@@ -20,9 +19,9 @@ test:
         max_retries: 1
         retry_interval: 0
 production:
-  host: <%= ENV['MONGOID_HOST'] %>
-  port: <%= ENV['MONGOID_PORT'] %>
-  username: <%= ENV['MONGOID_USERNAME'] %>
-  password: <%= ENV['MONGOID_PASSWORD'] %>
-  database: <%= ENV['MONGOID_DATABASE'] %>
-  
+  sessions:
+    default:
+      uri: <%= ENV['MONGOHQ_URL'] %>
+      options:
+        skip_version_check: true
+        safe: true
