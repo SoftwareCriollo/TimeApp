@@ -21,6 +21,8 @@ gem 'quiet_assets', group: :development
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
+gem 'rails_12factor', group: :production
+
 group :test do
   gem 'rspec-rails'
   gem 'rspec-autotest'
