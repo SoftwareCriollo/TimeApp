@@ -1,9 +1,9 @@
 <h1 class='underline'>{{controller.project.name}}</h1>
 <section id='cards'>
-  <article ng-repeat="card in controller.cards" ng-href="#/boards/{{card.id}}/cards" class='card'>
+  <article ng-repeat="card in controller.cards" ng-href="#/boards/{{card.id}}/cards" class='card-task'>
     <div class="list">
       <span class='icn-bullet'></span>
-      <p>{{card.list_name}}</p>
+      <p>{{card.name}}</p>
     </div>
   </article>
 

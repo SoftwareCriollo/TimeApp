@@ -9,7 +9,7 @@ class Api::ProjectsController < ApiController
   end
 
   def cards
-    cards = project_manager.cards_serialized(params[:id])
+    cards = project_manager.cards_by_board(params[:id])
     render json: cards
   end
 
