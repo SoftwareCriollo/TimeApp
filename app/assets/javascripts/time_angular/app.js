@@ -6,6 +6,7 @@
     'Devise',
     'CacheStore',
     'timeFrontendApp-authentication',
+    'timeFrontendApp-projects',
     'ngMessages',
     'ngResource',
     'ngRoute',
@@ -26,6 +27,7 @@
   app.config(['$httpProvider', function($httpProvider){    
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+//    $httpProvider.defaults.headers.common['X-USER-TOKEN'] = currentUser.token();
     var interceptor = ['$location', '$rootScope', '$q', function($location, $rootScope, $q) {
       function success(response) {
         return response
@@ -48,8 +50,15 @@
   
   app.config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: "templates/new_iteration.html"
+      .when('/projects', {
+        templateUrl: "templates/projects/index.html",
+        controller: 'ProjectsController',
+        controllerAs: 'controller'
+      })
+      .when('/projects/:projectId/cards', {
+        templateUrl: "templates/projects/cards.html",
+        controller: 'CardsController',
+        controllerAs: 'controller'
       })
       .when('/log-in', {
         templateUrl: 'templates/authentication/login.html',
@@ -57,7 +66,7 @@
         controllerAs: 'auth'
       })
       .otherwise({
-        redirectTo: '/log-in'
+        redirectTo: '/projects'
       });
   });
 })();

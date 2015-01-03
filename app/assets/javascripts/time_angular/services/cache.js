@@ -2,6 +2,39 @@
   var CacheStoreModule = angular.module('CacheStore', []);
 
   CacheStoreModule.config(['$provide', function($provide) {
+    $provide.factory('ProjectCache',[function() {
+      this.loadProjects = function(){
+        return loadJsonCache('projects') || [];
+      };
+
+      this.saveProjects = function(new_projects){
+        saveJsonCache('projects',new_projects);
+      };
+      this.findProject = function(project_id){
+        for (var i = this.projects.length - 1; i >= 0; i--) {
+          project = this.projects[i];
+          if(project.id == project_id)
+            return project;
+        };
+      };
+      
+      this.projects = this.loadProjects();
+      
+      return this;
+    }]);
+
+    $provide.factory('CardsCache',[function() {
+      this.loadCards = function(project_id){
+        return loadJsonCache(project_id+'_cards') || [];
+      };
+
+      this.saveCards = function(project_id, new_cards){
+        saveJsonCache(project_id+'_cards',new_cards);
+      };
+
+      return this;
+    }]);
+
     $provide.factory('CurrentUser',["$location",function($location) {
       var currentUser;
 
@@ -15,7 +48,9 @@
       this.changeUser = function(user){
         currentUser = user;
       };
-
+      this.token = function(){
+        return currentUser.token_authentication;
+      }
       this.saveCache = function(){
         saveJsonCache('currentUser',currentUser);
       };
@@ -25,7 +60,7 @@
           $location.path('/');
         }
       }
-      this.pendingAuth = function(){      
+      this.isPendingAuth = function(){      
         if( !this.isAuthenticated()){
           $location.path('/log-in');
         }
@@ -34,8 +69,6 @@
         currentUser = new TimeApp.User( loadJsonCache("currentUser") );
       else
         currentUser = new TimeApp.User();
-
-
 
       return this;
     }]);
@@ -47,8 +80,10 @@
   };
 
   var loadJsonCache = function(name){
-    console.log(localStorage[name]);
-    return JSON.parse(localStorage[name]);
+    if(localStorage[name])
+      return JSON.parse(localStorage[name]);
+    else
+      return undefined;
   };
 
   var existCache = function(name){
