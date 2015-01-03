@@ -21,7 +21,11 @@ gem 'quiet_assets', group: :development
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
-gem 'rails_12factor', group: :production
+group :production, :staging do
+  gem "rails_12factor"
+  gem "rails_stdout_logging"
+  gem "rails_serve_static_assets"
+end
 
 group :test do
   gem 'rspec-rails'

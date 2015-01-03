@@ -284,6 +284,8 @@ DEPENDENCIES
   rails (= 4.1.8)
   rails-api
   rails_12factor
+  rails_serve_static_assets
+  rails_stdout_logging
   rspec-autotest
   rspec-rails
   ruby-trello
