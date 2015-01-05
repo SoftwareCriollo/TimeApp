@@ -19,13 +19,13 @@
   ```
 ## Development
 
-###Views
+### Views
   * Angular
     * All views should be in the folder **/templates/\[:resources]/file.html**
     * The view do not need all layout
   * Ruby server: Normally
   
-###Controllers
+### Controllers
   * Angular
     * Should be in the folder: **/assets/javascripts/time_angular/modules/\[:resources\]/action.js**
 
@@ -35,19 +35,20 @@
   * Server Controllers
     * Normally
 
-###Models
+### Models
   * Angular: 
     * All models should be created with 
-```javascript
-  var TimeApp = window.TimeApp ||= {}
-  var myObject = TimeApp.myObject = {};
-  myObject = function(attributes){
-    attributes ||= {};
-    this.my_attribute = attributes.my_attribute; //Initializacion
 
-    this.my_function = function(){};
-  }
-```
+    ```javascript
+      var TimeApp = window.TimeApp ||= {}
+      var myObject = TimeApp.myObject = {};
+      myObject = function(attributes){
+        attributes ||= {};
+        this.my_attribute = attributes.my_attribute; //Initializacion
+
+        this.my_function = function(){};
+      }
+    ```
 
 ## Dependencies
 
