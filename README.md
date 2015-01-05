@@ -8,7 +8,8 @@
       TRELLO_SECRET=YOURSECRETKEYGOESHERE
     ```
 
-  ```
+  ```shell
+    mongod
     rails s
   ```
 ## Run test suite
