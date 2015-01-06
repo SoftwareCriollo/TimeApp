@@ -5,16 +5,14 @@
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= csrf_meta_tags %>
 </head>
-<body ng-app="timeFrontendApp"> 
+<body ng-app="timeFrontendApp">
   <div class="header">
     <img src="images/logo.svg" alt="logo" />
-    <div class="text-right">
-      <p> "Do or do not. There is no try" - Yoda</p>
-    </div>
   </div>
+
   <div ng-view="" class='container'></div>
   <div class="hide">
-    <%= javascript_include_tag 'application' %>  
+    <%= javascript_include_tag 'application' %>
   </div>
 </body>
 </html>
