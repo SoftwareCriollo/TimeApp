@@ -1,5 +1,5 @@
+<div ng-include="'templates/projects/projects_box_right.html'" class="text-right box-float-right project-box-right"></div>
 <h1 class='underline'>Projects</h1>
 <section id='projects'>
   <a ng-repeat="project in controller.projects" href="#/projects/{{project.id}}/cards" class='card-project'>{{project.name}}</a>
-
 </section>
