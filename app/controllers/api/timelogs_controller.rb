@@ -3,12 +3,10 @@ class Api::TimelogsController <  ApiController
   def create
     @timelog = Timelog.new(timelog_params)
 
-    respond_to do |format|
-      if  @timelog.save
-        format.html { redirect_to "/", notice: 'User was successfully created.' }
-      else
-        format.html { redirect_to '/', notice: 'Error saving property'}
-      end
+    if  @timelog.save
+      render json: @timelog, status: 201, notice: "Successfully created Timelog"
+    else
+      render json: @timelog, status: 422
     end
   end
 

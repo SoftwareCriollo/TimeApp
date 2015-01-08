@@ -3,12 +3,10 @@ class Api::IterationsController <  ApiController
   def create
     @iteration= Iteration.new(iteration_params)
 
-    respond_to do |format|
-      if  @iteration.save
-        format.html { redirect_to "/", notice: 'User was successfully created.' }
-      else
-        format.html { redirect_to '/', notice: 'Error saving property'}
-      end
+    if  @iteration.save
+      render json: @iteration, status: 201, notice: "Successfully created Iteration"
+    else
+      render json: @iteration, status: 422
     end
   end
 
