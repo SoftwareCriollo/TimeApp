@@ -8,12 +8,8 @@ Rails.application.routes.draw do
         get :cards
       end
     end
-    resources :iterations do
-      post :create    
-    end
-    resources :timelogs do
-      post :create    
-    end
+    resources :iterations
+    resources :timelogs
   end
   
 #  namespace :api do
