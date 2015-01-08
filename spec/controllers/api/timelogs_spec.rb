@@ -6,7 +6,7 @@ describe 'POST #create' do
 
   context 'Create new Timelog' do
     let(:timelog){FactoryGirl.attributes_for(:timelog) }
-    it 'Redirects them to their /' do
+    it 'Answer to a json' do
       post :create, timelog: timelog
       expect(response.status).to eq(201)
     end

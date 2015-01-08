@@ -7,7 +7,7 @@ FactoryGirl.define do
     time '30'
     user_id '345G'
     trello false
-    iteration_id '340Y'
+    iteration_id 'id'
     value_ajust '500.00'
   end
 end
