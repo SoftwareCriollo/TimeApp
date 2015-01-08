@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root 'home#index'
 
   namespace :api do
@@ -6,6 +7,12 @@ Rails.application.routes.draw do
       member do
         get :cards
       end
+    end
+    resources :iterations do
+      post :create    
+    end
+    resources :timelogs do
+      post :create    
     end
   end
   
