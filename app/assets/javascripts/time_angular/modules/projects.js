@@ -3,10 +3,17 @@
   var app = angular.module('timeFrontendApp-projects',['CacheStore'])
 
   app.controller('ProjectsController',['$http','CurrentUser','ProjectCache', function($http,currentUser,projectsCache){
+
+    this.logOut = function(){
+      console.log('click log out');
+      localStorage.clear();
+      location.reload();
+    };
+
     currentUser.isPendingAuth();
 
     var controller = this;
-    
+
     this.projects = projectsCache.projects;
     $http.get('/api/projects')
       .success(function(projects, status, headers, config){
@@ -14,7 +21,14 @@
         controller.projects = projects;
       });
   }]);
+
   app.controller('CardsController',['$http','$routeParams','CurrentUser','ProjectCache','CardsCache', function($http,$routeParams, currentUser,projectCache,cardsCache){
+    this.logOut = function(){
+      console.log('click log out');
+      localStorage.clear();
+      location.reload();
+    };
+
     currentUser.isPendingAuth();
     var controller = this;
     var projectId = $routeParams.projectId;
