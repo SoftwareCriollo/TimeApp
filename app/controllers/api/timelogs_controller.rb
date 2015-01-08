@@ -1,4 +1,4 @@
-class Api::TimelogsController < ApplicationController
+class Api::TimelogsController <  ApiController
 
   def create
     @timelog = Timelog.new(timelog_params)

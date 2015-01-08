@@ -1,4 +1,4 @@
-class Api::IterationsController < ApplicationController
+class Api::IterationsController <  ApiController
 
   def create
     @iteration= Iteration.new(iteration_params)
