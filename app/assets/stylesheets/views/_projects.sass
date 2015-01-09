@@ -11,16 +11,6 @@
   margin-bottom: initial
   border: 2px solid $background-color-secondary
 
-.name-project
-  height: 109px
-  width: 289px
-  vertical-align: middle
-  display: table-cell
-  max-width: 235px
-  overflow: hidden
-  text-overflow: ellipsis
-  word-wrap: break-word
-
 .name-task
   font-size: 0.64em
   width: 289px
@@ -37,8 +27,11 @@
   text-overflow: ellipsis
   overflow: hidden
 
-.underline-time-log
+.underline-time-log,
+.section-time-log
   display: none
+
+.underline-time-log
   margin: 40px 20px
   border: 2px solid $background-color-secondary
 
@@ -49,7 +42,6 @@
   .title-time-log
     margin: 20px
     width: 100%
-    display: none
     h1
       text-align: $float-left
       font-size: 20px
@@ -98,6 +90,7 @@
       width: 100%
 
   .underline-time-log-v
+
     margin: 10px
     border: 1px solid $background-color-secondary
     width: 0px
@@ -122,7 +115,6 @@
       width: 62%
 
   .save-time-log
-    display: none
     color: $color-font-primary
     border: none
     margin-left: 430px
