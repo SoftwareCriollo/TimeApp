@@ -3,6 +3,6 @@
   <h1 class="title">Projects</h1>
   <hr class="underline" />
 </div>
-<section id='projects'>
-  <a ng-repeat="project in controller.projects" href="#/projects/{{project.id}}/cards" class='card-project'>{{project.name}}</a>
+<section ng-repeat="project in controller.projects" ng-click="controller.showProject(project.id)" id='projects' class="card-project" ng-mouseleave="controller.hoverOutProject(project.id)" ng-mouseover="controller.hoverInProject(project.id)" >
+  <div class="name-project name-project-{{project.id}}">{{project.name}}</div>
 </section>

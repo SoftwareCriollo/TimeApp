@@ -1,9 +1,13 @@
-<div ng-include="'templates/projects/login_box_right.html'" class="text-right box-float-right"></div>
+<div ng-include="'templates/projects/login_box_right.html'" class="text-right box-float-right login-box-right"></div>
 <section class="container-login">
   <form method="post" novalidate ng-submit="auth.signIn()" class='login'>
     <div class="fields">
-      <input type="email" name="email" ng-model="auth.user.email" placeholder="Email">
-      <input type="password" name="password" ng-model="auth.user.password" placeholder="Password">
+      <div class="field-up field-form">
+        Login  <input type="email" name="email" ng-model="auth.user.email" />
+      </div>
+      <div class="field-down field-form">
+        Password  <input type="password" name="password" ng-model="auth.user.password" />
+      </div>
     </div>
     <div class="btn-login">
       <input type="submit" class="btn-primary" name="commit" value="LOG IN">
