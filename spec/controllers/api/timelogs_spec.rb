@@ -10,6 +10,10 @@ describe 'POST #create' do
       post :create, timelog: timelog
       expect(response.status).to eq(201)
     end
+
+    it "Changes the Timelog count" do
+      expect { Timelog.create }.to change{ Timelog.count}.by(1)
+    end
     end
 end
 

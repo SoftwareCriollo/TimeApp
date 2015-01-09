@@ -10,6 +10,10 @@ describe 'POST #create' do
       post :create, iteration: iteration
       expect(response.status).to eq(201)
     end
+    it "Changes the Iteration count" do
+      expect { Iteration.create }.to change{ Iteration.count }.by(1)
+    end
+    
     end
 end
 
