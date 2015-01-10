@@ -11,7 +11,11 @@ class Api::TimelogsController <  ApiController
   end
 
   def timelog_params
-    params.require(:timelog).permit(:project_id, :project_name, :task_id, :comment, :time, :user_id, :fecha, :trello, :iteration_id, :value_ajust)
-  end 
+    params.require(:timelog).permit(:project_id, :project_name, :task_id, :comment, :time, :user_id, :fecha, :trello, :iteration_id, :value_ajust, array_timelog: timelog_attributes)
+  end
+
+  def timelog_attributes
+    [:project_id, :project_name, :task_id, :comment, :time, :user_id, :fecha, :trello, :iteration_id, :value_ajust]
+  end
 
 end
