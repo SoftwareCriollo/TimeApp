@@ -12,7 +12,7 @@ describe 'POST #create' do
     end
 
     it "Changes the Timelog count" do
-      expect { Timelog.create }.to change{ Timelog.count}.by(1)
+      expect {create (:timelog) }.to change(Timelog, :count ).by(1)
     end
     end
 end
