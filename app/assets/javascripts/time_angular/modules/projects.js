@@ -68,13 +68,11 @@
     };
 
     this.tasks = function(idCard, nameCard){ // function to do array time log
-      if(this.task.length>0){
-        if(this.isUnSelected(idCard, nameCard)){
-          this.removeCard(idCard, nameCard);
-        }
-        else{
-          this.addCard(idCard, nameCard);
-        }
+      if(this.task.length>0 && this.isUnSelected(idCard, nameCard)){
+        this.removeCard(idCard, nameCard);
+      }
+      else if(this.task.length>0 && !this.isUnSelected(idCard, nameCard)){
+        this.addCard(idCard, nameCard);
       }
       else{
         this.addCard(idCard, nameCard);
