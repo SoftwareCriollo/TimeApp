@@ -79,12 +79,12 @@
       }
 
       if(this.task.length>0){
-        $('.section-time-log').css("display","block");
-        $('.underline-time-log').css("display","block");
+        $('.section-time-log').removeClass('hide');
+        $('.underline-time-log').removeClass('hide');
       }
       else{
-        $('.section-time-log').css("display","none");
-        $('.underline-time-log').css("display","none");
+        $('.section-time-log').addClass('hide');
+        $('.underline-time-log').addClass('hide');
       }
     };
   /************************************************************************************/

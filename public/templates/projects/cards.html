@@ -15,32 +15,32 @@
     </div>
   </article>
 </section>
-<hr class="underline-time-log"/>
-<div class="section-time-log">
+<hr class="underline-time-log hide"/>
+<div class="section-time-log hide">
   <div class="title-time-log">
     <h1>TIME LOG</h1>
   </div>
   <section class="section-time-log-funtional">
     <form method="post" name="logTimeForm">
-    <article ng-repeat="selection in controller.task track by $index" class="box-time-log">
-      <div class="section-time-log-left section-left-card">
-      <div class="card-selected-time-log">
-        <p> {{selection.name}}</p>
-      </div>
-      </div>
-      <div class="section-time-log-left section-left-hr">
-        <hr class="underline-time-log-v"/>
-      </div>
-      <div class="form-time-log">
+      <article ng-repeat="selection in controller.task track by $index" class="box-time-log">
+        <div class="section-time-log-left section-left-card">
+        <div class="card-selected-time-log">
+          <p> {{selection.name}}</p>
+        </div>
+        </div>
+        <div class="section-time-log-left section-left-hr">
+          <hr class="underline-time-log-v"/>
+        </div>
+        <div class="form-time-log">
     		  <div class="field-form field-time-log field-up">
-    		  	<input name="time" class="ng-dirty ng-valid" placeholder="Hours" />
+    		  	<input name="time" placeholder="Hours" />
     	  	</div>
     		  <div class="field-form field-time-log field-down">
-    		  	<input name="comment" class="ng-dirty ng-valid" placeholder="Notes - link to screenshot, screencast"/>
+    		  	<input name="comment" placeholder="Notes - link to screenshot, screencast"/>
     	    </div>
         </div>
-    </article>
+      </article>
+      <input type="submit" value="SAVE" class="btn-primary save-time-log" />
     </form>
   </section>
-  <button class="btn-primary save-time-log" ng-click="">SAVE</button>
 </div>

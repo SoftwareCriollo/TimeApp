@@ -6,9 +6,9 @@
     this.project_id = attributes.project_id;
     this.project_name = attributes.project_name;
     this.time_logs[] = attributes.time_logs;
-  
+
     this.toJsonString = function(){
-      return JSON.stringify(this);
+      this.attributes;
     };
   };
 })();
