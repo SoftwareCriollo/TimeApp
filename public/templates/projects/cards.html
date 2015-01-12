@@ -20,25 +20,27 @@
   <div class="title-time-log">
     <h1>TIME LOG</h1>
   </div>
-  <section ng-repeat="selection in controller.task track by $index" class="section-time-log-funtional">
-    <div class="section-time-log-left section-left-card">
+  <section class="section-time-log-funtional">
+    <form method="post" name="logTimeForm">
+    <article ng-repeat="selection in controller.task track by $index" class="box-time-log">
+      <div class="section-time-log-left section-left-card">
       <div class="card-selected-time-log">
         <p> {{selection.name}}</p>
       </div>
-    </div>
-    <div class="section-time-log-left section-left-hr">
-      <hr class="underline-time-log-v"/>
-    </div>
-    <div class="form-time-log">
-    	<form name="logTimeForm">
-    		<div class="field-form field-time-log field-up">
-    			<input name="hours" class="ng dirty ng-valid" placeholder="Hours"/>
-    		</div>
-    		<div class="field-form field-time-log field-down">
-    			<input name="notes" class="ng dirty ng-valid" placeholder="Notes - link to screenshot, screencast"/>
-    	  </div>
-    	</form>
-    </div>
+      </div>
+      <div class="section-time-log-left section-left-hr">
+        <hr class="underline-time-log-v"/>
+      </div>
+      <div class="form-time-log">
+    		  <div class="field-form field-time-log field-up">
+    		  	<input name="time" class="ng-dirty ng-valid" placeholder="Hours" />
+    	  	</div>
+    		  <div class="field-form field-time-log field-down">
+    		  	<input name="comment" class="ng-dirty ng-valid" placeholder="Notes - link to screenshot, screencast"/>
+    	    </div>
+        </div>
+    </article>
+    </form>
   </section>
-  <button class="btn-primary save-time-log">SAVE</button>
+  <button class="btn-primary save-time-log" ng-click="">SAVE</button>
 </div>

@@ -79,7 +79,7 @@
       }
 
       if(this.task.length>0){
-        $('.section-time-log').css("display","inline-block");
+        $('.section-time-log').css("display","block");
         $('.underline-time-log').css("display","block");
       }
       else{
