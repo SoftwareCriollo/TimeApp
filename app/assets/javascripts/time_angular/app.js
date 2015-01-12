@@ -65,6 +65,9 @@
         controller: 'LoginController',
         controllerAs: 'auth'
       })
+      .when('/iterations/:projectId', {
+        templateUrl: 'templates/iterations/index.html'
+      })
       .otherwise({
         redirectTo: '/projects'
       });

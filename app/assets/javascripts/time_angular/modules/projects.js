@@ -80,11 +80,11 @@
 
       if(this.task.length>0){
         $('.section-time-log').removeClass('hide');
-        $('.underline-time-log').removeClass('hide');
+        $('.underline-division').removeClass('hide');
       }
       else{
         $('.section-time-log').addClass('hide');
-        $('.underline-time-log').addClass('hide');
+        $('.underline-division').addClass('hide');
       }
     };
   /************************************************************************************/

@@ -9,7 +9,7 @@ form
     background: none
     border: none
     font-size: $font-size-primary
-    height: 92%
+    height: 42px
     &focus
       outline:none
 
@@ -19,3 +19,13 @@ input[type='text'], input[type='email'], input[type='password'],input[type='sear
   @include box-shadow()
   &:focus
     outline: none
+
+[placeholder]
+  &::-webkit-input-placeholder
+    color: $color-titles
+  &:-moz-placeholder 
+    color: $color-titles
+  &::-moz-placeholder 
+    color: $color-titles
+  &:-ms-input-placeholder
+    color: $color-titles
