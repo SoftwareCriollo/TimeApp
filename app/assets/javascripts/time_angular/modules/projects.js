@@ -88,5 +88,29 @@
   /************************************************************************************/
 
   }]);
+
+  app.controller('ClientsController',['$http','$routeParams','CurrentUser','ProjectCache','CardsCache', function($http,$routeParams, currentUser,projectCache,cardsCache){
+    
+    this.logOut = function(){ // function to "log out" the user, clear all the local storage
+      localStorage.clear();
+      location.reload();
+    };
+
+    currentUser.isPendingAuth();
+    var controller = this;
+    var projectId = $routeParams.projectId;
+    this.project = projectCache.findProject(projectId);
+    this.cards = cardsCache.loadCards(projectId);
+
+    var url = '/api/projects/' + projectId + '/cards';
+    $http.get(url)
+      .success(function(cards, status, headers, config){
+        cardsCache.saveCards(projectId,cards);
+        controller.cards = cards;
+      });
+
+  }]);
+
+
 })();
 

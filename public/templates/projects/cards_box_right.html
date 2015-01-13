@@ -1,9 +1,9 @@
   <div class="buttons-up">
     <button class="log-out"><a href ng-click="controller.logOut()">LOG OUT</a></button>
-    <button class="client-information"><a href>CLIENT INFORMATION</a></button>
+    <button class="client-information"><a href="#/projects/{{controller.project.id}}/client">CLIENT INFORMATION</a></button>
   </div>
   <ul>
-  	<li class="active-up-menu"><a href="#">STORIES</a></li>
+  	<li class="active-up-menu"><a href="#/projects/{{controller.project.id}}/cards">STORIES</a></li>
   	<li><a href="#/iterations/{{controller.project.id}}">ITERATIONS</a></li>
   	<li><a href="#/performance/{{controller.project.id}}">PERFORMANCE</a></li>
   </ul>

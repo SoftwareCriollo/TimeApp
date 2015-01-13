@@ -23,9 +23,14 @@
       return user;
     });
   }]);
-  
+
   app.config(function ($routeProvider) {
     $routeProvider
+      .when('/log-in', {
+        templateUrl: 'templates/authentication/login.html',
+        controller: 'LoginController',
+        controllerAs: 'auth'
+      })
       .when('/projects', {
         templateUrl: "templates/projects/index.html",
         controller: 'ProjectsController',
@@ -36,10 +41,10 @@
         controller: 'CardsController',
         controllerAs: 'controller'
       })
-      .when('/log-in', {
-        templateUrl: 'templates/authentication/login.html',
-        controller: 'LoginController',
-        controllerAs: 'auth'
+      .when('/projects/:projectId/client', {
+        templateUrl: "templates/projects/client.html",
+        controller: 'ClientsController',
+        controllerAs: 'controller'
       })
       .when('/iterations/:projectId', {
         templateUrl: 'templates/iterations/index.html'
