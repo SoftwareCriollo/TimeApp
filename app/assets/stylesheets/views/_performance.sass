@@ -6,7 +6,8 @@
 .circle,
 .commits,
 .commits a,
-.box-hours
+.box-hours,
+.url-to-share
   display: inline-block
 
 .section-up-performance
@@ -28,6 +29,7 @@
   padding: 7px 14px
   background: $background-color-btn-none
   color: $color-btm
+  margin-left: 20px
   &:hover
     cursor: pointer
 
@@ -62,10 +64,15 @@
   p
     float: left
     margin-top: 7px
+
+.img-rotate-180
+  -webkit-transform: rotate(180deg)
+  -moz-transform: rotate(180deg)
+  rotation: 180deg
+  margin-left: 8px
+
 .box-center-performance
-  width: 71%
-  padding-right: 29%
-  float: right
+  width: 50%
 
 .box-total-hours-performance
   margin-bottom: 30px
@@ -111,4 +118,9 @@
 
 .commits
   margin-bottom: 30px
+
+.date-single-performance
+  margin-bottom: 10px
+  margin-top: 30px
+
 

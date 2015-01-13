@@ -1,0 +1,92 @@
+<div ng-include="'templates/performance/performance_box_right.html'" class="text-right box-float-right performance-box-right"></div>
+<div class="section-up-performance section-up-title">
+  <div class="box-title title-performance">
+    <h1 class="title"> GREEN LIGHT - CRM</h1>
+    <hr class="underline" />
+  </div>
+  <button href class="search-date-range">
+    SEARCH BY DATE RANGE
+  </button>
+  <div class="float-right url-to-share">Url to Share: <a href>softwarecriollo.com/greenliht/12081212</a></div>
+</div>
+<section ng-init="daysWeek = [{name:'tuesday'},{name:'wednesday'},{name:'thursday'},{name:'friday'}]" class="container-new-performance">
+  <div class="section-up-performance">
+    <div class="float-left section-change-performance">
+      <a href>
+        <img src="images/arrow-circle.png"/>
+        <p>DECEMBER 15th - 19th</p>
+      </a>
+    </div>
+    <div class="box-center-performance">
+      <h3>DECEMBER 8th - 12th</h3>
+      <div class="box-total-hours-performance">
+        <img src="images/watch.png"/>
+        7 hours worked
+        <hr class="underline-short-dark"/>
+      </div>
+    </div>
+    <div class="float-right section-change-performance">
+      <a href>
+        <p>DECEMBER 1th - 5th</p>
+        <img class="img-rotate-180" src="images/arrow-circle.png"/>
+      </a>
+    </div>
+  </div>
+  <article>
+    <div class="date-performance date-single-performance">
+      MONDAY, 12/8 - <p>6 hours</p>
+    </div>
+    <div ng-repeat="n in [1,2]" class="card-performance">
+      <div class="list">
+        <a href class="img-edit"><img src="images/edit.png"/></a>
+        <div class="name-task">Refactoring trips navigation </div>
+        <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
+        <div class="list-name-task">
+          <img src="images/circle.png" />
+          DONE
+        </div>
+        <div class="box-hours">
+          <div class="box-silver"><img src="images/clock-silver.png"/>3.5 HOURS</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article ng-repeat="day in daysWeek">
+    <div class="date-performance date-single-performance">
+      {{day.name}}, 12/{{9+$index}}  <p></p>
+    </div>
+    <div class="card-performance">
+      <div class="list">
+        <a href class="img-edit"></a>
+        <div class="name-task">Refactoring trips navigation </div>
+        <div class="note-task"></div>
+        <div class="list-name-task">
+          <img src="images/circle.png" />
+          DONE
+        </div>
+        <div class="box-hours"></div>
+      </div>
+    </div>
+  </article>
+  <hr class="underline-division"/>
+
+  <article>
+    <div class="date-performance date-single-performance">
+      undefined date  <p></p>
+    </div>
+    <div ng-repeat="n in [1,2]" class="card-performance">
+      <div class="list">
+        <a href class="img-edit"></a>
+        <div class="name-task">Refactoring trips navigation </div>
+        <div class="note-task"></div>
+        <div class="list-name-task">
+          <img src="images/circle.png" />
+          DONE
+        </div>
+        <div class="box-hours"></div>
+      </div>
+    </div>
+  </article>
+
+</section>
