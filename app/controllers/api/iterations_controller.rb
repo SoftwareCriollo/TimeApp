@@ -2,16 +2,15 @@ class Api::IterationsController <  ApiController
 
   def create
     @iteration= Iteration.new(iteration_params)
-
     if  @iteration.save
-      render json: @iteration, status: 201, notice: "Successfully created Iteration"
+      render json: @iteration, status: :created
     else
-      render json: @iteration, status: 422
+      render json: @iteration.errors.messages, status: :unprocessable_entity
     end
   end
 
   def iteration_params
     params.require(:iteration).permit(:project_id, :time, :note, :start, :end_date)
-  end 
+  end
 
 end

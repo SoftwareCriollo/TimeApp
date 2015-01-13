@@ -2,20 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Api::IterationsController, :type => :controller do
 
-describe 'POST #create' do
-
-  context 'Create new iteration' do
-    let(:iteration){FactoryGirl.attributes_for(:iteration) }
-    it 'Answer to a json' do
-      post :create, iteration: iteration
-      expect(response.status).to eq(201)
+  describe 'POST #create' do
+    context 'valid attributes' do
+      let(:iteration){FactoryGirl.attributes_for(:iteration) }
+      let(:valid_request){ post :create, iteration: iteration }
+      let(:invalid_request) { post :create, iteration: {no_attr: "not"} }
+      include_examples "resource", Iteration
     end
-    it "Changes the Iteration count" do
-      expect {create (:iteration) }.to change(Iteration, :count ).by(1)
-    end
-    
-    end
+  end
 end
-
-end
-
