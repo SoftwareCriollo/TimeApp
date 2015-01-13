@@ -1,11 +1,65 @@
 .header
   height: 97px
+  background-color: $background-color-header
   img
-    margin-left: 35px
+    margin-left: 20px
     margin-top: 30px
     width: 213.1px
-  p
-    font-size: 14px
+
+.box-float-right
+  position: relative
+  margin-right: 20px
+  float: $float-right
+  a
+    text-align: center
+    text-decoration: none
+    font-style: normal
+
+.buttons-up
+  display: inline-block
+  width: 100%
+  .log-out
+    background: $background-color-btn-secondary
+    float: $float-right
+    padding: 2px 5px
+    border: 0
+    a
+      font-size: 11px
+      color: $color-font-primary
+      width: 52px
+  .client-information
+    @extend .log-out
+    margin-right: 5px
 
 .login-box-right
-  top: -165px
+  top: -10.6em
+
+.cards-box-right
+  top: -83px
+  ul
+    list-style: none
+    margin: 0
+    li
+      margin-left: -3px
+      margin-right: -3px
+      @extend .general-performance
+      display: inline-block
+
+.iterations-box-right
+  @extend .cards-box-right
+
+.project-box-right
+  top: -83px
+
+.active-up-menu
+  background: #95e1dc
+  a
+    color: #FFF !important
+
+.general-performance
+  border: 2px solid $background-color-btn-primary
+  margin-top: 5px
+  padding: 7px 14px
+  a
+    font-size: 13px
+    color: $color-secondary

@@ -1,47 +1,73 @@
 body
   background-color: $background-color-primary
-  font-size: 16px
+  font-size: 1em
   color: $color-titles
   font-family: $font-family-primary
   margin: 0
 
-.login
-  text-align: $text-align-primary
-  form
-    background-color: $background-color-secondary
-    
-.header
-  background-color: $background-color-header
-
-.box-float-right
-  position: relative
+.container
+  text-align: center
 
 .card
-  background-color: $background-color-card
   display: inline-block
-  text-align: center
-  margin: 0.7em
-  width: 11.3em
-  padding: 0 1.5em
-
-.card-project
-  @extend .card
-  height: 7.5em
-  line-height: 7.5em
-  font-size: 1.25em
-  text-transform: uppercase
+  background-color: $background-color-card
   color: $color-titles
-  text-decoration: none
-  border-radius: 2px
+  margin: 0.7em
+  width: 289px
   border: 1px solid $background-color-card
+  border-radius: 2px
+  height: 150px
+  font-weight: $font-museo-weight-normal
   @include ellipsis()
   &:hover
     border: 1px solid $background-color-card-hover
     color: $color-link-primary
+    cursor: pointer
+
+.card-project
+  @extend .card
+  padding: 0 1.5em
+  line-height: 7.5em
+  text-transform: uppercase
+  text-decoration: none
+  font-size: 1.25em
 
 .card-task
   @extend .card
-  p
-    @include ellipsis()
+  padding: 1em
+  text-align: left
+  font-size: 1.25em
 
-  
+.list
+  height: 109px
+  width: 289px
+  display: table-cell
+  max-width: 235px
+
+.section-time-log-left
+  text-align: left
+
+.underline-division
+  margin: 40px 20px
+  border: 2px solid $background-color-secondary
+
+.iteration
+  @extend .card
+  padding: 20px
+  text-align: left
+  font-size: 0.8em
+  &:hover
+    background-color: $background-color-card
+    color: $color-titles
+    cursor: auto
+  a
+    cursor: pointer
+    font-size: 12px
+    text-decoration: underline
+    font-weight: $font-weight-primary
+
+.float-right
+  float: $float-right
+
+.float-left
+  float: $float-left

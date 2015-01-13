@@ -1,0 +1,31 @@
+form
+  text-align: left
+  background: $background-form-color
+
+.field-form
+  border-bottom: $border-width-primary solid $color-titles
+  height: 37px
+  input
+    background: none
+    border: none
+    font-size: $font-size-primary
+    height: 42px
+    &focus
+      outline:none
+
+input[type='text'], input[type='email'], input[type='password'],input[type='search'], input[type='tel'], input[type='url']
+  position: relative
+  display: block
+  @include box-shadow()
+  &:focus
+    outline: none
+
+[placeholder]
+  &::-webkit-input-placeholder
+    color: $color-titles
+  &:-moz-placeholder 
+    color: $color-titles
+  &::-moz-placeholder 
+    color: $color-titles
+  &:-ms-input-placeholder
+    color: $color-titles

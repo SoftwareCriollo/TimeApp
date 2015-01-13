@@ -1,10 +1,46 @@
-<h1 class='underline'>{{controller.project.name}}</h1>
+<div ng-include="'templates/projects/cards_box_right.html'" class="text-right box-float-right cards-box-right"></div>
+<div class="box-title">
+  <h1 class="title">{{controller.project.name}}</h1>
+  <hr class="underline" />
+</div>
 <section id='cards'>
-  <article ng-repeat="card in controller.cards" ng-href="#/boards/{{card.id}}/cards" class='card-task'>
+  <article ng-repeat="card in controller.cards" ng-click="controller.tasks(card.id, card.name)" class='card-task'>
     <div class="list">
       <span class='icn-bullet'></span>
-      <p>{{card.name}}</p>
+        <div class="name-task">{{card.name}}</div>
+        <div class="list-name-task">
+          <img src="images/circle.png" alt="logo" />
+          {{card.list_name}}
+        </div>
     </div>
   </article>
-
 </section>
+<hr class="underline-division hide"/>
+<div class="section-time-log hide">
+  <div class="title-time-log">
+    <h1>TIME LOG</h1>
+  </div>
+  <section class="section-time-log-funtional">
+    <form method="post" name="logTimeForm">
+      <article ng-repeat="selection in controller.task track by $index" class="box-time-log">
+        <div class="section-time-log-left section-left-card">
+        <div class="card-selected-time-log">
+          <p> {{selection.name}}</p>
+        </div>
+        </div>
+        <div class="section-time-log-left section-left-hr">
+          <hr class="underline-time-log-v"/>
+        </div>
+        <div class="form-time-log">
+    		  <div class="field-form field-time-log field-up">
+    		  	<input name="time" placeholder="Hours" />
+    	  	</div>
+    		  <div class="field-form field-time-log field-down">
+    		  	<input name="comment" placeholder="Notes - link to screenshot, screencast"/>
+    	    </div>
+        </div>
+      </article>
+      <input type="submit" value="SAVE" class="btn-primary save-time-log" />
+    </form>
+  </section>
+</div>
