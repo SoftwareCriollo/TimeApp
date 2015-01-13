@@ -44,6 +44,9 @@
       .when('/iterations/:projectId', {
         templateUrl: 'templates/iterations/index.html'
       })
+      .when('/performance', {
+        templateUrl: 'templates/performance/index.html'
+      })
       .otherwise({
         redirectTo: '/projects'
       });

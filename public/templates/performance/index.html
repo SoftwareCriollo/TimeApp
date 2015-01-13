@@ -1,0 +1,55 @@
+<div ng-include="'templates/performance/performance_box_right.html'" class="text-right box-float-right performance-box-right"></div>
+<div class="section-up-performance section-up-title">
+  <div class="box-title title-performance">
+    <h1 class="title"> GENERAL PERFORMANCE</h1>
+    <hr class="underline" />
+  </div>
+  <button href class="search-date-range">
+    SEARCH BY DATE RANGE
+  </button>
+</div>
+<section class="container-new-performance">
+  <div class="section-up-performance">
+    <div class="float-left section-change-performance">
+      <a href>
+        <img src="images/arrow-circle.png"/>
+        <p>DECEMBER 15th - 19th</p>
+      </a>
+    </div>
+    <div class="box-center-performance">
+      <h3>DECEMBER 8th - 12th</h3>
+      <div class="box-total-hours-performance">
+        <img src="images/watch.png"/>
+        37 hours worked
+        <hr class="underline-short-dark"/>
+      </div>
+    </div>
+  </div>
+  <article ng-repeat="n in [1,2]">
+    <div class="date-performance">
+      MONDAY, 12/8 - TOTAL: 12 Hours
+    </div>
+    <div class="activity" ng-repeat="n in [1,2]">
+      <div class="project-hours-performance">
+        <div class="circle">1</div> GREEN LIGHT - 6 hours
+      </div>
+      <div ng-repeat="n in [1,2,3,4]" class="card-performance">
+        <div class="list">
+          <img src="" />
+          <div class="name-task">Refactoring trips navigation </div>
+          <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
+          <div class="list-name-task">
+            <img src="images/circle.png" />
+            DONE
+          </div>
+          <div class="box-hours"><img src=""/>3 HOURS</div>
+        </div>
+      </div>
+      <div class="commits">
+        <p>Github commits</p>
+        <a href ng-repeat="n in [1,2,3]">http://git.softwarecriollo.com/hugo/greenlight/commit/3945ea9xssdf4g58h8h5j6</a>
+      </div>
+    </div>
+  </article>
+
+</section>
