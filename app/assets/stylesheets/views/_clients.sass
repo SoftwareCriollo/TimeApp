@@ -1,7 +1,10 @@
-.info-client
+.box-client
   display: inline-block
   width: 48%
   background: #FFF
+
+.info-client
+  @extend .box-client
   height: 280px
   margin: 72px 0px
   padding: 10px 10px 30px 30px
@@ -19,5 +22,19 @@
 .email-client
   height: 72px
 
-
+.new-client
+  @extend .box-client
+  margin: 50px 0px
+  height: 400px
+  padding: 0px 50px
+  form
+    text-align: center
+  input
+    margin-top: 30px
+    width: 100%
+  .save-new-client
+    margin-top: 40px
+    width: auto
+  .field-form
+    height: 43px
 

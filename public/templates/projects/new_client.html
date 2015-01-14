@@ -1,0 +1,26 @@
+<div ng-include="'templates/projects/client_box_right.html'" class="text-right box-float-right client-box-right"></div>
+<div class="box-title">
+  <h1 class="title">NEW CLIENT</h1>
+  <hr class="underline" />
+</div>
+<section id='client'>
+  <article class='new-client'>
+    <form method="post" name="newClientForm">
+      <div class="fields">
+        <div class="field-up field-form">
+          <input type="text" name="name" placeholder="Client Name" />
+        </div>
+        <div class="field-up field-form">
+          <input type="email" name="email" placeholder="E-mail Address" />
+        </div>
+        <div class="field-up field-form">
+          <input type="text" name="git" placeholder="Git Url" />
+        </div>
+        <div class="field-down field-form">
+          <input type="text" name="ssh" placeholder="SSH" />
+        </div>
+      </div>
+      <input type="submit" value="SAVE" class="btn-primary save-new-client" />
+    </form>
+  </article>
+</section>
