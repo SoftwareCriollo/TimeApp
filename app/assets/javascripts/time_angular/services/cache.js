@@ -1,4 +1,5 @@
 (function(){
+  var TimeApp = window.TimeApp;
   var CacheStoreModule = angular.module('CacheStore', []);
 
   CacheStoreModule.config(['$provide', function($provide) {
@@ -37,7 +38,7 @@
 
     $provide.factory('CurrentUser',["$location",function($location) {
       var currentUser;
-
+      console.log("    2   ");
       this.id= function(){
         currentUser.id;
       };
@@ -47,6 +48,7 @@
       };
       this.changeUser = function(user){
         currentUser = user;
+        $('meta[name="Token"]').attr('content',user.token_authentication);
       };
       this.token = function(){
         return currentUser.token_authentication;
@@ -66,10 +68,11 @@
         }
       }
       if( existCache("currentUser") )
-        currentUser = new TimeApp.User( loadJsonCache("currentUser") );
+        currentUser = new TimeApp.User( loadJsonCache("currentUser") );      
       else
         currentUser = new TimeApp.User();
 
+      $('meta[name="Token"]').attr('content',currentUser.token_authentication);
       return this;
     }]);
 

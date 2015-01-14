@@ -1,4 +1,5 @@
 (function(){
+  window.TimeApp =  window.TimeApp || {};
 
   var User = function(attributes){
     attributes = attributes || {} 
@@ -21,6 +22,7 @@
     };
   };
 
+  console.log('USER');
   window.TimeApp.User = User;
 
 })();

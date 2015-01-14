@@ -19,32 +19,38 @@ class ProjectManager
   ## [ {name:"name card", id: "id_card", list_name: "the name in", list_id: 'id'}]
 
   def cards_by_board(board_id)
-    board = Trello::Board.find(board_id)
-    lists = allowed_lists(board.lists)
-    lists_hash = lists.inject({}) do |hash,list|
+    @board = Trello::Board.find(board_id)
+    lists = allowed_lists(@board.lists)
+    @lists_hash = lists.inject({}) do |hash,list|
       hash[list.id]= list.name
       hash
     end
-    id_lists = lists_hash.keys
-
-    selected_cards = board.cards.inject([]) do |result_cards, card| 
-      if id_lists.include?(card.list_id)
-        result_cards << card
-      else
-        result_cards
-      end
-    end
-
-    selected_cards = arrays_object(selected_cards,CARDS_ATTRIBUTES)
-    selected_cards.map do |card|
-      card[:list_name] = lists_hash[card[:list_id]]
-    end
-    selected_cards
+    @id_lists = @lists_hash.keys
+    add_name_list_to_cards
   end
 
   def boards_serialized
     arrays_object(boards,BOARD_ATTRIBUTES)
   end
+
+  def add_name_list_to_cards
+    selected_cards = arrays_object(filter_cards_by_list, CARDS_ATTRIBUTES)
+    selected_cards.map do |card|
+      card[:list_name] = @lists_hash[card[:list_id]]
+    end
+    selected_cards
+  end
+
+  def filter_cards_by_list
+    @board.cards.inject([]) do |result_cards, card| 
+      if @id_lists.include?(card.list_id)
+        result_cards << card
+      else
+        result_cards
+      end
+    end
+  end
+
 
   def organization_name
     'softwarecriollo'

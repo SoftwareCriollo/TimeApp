@@ -1,5 +1,4 @@
 'use strict';
-
 (function() {
   window.TimeApp = {};
   var app = angular.module('timeFrontendApp', [
@@ -26,14 +25,18 @@
 
   app.config(['$httpProvider', function($httpProvider){    
     $httpProvider.defaults.withCredentials = true;
-    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
-//    $httpProvider.defaults.headers.common['X-USER-TOKEN'] = currentUser.token();
+    setInterval(function(){      
+       $httpProvider.defaults.headers.common.Token = $('meta[name=Token]').attr('content');
+    },1000);
+   
     var interceptor = ['$location', '$rootScope', '$q', function($location, $rootScope, $q) {
       function success(response) {
+        console.log(" success ");
         return response
       };
 
       function error(response) {
+        console.log(' otherwise');
         if (response.status == 401) {
           $rootScope.$broadcast('event:unauthorized');
           $location.path('/users/login');

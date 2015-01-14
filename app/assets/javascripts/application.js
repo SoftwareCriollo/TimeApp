@@ -7,11 +7,11 @@
 //= require angular-route/angular-route
 //= require angular-sanitize/angular-sanitize
 
-//= require ./time_angular/app
 //= require_tree ./time_angular/models
 //= require ./time_angular/modules/authentication
 //= require ./time_angular/modules/projects
 //= require ./time_angular/services/cache
+//= require ./time_angular/app
 
 // This File is only for angular
 
