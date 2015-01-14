@@ -7,6 +7,7 @@
     'Repository',
     'timeFrontendApp-authentication',
     'timeFrontendApp-projects',
+    'timeFrontendApp-iterations',
     'ngMessages',
     'ngResource',
     'ngRoute',
@@ -52,13 +53,21 @@
         controllerAs: 'controller'
       })
       .when('/iterations/:projectId', {
-        templateUrl: 'templates/iterations/index.html'
-      })
-      .when('/performance/:projectId', {
-        templateUrl: 'templates/performance/performance.html'
+        templateUrl: 'templates/iterations/index.html',
+        controller: 'IterationsController',
+        controllerAs: 'controller'
       })
       .when('/performance', {
         templateUrl: 'templates/performance/index.html'
+      })
+      .when('/performance/search', {
+        templateUrl: 'templates/performance/search.html'
+      })
+      .when('/performance/search/:projectId', {
+        templateUrl: 'templates/performance/search_by_project.html'
+      })
+      .when('/performance/project/:projectId', {
+        templateUrl: 'templates/performance/performance.html'
       })
       .otherwise({
         redirectTo: '/projects'
