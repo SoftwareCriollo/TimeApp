@@ -1,8 +1,17 @@
 <div ng-include="'templates/projects/cards_box_right.html'" class="text-right box-float-right cards-box-right"></div>
-<div class="box-title">
-  <h1 class="title">{{controller.project.name}}</h1>
-  <hr class="underline" />
+<div class="section-up-card section-up-title">
+  <div class="box-title title-card">
+    <h1 class="title">{{controller.project.name}}</h1>
+    <hr class="underline" />
+  </div>
+  <div class="box-search-story">
+    <form>
+      <img src="images/magnifying-glass.png"/>
+      <input type="text" name="search-story"  placeholder="Search story"/>
+    </form>
+  </div>
 </div>
+
 <section id='cards'>
   <article ng-repeat="card in controller.cards" ng-click="controller.tasks(card.id, card.name)" class='card-task'>
     <div class="list">

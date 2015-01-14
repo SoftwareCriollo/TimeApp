@@ -19,14 +19,16 @@ input[type='text'], input[type='email'], input[type='password'],input[type='sear
   display: block
   @include box-shadow()
   &:focus
-    outline: none
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0)
+    -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0)
+    -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0)
 
 [placeholder]
   &::-webkit-input-placeholder
-    color: $color-titles
-  &:-moz-placeholder 
-    color: $color-titles
-  &::-moz-placeholder 
-    color: $color-titles
+    color: $color-placeholder-primary
+  &:-moz-placeholder
+    color: $color-placeholder-primary
+  &::-moz-placeholder
+    color: $color-placeholder-primary
   &:-ms-input-placeholder
-    color: $color-titles
+    color: $color-placeholder-primary
