@@ -1,4 +1,5 @@
 (function(){
+
   window.TimeApp =  window.TimeApp || {};
   var TimeApp = window.TimeApp;
   var timeLog = TimeApp.timeLog = {};

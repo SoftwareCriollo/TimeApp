@@ -22,6 +22,7 @@
   }]);
 
   app.controller('CardsController',['CardRepository','$routeParams','CurrentUser','ProjectCache','CardsCache', function(cardRepository,$routeParams, currentUser,projectCache,cardsCache){
+
     var controller = this;
     var projectId = $routeParams.projectId;
     currentUser.isPendingAuth();
@@ -42,8 +43,8 @@
       localStorage.clear();
       location.reload();
     };
-    
-    /* add the selected card in an array, the array would be the "pre time log"  */  
+
+    /* add the selected card in an array, the array would be the "pre time log"  */
     this.isUnSelected = function(idCard, nameCard){ // function to validate is unselected a card
       for (var i = 0; i < this.task.length; i++) {
         if (this.task[i].id==idCard) {
@@ -90,7 +91,7 @@
   }]);
 
   app.controller('ClientsController',['$http','$routeParams','CurrentUser','ProjectCache','CardsCache', function($http,$routeParams, currentUser,projectCache,cardsCache){
-    
+
     this.logOut = function(){ // function to "log out" the user, clear all the local storage
       localStorage.clear();
       location.reload();

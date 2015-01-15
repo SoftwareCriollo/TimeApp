@@ -57,6 +57,11 @@
         controller: 'IterationsController',
         controllerAs: 'controller'
       })
+      .when('/iterations/entries/:projectId', {
+        templateUrl: 'templates/iterations/entries.html',
+        controller: 'IterationsController',
+        controllerAs: 'controller'
+      })
       .when('/performance', {
         templateUrl: 'templates/performance/index.html'
       })
