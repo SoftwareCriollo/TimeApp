@@ -81,7 +81,8 @@
 .section-up-iteration,
 .title-iteration,
 .section-change-iteration,
-.box-center-iteration
+.box-center-iteration,
+.entry-time-iterations
   display: inline-block
 
 .section-up-iteration
@@ -147,5 +148,47 @@
 .date-single-iteration
   margin-bottom: 10px
   margin-top: 30px
+
+.editTimeEntries
+  width: 42.5%
+  margin-left: 15px
+  display: table
+  position: absolute
+  form
+    background: none
+    .field-form
+      background: #FFF
+      border: none
+      height: auto
+      margin: 10px 0
+    .field-up
+      width: 53%
+    input[type='text'],
+    textarea
+      padding: 0 20px
+    textarea
+      height: 110px
+      padding-top: 20px
+    input[type='text']
+      height: 51px
+    input[type='submit']
+      height: 42px
+      padding: 0 30px
+    [placeholder]
+      &::-webkit-input-placeholder
+        color: $color-placeholder-secondary
+        font-style: $font-style-primary
+      &:-moz-placeholder
+        color: $color-placeholder-secondary
+        font-style: $font-style-primary
+      &::-moz-placeholder
+        color: $color-placeholder-secondary
+        font-style: $font-style-primary
+      &:-ms-input-placeholder
+        color: $color-placeholder-secondary
+        font-style: $font-style-primary
+
+.margin-show-entry-edit
+  margin-bottom: 276px
 
 

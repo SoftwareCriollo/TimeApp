@@ -1,11 +1,11 @@
 <div ng-include="'templates/iterations/iterations_box_right.html'" class="text-right box-float-right iterations-box-right"></div>
 <div class="section-up-iteration section-up-title">
   <div class="box-title title-iteration">
-    <h1 class="title"> GREEN LIGHT - CRM</h1>
+    <h1 class="title"> {{controller.project.name}}</h1>
     <hr class="underline" />
   </div>
   <button class="search-date-range">
-    <a href="#/iterations/search_by_project/:project">SEARCH BY DATE RANGE</a>
+    <a href="#/iterations/search_by_project/">SEARCH BY DATE RANGE</a>
   </button>
   <div class="float-right url-to-share">Url to Share: <a href>softwarecriollo.com/greenliht/12081212</a></div>
 </div>
@@ -36,18 +36,33 @@
     <div class="date-iteration date-single-iteration">
       {{day.name}}, 12/{{9+$index}} - <p>6 hours</p>
     </div>
-    <div ng-repeat="n in [1,2]" class="card-iteration">
-      <div class="list">
-        <a href class="img-edit"><img src="images/edit.png"/></a>
-        <div class="name-task">Refactoring trips navigation </div>
-        <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
-        <div class="list-name-task">
-          <img src="images/circle.png" />
-          DONE
+    <div ng-repeat="n in [1,2]" class="entry-time-iterations entry-time-iterations-{{n}}">
+      <div class="card-iteration card-iterarion-{{n}}">
+        <div class="list">
+          <a ng-click="controller.editTimeEntry(n)" class="img-edit img-edit edit-entry-{{n}}"><img src="images/edit.png"/></a>
+          <div class="name-task">Refactoring trips navigation </div>
+          <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
+          <div class="list-name-task">
+            <img src="images/circle.png" />
+            DONE
+          </div>
+          <div class="box-hours">
+            <div class="box-silver"><img src="images/clock-silver.png"/>3.5 HOURS</div>
+          </div>
         </div>
-        <div class="box-hours">
-          <div class="box-silver"><img src="images/clock-silver.png"/>3.5 HOURS</div>
-        </div>
+      </div>
+      <div class="editTimeEntries entry-time-{{n}} hide">
+        <form method="post" name="formEditTimeEntries">
+          <div class="form-time-entries">
+            <div class="field-form field-up">
+              <input type="text" name="time" placeholder="Hours: 3.5" />
+            </div>
+            <div class="field-form field-down">
+              <textarea rows="4" cols="50"name="comment" placeholder="Notes: screencast.com/289623985623"/>
+            </div>
+          </div>
+          <input type="submit" value="SAVE" class="btn-primary" />
+        </form>
       </div>
     </div>
   </article>
