@@ -35,23 +35,38 @@
     <div class="date-performance">
       MONDAY, 12/8 - <p>TOTAL: 12 hours</p>
     </div>
-    <div class="activity" ng-repeat="n in [1,2]">
+    <div class="activity" ng-repeat="project in controller.projects">
       <div class="project-hours-performance">
         <div class="circle">1</div>
-        GREEN LIGHT - <p>6 hours</p>
+        {{project.name}} - <p>6 hours</p>
       </div>
-      <div ng-repeat="n in [1,2,3,4]" class="card-performance">
-        <div class="list">
-          <a href class="img-edit"><img src="images/edit.png"/></a>
-          <div class="name-task">Refactoring trips navigation </div>
-          <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
-          <div class="list-name-task">
-            <img src="images/circle.png" />
-            DONE
+      <div ng-repeat="n in [1,2,3,4]" class="box-performance-edit performance-{{n}}">
+        <div class="card-performance card-performance-{{n}}">
+          <div class="list">
+            <a ng-click="controller.edit(n)" class="img-edit img-edit edit-performance-{{n}}"><img src="images/edit.png"/></a>
+            <div class="name-task">Refactoring trips navigation </div>
+            <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
+            <div class="list-name-task">
+              <img src="images/circle.png" />
+              DONE
+            </div>
+            <div class="box-hours">
+              <div class="box-silver"><img src="images/clock-silver.png"/>3 HOURS</div>
+            </div>
           </div>
-          <div class="box-hours">
-            <div class="box-silver"><img src="images/clock-silver.png"/>3 HOURS</div>
-          </div>
+        </div>
+        <div class="editTimeEntries form-edit-perfotmance-{{n}} hide">
+          <form method="post" name="formEditTimeEntries">
+            <div class="form-time-entries">
+              <div class="field-form field-up">
+                <input type="text" name="time" placeholder="Hours: 3.5" />
+              </div>
+              <div class="field-form field-down">
+                <textarea rows="4" cols="50"name="comment" placeholder="Notes: screencast.com/289623985623"/>
+              </div>
+            </div>
+            <input type="submit" value="SAVE" class="btn-primary" />
+          </form>
         </div>
       </div>
       <div class="commits">

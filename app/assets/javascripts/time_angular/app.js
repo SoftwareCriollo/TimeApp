@@ -8,6 +8,7 @@
     'timeFrontendApp-authentication',
     'timeFrontendApp-projects',
     'timeFrontendApp-iterations',
+    'timeFrontendApp-performance',
     'ngMessages',
     'ngResource',
     'ngRoute',
@@ -63,16 +64,24 @@
         controllerAs: 'controller'
       })
       .when('/performance', {
-        templateUrl: 'templates/performance/index.html'
+        templateUrl: 'templates/performance/index.html',
+        controller: 'GeneralPerformanceController',
+        controllerAs: 'controller'
       })
       .when('/performance/search', {
-        templateUrl: 'templates/performance/search.html'
+        templateUrl: 'templates/performance/search.html',
+        controller: 'GeneralPerformanceController',
+        controllerAs: 'controller'
       })
       .when('/performance/search/:projectId', {
-        templateUrl: 'templates/performance/search_by_project.html'
+        templateUrl: 'templates/performance/search_by_project.html',
+        controller: 'PerformanceController',
+        controllerAs: 'controller'
       })
       .when('/performance/project/:projectId', {
-        templateUrl: 'templates/performance/performance.html'
+        templateUrl: 'templates/performance/performance.html',
+        controller: 'PerformanceController',
+        controllerAs: 'controller'
       })
       .otherwise({
         redirectTo: '/projects'

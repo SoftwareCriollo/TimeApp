@@ -47,6 +47,10 @@ body
 .card-performance
   @extend .card-task
   padding: 0.2em
+  &:hover
+    border: 1px solid $background-color-card
+    color: $color-titles
+    cursor: auto
   .name-task,
   .note-task,
   .list-name-task
@@ -81,17 +85,9 @@ body
     display: inline-block
     float: left
     width: 30%
-  &:hover
-    background-color: $background-color-card
-    color: $color-titles
-    cursor: auto
 
 .card-iteration
   @extend .card-performance
-  &:hover
-    border: 1px solid $background-color-card
-    color: $color-titles
-    cursor: auto
 
 .section-time-log-left
   text-align: left
@@ -123,4 +119,10 @@ body
 
 .selected
   border: 1px solid $background-color-card-hover
-  color: $color-link-primary
+  &:hover
+    border: 1px solid $background-color-card-hover  
+
+.margin-show-entry-edit,
+.margin-show-performance-edit
+  margin-bottom: 276px
+

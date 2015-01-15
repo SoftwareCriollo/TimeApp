@@ -2,7 +2,7 @@
 (function(){
   var app = angular.module('timeFrontendApp-iterations',['CacheStore'])
 
-  app.controller('IterationsController',['$http','$routeParams','CurrentUser','ProjectCache','CardsCache', function($http,$routeParams, currentUser,projectCache,cardsCache){
+  app.controller('IterationsController',['$http','$routeParams','CurrentUser','ProjectCache', function($http,$routeParams, currentUser,projectCache){
 
     currentUser.isPendingAuth();
 
@@ -28,8 +28,6 @@
 
       this.lastEntry = entry;
     };
-
-
 
   }]);
 
