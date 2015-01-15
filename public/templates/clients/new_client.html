@@ -1,23 +1,23 @@
-<div ng-include="'templates/clients/client_box_right.html'" class="text-right box-float-right client-box-right"></div>
+<div ng-include="'templates/clients/new_client_box_right.html'" class="text-right box-float-right new-client-box-right"></div>
 <div class="box-title">
   <h1 class="title">NEW CLIENT</h1>
   <hr class="underline" />
 </div>
 <section id='client'>
   <div class='new-client'>
-    <form method="post" name="newClientForm">
+    <form method="post" novalidate ng-submit="controller.newClient()" name="newClientForm">
       <div class="fields">
         <div class="field-form">
-          <input type="text" name="name" placeholder="Client Name" />
+          <input type="text" name="name" ng-model="controller.clients.client_name" placeholder="Client Name" />
         </div>
         <div class="field-form">
-          <input type="email" name="email" placeholder="E-mail Address" />
+          <input type="email" name="email" ng-model="controller.clients.client_email" placeholder="E-mail Address" />
         </div>
         <div class="field-form">
-          <input type="text" name="git" placeholder="Git Url" />
+          <input type="text" name="git" ng-model="controller.clients.client_git" placeholder="Git Url" />
         </div>
         <div class="field-form">
-          <input type="text" name="ssh" placeholder="SSH" />
+          <input type="text" name="ssh" ng-model="controller.clients.client_ssh" placeholder="SSH" />
         </div>
       </div>
       <input type="submit" value="SAVE" class="btn-primary save-new-client" />
