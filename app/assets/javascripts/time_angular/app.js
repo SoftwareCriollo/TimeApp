@@ -9,6 +9,7 @@
     'timeFrontendApp-projects',
     'timeFrontendApp-iterations',
     'timeFrontendApp-performance',
+    'timeFrontendApp-clients',
     'ngMessages',
     'ngResource',
     'ngRoute',
@@ -43,13 +44,13 @@
         controller: 'CardsController',
         controllerAs: 'controller'
       })
-      .when('/projects/:projectId/client', {
-        templateUrl: "templates/projects/client.html",
+      .when('/clients/:projectId/client', {
+        templateUrl: "templates/clients/client.html",
         controller: 'ClientsController',
         controllerAs: 'controller'
       })
-      .when('/projects/new_client', {
-        templateUrl: "templates/projects/new_client.html",
+      .when('/clients/new_client', {
+        templateUrl: "templates/clients/new_client.html",
         controller: 'ClientsController',
         controllerAs: 'controller'
       })

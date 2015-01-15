@@ -12,6 +12,7 @@
 //= require ./time_angular/modules/projects
 //= require ./time_angular/modules/iterations
 //= require ./time_angular/modules/performance
+//= require ./time_angular/modules/clients
 //= require ./time_angular/services/cache
 //= require ./time_angular/services/repository
 //= require ./time_angular/app
