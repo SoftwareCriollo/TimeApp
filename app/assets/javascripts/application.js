@@ -11,6 +11,7 @@
 //= require ./time_angular/modules/authentication
 //= require ./time_angular/modules/projects
 //= require ./time_angular/services/cache
+//= require ./time_angular/services/repository
 //= require ./time_angular/app
 
 // This File is only for angular

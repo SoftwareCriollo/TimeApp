@@ -4,6 +4,7 @@
   var app = angular.module('timeFrontendApp', [
     'Devise',
     'CacheStore',
+    'Repository',
     'timeFrontendApp-authentication',
     'timeFrontendApp-projects',
     'ngMessages',
@@ -21,34 +22,6 @@
       user.id = user._id["$oid"];
       return user;
     });
-  }]);
-
-  app.config(['$httpProvider', function($httpProvider){    
-    $httpProvider.defaults.withCredentials = true;
-    setInterval(function(){      
-       $httpProvider.defaults.headers.common.Token = $('meta[name=Token]').attr('content');
-    },1000);
-   
-    var interceptor = ['$location', '$rootScope', '$q', function($location, $rootScope, $q) {
-      function success(response) {
-        console.log(" success ");
-        return response
-      };
-
-      function error(response) {
-        console.log(' otherwise');
-        if (response.status == 401) {
-          $rootScope.$broadcast('event:unauthorized');
-          $location.path('/users/login');
-          return response;
-        };
-        return $q.reject(response);
-      };
-      return function(promise) {
-        return promise.then(success, error);
-      };
-    }];
-    $httpProvider.interceptors.push(interceptor);
   }]);
   
   app.config(function ($routeProvider) {

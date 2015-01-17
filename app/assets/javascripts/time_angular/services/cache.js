@@ -11,6 +11,7 @@
       this.saveProjects = function(new_projects){
         saveJsonCache('projects',new_projects);
       };
+      
       this.findProject = function(project_id){
         for (var i = this.projects.length - 1; i >= 0; i--) {
           project = this.projects[i];
@@ -38,7 +39,6 @@
 
     $provide.factory('CurrentUser',["$location",function($location) {
       var currentUser;
-      console.log("    2   ");
       this.id= function(){
         currentUser.id;
       };
@@ -51,6 +51,7 @@
         $('meta[name="Token"]').attr('content',user.token_authentication);
       };
       this.token = function(){
+        console.log(currentUser.token_authentication);
         return currentUser.token_authentication;
       }
       this.saveCache = function(){

@@ -1,6 +1,5 @@
 (function(){
   window.TimeApp =  window.TimeApp || {};
-
   var User = function(attributes){
     attributes = attributes || {} 
     this.email = attributes.email;
@@ -21,8 +20,5 @@
       return JSON.stringify(this);
     };
   };
-
-  console.log('USER');
   window.TimeApp.User = User;
-
 })();
