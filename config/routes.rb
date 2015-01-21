@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root 'home#index'
 
   namespace :api do
@@ -7,6 +8,8 @@ Rails.application.routes.draw do
         get :cards
       end
     end
+    resources :iterations
+    resources :timelogs
   end
   
 #  namespace :api do
