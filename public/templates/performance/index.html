@@ -1,0 +1,82 @@
+<div ng-include="'templates/performance/general_performance_box_right.html'" class="text-right box-float-right general-performance-box-right"></div>
+<div class="section-up-performance section-up-title">
+  <div class="box-title title-performance">
+    <h1 class="title"> GENERAL PERFORMANCE</h1>
+    <hr class="underline" />
+  </div>
+  <button class="search-date-range">
+    <a href="#/performance/search">SEARCH BY DATE RANGE</a>
+  </button>
+</div>
+<section class="container-new-performance">
+  <div class="section-up-performance">
+    <div class="float-left section-change-performance">
+      <a href>
+        <img src="images/arrow-circle.png"/>
+        <p>DECEMBER 15th - 19th</p>
+      </a>
+    </div>
+    <div class="box-center-performance">
+      <h3>DECEMBER 8th - 12th</h3>
+      <div class="box-total-hours-performance">
+        <img src="images/watch.png"/>
+        37 hours worked
+        <hr class="underline-short-dark"/>
+      </div>
+    </div>
+    <div class="float-right section-change-performance">
+      <a href>
+        <p>DECEMBER 1th - 5th</p>
+        <img class="img-rotate-180" src="images/arrow-circle.png"/>
+      </a>
+    </div>
+  </div>
+  <article ng-repeat="n in [1,2]">
+    <div class="date-performance">
+      MONDAY, 12/8 - <p>TOTAL: 12 hours</p>
+    </div>
+    <div class="activity" ng-repeat="project in controller.projects">
+      <div class="project-hours-performance">
+        <div class="circle">1</div>
+        {{project.name}} - <p>6 hours</p>
+      </div>
+      <div ng-repeat="n in [1,2,3,4]" class="box-performance-edit performance-{{n}}">
+        <div class="card-performance card-performance-{{n}}">
+          <div class="list">
+            <a ng-click="controller.edit(n)" class="img-edit img-edit edit-performance-{{n}}"><img src="images/edit.png"/></a>
+            <div class="name-task">Refactoring trips navigation </div>
+            <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
+            <div class="list-name-task">
+              <img src="images/circle.png" />
+              DONE
+            </div>
+            <div class="box-hours">
+              <div class="box-silver"><img src="images/clock-silver.png"/>3 HOURS</div>
+            </div>
+          </div>
+        </div>
+        <div class="editTimeEntries form-edit-perfotmance-{{n}} hide">
+          <form method="post" name="formEditTimeEntries">
+            <div class="form-time-entries">
+              <div class="field-form field-up">
+                <input type="text" name="time" placeholder="Hours: 3.5" />
+              </div>
+              <div class="field-form field-down">
+                <textarea rows="4" cols="50"name="comment" placeholder="Notes: screencast.com/289623985623"/>
+              </div>
+            </div>
+            <input type="submit" value="SAVE" class="btn-primary" />
+          </form>
+        </div>
+      </div>
+      <div class="commits">
+        <ul>
+          <li>Github commits</li>
+          <a href ng-repeat="n in [1,2,3]">http://git.softwarecriollo.com/hugo/greenlight/commit/3945ea9xssdf4g58h8h5j6</a>
+        </ul>
+      </div>
+    </div>
+    <hr class="underline-division"/>
+  </article>
+
+</section>

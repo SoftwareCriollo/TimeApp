@@ -1,15 +1,20 @@
 form
   text-align: left
   background: $background-form-color
+  display: inline-block
+  width: 100%
 
 .field-form
   border-bottom: $border-width-primary solid $color-titles
   height: 37px
-  input
+  input,select, textarea
+    color: $color-placeholder-primary
+    width: 100%
     background: none
     border: none
     font-size: $font-size-primary
-    height: 42px
+    height: 2.5em
+    font-family: $font-family-primary
     &focus
       outline:none
 
@@ -18,14 +23,16 @@ input[type='text'], input[type='email'], input[type='password'],input[type='sear
   display: block
   @include box-shadow()
   &:focus
-    outline: none
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0)
+    -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0)
+    -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0)
 
 [placeholder]
   &::-webkit-input-placeholder
-    color: $color-titles
-  &:-moz-placeholder 
-    color: $color-titles
-  &::-moz-placeholder 
-    color: $color-titles
+    color: $color-placeholder-primary
+  &:-moz-placeholder
+    color: $color-placeholder-primary
+  &::-moz-placeholder
+    color: $color-placeholder-primary
   &:-ms-input-placeholder
-    color: $color-titles
+    color: $color-placeholder-primary

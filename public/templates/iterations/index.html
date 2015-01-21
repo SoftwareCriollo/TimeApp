@@ -1,6 +1,6 @@
 <div ng-include="'templates/iterations/iterations_box_right.html'" class="text-right box-float-right iterations-box-right"></div>
 <div class="box-title">
-  <h1 class="title"> green light - crm</h1>
+  <h1 class="title"> {{controller.project.name}}</h1>
   <hr class="underline" />
 </div>
 
@@ -9,13 +9,13 @@
   <div class="box-new-iteration">
     <form class="formIterations">
       <div class="field-form field-iterations float-left">
-        <input type="text" name="login" value="" placeholder="Amount of hours"/>
+        <input type="text" name="hours" value="" placeholder="Amount of hours"/>
       </div>
       <div class="field-form field-iterations float-left margin-right">
-        <input type="text" name="login" value="" placeholder="Start date"/>
+        <input type="text" name="start_date" value="" placeholder="Start date"/>
       </div>
       <div class="field-form field-iterations float-left">
-        <input type="text" name="login" value="" placeholder="Invoce #"/>
+        <input type="text" name="invoce" value="" placeholder="Invoce #"/>
       </div>
       <div class="field-button-iterations">
         <input type="submit" value="SAVE" class="btn-primary" />
@@ -32,6 +32,6 @@
     <div class="hours-iteration float-right">67.7/70 hours</div>
     <div class="number-iteration float-left">10</div>
     <img class="arrow-iteration float-right" src="images/arrow-green.png"/>
-    <a class="link-show-iteration float-right">VIEW TIME ENTRIES</a>
+    <a class="link-show-iteration float-right" href="#/iterations/entries/{{controller.project.id}}">VIEW TIME ENTRIES</a>
   </article>
 </section>

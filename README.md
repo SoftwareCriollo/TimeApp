@@ -41,13 +41,14 @@
     * All models should be created with 
 
     ```javascript
-      var TimeApp = window.TimeApp ||= {}
+      window.TimeApp = window.TimeApp || {};
+      var TimeApp = window.TimeApp;
       var myObject = TimeApp.myObject = {};
       myObject = function(attributes){
         attributes ||= {};
-        this.my_attribute = attributes.my_attribute; //Initializacion
+        this.myAttribute = attributes.myAttribute; //Initializacion
 
-        this.my_function = function(){};
+        this.myFunction = function(){};
       }
     ```
 

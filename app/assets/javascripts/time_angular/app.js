@@ -7,6 +7,9 @@
     'Repository',
     'timeFrontendApp-authentication',
     'timeFrontendApp-projects',
+    'timeFrontendApp-iterations',
+    'timeFrontendApp-performance',
+    'timeFrontendApp-clients',
     'ngMessages',
     'ngResource',
     'ngRoute',
@@ -23,9 +26,14 @@
       return user;
     });
   }]);
-  
+
   app.config(function ($routeProvider) {
     $routeProvider
+      .when('/log-in', {
+        templateUrl: 'templates/authentication/login.html',
+        controller: 'LoginController',
+        controllerAs: 'auth'
+      })
       .when('/projects', {
         templateUrl: "templates/projects/index.html",
         controller: 'ProjectsController',
@@ -36,13 +44,45 @@
         controller: 'CardsController',
         controllerAs: 'controller'
       })
-      .when('/log-in', {
-        templateUrl: 'templates/authentication/login.html',
-        controller: 'LoginController',
-        controllerAs: 'auth'
+      .when('/clients/:projectId/client', {
+        templateUrl: "templates/clients/client.html",
+        controller: 'InfoClientsController',
+        controllerAs: 'controller'
+      })
+      .when('/clients/new_client', {
+        templateUrl: "templates/clients/new_client.html",
+        controller: 'ClientsController',
+        controllerAs: 'controller'
       })
       .when('/iterations/:projectId', {
-        templateUrl: 'templates/iterations/index.html'
+        templateUrl: 'templates/iterations/index.html',
+        controller: 'IterationsController',
+        controllerAs: 'controller'
+      })
+      .when('/iterations/entries/:projectId', {
+        templateUrl: 'templates/iterations/entries.html',
+        controller: 'IterationsController',
+        controllerAs: 'controller'
+      })
+      .when('/performance', {
+        templateUrl: 'templates/performance/index.html',
+        controller: 'GeneralPerformanceController',
+        controllerAs: 'controller'
+      })
+      .when('/performance/search', {
+        templateUrl: 'templates/performance/search.html',
+        controller: 'GeneralPerformanceController',
+        controllerAs: 'controller'
+      })
+      .when('/performance/search/:projectId', {
+        templateUrl: 'templates/performance/search_by_project.html',
+        controller: 'PerformanceController',
+        controllerAs: 'controller'
+      })
+      .when('/performance/project/:projectId', {
+        templateUrl: 'templates/performance/performance.html',
+        controller: 'PerformanceController',
+        controllerAs: 'controller'
       })
       .otherwise({
         redirectTo: '/projects'

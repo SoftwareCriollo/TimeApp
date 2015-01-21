@@ -1,7 +1,9 @@
 (function(){
+
   window.TimeApp =  window.TimeApp || {};
-  var TimeApp = window.TimeApp ;
+  var TimeApp = window.TimeApp;
   var timeLog = TimeApp.timeLog = {};
+
   timeLog = function(attributes){
     attributes = attributes || {};
     this.project_id = attributes.project_id;
@@ -13,6 +15,8 @@
     };
   };
 })();
+
+
 
 
 
