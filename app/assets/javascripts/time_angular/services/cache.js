@@ -1,4 +1,5 @@
 (function(){
+  var TimeApp = window.TimeApp;
   var CacheStoreModule = angular.module('CacheStore', []);
 
   CacheStoreModule.config(['$provide', function($provide) {
@@ -10,6 +11,7 @@
       this.saveProjects = function(new_projects){
         saveJsonCache('projects',new_projects);
       };
+      
       this.findProject = function(project_id){
         for (var i = this.projects.length - 1; i >= 0; i--) {
           project = this.projects[i];
@@ -37,7 +39,6 @@
 
     $provide.factory('CurrentUser',["$location",function($location) {
       var currentUser;
-
       this.id= function(){
         currentUser.id;
       };
@@ -47,8 +48,10 @@
       };
       this.changeUser = function(user){
         currentUser = user;
+        $('meta[name="Token"]').attr('content',user.token_authentication);
       };
       this.token = function(){
+        console.log(currentUser.token_authentication);
         return currentUser.token_authentication;
       }
       this.saveCache = function(){
@@ -66,10 +69,11 @@
         }
       }
       if( existCache("currentUser") )
-        currentUser = new TimeApp.User( loadJsonCache("currentUser") );
+        currentUser = new TimeApp.User( loadJsonCache("currentUser") );      
       else
         currentUser = new TimeApp.User();
 
+      $('meta[name="Token"]').attr('content',currentUser.token_authentication);
       return this;
     }]);
 

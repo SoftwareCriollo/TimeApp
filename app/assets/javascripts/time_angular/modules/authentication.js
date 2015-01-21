@@ -1,5 +1,6 @@
 'use strict';
 (function(){
+  var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-authentication',['Devise','CacheStore'])
 
   app.controller('LoginController',['$scope','$location','Auth','CurrentUser', function($scope,$location,Auth,currentUser){
@@ -14,6 +15,8 @@
       });
     }
     this.user = new TimeApp.User();
+    this.user.email = "test@email.com";
+    this.user.password = "password";
     currentUser.checkAuth();
 
   }]);

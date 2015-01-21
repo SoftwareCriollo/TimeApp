@@ -1,8 +1,8 @@
 'use strict';
 (function(){
-  var app = angular.module('timeFrontendApp-projects',['CacheStore'])
+  var app = angular.module('timeFrontendApp-projects',['CacheStore','Repository'])
 
-  app.controller('ProjectsController',['$http','CurrentUser','ProjectCache', function($http,currentUser,projectsCache){
+  app.controller('ProjectsController',['ProjectRepository','CurrentUser','ProjectCache', function(projectRepository,currentUser,projectsCache){
 
     this.logOut = function(){ // function to "log out" the user, clear all the local storage
       localStorage.clear();
@@ -14,38 +14,36 @@
     var controller = this;
 
     this.projects = projectsCache.projects;
-    $http.get('/api/projects')
-      .success(function(projects, status, headers, config){
-        projectsCache.saveProjects(projects);
-        controller.projects = projects;
-      });
+    projectRepository.get(function(projects, status, headers, config){
+      projectsCache.saveProjects(projects);
+      controller.projects = projects;
+    });
 
   }]);
 
-  app.controller('CardsController',['$http','$routeParams','CurrentUser','ProjectCache','CardsCache', function($http,$routeParams, currentUser,projectCache,cardsCache){
-    
+  app.controller('CardsController',['CardRepository','$routeParams','CurrentUser','ProjectCache','CardsCache', function(cardRepository,$routeParams, currentUser,projectCache,cardsCache){
+    var controller = this;
+    var projectId = $routeParams.projectId;
+    currentUser.isPendingAuth();
+
+    this.project = projectCache.findProject(projectId);
+    this.cards = cardsCache.loadCards(projectId);
+    this.task = [];
+    this.indexRemove = null;
+
+    cardRepository.setProjectId(projectId);
+
+    cardRepository.get(function(cards, status, headers, config){
+      cardsCache.saveCards(projectId,cards);
+      controller.cards = cards;
+    });
+
     this.logOut = function(){ // function to "log out" the user, clear all the local storage
       localStorage.clear();
       location.reload();
     };
-
-    currentUser.isPendingAuth();
-    var controller = this;
-    var projectId = $routeParams.projectId;
-    this.project = projectCache.findProject(projectId);
-    this.cards = cardsCache.loadCards(projectId);
-
-    var url = '/api/projects/' + projectId + '/cards';
-    $http.get(url)
-      .success(function(cards, status, headers, config){
-        cardsCache.saveCards(projectId,cards);
-        controller.cards = cards;
-      });
-
-  /* add the selected card in an array, the array would be the "pre time log"  */
-    this.task = [];
-    this.indexRemove = null;
-
+    
+    /* add the selected card in an array, the array would be the "pre time log"  */  
     this.isUnSelected = function(idCard, nameCard){ // function to validate is unselected a card
       for (var i = 0; i < this.task.length; i++) {
         if (this.task[i].id==idCard) {

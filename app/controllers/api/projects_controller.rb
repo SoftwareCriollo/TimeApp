@@ -1,4 +1,4 @@
-class Api::ProjectsController < ApiController
+class Api::ProjectsController < ApiAuthenticatedController
 #  before_action :project_manager
 
  # include ProjectManagerConcern
