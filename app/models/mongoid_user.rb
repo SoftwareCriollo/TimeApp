@@ -40,7 +40,6 @@ class MongoidUser
     if sign_in_count_changed?
       begin
         self.token_authentication = generate_token
-        puts " ----> #{self.class.where(token_authentication: token_authentication).count > 0}"
       end while self.class.where(token_authentication: token_authentication).count > 0     
     else
       false

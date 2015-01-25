@@ -1,4 +1,8 @@
 RSpec.shared_examples "resource" do |klass|
+  before do
+    stubbing
+  end
+
   describe "sucessfully" do
     describe "response" do
       before{ valid_request }

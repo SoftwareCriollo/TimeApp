@@ -4,10 +4,9 @@ FactoryGirl.define do
     project_name 'CPF-Market'
     task_id '25G'
     comment 'Testing'
-    time '30'
+    time 10
     user_id '345G'
-    trello false
-    iteration_id 'id'
-    value_ajust '500.00'
+    trello true
+    value_ajust 1
   end
 end

@@ -8,7 +8,7 @@ class ProjectManager
   ALLOWED_LIST_NAMES= [/doing/i, /to define/i, /done/i ]
 
   def initialize
-    @organization = Trello::Organization.find(organization_name)
+    @organization = find_organization
   end
 
   def boards
@@ -19,7 +19,7 @@ class ProjectManager
   ## [ {name:"name card", id: "id_card", list_name: "the name in", list_id: 'id'}]
 
   def cards_by_board(board_id)
-    @board = Trello::Board.find(board_id)
+    @board = find_board(board_id)
     lists = allowed_lists(@board.lists)
     @lists_hash = lists.inject({}) do |hash,list|
       hash[list.id]= list.name
@@ -52,6 +52,14 @@ class ProjectManager
   end
 
 
+  def project_name(project_id)
+    find_board(board_id).name
+  end
+
+  def task_name(task_id)
+    find_card(task_id).name
+  end
+  
   def organization_name
     'softwarecriollo'
   end
@@ -69,7 +77,16 @@ class ProjectManager
       value[list.name] = list.cards
       value
     end
+  end
 
+  def find_board(board_id)
+    Trello::Board.find(board_id)
+  end
+  def find_card(card_id)
+    Trello::Card.find(card_id)
+  end
+  def find_organization
+    Trello::Organization.find(organization_name)
   end
 
 
