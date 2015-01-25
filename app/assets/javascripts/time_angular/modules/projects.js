@@ -21,7 +21,7 @@
 
   }]);
 
-  app.controller('CardsController',['CardRepository','$routeParams','CurrentUser','ProjectCache','CardsCache', function(cardRepository,$routeParams, currentUser,projectCache,cardsCache){
+  app.controller('CardsController',['CardRepository','TimeLoggerRepository','$routeParams','CurrentUser','ProjectCache','CardsCache', function(cardRepository,timeLoggerRepository,$routeParams, currentUser,projectCache,cardsCache){
 
     var controller = this;
     var projectId = $routeParams.projectId;
@@ -38,6 +38,10 @@
       controller.cards = cards;
     });
 
+    this.saveTimeLogger = function(){
+
+    };
+    
     this.logOut = function(){ // function to "log out" the user, clear all the local storage
       localStorage.clear();
       location.reload();
