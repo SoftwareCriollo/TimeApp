@@ -42,14 +42,13 @@
 
     ```javascript
       window.TimeApp = window.TimeApp || {};
-      var TimeApp = window.TimeApp;
-      var myObject = TimeApp.myObject = {};
-      myObject = function(attributes){
+      var myObject = function(attributes){
         attributes ||= {};
         this.myAttribute = attributes.myAttribute; //Initializacion
 
         this.myFunction = function(){};
       }
+      window.TimeApp.myObject = myObject;
     ```
 
 ## Dependencies
