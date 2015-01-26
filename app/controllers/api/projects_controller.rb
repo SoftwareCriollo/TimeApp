@@ -1,8 +1,6 @@
 class Api::ProjectsController < ApiAuthenticatedController
 #  before_action :project_manager
 
- # include ProjectManagerConcern
-
   def index
     boards = project_manager.boards_serialized
     render json: boards

@@ -26,7 +26,7 @@ class Iteration
   end
 
   def time_wordked
-    total_time =  timelogs.inject(0.0){|total,timelog| total += timelog.time_for_iteration }
+    total_time = timelogs.inject(0.0){|total,timelog| total += timelog.time_for_iteration }
     total_time.round(2)
   end  
 

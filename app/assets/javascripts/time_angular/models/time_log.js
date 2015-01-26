@@ -10,7 +10,7 @@
       return {
         "project_id":this.project_id,
         "project_name":this.project_name,
-        "timelogs": this.time_logs,
+        "timelogs_attributes": this.time_logs,
       };
     };
     this.hasTask = function(){

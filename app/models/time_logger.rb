@@ -14,11 +14,7 @@ class TimeLogger
     @attributes = attributes
     config_params
     config_timelogs
-    if valid?
-      save
-    else
-      puts errors.messages.inspect
-    end
+    valid? ? save : false
   end
 
   def config_params
@@ -33,6 +29,7 @@ class TimeLogger
   def valid?
     validate_timelogs
     super
+    return errors.empty?
   end
 
   private
@@ -41,7 +38,7 @@ class TimeLogger
     time = 0
     timelogs.each do |timelog|
       time += timelog.time 
-      errors.add( :timelogs, timelog.errors.messages) unless timelog.valid?
+      errors.add(:timelogs, timelog.errors.messages) unless timelog.valid?
     end
     validate_timeleft_iteration(time)
   end
@@ -56,6 +53,7 @@ class TimeLogger
   end
 
   def config_timelogs
+    return nil if @attributes[:timelogs_attributes].nil?
     @attributes[:timelogs_attributes].each do |attr_timelog|
       attr_timelog[:project_id] = project_id
       attr_timelog[:project_name] = project_name

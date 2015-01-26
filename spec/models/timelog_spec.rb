@@ -5,7 +5,8 @@ RSpec.describe Timelog, :type => :model do
   before(:each) do
     Iteration.destroy_all
     Timelog.destroy_all
-    stubbing
+    stubbing_project_manager
+    allow_any_instance_of(Timelog).to receive(:user).and_return(user)
   end
 
   let(:user) { create(:user) }

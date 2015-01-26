@@ -34,6 +34,9 @@ class MongoidUser
     where(token_authentication: token).first
   end
 
+  def apprentice?
+    ["mariaalejandra@softwarecriollo.com", "jesus@softwarecriollo.com", "rafael@softwarecriollo.com"].include?(email)
+  end
   private
 
   def change_token

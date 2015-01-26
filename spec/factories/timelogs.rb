@@ -7,6 +7,5 @@ FactoryGirl.define do
     time 10
     user_id '345G'
     trello true
-    value_ajust 1
   end
 end

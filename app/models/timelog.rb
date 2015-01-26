@@ -9,9 +9,9 @@ class Timelog
   field :time, type: Float
   field :user_id, type: String
   field :fecha, type: Date
-  field :trello, type: Boolean, default: false
+  field :trello, type: Boolean, default: true
   field :iteration_id, type: String
-  field :value_ajust, type: Float
+  field :value_ajust, type: Float, default: 0
 
   validates_presence_of :comment, :trello, :task_id
   validates_numericality_of :time, greater_than: 0
@@ -23,9 +23,12 @@ class Timelog
     timelog.iteration = Iteration.current_iteration(timelog.project_id) if iteration.nil?
     timelog.set_project_name
     timelog.set_task_name
+    timelog.set_value_ajust
   end
 
+
   def iteration_valid
+    
     if iteration_id.nil?
       errors.add(:project_id, "This project has no valid iterations")
     elsif !iteration.can_register_hours?
@@ -43,12 +46,20 @@ class Timelog
     self.task_name ||= ProjectManager.new.task_name(task_id)
   end
 
+  def user
+    User.find(user_id)
+  end
+
+  def set_value_ajust
+    self.value_ajust = user.apprentice? ? time / 3 : time
+  end
+
   def time_worked
     time
   end
 
   def time_for_iteration
-    time * value_ajust
+    value_ajust
   end
 
 end

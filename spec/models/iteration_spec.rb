@@ -18,9 +18,18 @@ RSpec.describe Iteration, :type => :model do
     let!(:iteration) { create(:iteration, project_id: "my-project", time: 10 )}
 
     subject{ iteration.remain_time }
-    before{ stubbing }
-    before{ create(:timelog, project_id: "my-project", time: 9) }
 
-    it { is_expected.to eql(6.0) }
+    before{ stubbing_project_manager }
+    before{ create(:timelog, user_id: user.id ,project_id: "my-project", time: 9) }
+
+    context "apprentice" do
+      let(:user) {create(:apprentice) }
+      it { is_expected.to eql(12.0) }   
+    end
+    context "not apprentice" do
+      let(:user) {create(:user) }
+      it { is_expected.to eql(6.0) }   
+
+    end
   end 
 end
