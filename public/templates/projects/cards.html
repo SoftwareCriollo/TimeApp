@@ -33,7 +33,7 @@
       <h1>TIME LOG</h1>
     </div>
     <section class="section-time-log-funtional">
-      <form method="post" name="logTimeForm" novalidate ng-submit="this.saveTimeLogger()">
+      <form method="post" name="logTimeForm" novalidate ng-submit="ctrl.saveTimeLogger()">
         <article ng-repeat="timelog in ctrl.timeLogger.timelogs" class="box-time-log">
           <div class="section-time-log-left section-left-card">
             <div class="card-selected-time-log">
@@ -44,11 +44,11 @@
             <hr class="underline-time-log-v"/>
           </div>
           <div class="form-time-log">
-            <input class="half-size" type='number' min="0.0001" float name="time" placeholder="Hours" ng-model="timelog.time" />
+            <input class="half-size" type='number' min="0.0001" required float name="time" placeholder="Hours" ng-model="timelog.time" />
             <input type="text" name="comment" placeholder="Notes - link to screenshot, screencast" ng-model='timelog.comments'/>
           </div>
         </article>
-        <input type="submit" value="SAVE" class="btn-primary save-time-log" />
+        <input type="submit" value="SAVE" class="btn-primary save-time-log" ng-disabled="!logTimeForm.$valid">
       </form>
     </section>
   </div>

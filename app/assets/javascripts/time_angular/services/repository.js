@@ -14,10 +14,9 @@
     }]);
 
     $provide.factory('TimeLoggerRepository',["Repository",function(repository) {
-      this.route = "/api/timelogger";
-
+      this.route = "/api/timelogs";
       this.create = function(data,success_callback){
-        repository.post(this.route,{"time_logger":data},success_callback);
+        repository.post(this.route,{"timelogger":data},success_callback);
       };
       this.edit = function(object,success_callback){        
         repository.post(this.route,{"timelog":data},success_callback);        

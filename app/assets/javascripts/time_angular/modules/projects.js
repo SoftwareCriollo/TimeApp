@@ -39,7 +39,7 @@
     });
 
     this.saveTimeLogger = function(){
-
+      
     };
     
     this.logOut = function(){ // function to "log out" the user, clear all the local storage
