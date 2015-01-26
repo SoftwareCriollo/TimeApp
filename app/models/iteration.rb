@@ -10,5 +10,27 @@ class Iteration
 
   validates_presence_of :start, :end_date, :time
   validates_numericality_of :time
-  
+
+  has_many :timelogs
+
+  def self.current_iteration(project)
+    Iteration.where(:project_id => project, :start.lte => DateTime.now ).order_by(:start.asc).limit(1).last
+  end
+
+  def can_register_hours?(total = 0)
+    time_wordked + total < time + free_time
+  end
+
+  def remain_time
+    (time + free_time)- time_wordked
+  end
+
+  def time_wordked
+    total_time = timelogs.inject(0.0){|total,timelog| total += timelog.time_for_iteration }
+    total_time.round(2)
+  end  
+
+  def free_time
+    5
+  end
 end

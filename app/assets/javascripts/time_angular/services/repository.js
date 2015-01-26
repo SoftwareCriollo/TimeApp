@@ -13,6 +13,23 @@
       return this;
     }]);
 
+    $provide.factory('TimeLoggerRepository',["Repository",function(repository) {
+      this.route = "/api/timelogs";
+      this.create = function(data,success_callback){
+        repository.post(this.route,{"timelogger":data},success_callback);
+      };
+      this.edit = function(object,success_callback){        
+        repository.post(this.route,{"timelog":data},success_callback);        
+      };
+      this.createRoute= function(){
+        return this.route;
+      };
+      this.patchRoute= function(data){
+        return this.route + "/"+data.timelog_id;
+      };
+      return this;
+    }]);
+
     $provide.factory('CardRepository',["Repository",function(repository) {
       this.route = undefined;
       this.projectId = undefined;
@@ -43,9 +60,21 @@
               error_callback(data,status,headers,config);
           });
       };
-      this.post = function(route,success_callback,error_callback){
+      this.post = function(route,data,success_callback,error_callback){
         error_callback = error_callback || function(){}
-        $http.post(route, {"headers":this.setHeaders()})
+        $http.post(route,data, {"headers":this.setHeaders()})
+          .success(success_callback)
+          .error(function(data, status, headers, config) {
+            if(status == 401)
+              closeSession();
+            else if (status == 422)
+              error_callback(data,status,headers,config);
+
+          });
+      };
+      this.patch = function(route,data,success_callback,error_callback){
+        error_callback = error_callback || function(){}
+        $http.patch(route,data,{"headers":this.setHeaders()})
           .success(success_callback)
           .error(function(data, status, headers, config) {
             if(status == 401)

@@ -1,4 +1,8 @@
 RSpec.shared_examples "resource" do |klass|
+  let(:user) { create(:user)}
+  before { stubbing_project_manager }
+  before { allow_any_instance_of(ApiAuthenticatedController).to receive(:restrict_access).and_return(true)}
+  before { allow_any_instance_of(ApiAuthenticatedController).to receive(:current_user).and_return(user)}
   describe "sucessfully" do
     describe "response" do
       before{ valid_request }

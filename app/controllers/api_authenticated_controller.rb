@@ -1,5 +1,5 @@
 class ApiAuthenticatedController < ActionController::API
-  before_filter :restrict_access
+  before_action :restrict_access
 
   def current_user
     @current_user
@@ -7,7 +7,6 @@ class ApiAuthenticatedController < ActionController::API
 
   private
     def restrict_access
-      puts request.headers.inspect
       token = request.headers["HTTP_TOKEN"]
       @current_user = User.find_by_access_token(token)
       head :unauthorized unless @current_user

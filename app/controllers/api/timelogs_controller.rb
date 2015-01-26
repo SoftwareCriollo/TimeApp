@@ -1,21 +1,20 @@
-class Api::TimelogsController <  ApiController
+class Api::TimelogsController <  ApiAuthenticatedController
 
   def create
-    @timelog = Timelog.new(timelog_params)
-
-    if  @timelog.save
-      render json: @timelog, status: 201, notice: "Successfully created Timelog"
+    @timelogs = TimeLogger.new(current_user)
+    if @timelogs.create(timelog_params)
+      render json: @timelogs, status: 201, notice: "Successfully created Timelog"
     else
-      render json: @timelog, status: 422
+      render json: @timelogs.errors.messages, status: 422
     end
   end
 
   def timelog_params
-    params.require(:timelog).permit(:project_id, :project_name, :task_id, :comment, :time, :user_id, :fecha, :trello, :iteration_id, :value_ajust, array_timelog: timelog_attributes)
+    params.require(:timelogger).permit(:project_id, :project_name, timelogs_attributes: timelog_attributes)
   end
 
   def timelog_attributes
-    [:project_id, :project_name, :task_id, :comment, :time, :user_id, :fecha, :trello, :iteration_id, :value_ajust]
+    [:task_id,:task_name, :comment, :time]
   end
 
 end

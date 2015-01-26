@@ -34,13 +34,15 @@ class MongoidUser
     where(token_authentication: token).first
   end
 
+  def apprentice?
+    ["mariaalejandra@softwarecriollo.com", "jesus@softwarecriollo.com", "rafael@softwarecriollo.com"].include?(email)
+  end
   private
 
   def change_token
     if sign_in_count_changed?
       begin
         self.token_authentication = generate_token
-        puts " ----> #{self.class.where(token_authentication: token_authentication).count > 0}"
       end while self.class.where(token_authentication: token_authentication).count > 0     
     else
       false

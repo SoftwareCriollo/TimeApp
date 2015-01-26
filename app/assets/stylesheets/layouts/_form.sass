@@ -4,23 +4,38 @@ form
   display: inline-block
   width: 100%
 
-.field-form
-  border-bottom: $border-width-primary solid $color-titles
-  height: 37px
-  input,select, textarea
-    color: $color-placeholder-primary
-    width: 100%
-    background: none
-    border: none
-    font-size: $font-size-primary
-    height: 2.5em
-    font-family: $font-family-primary
-    &focus
-      outline:none
 
-input[type='text'], input[type='email'], input[type='password'],input[type='search'], input[type='tel'], input[type='url']
+input,select, textarea
+  border: none
+  border-bottom: $border-width-primary solid $color-titles
+  color: $color-placeholder-primary
+  background: none
+  font-size: $font-size-primary
+  height: 2.5em
+  line-height: 2.5em
+  font-family: $font-family-primary
+  margin-bottom: 0.5em
+  &:focus
+    outline:none
+  &.ng-invalid
+    color: $color-font-error
+    &:focus
+      box-shadow: 0px 0px 0px $color-font-error
+      -webkit-box-shadow: 0px 0px 0px $color-font-error
+      -moz-box-shadow: 0px 0px 0px $color-font-error
+
+input[type='search']
+  background: url(/images/magnifying-glass.png) left center no-repeat
+  background-size: 15px
+  padding-left: 20px
+  
+input[type='text'], input[type='email'], input[type='password'],input[type='search'], input[type='tel'], input[type='url'],input[type='number']
   position: relative
   display: block
+  width: 100%
+  &.half-size
+    width: 50%
+
   @include box-shadow()
   &:focus
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0)
@@ -28,11 +43,6 @@ input[type='text'], input[type='email'], input[type='password'],input[type='sear
     -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0)
 
 [placeholder]
-  &::-webkit-input-placeholder
+  &::-webkit-input-placeholder,&:-moz-placeholder,&::-moz-placeholder,&:-ms-input-placeholder  
     color: $color-placeholder-primary
-  &:-moz-placeholder
-    color: $color-placeholder-primary
-  &::-moz-placeholder
-    color: $color-placeholder-primary
-  &:-ms-input-placeholder
-    color: $color-placeholder-primary
+    font-style: italic

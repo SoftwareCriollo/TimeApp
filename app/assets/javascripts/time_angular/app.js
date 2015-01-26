@@ -42,7 +42,7 @@
       .when('/projects/:projectId/cards', {
         templateUrl: "templates/projects/cards.html",
         controller: 'CardsController',
-        controllerAs: 'controller'
+        controllerAs: 'ctrl'
       })
       .when('/clients/:projectId/client', {
         templateUrl: "templates/clients/client.html",

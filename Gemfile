@@ -30,6 +30,7 @@ end
 group :test do
   gem 'rspec-rails'
   gem 'rspec-autotest'
+  gem 'autotest-rails'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'poltergeist'
