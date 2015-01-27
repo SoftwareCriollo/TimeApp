@@ -7,29 +7,29 @@
 <section class="container-new-iteration">
   <div class="subtitle-left">ADD NEW ITERATION</div>
   <div class="box-new-iteration">
-    <form class="formIterations">
+    <form class="formIterations" ng-submit="controller.SaveIteration()">
       <div class="field-form field-iterations float-left">
-        <input type="text" name="hours" value="" placeholder="Amount of hours"/>
+        <input type="text" name="hours" value="" ng-model="controller.iteration.time" placeholder="Amount of hours"/>
       </div>
       <div class="field-form field-iterations float-left margin-right">
-        <input type="text" name="start_date" value="" placeholder="Start date"/>
+        <input type="text" name="start_date" value="" ng-model="controller.iteration.start" placeholder="Start date"/>
       </div>
       <div class="field-form field-iterations float-left">
-        <input type="text" name="invoce" value="" placeholder="Invoce #"/>
+        <input type="text" name="invoce" value="" ng-model="controller.iteration.invoice" placeholder="Invoce #"/>
       </div>
       <div class="field-button-iterations">
-        <input type="submit" value="SAVE" class="btn-primary" />
+        <input type="submit" value="SAVE" name="commit" class="btn-primary" />
       </div>
   </form>
   </div>
 </section>
 <hr class="underline-division">
 <section class="show-iterations">
-  <article ng-repeat="n in [1,2,3,4,5,6,7,8,9,10]" class="iteration">
+  <article ng-repeat="iteration in controller.iterations" class="iteration">
     <img class="image-icon-iteration float-left" src="images/calendar.png"/>
-    <div class="range-iteration float-left">December 4th - Current</div>
-    <div class="inv-iteration float-left">Inv#787</div>
-    <div class="hours-iteration float-right">67.7/70 hours</div>
+    <div class="range-iteration float-left">{{iteration.date_start}}</div>
+    <div class="inv-iteration float-left">Inv#{{iteration.invoice}}</div>
+    <div class="hours-iteration float-right">{{iteration.hours}}</div>
     <div class="number-iteration float-left">10</div>
     <img class="arrow-iteration float-right" src="images/arrow-green.png"/>
     <a class="link-show-iteration float-right" href="#/iterations/entries/{{controller.project.id}}">VIEW TIME ENTRIES</a>

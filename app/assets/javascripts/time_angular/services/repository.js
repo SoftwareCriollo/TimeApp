@@ -30,6 +30,36 @@
       return this;
     }]);
 
+    $provide.factory('IterationsRepository',["Repository",function(repository) {
+      this.route = undefined;
+      this.projectId = undefined;
+
+      this.setProjectId = function(projectId){
+        this.projectId = projectId;
+        this.route = '/api/iterations/' + projectId;
+      };
+
+      this.get = function(success_callback){
+        repository.get(this.route,success_callback);
+      };
+
+      this.post = function(route,success_callback,error_callback){
+        error_callback = error_callback || function(){}
+        $http.post(route, {"iteration":this.iteration()})
+          .success(success_callback)
+          .error(function(data, status, iteration, config) {
+            if(status == 401)
+              closeSession();
+            else if (status == 422)
+              error_callback(data,status,iteration,config);
+
+          });
+      };
+        console.log(this);
+        return this;
+
+    }]);
+
     $provide.factory('CardRepository',["Repository",function(repository) {
       this.route = undefined;
       this.projectId = undefined;

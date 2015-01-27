@@ -10,7 +10,7 @@ class Api::IterationsController <  ApiController
   end
 
   def iteration_params
-    params.require(:iteration).permit(:project_id, :time, :note, :start, :end_date)
+    params.require(:iteration).permit(:project_id, :time, :note, :start, :end_date, :invoice)
   end
 
 end

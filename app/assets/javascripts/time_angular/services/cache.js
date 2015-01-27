@@ -25,6 +25,18 @@
       return this;
     }]);
 
+    $provide.factory('IterationsCache',[function() {
+      this.loadIterations = function(project_id){
+        return loadJsonCache(project_id+'_iterarions') || [];
+      };
+
+      this.saveIterations = function(project_id, new_iterations){
+        saveJsonCache(project_id+'_iterations',new_iterations);
+      };
+
+      return this;
+    }]);
+
     $provide.factory('CardsCache',[function() {
       this.loadCards = function(project_id){
         return loadJsonCache(project_id+'_cards') || [];

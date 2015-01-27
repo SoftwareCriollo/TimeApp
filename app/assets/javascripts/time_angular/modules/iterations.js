@@ -1,32 +1,24 @@
 'use strict';
 (function(){
-  var app = angular.module('timeFrontendApp-iterations',['CacheStore'])
+  var app = angular.module('timeFrontendApp-iterations',['CacheStore','Repository'])
 
   app.controller('IterationsController',['$http','$routeParams','CurrentUser','ProjectCache', function($http,$routeParams, currentUser,projectCache){
 
-    currentUser.isPendingAuth();
-
     var controller = this;
     var projectId = $routeParams.projectId;
+    currentUser.isPendingAuth();
 
     this.project = projectCache.findProject(projectId);
+    iterationsRepository.setProjectId(projectId);
 
-    this.editTimeEntry = function(entry){
-
-      if(this.lastEntry){
-        $('.card-iterarion-' + this.lastEntry).removeClass("selected"); //add class selected to card by entry (entry's the id), necessary to build the id
-        $('.entry-time-' + this.lastEntry).addClass("hide");
-        $('.edit-entry-' + this.lastEntry).removeClass("hide");
-        $('.entry-time-iterations-' + this.lastEntry).removeClass("margin-show-entry-edit");
-      }
-
-      $('.card-iterarion-' + entry).addClass("selected"); //add class selected to card by entry (entry's the id), necessary to build the id
-      $('.entry-time-' + entry).removeClass("hide");
-      $('.edit-entry-' + entry).addClass("hide");
-      $('.entry-time-iterations-' + entry).addClass("margin-show-entry-edit");
-
-
-      this.lastEntry = entry;
+    this.iterations = iterationsCache.iterations;
+    iterationsRepository.get(function(iterations, status, headers, config){
+      iterationsCache.saveIterations(iterations);
+      console.log("iterations: "+iterations);
+      controller.iterations = iterations;
+    });
+ 
+    this.SaveIteration = function(){
     };
 
   }]);
