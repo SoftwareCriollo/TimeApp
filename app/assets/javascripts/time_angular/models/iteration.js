@@ -9,9 +9,6 @@
     this.end_date = attributes.end_date;
     this.invoice = attributes.invoice;
     
-    this.toJson = function(){
-      return attributes.toJson();
-    };
   };
   window.TimeApp.Iteration = Iteration;
 })();

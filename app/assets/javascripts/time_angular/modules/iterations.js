@@ -2,7 +2,8 @@
 (function(){
   var app = angular.module('timeFrontendApp-iterations',['CacheStore','Repository'])
 
-  app.controller('IterationsController',['$http','$routeParams','CurrentUser','ProjectCache', function($http,$routeParams, currentUser,projectCache){
+  app.controller('IterationsController',['IterationsRepository','$http','$routeParams','CurrentUser','ProjectCache','IterationsCache', function(iterationsRepository,$http,$routeParams, currentUser,projectCache,iterationsCache){
+    currentUser.isPendingAuth();
 
     var controller = this;
     var projectId = $routeParams.projectId;
@@ -13,12 +14,12 @@
 
     this.iterations = iterationsCache.iterations;
     iterationsRepository.get(function(iterations, status, headers, config){
-      iterationsCache.saveIterations(iterations);
       console.log("iterations: "+iterations);
       controller.iterations = iterations;
     });
  
     this.SaveIteration = function(){
+        iterationsRepository.saveIterations(this.iteration);
     };
 
   }]);

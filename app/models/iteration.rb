@@ -6,7 +6,7 @@ class Iteration
   field :note, type: String
   field :start, type: Date, default: DateTime.now
   field :end_date, type: Date, default: DateTime.now
-  field :invoice, type Integer
+  field :invoice, type: Integer
 
   validates_presence_of :start, :end_date, :time
   validates_numericality_of :time
