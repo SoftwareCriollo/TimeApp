@@ -25,8 +25,21 @@ RSpec.describe TimeLogger, :type => :model do
 
     describe "iteration" do
       describe "existing" do
-        let!(:iteration){ create(:iteration, project_id:"is-an-id",start: DateTime.now - 1.day)}      
+        let(:time){ 30 }
+        let!(:iteration){ create(:iteration, time: time, project_id:"is-an-id",start: DateTime.now - 1.day)}      
         it{ expect{ time_logger.create(attributes) }.to change{Timelog.count}.by(2) }
+        
+        describe "Record more hours than are available" do
+          let(:time){ 1 }
+          it{ expect{ time_logger.create(attributes) }.to change{Timelog.count}.by(2) }          
+        end
+
+        describe "No record because no times available" do
+          let(:time){ 1 }
+          before {time_logger.create(attributes)}
+          it{ expect{ time_logger.create(attributes) }.to change{Timelog.count}.by(0) }             
+        end
+
       end
       describe "not existing" do
         it{ expect{ time_logger.create(attributes) }.to change{Timelog.count}.by(0) }
@@ -34,3 +47,4 @@ RSpec.describe TimeLogger, :type => :model do
     end
   end
 end
+
