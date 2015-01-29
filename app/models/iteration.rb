@@ -8,7 +8,7 @@ class Iteration
   field :end_date, type: Date
   field :invoice, type: Integer
 
-  validates_presence_of :start, :end_date, :time
+  validates_presence_of :start, :time
   validates_numericality_of :time
 
   has_many :timelogs

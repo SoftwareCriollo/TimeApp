@@ -44,8 +44,6 @@
           console.error("You must set projectId");
         else
           repository.get(this.route,success_callback);
-
-        console.log("iterations done");
       };
 
       this.saveIterations = function(iteration,success_callback,error_callback){
@@ -62,8 +60,8 @@
 
           });
       };
-        return this;
-
+      
+      return this;
     }]);
 
     $provide.factory('CardRepository',["Repository",function(repository) {
