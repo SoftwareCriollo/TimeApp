@@ -8,7 +8,7 @@ Rails.application.routes.draw do
         get :cards
       end
     end
-    resources :iterations, only: [:create]
+    resources :iterations
     resources :timelogs, only: [:create]
   end
   

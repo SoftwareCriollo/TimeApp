@@ -9,17 +9,18 @@
     var projectId = $routeParams.projectId;
     currentUser.isPendingAuth();
 
-    this.project = projectCache.findProject(projectId);
     iterationsRepository.setProjectId(projectId);
 
     this.iterations = iterationsCache.iterations;
     iterationsRepository.get(function(iterations, status, headers, config){
+      iterationsCache.saveIterations(projectId,iterations);
       console.log("iterations: "+iterations);
       controller.iterations = iterations;
     });
  
     this.SaveIteration = function(){
-        iterationsRepository.saveIterations(this.iteration);
+      this.iteration.project_id = projectId; 
+      iterationsRepository.saveIterations(this.iteration);
     };
 
   }]);

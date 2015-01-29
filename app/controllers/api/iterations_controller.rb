@@ -10,6 +10,15 @@ class Api::IterationsController <  ApiController
   end
 
   def show
+    @iteration = Iteration.new()
+    if @iteration.show_iterations(params[:project_id])
+      render json: iterations
+    else
+      render json: @iteration.errors.messages, status: :unprocessable_entity
+    end
+  end
+
+  def index
   end
 
   def iteration_params

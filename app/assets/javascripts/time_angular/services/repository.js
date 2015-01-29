@@ -36,11 +36,16 @@
 
       this.setProjectId = function(projectId){
         this.projectId = projectId;
-        this.route = '/api/iterations/' + projectId;
+        this.route = '/api/iterations';
       };
 
       this.get = function(success_callback){
-        repository.get(this.route,success_callback);
+        if( this.projectId === undefined)
+          console.error("You must set projectId");
+        else
+          repository.get(this.route,success_callback);
+
+        console.log("iterations done");
       };
 
       this.saveIterations = function(iteration,success_callback,error_callback){
@@ -57,7 +62,6 @@
 
           });
       };
-        console.log(this);
         return this;
 
     }]);
