@@ -46,12 +46,6 @@
         saveJsonCache(project_id+'_cards',new_cards);
       };
 
-      //Timelogger
-
-      this.saveTimeLogger = function(project_id, new_timeloggers){
-        saveJsonCache(project_id+'_timeloggers',new_timeloggers);
-      };
-
       return this;
     }]);
 

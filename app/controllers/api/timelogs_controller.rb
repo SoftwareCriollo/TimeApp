@@ -11,8 +11,6 @@ class Api::TimelogsController <  ApiAuthenticatedController
 
   
   def timelog_params
-  
-  puts params.inspect
     params.require(:timelogger).permit(:project_id, :project_name, timelogs_attributes: timelog_attributes)
   end
 
