@@ -20,7 +20,10 @@
  
     this.SaveIteration = function(){
       this.iteration.project_id = projectId; 
-      iterationsRepository.saveIterations(this.iteration);
+      
+      iterationsRepository.saveIterations(this.iteration,function(data){ 
+
+      });
     };
 
   }]);
