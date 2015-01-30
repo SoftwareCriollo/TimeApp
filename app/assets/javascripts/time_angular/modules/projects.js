@@ -33,13 +33,21 @@
     this.cards = cardsCache.loadCards(projectId);
 
     cardRepository.setProjectId(projectId);
+
+
     cardRepository.get(function(cards, status, headers, config){
       cardsCache.saveCards(projectId,cards);
       controller.cards = cards;
     });
 
+
+    //Timelogger
+
     this.saveTimeLogger = function(){
-      
+
+      this.timeLogger.project_id = projectId;
+      this.timeLogger.project_name = this.project.name;
+      timeLoggerRepository.saveTimeLogger(this.timeLogger.toJson());  
     };
     
     this.logOut = function(){ // function to "log out" the user, clear all the local storage

@@ -27,6 +27,12 @@
       this.patchRoute= function(data){
         return this.route + "/"+data.timelog_id;
       };
+
+      //Timelogger
+      this.saveTimeLogger = function(timelogger,success_callback){
+        repository.post('/api/timelogs/', {"timelogger":timelogger}, success_callback);
+      };
+
       return this;
     }]);
 
