@@ -30,7 +30,7 @@
       return this;
     }]);
 
-    $provide.factory('IterationsRepository',["$http","Repository",function($http,repository) {
+    $provide.factory('IterationsRepository',["Repository",function(repository) {
       this.route = undefined;
       this.projectId = undefined;
 
@@ -46,19 +46,8 @@
           repository.get(this.route,success_callback);
       };
 
-      this.saveIterations = function(iteration,success_callback,error_callback){
-
-        error_callback = error_callback || function(){}
-        
-        $http.post('/api/iterations/', {"iteration":iteration})
-          .success(function(success_callback) {
-            console.log("iteration created");
-          })
-          .error(function(data, status, iteration, config) {
-            if(status == 422)
-              error_callback(data,status,iteration,config);
-
-          });
+      this.saveIterations = function(iteration,success_callback){
+        repository.post('/api/iterations/', {"iteration":iteration}, success_callback);
       };
       
       return this;

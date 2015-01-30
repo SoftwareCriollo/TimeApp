@@ -2,7 +2,7 @@
 (function(){
   var app = angular.module('timeFrontendApp-iterations',['CacheStore','Repository'])
 
-  app.controller('IterationsController',['IterationsRepository','$http','$routeParams','CurrentUser','ProjectCache','IterationsCache', function(iterationsRepository,$http,$routeParams, currentUser,projectCache,iterationsCache){
+  app.controller('IterationsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache','IterationsCache', function(iterationsRepository,$routeParams, currentUser,projectCache,iterationsCache){
     currentUser.isPendingAuth();
 
     var controller = this;

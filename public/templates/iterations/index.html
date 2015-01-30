@@ -9,12 +9,10 @@
   <div class="box-new-iteration">
     <form class="formIterations" ng-submit="controller.SaveIteration()">
       <div class="field-form field-iterations float-left">
-        <input type="text" name="hours" ng-model="controller.iteration.time" placeholder="Amount of hours"/>
+        <input type="text" name="hours" ng-model="controller.iteration.time" placeholder="Amount of hours" required/>
       </div>
       <div class="field-form field-iterations float-left margin-right">
-        <input type="text" name="start_date" ng-model="controller.iteration.start" placeholder="Start date" ng-pattern="/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(199\d|[2-9]\d{3})$/"/>
-        <span ng-show='formIterations.start_date.$error.pattern'>Your date format is invalid, please chek it again</span>
-        <span ng-show='formIterations.start_date.$pristine'>Enter a valid date here : DD/MM/YYYY</span>
+        <input type="text" name="start_date" ng-model="controller.iteration.start" placeholder="Start date" ng-pattern="/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(199\d|[2-9]\d{3})$/"/ required valid-date>
       </div>
       <div class="field-form field-iterations float-left">
         <input type="text" name="invoce" ng-model="controller.iteration.invoice" placeholder="Invoce #"/>
