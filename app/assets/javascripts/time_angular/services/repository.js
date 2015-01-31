@@ -31,8 +31,6 @@
     }]);
 
     $provide.factory('IterationsRepository',["Repository",function(repository) {
-      this.route = undefined;
-      this.projectId = undefined;
 
       this.setProjectId = function(projectId){
         this.projectId = projectId;
@@ -40,15 +38,11 @@
       };
 
       this.get = function(success_callback){
-        if( this.projectId === undefined)
-          console.error("You must set projectId");
-        else
           repository.get(this.route,success_callback);
       };
 
-      this.saveIterations = function(iteration,success_callback){
-        repository.post('/api/iterations/', {"iteration":iteration}, success_callback);
-        
+      this.saveIterations = function(iteration,success_callback,error_callback){
+        repository.post('/api/iterations/', {"iteration":iteration}, success_callback, error_callback);
       };
       
       return this;

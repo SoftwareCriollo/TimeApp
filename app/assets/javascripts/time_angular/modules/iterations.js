@@ -4,10 +4,8 @@
 
   app.controller('IterationsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache','IterationsCache', function(iterationsRepository,$routeParams, currentUser,projectCache,iterationsCache){
     currentUser.isPendingAuth();
-
     var controller = this;
     var projectId = $routeParams.projectId;
-    currentUser.isPendingAuth();
 
     iterationsRepository.setProjectId(projectId);
 
@@ -21,19 +19,18 @@
     this.SaveIteration = function(){
       this.iteration.project_id = projectId; 
       
-      iterationsRepository.saveIterations(this.iteration,function(data){ 
+      iterationsRepository.saveIterations(this.iteration, this.success_callback = function() {
+        alert('The iteration was registrated successfully.');
 
-
-
-
+      },
+      this.error_callback = function() {
+      
       });
-
-      this.clearForm = function() {
-        this.iteration.hours='';
-        this.iteration.start='';
-        this.iteration.invoice='';
-      }
     };
+
+    this.clearForm = function(){
+      this.iteration = new TimeApp.iteration( {project_id: project_id}); 
+    }
 
   }]);
 
