@@ -8,6 +8,7 @@
 //= require angular-sanitize/angular-sanitize
 
 //= require_tree ./time_angular/models
+//= require ./time_angular/directives/navigator
 //= require ./time_angular/modules/authentication
 //= require ./time_angular/modules/projects
 //= require ./time_angular/modules/iterations
