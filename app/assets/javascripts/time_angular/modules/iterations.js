@@ -23,7 +23,16 @@
       
       iterationsRepository.saveIterations(this.iteration,function(data){ 
 
+
+
+
       });
+
+      this.clearForm = function() {
+        this.iteration.hours='';
+        this.iteration.start='';
+        this.iteration.invoice='';
+      }
     };
 
   }]);

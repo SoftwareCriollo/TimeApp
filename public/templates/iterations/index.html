@@ -13,7 +13,7 @@
         <span ng-show="formIterations.hours.$error.required  && formIterations.hours.$dirty">The amount of hours is required.</span>
       </div>
       <div class="field-form field-iterations float-left margin-right">
-        <input type="text" name="start_date" ng-model="controller.iteration.start" placeholder="Start date" ng-pattern="/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(199\d|[2-9]\d{3})$/"/ required date-field>
+        <input type="text" name="start_date" ng-model="controller.iteration.start" placeholder="Start date" ng-pattern="/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(199\d|[2-9]\d{3})$/" required date-field />
         <span ng-show='formIterations.start_date.$invalid && formIterations.start_date.$dirty'>Your date format is invalid, enter a valid date here : DD/MM/YYYY, please chek it again.</span>
         <div style="clear:both;"></div>
         <span ng-show="formIterations.start_date.$error.required  && formIterations.start_date.$dirty">The start date is required.</span>
@@ -22,7 +22,7 @@
         <input type="text" name="invoce" ng-model="controller.iteration.invoice" placeholder="Invoce #"/>
       </div>
       <div class="field-button-iterations">
-        <input type="submit" value="SAVE" name="commit" class="btn-primary" ng-class="{ disabled: formIterations.$invalid}"/>
+        <input type="submit" value="SAVE" name="commit" class="btn-primary" ng-class="{ disabled: formIterations.$invalid }" ng-disabled="formIterations.$invalid"/>
       </div>
   </form>
   </div>
