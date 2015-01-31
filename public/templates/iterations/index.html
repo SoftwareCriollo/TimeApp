@@ -22,7 +22,10 @@
         <input type="text" name="invoce" ng-model="controller.iteration.invoice" placeholder="Invoce #"/>
       </div>
       <div class="field-button-iterations">
-        <input type="submit" value="SAVE" name="commit" class="btn-primary" ng-class="{ disabled: formIterations.$invalid }" ng-disabled="formIterations.$invalid"/>
+        <input type="submit" value="SAVE" name="commit" class="btn-primary" ng-class="{ disabled: formIterations.$invalid }" ng-disabled="formIterations.$invalid" />
+        <div style="clear:both;"></div>
+        <span class="ng-valid" ng-show="controller.success">The iteration was registrated successfully.</span>
+        <span class="ng-invalid ng-dirty" ng-show="controller.error">An error has occurred when the operation was in progress.</span>
       </div>
   </form>
   </div>

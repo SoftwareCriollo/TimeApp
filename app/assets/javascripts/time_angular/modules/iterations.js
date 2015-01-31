@@ -18,18 +18,19 @@
  
     this.SaveIteration = function(){
       this.iteration.project_id = projectId; 
-      
       iterationsRepository.saveIterations(this.iteration, this.success_callback = function() {
-        alert('The iteration was registrated successfully.');
-
+        controller.success=true;
+        controller.clearForm();
       },
       this.error_callback = function() {
-      
+        controller.error=true;      
       });
     };
 
     this.clearForm = function(){
-      this.iteration = new TimeApp.iteration( {project_id: project_id}); 
+      this.iteration.time='';
+      this.iteration.start='';
+      this.iteration.invoice='';
     }
 
   }]);
