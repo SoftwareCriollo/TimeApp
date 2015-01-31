@@ -32,6 +32,7 @@ class TimeLogger
     return errors.empty?
   end
 
+
   private
 
   def validate_timelogs
@@ -43,11 +44,11 @@ class TimeLogger
     validate_timeleft_iteration(time)
   end
 
-  def validate_timeleft_iteration(total)
+  def validate_timeleft_iteration
     iteration = Iteration.current_iteration(project_id)
     if iteration.nil?
       errors.add(:project_id, "We don't have a valid iteration")      
-    elsif iteration.can_register_hours?(total)
+    elsif iteration.can_register_hours?
       errors.add(:project_id, "Can't log #{total} hours. Remain time: #{iteration.remain_time}")
     end
   end
