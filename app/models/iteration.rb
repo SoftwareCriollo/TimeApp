@@ -13,9 +13,7 @@ class Iteration
 
   has_many :timelogs
 
-  def show_iterations(project)
-    Iteration.where(:project_id => project)
-  end
+  scope :by_project, ->(project_id) { where(:project_id => project_id) }
 
   def self.current_iteration(project)
     Iteration.where(:project_id => project, :start.lte => DateTime.now ).order_by(:start.asc).limit(1).last

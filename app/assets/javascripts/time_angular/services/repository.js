@@ -31,15 +31,16 @@
     }]);
 
     $provide.factory('IterationsRepository',["Repository",function(repository) {
+      this.route_shallow = '/api/iterations';
       this.route = undefined;
       this.projectId = undefined;
 
       this.setProjectId = function(projectId){
         this.projectId = projectId;
-        this.route = '/api/iterations';
+        this.route = '/api/projects/'+projectId+'/iterations';
       };
 
-      this.get = function(success_callback){
+      this.index = function(success_callback){
         if( this.projectId === undefined)
           console.error("You must set projectId");
         else

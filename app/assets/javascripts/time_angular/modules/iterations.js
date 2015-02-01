@@ -5,20 +5,22 @@
   app.controller('IterationsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache','IterationsCache', function(iterationsRepository,$routeParams, currentUser,projectCache,iterationsCache){
     currentUser.isPendingAuth();
     var controller = this;
-    var projectId = $routeParams.projectId;
+    console.log( $routeParams.projectId);
+    this.projectId = $routeParams.projectId;
 
-    iterationsRepository.setProjectId(projectId);
+    iterationsRepository.setProjectId(this.projectId);
 
     this.iterations = iterationsCache.iterations;
-    iterationsRepository.get(function(iterations, status, headers, config){
-      iterationsCache.saveIterations(projectId,iterations);
+
+    iterationsRepository.index(function(iterations, status, headers, config){
+      iterationsCache.saveIterations(controller.projectId,iterations);
       console.log("iterations: "+iterations);
       controller.iterations = iterations;
     });
  
     this.SaveIteration = function(){
-      this.iteration.project_id = projectId; 
-      iterationsRepository.saveIterations(this.iteration, this.success_callback = function() {
+      this.iteration.project_id = controller.projectId; 
+      iterationsRepository.saveIterations(controller.iteration, function() {
         controller.success=true;
         controller.clearForm();
       },
@@ -28,9 +30,7 @@
     };
 
     this.clearForm = function(){
-      this.iteration.time='';
-      this.iteration.start='';
-      this.iteration.invoice='';
+      location.refresh();
     }
 
   }]);

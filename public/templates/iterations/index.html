@@ -15,9 +15,9 @@
       </div>
       <div class="field-form field-iterations float-left margin-right">
         <input type="text" name="start_date" ng-model="controller.iteration.start" placeholder="Start date" ng-pattern="/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(199\d|[2-9]\d{3})$/" required date-field />
-        <span ng-show='formIterations.start_date.$invalid && formIterations.start_date.$dirty'>Your date format is invalid, enter a valid date here : DD/MM/YYYY, please chek it again.</span>
-        <div style="clear:both;"></div>
-        <span ng-show="formIterations.start_date.$error.required  && formIterations.start_date.$dirty">The start date is required.</span>
+        <p ng-show='formIterations.start_date.$invalid && formIterations.start_date.$dirty'>
+         Enter a valid date here : DD/MM/YYYY.</p>
+        <p ng-show="formIterations.start_date.$error.required  && formIterations.start_date.$dirty">The start date is required.</p>
       </div>
       <div class="field-form field-iterations float-left">
         <input type="text" name="invoce" ng-model="controller.iteration.invoice" placeholder="Invoce #"/>
@@ -35,9 +35,9 @@
 <section class="show-iterations">
   <article ng-repeat="iteration in controller.iterations" class="iteration">
     <img class="image-icon-iteration float-left" src="images/calendar.png"/>
-    <div class="range-iteration float-left">{{ iteration.date_start }}</div>
+    <div class="range-iteration float-left">{{ iteration.date_start }} - {{ iteration.date_end }}</div>
     <div class="inv-iteration float-left">Inv#{{ iteration.invoice }}</div>
-    <div class="hours-iteration float-right">{{ iteration.hours }}</div>
+    <div class="hours-iteration float-right"> {{iteration.time_worked}}/ {{ iteration.hours }}</div>
     <div class="number-iteration float-left">10</div>
     <img class="arrow-iteration float-right" src="images/arrow-green.png"/>
     <a class="link-show-iteration float-right" href="#/iterations/entries/{{controller.project.id}}">VIEW TIME ENTRIES</a>
