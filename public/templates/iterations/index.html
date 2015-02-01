@@ -1,45 +1,49 @@
 <navigatorproject class='navigator-right' project="ctrl.project" section="'iterations'"></navigatorproject>
 
 <div class="box-title">
-  <h1 class="title"> {{controller.project.name}}</h1>
+  <h1 class="title"> {{ctrl.project.name}}</h1>
   <hr class="underline" />
 </div>
 
 <section class="container-new-iteration">
   <div class="subtitle-left">ADD NEW ITERATION</div>
   <div class="box-new-iteration">
-    <form class="formIterations" name="formIterations" ng-submit="controller.SaveIteration()">
+    <form class="formIterations" name="formIterations" ng-submit="ctrl.SaveIteration()">
       <div class="field-form field-iterations float-left">
-        <input type="number" name="hours" ng-model="controller.iteration.time" placeholder="Amount of hours" min="0" required/>
+        <input type="number" name="hours" ng-model="ctrl.iteration.time" placeholder="Amount of hours" min="0" required/>
         <span ng-show="formIterations.hours.$error.required  && formIterations.hours.$dirty">The amount of hours is required.</span>
       </div>
       <div class="field-form field-iterations float-left margin-right">
-        <input type="text" name="start_date" ng-model="controller.iteration.start" placeholder="Start date" ng-pattern="/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(199\d|[2-9]\d{3})$/" required date-field />
-        <p ng-show='formIterations.start_date.$invalid && formIterations.start_date.$dirty'>
-         Enter a valid date here : DD/MM/YYYY.</p>
+        <input type="date" name="start_date" ng-model="ctrl.iteration.start" placeholder="Start date" required date-field />
         <p ng-show="formIterations.start_date.$error.required  && formIterations.start_date.$dirty">The start date is required.</p>
       </div>
       <div class="field-form field-iterations float-left">
-        <input type="text" name="invoce" ng-model="controller.iteration.invoice" placeholder="Invoce #"/>
+        <input type="text" name="invoce" ng-model="ctrl.iteration.invoice" placeholder="Invoce #"/>
       </div>
       <div class="field-button-iterations">
         <input type="submit" value="SAVE" name="commit" class="btn-primary" ng-class="{ disabled: formIterations.$invalid }" ng-disabled="formIterations.$invalid" />
         <div style="clear:both;"></div>
-        <span class="ng-valid" ng-show="controller.success">The iteration was registrated successfully.</span>
-        <span class="ng-invalid ng-dirty" ng-show="controller.error">An error has occurred when the operation was in progress.</span>
+        <span class="ng-valid" ng-show="ctrl.success">The iteration was registrated successfully.</span>
+        <span class="ng-invalid ng-dirty" ng-show="ctrl.error">An error has occurred when the operation was in progress.</span>
       </div>
   </form>
   </div>
 </section>
 <hr class="underline-division">
 <section class="show-iterations">
-  <article ng-repeat="iteration in controller.iterations" class="iteration">
-    <img class="image-icon-iteration float-left" src="images/calendar.png"/>
-    <div class="range-iteration float-left">{{ iteration.date_start }} - {{ iteration.date_end }}</div>
-    <div class="inv-iteration float-left">Inv#{{ iteration.invoice }}</div>
-    <div class="hours-iteration float-right"> {{iteration.time_worked}}/ {{ iteration.hours }}</div>
-    <div class="number-iteration float-left">10</div>
-    <img class="arrow-iteration float-right" src="images/arrow-green.png"/>
-    <a class="link-show-iteration float-right" href="#/iterations/entries/{{controller.project.id}}">VIEW TIME ENTRIES</a>
+  <article ng-repeat="iteration in ctrl.iterations" class="iteration">
+    <div class='range-date'>
+      <img class="image-icon-iteration" src="images/calendar.png"/>
+      <div class="range-iteration">{{ iteration.date_start }} - {{ iteration.date_end }}</div>
+    </div>
+    <div class="invoice-data">
+      <div class="inv-iteration float-left">Inv#{{ iteration.invoice }}</div>
+      <div class="hours-iteration float-right"> {{iteration.time_worked}}/ {{ iteration.hours }}</div>
+    </div>
+    <div class='invoice-aditiona'>
+    <div class="number-iteration float-left"> {{$index + 1}} </div>
+    <a class="link-show-iteration float-right" href="#/project/{{ctrl.project.id}}/iterations/entries">VIEW TIME ENTRIES</a>
+      
+    </div> 
   </article>
 </section>

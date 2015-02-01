@@ -1,8 +1,7 @@
 class Api::IterationsController <  ApiController
-
   def create
     @iteration= Iteration.new(iteration_params)
-    if  @iteration.save
+    if  @iteration.valid?
       render json: @iteration, status: :created
     else
       render json: @iteration.errors.messages, status: :unprocessable_entity

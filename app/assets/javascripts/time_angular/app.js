@@ -48,7 +48,7 @@
         .when('/projects/:projectId/iterations', {
           templateUrl: 'templates/iterations/index.html',
           controller: 'IterationsController',
-          controllerAs: 'controller'
+          controllerAs: 'ctrl'
         })
         .when('/iterations/:iterationId/', {
           templateUrl: 'templates/iterations/entries.html',

@@ -48,7 +48,7 @@
       };
 
       this.saveIterations = function(iteration,success_callback,error_callback){
-        repository.post('/api/iterations/', {"iteration":iteration}, success_callback, error_callback);
+        repository.post(this.route, {"iteration":iteration}, success_callback, error_callback);
       };
       
       return this;
