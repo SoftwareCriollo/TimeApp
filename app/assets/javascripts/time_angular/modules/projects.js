@@ -56,8 +56,7 @@
     };
     
     this.error = function(data, status, headers, config){
-      console.log(data);
-      controller.errors = data
+      controller.errors = data;
     };
 
     
