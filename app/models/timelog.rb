@@ -15,6 +15,7 @@ class Timelog
 
   validates_presence_of :comment, :trello, :task_id
   validates_numericality_of :time, greater_than: 0
+  validate :iteration_valid
 
   belongs_to :iteration
 
@@ -25,6 +26,20 @@ class Timelog
     timelog.set_project_name
     timelog.set_task_name
     timelog.set_value_ajust
+  end
+
+  after_initialize do |timelog|
+    timelog.fecha ||= Date.today
+  end
+
+  def iteration_valid
+    if iteration_id.nil?
+      errors.add(:project_id, "This project has no valid iterations")
+    elsif iteration.start > fecha
+      errors.add(:project_id, "The iteration is not available")
+    else
+
+    end
   end
 
   def set_project_name
