@@ -52,6 +52,7 @@
 
     this.success = function(data, status, headers, config){
       alert('Created');
+      location.reload();
     };
     
     this.error = function(data, status, headers, config){
