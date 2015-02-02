@@ -48,6 +48,6 @@ class Iteration
   end
 
   def as_json(options = nil)
-    super(options).merge({time_wordked: time_wordked})
+    super(options).merge({time_worked: time_wordked})
   end
 end

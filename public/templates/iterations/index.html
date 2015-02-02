@@ -33,12 +33,11 @@
 <section class="show-iterations">
   <article ng-repeat="iteration in ctrl.iterations" class="iteration">
     <div class='range-date'>
-      <img class="image-icon-iteration" src="images/calendar.png"/>
-      <div class="range-iteration">{{ iteration.date_start }} - {{ iteration.date_end }}</div>
+      <div class="range-iteration">{{ iteration.start }} - {{ iteration.date_end || "Current"}}</div>
     </div>
     <div class="invoice-data">
       <div class="inv-iteration float-left">Inv#{{ iteration.invoice }}</div>
-      <div class="hours-iteration float-right"> {{iteration.time_worked}}/ {{ iteration.hours }}</div>
+      <div class="hours-iteration float-right"> {{iteration.time_worked}}/ {{ iteration.time }}</div>
     </div>
     <div class='invoice-aditiona'>
     <div class="number-iteration float-left"> {{$index + 1}} </div>
