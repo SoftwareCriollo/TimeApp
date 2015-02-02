@@ -25,11 +25,12 @@
 
     var controller = this;
     var projectId = $routeParams.projectId;
-    this.timeLogger = new TimeApp.TimeLogger();
 
     currentUser.isPendingAuth();
 
     this.project = projectCache.findProject(projectId);
+
+    this.timeLogger = new TimeApp.TimeLogger({project: this.project});
     this.cards = cardsCache.loadCards(projectId);
 
     cardRepository.setProjectId(projectId);
@@ -44,11 +45,20 @@
     //Timelogger
 
     this.saveTimeLogger = function(){
-
       this.timeLogger.project_id = projectId;
       this.timeLogger.project_name = this.project.name;
-      timeLoggerRepository.saveTimeLogger(this.timeLogger.toJson());  
+      timeLoggerRepository.saveTimeLogger(this.timeLogger.toJson(),this.success,this.error);  
     };
+
+    this.success = function(data, status, headers, config){
+      alert('Created');
+    };
+    
+    this.error = function(data, status, headers, config){
+      console.log(data);
+      controller.errors = data
+    };
+
     
     this.logOut = function(){ // function to "log out" the user, clear all the local storage
       localStorage.clear();

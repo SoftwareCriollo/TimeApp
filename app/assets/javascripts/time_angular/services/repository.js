@@ -29,8 +29,8 @@
       };
 
       //Timelogger
-      this.saveTimeLogger = function(timelogger,success_callback){
-        repository.post('/api/timelogs/', {"timelogger":timelogger}, success_callback);
+      this.saveTimeLogger = function(timelogger,success_callback,error_callback){
+        repository.post('/api/timelogs/', {"timelogger":timelogger}, success_callback,error_callback);
       };
 
       return this;

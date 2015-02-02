@@ -34,6 +34,12 @@
       <h1>TIME LOG</h1>
     </div>
     <section class="section-time-log-funtional">
+      <ul class="errors">
+        <li ng-repeat='(field,errors) in ctrl.errors'>
+          <p> {{field}} </p>
+          <ul> <li ng-repeat='error in errors'>{{error}}</li> </ul>
+        </li>
+      </ul>
       <form method="post" name="logTimeForm" novalidate ng-submit="ctrl.saveTimeLogger()">
         <article ng-repeat="timelog in ctrl.timeLogger.timelogs" class="box-time-log">
           <div class="section-time-log-left section-left-card">
