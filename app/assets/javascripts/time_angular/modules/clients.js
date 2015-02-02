@@ -14,7 +14,6 @@
       if (this.clients.client_name && this.clients.client_email && this.clients.client_git && this.clients.client_ssh) {
          this.addClient();
       }
-      console.log(this.clientsArray);
     };
 
     this.addClient = function(){
