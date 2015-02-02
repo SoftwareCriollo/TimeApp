@@ -15,28 +15,16 @@ class Timelog
 
   validates_presence_of :comment, :trello, :task_id
   validates_numericality_of :time, greater_than: 0
-  validate :iteration_valid
 
   belongs_to :iteration
 
   scope :last_registered, -> (quantity=1){order_by(:fecha.desc).limit(quantity) }
+
   before_validation(on: :create) do |timelog|
     timelog.iteration = Iteration.current_iteration(timelog.project_id) if iteration.nil?
     timelog.set_project_name
     timelog.set_task_name
     timelog.set_value_ajust
-  end
-
-
-  def iteration_valid
-    
-    if iteration_id.nil?
-      errors.add(:project_id, "This project has no valid iterations")
-    elsif !iteration.can_register_hours?
-      errors.add(:project_id, "The iteration is complete, we can log more hours")
-    else
-
-    end
   end
 
   def set_project_name

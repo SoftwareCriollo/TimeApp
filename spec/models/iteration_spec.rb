@@ -37,11 +37,11 @@ RSpec.describe Iteration, :type => :model do
 
     context "apprentice" do
       let(:user) {create(:apprentice) }
-      it { is_expected.to eql(12.0) }
+      it { is_expected.to eql(7.0) }
     end
     context "not apprentice" do
       let(:user) {create(:user) }
-      it { is_expected.to eql(6.0) }
+      it { is_expected.to eql(1.0) }
 
     end
   end

@@ -32,13 +32,7 @@ RSpec.describe Timelog, :type => :model do
       context 'exists' do
         let!(:iteration){ create(:iteration, project_id: 'id') }
         it { is_expected.to be_valid }
-
-        context "iteration full hours" do
-          let!(:iteration){ create(:iteration, project_id: 'id') }
-          before{ allow_any_instance_of(Iteration).to receive(:can_register_hours?).and_return(false) }
-
-          it { is_expected.to_not be_valid }
-        end
+        
         context "can't be added a day after" do
           let!(:iteration){ create(:iteration, project_id: 'id',start: DateTime.now + 2.days) }
           it { is_expected.to_not be_valid }
