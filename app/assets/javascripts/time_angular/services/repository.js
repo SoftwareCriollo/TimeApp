@@ -30,6 +30,30 @@
       return this;
     }]);
 
+    $provide.factory('IterationsRepository',["Repository",function(repository) {
+      this.route_shallow = '/api/iterations';
+      this.route = undefined;
+      this.projectId = undefined;
+
+      this.setProjectId = function(projectId){
+        this.projectId = projectId;
+        this.route = '/api/projects/'+projectId+'/iterations';
+      };
+
+      this.index = function(success_callback){
+        if( this.projectId === undefined)
+          console.error("You must set projectId");
+        else
+          repository.get(this.route,success_callback);
+      };
+
+      this.saveIterations = function(iteration,success_callback,error_callback){
+        repository.post(this.route, {"iteration":iteration}, success_callback, error_callback);
+      };
+      
+      return this;
+    }]);
+
     $provide.factory('CardRepository',["Repository",function(repository) {
       this.route = undefined;
       this.projectId = undefined;

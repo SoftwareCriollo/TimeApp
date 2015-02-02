@@ -1,7 +1,7 @@
 'use strict';
 (function(){
   var TimeApp = window.TimeApp;
-  var app = angular.module('timeFrontendApp-projects',['CacheStore','Repository'])
+  var app = angular.module('timeFrontendApp-projects',["timeFrontendApp-navigator",'CacheStore','Repository'])
 
   app.controller('ProjectsController',['ProjectRepository','CurrentUser','ProjectCache', function(projectRepository,currentUser,projectsCache){
 

@@ -1,0 +1,60 @@
+.navigator-right
+  top: -83px
+  float: right
+  position: relative
+  margin-right: 15px
+  nav
+    margin-top: 10px
+    font-size: 0
+    a
+      border: 2px solid $background-color-btn-primary
+      padding: 7px 14px
+      margin-right: -1px
+      font-size: 13px
+      color: $color-secondary
+      text-decoration: none
+      &:nth-child(2)
+        border-left: 0
+        border-right: 0
+
+.box-float-right
+  position: relative
+  margin-right: 20px
+  float: $float-right
+  a
+    text-align: center
+    text-decoration: none
+    font-style: normal
+
+.buttons-up
+  display: inline-block
+  width: 100%
+  .button-secunday
+    background: $background-color-btn-secondary
+    float: $float-right
+    padding: 2px 5px
+    border: 0
+    font-size: 11px
+    color: $color-font-primary
+    text-decoration: none
+  .log-out
+    @extend .button-secunday
+  .client-information
+    @extend .button-secunday
+    margin-right: 5px
+
+.login-box-right
+  top: -170px
+
+nav 
+  .active
+    background: #95e1dc
+    color: #FFF !important
+
+.general-performance
+  border: 2px solid $background-color-btn-primary
+  margin-top: 5px
+  padding: 7px 14px
+  a
+    font-size: 13px
+    color: $color-secondary

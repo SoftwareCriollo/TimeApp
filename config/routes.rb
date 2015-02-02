@@ -7,8 +7,8 @@ Rails.application.routes.draw do
       member do
         get :cards
       end
+      resources :iterations, only: [:create,:index]
     end
-    resources :iterations, only: [:create]
     resources :timelogs, only: [:create]
   end
   

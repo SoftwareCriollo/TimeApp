@@ -10,6 +10,7 @@
     'timeFrontendApp-iterations',
     'timeFrontendApp-performance',
     'timeFrontendApp-clients',
+    'timeFrontendApp-navigator',
     'ngMessages',
     'ngResource',
     'ngRoute',
@@ -39,11 +40,21 @@
         controller: 'ProjectsController',
         controllerAs: 'controller'
       })
-      .when('/projects/:projectId/cards', {
-        templateUrl: "templates/projects/cards.html",
-        controller: 'CardsController',
-        controllerAs: 'ctrl'
-      })
+        .when('/projects/:projectId/cards', {
+          templateUrl: "templates/projects/cards.html",
+          controller: 'CardsController',
+          controllerAs: 'ctrl'
+        })
+        .when('/projects/:projectId/iterations', {
+          templateUrl: 'templates/iterations/index.html',
+          controller: 'IterationsController',
+          controllerAs: 'ctrl'
+        })
+        .when('/iterations/:iterationId/', {
+          templateUrl: 'templates/iterations/entries.html',
+          controller: 'IterationsController',
+          controllerAs: 'controller'
+        })
       .when('/clients/:projectId/client', {
         templateUrl: "templates/clients/client.html",
         controller: 'InfoClientsController',
@@ -52,16 +63,6 @@
       .when('/clients/new_client', {
         templateUrl: "templates/clients/new_client.html",
         controller: 'ClientsController',
-        controllerAs: 'controller'
-      })
-      .when('/iterations/:projectId', {
-        templateUrl: 'templates/iterations/index.html',
-        controller: 'IterationsController',
-        controllerAs: 'controller'
-      })
-      .when('/iterations/entries/:projectId', {
-        templateUrl: 'templates/iterations/entries.html',
-        controller: 'IterationsController',
         controllerAs: 'controller'
       })
       .when('/performance', {

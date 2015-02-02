@@ -1,33 +1,37 @@
 'use strict';
 (function(){
-  var app = angular.module('timeFrontendApp-iterations',['CacheStore'])
+  var TimeApp = window.TimeApp;
+  var app = angular.module('timeFrontendApp-iterations',['CacheStore','Repository'])
 
-  app.controller('IterationsController',['$http','$routeParams','CurrentUser','ProjectCache', function($http,$routeParams, currentUser,projectCache){
-
+  app.controller('IterationsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache','IterationsCache', function(iterationsRepository,$routeParams, currentUser,projectCache,iterationsCache){
     currentUser.isPendingAuth();
 
     var controller = this;
     var projectId = $routeParams.projectId;
 
     this.project = projectCache.findProject(projectId);
+    this.iteration = new TimeApp.Iteration({project_id: this.project.id});
 
-    this.editTimeEntry = function(entry){
+    iterationsRepository.setProjectId(this.project.id);
+    this.iterations = [];
 
-      if(this.lastEntry){
-        $('.card-iterarion-' + this.lastEntry).removeClass("selected"); //add class selected to card by entry (entry's the id), necessary to build the id
-        $('.entry-time-' + this.lastEntry).addClass("hide");
-        $('.edit-entry-' + this.lastEntry).removeClass("hide");
-        $('.entry-time-iterations-' + this.lastEntry).removeClass("margin-show-entry-edit");
-      }
-
-      $('.card-iterarion-' + entry).addClass("selected"); //add class selected to card by entry (entry's the id), necessary to build the id
-      $('.entry-time-' + entry).removeClass("hide");
-      $('.edit-entry-' + entry).addClass("hide");
-      $('.entry-time-iterations-' + entry).addClass("margin-show-entry-edit");
-
-
-      this.lastEntry = entry;
+    iterationsRepository.index(function(iterations, status, headers, config){
+      controller.iterations = iterations;
+    });
+ 
+    this.SaveIteration = function(){
+      this.iteration.project_id = controller.projectId; 
+      iterationsRepository.saveIterations(controller.iteration.toJsonToServer(), function() {
+        controller.clearForm();
+      },
+      function() {
+        controller.error=true;      
+      });
     };
+
+    this.clearForm = function(){
+      location.reload();
+    }
 
   }]);
 

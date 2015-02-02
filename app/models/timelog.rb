@@ -19,6 +19,7 @@ class Timelog
 
   belongs_to :iteration
 
+  scope :last_registered, -> (quantity=1){order_by(:fecha.desc).limit(quantity) }
   before_validation(on: :create) do |timelog|
     timelog.iteration = Iteration.current_iteration(timelog.project_id) if iteration.nil?
     timelog.set_project_name
