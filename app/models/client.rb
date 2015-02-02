@@ -6,6 +6,6 @@ class Client
   field :send_mail, type: Boolean, default: true
 
   validates_presence_of :project_id, :name, :email
-  validates :email, :presence => true, format: {with: /^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i}
+  validates :email, :presence => true, format: {with: /A([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})z/i}
 
 end
