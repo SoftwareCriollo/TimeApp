@@ -13,10 +13,21 @@ class Iteration
 
   has_many :timelogs
 
-  scope :by_project, ->(project_id) { where(:project_id => project_id) }
+  scope :by_project, ->(project_id) { includes(:timelogs).where(:project_id => project_id) }
+
+  before_create do |iteration|
+    prev_iteration = Iteration.current_iteration(iteration.project_id)
+    prev_iteration.close_iteration! if prev_iteration
+  end
 
   def self.current_iteration(project)
     Iteration.where(:project_id => project, :start.lte => DateTime.now ).order_by(:start.asc).limit(1).last
+  end
+
+  def close_iteration!
+    last_timelog = self.timelogs.last_registered(1).last
+    self.end_date = last_timelog.fecha
+    self.save
   end
 
   def can_register_hours?(total = 0)
@@ -34,5 +45,9 @@ class Iteration
 
   def free_time
     5
+  end
+
+  def as_json(options = nil)
+    super(options).merge({time_wordked: time_wordked})
   end
 end
