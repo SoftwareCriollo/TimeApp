@@ -2,15 +2,15 @@
   window.TimeApp =  window.TimeApp || {};
   var TimeLogger = function(attributes){
     attributes = attributes || {};
-    this.project_id = attributes.project_id;
-    this.project_name = attributes.project_name;
+    this.project_id = attributes.project.id;
+    this.project_name = attributes.project.name;
     this.timelogs = attributes.timelogs || [];
 
     this.toJson = function(){
       return {
         "project_id":this.project_id,
         "project_name":this.project_name,
-        "timelogs_attributes": this.time_logs,
+        "timelogs_attributes": this.timelogs,
       };
     };
     this.hasTask = function(){

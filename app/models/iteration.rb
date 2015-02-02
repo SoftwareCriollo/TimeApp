@@ -21,7 +21,7 @@ class Iteration
   end
 
   def self.current_iteration(project)
-    Iteration.where(:project_id => project, :start.lte => DateTime.now ).order_by(:start.asc).limit(1).last
+    Iteration.where(:project_id => project, :start.lte => DateTime.now ).order_by(:start.desc).limit(1).last
   end
 
   def close_iteration!
@@ -30,24 +30,21 @@ class Iteration
     self.save
   end
 
-  def can_register_hours?(total = 0)
-    time_wordked + total < time + free_time
+  def can_register_hours?
+    time_worked < time 
   end
 
   def remain_time
-    (time + free_time)- time_wordked
+    time - time_worked
   end
 
-  def time_wordked
+  def time_worked
     total_time = timelogs.inject(0.0){|total,timelog| total += timelog.time_for_iteration }
     total_time.round(2)
   end  
 
-  def free_time
-    5
+  def as_json(options = nil)
+    super(options).merge({time_worked: time_worked})
   end
 
-  def as_json(options = nil)
-    super(options).merge({time_worked: time_wordked})
-  end
 end

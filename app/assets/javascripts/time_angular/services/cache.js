@@ -49,6 +49,8 @@
       return this;
     }]);
 
+
+
     $provide.factory('CurrentUser',["$location",function($location) {
       var currentUser;
       this.id= function(){

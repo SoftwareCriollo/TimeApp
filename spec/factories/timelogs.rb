@@ -7,5 +7,6 @@ FactoryGirl.define do
     time 10
     user_id '345G'
     trello true
+    fecha Date.today
   end
 end
