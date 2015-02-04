@@ -10,7 +10,7 @@
     var projectId = $routeParams.projectId;
 
     this.project = projectCache.findProject(projectId);
-    this.iteration = new TimeApp.Iteration({project_id: this.project.id});
+    this.iteration = new TimeApp.Iteration({project_id: projectId});
 
     iterationsRepository.setProjectId(this.project.id);
     this.iterations = [];
@@ -18,9 +18,8 @@
     iterationsRepository.index(function(iterations, status, headers, config){
       controller.iterations = iterations;
     });
- 
+
     this.SaveIteration = function(){
-      this.iteration.project_id = controller.projectId; 
       iterationsRepository.saveIterations(controller.iteration.toJsonToServer(), function() {
         controller.clearForm();
       },
