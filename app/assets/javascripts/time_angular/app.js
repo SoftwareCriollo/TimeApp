@@ -55,6 +55,11 @@
           controller: 'IterationsController',
           controllerAs: 'controller'
         })
+        .when('/project/:projectId/iterations/entries', {
+          templateUrl: 'templates/iterations/entries.html',
+          controller: 'IterationsController',
+          controllerAs: 'controller'
+        })
       .when('/clients/:projectId/client', {
         templateUrl: "templates/clients/client.html",
         controller: 'InfoClientsController',
