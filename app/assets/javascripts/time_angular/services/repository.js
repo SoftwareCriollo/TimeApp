@@ -54,7 +54,6 @@
       };
 
       this.saveIterations = function(iteration,success_callback,error_callback){
-        console.log("AQUI Iteration: " + iteration);
         repository.post(this.route, {"iteration":iteration}, success_callback, error_callback);
       };
       
