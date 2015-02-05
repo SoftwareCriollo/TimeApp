@@ -34,17 +34,17 @@
 
   }]);
 
-  app.controller('TimelogController',['TimeLoggerRepository','$routeParams','CurrentUser','ProjectCache', function(timeloggerRepository,$routeParams, currentUser,projectCache){
+  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser', function(iterationsRepository,$routeParams, currentUser){
     currentUser.isPendingAuth();
   
     var controller = this;
     var iterationId = $routeParams.iterationId;
     console.log( "route iteration id: " +iterationId);
 
-    timeloggerRepository.setIterationId(iterationId);
+    iterationsRepository.setIterationId(iterationId);
     this.timelogs = [];
   
-    timeloggerRepository.index(function(timelogs, status, headers, config){
+    iterationsRepository.entries(function(timelogs, status, headers, config){
       controller.timelogs = timelogs;
     });
    

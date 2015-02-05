@@ -50,9 +50,9 @@
         controller: 'IterationsController',
         controllerAs: 'ctrl'
       })
-      .when('/project/iterations/:iterationId/entries', {
+      .when('/iterations/:iterationId/entries', {
         templateUrl: 'templates/iterations/entries.html',
-        controller: 'TimelogController',
+        controller: 'TimelogsController',
         controllerAs: 'ctrl'
       })
       .when('/clients/:projectId/client', {

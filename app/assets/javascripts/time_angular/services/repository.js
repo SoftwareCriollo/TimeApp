@@ -14,34 +14,20 @@
     }]);
 
     $provide.factory('TimeLoggerRepository',["Repository",function(repository) {
-      this.route = undefined;
-      this.iterationId = undefined;
- 
-      this.setIterationId = function(iterationId){
-        this.iterationId = iterationId;
-        this.route= "/api/iterations/"+iterationId+"/timelogs";
-      };
+      this.route = "/api/timelogs";
 
       this.create = function(data,success_callback){
         repository.post(this.route,{"timelogger":data},success_callback);
       };
 
-      this.index = function(success_callback){
-        if( this.iterationId === undefined)
-          console.error("You must set iterationId");
-        else
-        {
-          console.log("timelogs");
-          repository.get(this.route,success_callback);
-        }
-      };
-
       this.edit = function(object,success_callback){        
         repository.post(this.route,{"timelog":data},success_callback);        
       };
+
       this.createRoute= function(){
         return this.route;
       };
+
       this.patchRoute= function(data){
         return this.route + "/"+data.timelog_id;
       };
@@ -58,8 +44,10 @@
       this.route_shallow = '/api/iterations';
       this.route = undefined;
       this.projectId = undefined;
+      this.iterationId = undefined;
 
       this.setProjectId = function(projectId){
+        console.log("entro al set");
         this.projectId = projectId;
         this.route = '/api/projects/'+projectId+'/iterations';
       };
@@ -73,6 +61,23 @@
 
       this.saveIterations = function(iteration,success_callback,error_callback){
         repository.post(this.route, {"iteration":iteration}, success_callback, error_callback);
+      };
+
+      this.setIterationId = function(iterationId){
+        this.iterationId = iterationId;
+      };
+
+      this.entries = function(success_callback){
+
+        this.route= "/api/iterations/"+iterationId+"/timelogs";
+        
+        if( this.iterationId === undefined)
+          console.error("You must set iterationId");
+        else
+        {
+          console.log("timelogs");
+          repository.get(this.route,success_callback);
+        }
       };
       
       return this;
