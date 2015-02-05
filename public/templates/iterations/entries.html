@@ -1,7 +1,7 @@
 <div ng-include="'templates/iterations/iterations_box_right.html'" class="text-right box-float-right iterations-box-right"></div>
 <div class="section-up-iteration section-up-title">
   <div class="box-title title-iteration">
-    <h1 class="title"> {{controller.project.name}}</h1>
+    <h1 class="title"> {{ctrl.project.name}}</h1>
     <hr class="underline" />
   </div>
   <button class="search-date-range">
@@ -39,7 +39,7 @@
     <div ng-repeat="n in [1,2]" class="entry-time-iterations entry-time-iterations-{{n}}">
       <div class="card-iteration card-iterarion-{{n}}">
         <div class="list">
-          <a ng-click="controller.editTimeEntry(n)" class="img-edit img-edit edit-entry-{{n}}"><img src="images/edit.png"/></a>
+          <a ng-click="ctrl.editTimeEntry(n)" class="img-edit img-edit edit-entry-{{n}}"><img src="images/edit.png"/></a>
           <div class="name-task">Refactoring trips navigation </div>
           <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
           <div class="list-name-task">

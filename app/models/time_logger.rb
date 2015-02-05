@@ -5,6 +5,8 @@ class TimeLogger
 
   validates_presence_of :project_id, :project_name
 
+  scope :by_iteration, ->(iteration_id) { where(:iteration_id => iteration_id) }
+
   def initialize(user)
     @user = user
     @timelogs = []

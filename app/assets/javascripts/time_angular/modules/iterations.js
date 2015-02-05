@@ -39,15 +39,16 @@
   
     var controller = this;
     var projectId = $routeParams.projectId;
-    var iterarionId = this.TimeApp.iteration.id;
+    var iterarionId = 'ObjectId("54cafbc57261660d1a0b0000")';
   
     this.project = projectCache.findProject(projectId);
-   
+
+    timeloggerRepository.setProjectId(projectId);
     timeloggerRepository.setIterationId(iterarionId);
     this.timelogs = [];
   
-    timeloggerRepository.show(function(timelogs, status, headers, config){
-    controller.timelogs = timelogs;
+    timeloggerRepository.index(function(timelogs, status, headers, config){
+      controller.timelogs = timelogs;
     });
    
    

@@ -53,7 +53,7 @@
       .when('/project/:projectId/iterations/entries', {
         templateUrl: 'templates/iterations/entries.html',
         controller: 'TimelogController',
-        controllerAs: 'crtl'
+        controllerAs: 'ctrl'
       })
       .when('/clients/:projectId/client', {
         templateUrl: "templates/clients/client.html",

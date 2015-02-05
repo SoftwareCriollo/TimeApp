@@ -15,6 +15,17 @@
 
     $provide.factory('TimeLoggerRepository',["Repository",function(repository) {
       this.route = "/api/timelogs";
+      this.iterationId = undefined;
+ 
+      this.setProjectId = function(projectId){
+        this.projectId = projectId;
+        this.route = '/api/projects/' + projectId + '/cards';
+      };
+
+      this.setIterationId = function(iterationId){
+        this.iterationId = iterationId;
+      };
+
       this.create = function(data,success_callback){
         repository.post(this.route,{"timelogger":data},success_callback);
       };
@@ -23,7 +34,10 @@
         if( this.iterationId === undefined)
           console.error("You must set iterationId");
         else
+        {
+          console.log("timelogs");
           repository.get(this.route,success_callback);
+        }
       };
 
       this.edit = function(object,success_callback){        

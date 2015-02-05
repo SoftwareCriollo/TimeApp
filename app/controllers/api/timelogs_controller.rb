@@ -9,6 +9,11 @@ class Api::TimelogsController <  ApiAuthenticatedController
     end
   end
 
+  def index
+    @iterations = TimeLogger.by_iteration(params[:iteration_id])
+    render json: @timelogs
+  end
+
   def timelog_params
     params.require(:timelogger).permit(:project_id, :project_name, timelogs_attributes: timelog_attributes)
   end
