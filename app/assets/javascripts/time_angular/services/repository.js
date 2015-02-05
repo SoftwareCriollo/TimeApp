@@ -18,6 +18,14 @@
       this.create = function(data,success_callback){
         repository.post(this.route,{"timelogger":data},success_callback);
       };
+
+      this.index = function(success_callback){
+        if( this.iterationId === undefined)
+          console.error("You must set iterationId");
+        else
+          repository.get(this.route,success_callback);
+      };
+
       this.edit = function(object,success_callback){        
         repository.post(this.route,{"timelog":data},success_callback);        
       };

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       end
       resources :iterations, only: [:create,:index]
     end
-    resources :timelogs, only: [:create]
+    resources :timelogs, only: [:create, :index]
   end
   
 #  namespace :api do

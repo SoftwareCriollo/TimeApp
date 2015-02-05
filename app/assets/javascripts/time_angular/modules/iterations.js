@@ -34,6 +34,25 @@
 
   }]);
 
+  app.controller('TimelogController',['TimeLoggerRepository','$routeParams','CurrentUser','ProjectCache', function(timeloggerRepository,$routeParams, currentUser,projectCache){
+    currentUser.isPendingAuth();
+  
+    var controller = this;
+    var projectId = $routeParams.projectId;
+    var iterarionId = this.TimeApp.iteration.id;
+  
+    this.project = projectCache.findProject(projectId);
+   
+    timeloggerRepository.setIterationId(iterarionId);
+    this.timelogs = [];
+  
+    timeloggerRepository.show(function(timelogs, status, headers, config){
+    controller.timelogs = timelogs;
+    });
+   
+   
+  }]);
+
 
 })();
 
