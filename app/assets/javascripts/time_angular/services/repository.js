@@ -14,16 +14,12 @@
     }]);
 
     $provide.factory('TimeLoggerRepository',["Repository",function(repository) {
-      this.route = "/api/timelogs";
+      this.route = undefined;
       this.iterationId = undefined;
  
-      this.setProjectId = function(projectId){
-        this.projectId = projectId;
-        this.route = '/api/projects/' + projectId + '/cards';
-      };
-
       this.setIterationId = function(iterationId){
         this.iterationId = iterationId;
+        this.route= "/api/iterations/"+iterationId+"/timelogs";
       };
 
       this.create = function(data,success_callback){

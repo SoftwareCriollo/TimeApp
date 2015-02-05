@@ -38,13 +38,10 @@
     currentUser.isPendingAuth();
   
     var controller = this;
-    var projectId = $routeParams.projectId;
-    var iterarionId = 'ObjectId("54cafbc57261660d1a0b0000")';
-  
-    this.project = projectCache.findProject(projectId);
+    var iterationId = $routeParams.iterationId;
+    console.log( "route iteration id: " +iterationId);
 
-    timeloggerRepository.setProjectId(projectId);
-    timeloggerRepository.setIterationId(iterarionId);
+    timeloggerRepository.setIterationId(iterationId);
     this.timelogs = [];
   
     timeloggerRepository.index(function(timelogs, status, headers, config){
