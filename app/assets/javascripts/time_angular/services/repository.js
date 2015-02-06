@@ -47,7 +47,6 @@
       this.iterationId = undefined;
 
       this.setProjectId = function(projectId){
-        console.log("entro al set");
         this.projectId = projectId;
         this.route = '/api/projects/'+projectId+'/iterations';
       };
@@ -65,19 +64,16 @@
 
       this.setIterationId = function(iterationId){
         this.iterationId = iterationId;
+        this.route= "/api/iterations/"+iterationId+"/timelogs";
       };
 
       this.entries = function(success_callback){
 
-        this.route= "/api/iterations/"+iterationId+"/timelogs";
-        
         if( this.iterationId === undefined)
           console.error("You must set iterationId");
         else
-        {
-          console.log("timelogs");
           repository.get(this.route,success_callback);
-        }
+        
       };
       
       return this;

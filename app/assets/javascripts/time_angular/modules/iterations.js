@@ -39,7 +39,6 @@
   
     var controller = this;
     var iterationId = $routeParams.iterationId;
-    console.log( "route iteration id: " +iterationId);
 
     iterationsRepository.setIterationId(iterationId);
     this.timelogs = [];

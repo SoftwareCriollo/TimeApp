@@ -1,7 +1,8 @@
 class TimeLogger
   include ActiveModel::Model
+  include Mongoid::Document
 
-  attr_accessor :project_name, :project_id, :user, :timelogs_attributes, :timelogs
+  attr_accessor :project_name, :iteration_id, :project_id, :user, :timelogs_attributes, :timelogs
 
   validates_presence_of :project_id, :project_name
 
