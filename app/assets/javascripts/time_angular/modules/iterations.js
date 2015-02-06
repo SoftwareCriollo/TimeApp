@@ -46,6 +46,16 @@
     iterationsRepository.entries(function(timelogs, status, headers, config){
       controller.timelogs = timelogs;
     });
+
+    this.editTimeEntry = function(n)
+    {
+      this.timelog = new TimeApp.Timelog();
+    }
+
+    this.EditTimelog = function()
+    {
+
+    }
    
    
   }]);

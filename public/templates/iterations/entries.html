@@ -36,29 +36,29 @@
     <div class="date-iteration date-single-iteration">
       {{day.name}}, 12/{{9+$index}} - <p>6 hours</p>
     </div>
-    <div ng-repeat="n in [1,2]" class="entry-time-iterations entry-time-iterations-{{n}}">
+    <div ng-repeat="timelog in ctrl.timelogs" class="entry-time-iterations entry-time-iterations-{{n}}">
       <div class="card-iteration card-iterarion-{{n}}">
         <div class="list">
           <a ng-click="ctrl.editTimeEntry(n)" class="img-edit img-edit edit-entry-{{n}}"><img src="images/edit.png"/></a>
-          <div class="name-task">Refactoring trips navigation </div>
-          <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
+          <div class="name-task">timelog.task_name</div>
+          <div class="note-task">Notes: <a href> time.notes</a> </div>
           <div class="list-name-task">
             <img src="images/circle.png" />
             DONE
           </div>
           <div class="box-hours">
-            <div class="box-silver"><img src="images/clock-silver.png"/>3.5 HOURS</div>
+            <div class="box-silver"><img src="images/clock-silver.png"/>{{timelog.time}} HOURS</div>
           </div>
         </div>
       </div>
       <div class="editTimeEntries entry-time-{{n}} hide">
-        <form method="post" name="formEditTimeEntries">
+        <form method="post" name="formEditTimeEntries" ng-submit="ctrl.EditTimelog()">
           <div class="form-time-entries">
             <div class="field-form field-up">
-              <input type="text" name="time" placeholder="Hours: 3.5" />
+              <input type="number" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
             </div>
             <div class="field-form field-down">
-              <textarea rows="4" cols="50"name="comment" placeholder="Notes: screencast.com/289623985623"/>
+              <textarea rows="4" cols="50"name="comment" ng-model="ctrl.timelog.notes" placeholder="Notes:" required/>
             </div>
           </div>
           <input type="submit" value="SAVE" class="btn-primary" />
