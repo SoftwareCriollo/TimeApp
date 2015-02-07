@@ -9,11 +9,11 @@ Rails.application.routes.draw do
       end
       resources :iterations, only: [:create,:index],shallow: true do
         member do
-          get 'timelogs', only: [:create,:index]
+          get 'timelogs', to: 'timelogs#index'
         end
       end
     end
-    resources :timelogs, only: [:create]
+    resources :timelogs, only: [:create,:index]
   end
   
 #  namespace :api do
