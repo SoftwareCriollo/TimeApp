@@ -29,7 +29,7 @@ class Iteration
     self.end_date = last_timelog.fecha
     self.save
   end
-
+  
   def can_register_hours?
     time_worked < time 
   end

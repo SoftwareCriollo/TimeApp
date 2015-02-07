@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       end
       resources :iterations, only: [:create,:index],shallow: true do
         member do
-          get 'timelogs', to: 'timelogs#index'
+          get 'timelogs'
         end
       end
     end

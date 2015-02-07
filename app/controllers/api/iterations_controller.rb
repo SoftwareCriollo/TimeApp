@@ -8,6 +8,11 @@ class Api::IterationsController <  ApiController
     end
   end
 
+  def timelogs
+    @iteration = Iteration.find(params[:id])
+    render json: @iteration.timelogs
+  end
+
   def show
   end
 
