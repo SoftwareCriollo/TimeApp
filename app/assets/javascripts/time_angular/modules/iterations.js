@@ -10,6 +10,7 @@
     var projectId = $routeParams.projectId;
 
     this.project = projectCache.findProject(projectId);
+    console.dir(this.project);
     this.iteration = new TimeApp.Iteration({project_id: projectId});
 
     iterationsRepository.setProjectId(this.project.id);
@@ -34,7 +35,7 @@
 
   }]);
 
-  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser', function(iterationsRepository,$routeParams, currentUser){
+  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser', 'IterationsCache', function(iterationsRepository,$routeParams, currentUser, iterationsCache){
     currentUser.isPendingAuth();
   
     var controller = this;
@@ -45,16 +46,20 @@
   
     iterationsRepository.entries(function(timelogs, status, headers, config){
       controller.timelogs = timelogs;
+      if (timelogs.length==0)
+        controller.emptyiteration =true;
+
     });
 
     this.editTimeEntry = function(n)
     {
-      this.timelog = new TimeApp.Timelog();
+      this.timelog = new TimeApp.TimeLogger();
     }
 
     this.EditTimelog = function()
     {
-
+      console.dir(controller.timelog);
+      
     }
    
    

@@ -18,7 +18,6 @@ class Timelog
 
   belongs_to :iteration
 
-  scope :by_iteration, ->(iteration_id) { where(:iteration_id => iteration_id) }
   scope :last_registered, -> (quantity=1){order_by(:fecha.desc).limit(quantity) }
 
   before_validation do |timelog|

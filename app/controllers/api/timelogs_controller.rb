@@ -10,8 +10,6 @@ class Api::TimelogsController <  ApiAuthenticatedController
   end
 
   def index
-    @iterations = TimeLog.by_iteration(params[:iteration_id])
-    render json: @timelogs
   end
 
   def timelog_params

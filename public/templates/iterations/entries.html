@@ -32,6 +32,7 @@
       </a>
     </div>
   </div>
+  <div ng-hide="ctrl.emptyiteration">
   <article ng-repeat="day in daysWeek">
     <div class="date-iteration date-single-iteration">
       {{day.name}}, 12/{{9+$index}} - <p>6 hours</p>
@@ -40,8 +41,8 @@
       <div class="card-iteration card-iterarion-{{n}}">
         <div class="list">
           <a ng-click="ctrl.editTimeEntry(n)" class="img-edit img-edit edit-entry-{{n}}"><img src="images/edit.png"/></a>
-          <div class="name-task">timelog.timelogs.task_name</div>
-          <div class="note-task">Notes: <a href> time.timelogs.notes</a> </div>
+          <div class="name-task">{{timelog.task_name}}</div>
+          <div class="note-task">Notes: <a href> {{timelog.comments}}</a> </div>
           <div class="list-name-task">
             <img src="images/circle.png" />
             DONE
@@ -58,7 +59,7 @@
               <input type="number" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
             </div>
             <div class="field-form field-down">
-              <textarea rows="4" cols="50"name="comment" ng-model="ctrl.timelog.notes" placeholder="Notes:" required/>
+              <textarea rows="4" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
             </div>
           </div>
           <input type="submit" value="SAVE" class="btn-primary" />
@@ -66,4 +67,8 @@
       </div>
     </div>
   </article>
+  </div>
+  <div ng-show="ctrl.emptyiteration">
+    <p>The iteration has no entries.</p>
+  </div>
 </section>
