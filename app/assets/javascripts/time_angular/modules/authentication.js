@@ -11,8 +11,8 @@
         currentUser.saveCache();
         $location.path('/projects')
       }, function(error) {
-
-      });
+          $scope.alerts = { message: 'The email or password you entered is incorrect.', success: false, error: true };
+    });
     }
     this.user = new TimeApp.User();
     currentUser.checkAuth();
