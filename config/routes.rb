@@ -7,9 +7,13 @@ Rails.application.routes.draw do
       member do
         get :cards
       end
-      resources :iterations, only: [:create,:index]
+      resources :iterations, only: [:create,:index],shallow: true do
+        member do
+          get 'timelogs'
+        end
+      end
     end
-    resources :timelogs, only: [:create]
+    resources :timelogs, only: [:create,:index]
   end
   
 #  namespace :api do

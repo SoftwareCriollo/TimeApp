@@ -33,15 +33,15 @@
 <section class="show-iterations">
   <article ng-repeat="iteration in ctrl.iterations" class="iteration">
     <div class='range-date'>
-      <div class="range-iteration">{{ iteration.start }} - {{ iteration.date_end || "Current"}}</div>
+      <div class="range-iteration">{{ iteration.start }} - {{ iteration.end_date || "Current"}}</div>
     </div>
     <div class="invoice-data">
       <div class="inv-iteration float-left">Inv#{{ iteration.invoice }}</div>
       <div class="hours-iteration float-right"> {{iteration.time_worked}}/ {{ iteration.time }}</div>
     </div>
     <div class='invoice-aditiona'>
-    <div class="number-iteration float-left"> {{$index + 1}} </div>
-    <a class="link-show-iteration float-right" href="#/project/{{ctrl.project.id}}/iterations/entries">VIEW TIME ENTRIES</a>
+    <div class="number-iteration float-left"> {{ ctrl.iterations.length - $index }} </div>
+    <a class="link-show-iteration float-right" href="#/iterations/{{iteration._id.$oid}}/entries">VIEW TIME ENTRIES</a>
       
     </div> 
   </article>

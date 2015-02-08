@@ -13,7 +13,7 @@ class Iteration
 
   has_many :timelogs
 
-  scope :by_project, ->(project_id) { includes(:timelogs).where(:project_id => project_id) }
+  scope :by_project, ->(project_id) { includes(:timelogs).where(:project_id => project_id).order_by(:start.desc) }
 
   before_create do |iteration|
     prev_iteration = Iteration.current_iteration(iteration.project_id)
@@ -21,7 +21,7 @@ class Iteration
   end
 
   def self.current_iteration(project)
-    Iteration.where(:project_id => project, :start.lte => DateTime.now ).order_by(:start.desc).limit(1).last
+    where(:project_id => project, :start.lte => DateTime.now ).order_by(:start.desc).limit(1).last
   end
 
   def close_iteration!
@@ -29,7 +29,7 @@ class Iteration
     self.end_date = last_timelog.fecha
     self.save
   end
-
+  
   def can_register_hours?
     time_worked < time 
   end

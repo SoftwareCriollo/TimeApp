@@ -15,15 +15,19 @@
 
     $provide.factory('TimeLoggerRepository',["Repository",function(repository) {
       this.route = "/api/timelogs";
+
       this.create = function(data,success_callback){
         repository.post(this.route,{"timelogger":data},success_callback);
       };
+
       this.edit = function(object,success_callback){        
         repository.post(this.route,{"timelog":data},success_callback);        
       };
+
       this.createRoute= function(){
         return this.route;
       };
+
       this.patchRoute= function(data){
         return this.route + "/"+data.timelog_id;
       };
@@ -40,6 +44,7 @@
       this.route_shallow = '/api/iterations';
       this.route = undefined;
       this.projectId = undefined;
+      this.iterationId = undefined;
 
       this.setProjectId = function(projectId){
         this.projectId = projectId;
@@ -55,6 +60,20 @@
 
       this.saveIterations = function(iteration,success_callback,error_callback){
         repository.post(this.route, {"iteration":iteration}, success_callback, error_callback);
+      };
+
+      this.setIterationId = function(iterationId){
+        this.iterationId = iterationId;
+        this.route= "/api/iterations/"+iterationId+"/timelogs";
+      };
+
+      this.entries = function(success_callback){
+
+        if( this.iterationId === undefined)
+          console.error("You must set iterationId");
+        else
+          repository.get(this.route,success_callback);
+        
       };
       
       return this;
