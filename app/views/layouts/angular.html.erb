@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TimeApp</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= csrf_meta_tags %>
+  <meta name='Token' content=''>
+</head>
+<body ng-app="timeFrontendApp">
+  <div class="header">
+    <a href="#/project"><img src="images/logo.svg" alt="logo" /></a>
+  </div>
+  <div ng-view="" class='container'></div>
+  <div class="hide">
+    <%= javascript_include_tag 'angular' %>
+  </div>
+</body>
+</html>

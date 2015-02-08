@@ -20,7 +20,8 @@ Rails.application.routes.draw do
     post "/change_password/:reset_password_token", to: "change_password#change_password", as: 'change_password'    
   end
   devise_for :mongoid_users,controllers: {
-    sessions: "sessions"
+    sessions: "sessions",
+    passwords: "passwords"
   }
 
 

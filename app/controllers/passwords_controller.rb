@@ -1,12 +1,8 @@
-class Api::PasswordsController < Devise::PasswordsController
+class PasswordsController < Devise::PasswordsController
   # GET /resource/password/new
   # def new
   #   super
   # end
-
-  def create
-    super
-  end
 
   def edit
     self.resource = resource_class.find_or_initialize_with_error_by(:reset_password_token, params[:reset_password_token])
