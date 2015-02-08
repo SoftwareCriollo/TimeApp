@@ -7,13 +7,13 @@
   </div>
   <div class="box-search-story">
     <form>
-      <input type="search" name="search-story"  placeholder="Search story"/>
+      <input type="search" name="search-story"  ng-model="search" placeholder="Search story"/>
     </form>
   </div>
 </div>
 
 <section id='cards'>
-  <article ng-repeat="card in ctrl.cards" ng-class="{active:ctrl.timeLogger.isSelected(card)}" ng-click="ctrl.timeLogger.toggleTasks(card)" class='card-task'>
+  <article ng-repeat="card in ctrl.cards" ng-class="{active:ctrl.timeLogger.isSelected(card)}" ng-click="ctrl.timeLogger.toggleTasks(card)" class='card-task' ng-show="!search || ([card.name]|filter:search).length">
     <div class="list">
 
       <span class='icn-bullet'></span>
