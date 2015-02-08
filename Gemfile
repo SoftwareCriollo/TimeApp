@@ -11,6 +11,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'puma'
 gem 'slim'
 
+gem 'simple_form'
 gem 'devise'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'activeadmin-mongoid', github: 'elia/activeadmin-mongoid', branch: 'rails4'
