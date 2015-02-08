@@ -4,29 +4,21 @@ class Api::PasswordsController < Devise::PasswordsController
   #   super
   # end
 
-  # POST /resource/password
-  # def create
-  #   super
-  # end
+  def create
+    super
+  end
 
-  # GET /resource/password/edit?reset_password_token=abcdef
-  # def edit
-  #   super
-  # end
-
-  # PUT /resource/password
-  # def update
-  #   super
-  # end
-
+  def edit
+    self.resource = resource_class.find_or_initialize_with_error_by(:reset_password_token, params[:reset_password_token])
+    @user = resource
+  end
   # protected
 
-  # def after_resetting_password_path_for(resource)
-  #   super(resource)
-  # end
+  def after_resetting_password_path_for(resource)
+    "/#/log-in"
+  end
 
-  # The path used after sending reset password instructions
-  # def after_sending_reset_password_instructions_path_for(resource_name)
-  #   super(resource_name)
-  # end
+  def after_sending_reset_password_instructions_path_for(resource_name)
+    "/#/log-in"
+  end
 end

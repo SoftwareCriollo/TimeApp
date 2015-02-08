@@ -1,7 +1,7 @@
 development:
   sessions:
     default:
-      database: time_app_development
+      database: kala-time
       hosts:
         - localhost:27017
       options:

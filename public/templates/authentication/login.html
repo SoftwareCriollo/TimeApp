@@ -3,13 +3,11 @@
   <form method="post" novalidate ng-submit="auth.signIn()" class='login'>
     <div class="fields">
       <input type="email" name="email" ng-model="auth.user.email" placeholder="Login" />
-      <div class="field-down field-form">
-        <input type="password" name="password" ng-model="auth.user.password" placeholder="Password" />
-      </div>
+      <input type="password" name="password" ng-model="auth.user.password" placeholder="Password" />
     </div>
       <input type="submit" class="btn-primary btn-centered" name="commit" value="LOG IN">
     <div class="login-help">
-      <a href="#">Forgot password?</a>
+      <a href="/mongoid_users/password/new">Forgot password?</a>
     </div>
   </form>
 </section>
