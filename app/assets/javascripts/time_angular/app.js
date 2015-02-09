@@ -55,7 +55,7 @@
         controller: 'TimelogsController',
         controllerAs: 'ctrl'
       })
-      .when('/clients/:projectId/client', {
+      .when('/projects/:projectId/client', {
         templateUrl: "templates/clients/client.html",
         controller: 'InfoClientsController',
         controllerAs: 'controller'
