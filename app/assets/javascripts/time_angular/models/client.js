@@ -1,6 +1,6 @@
 (function(){
   window.TimeApp = window.TimeApp || {};
-  var clients = window.TimeApp;
+  var client = window.TimeApp;
   clients = function(attributes){
     attributes = attributes || {};
     this.client_name = attributes.client_name;
@@ -10,5 +10,6 @@
 
 
   };
+  window.TimeApp.Client = Client;
 })();
 
