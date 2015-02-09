@@ -58,6 +58,8 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
       };
 
       this.saveClient = function(client,success_callback,error_callback){
+        console.log("is in the create function");
+        console.dir(client);
         repository.post(this.route, {"client":client}, success_callback, error_callback);
       };
       

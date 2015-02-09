@@ -1,5 +1,6 @@
 'use strict';
 (function(){
+  var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-clients',['CacheStore'])
 
   app.controller('ClientsController',['ClientsRepository','$routeParams','$http','CurrentUser','ProjectCache', function(clientsRepository,$routeParams,$http, currentUser,projectCache){
@@ -11,9 +12,10 @@
 
     this.project = projectCache.findProject(projectId);
     this.client = new TimeApp.Client({project_id: projectId});
-
+    clientsRepository.setProjectId(this.project.id);
 
     this.SaveClient = function(){
+      this.client.project_id = projectId;
       clientsRepository.saveClient(controller.client.toJsonToServer(), function() {
         controller.clearForm();
       },
@@ -23,10 +25,10 @@
     };
 
     this.clearForm = function(){
-      this.client.client_name = '';
-      this.client.client_email = '';
-      this.client.client_git = '';
-      this.client.client_ssh = '';
+      this.client.name = '';
+      this.client.email = '';
+      this.client.git = '';
+      this.client.ssh = '';
     };
 
 

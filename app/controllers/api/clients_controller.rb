@@ -1,5 +1,5 @@
 class Api::ClientsController <  ApiController
-  
+
   def create
     @client= Client.new(client_params)
     if  @client.save
@@ -12,6 +12,10 @@ class Api::ClientsController <  ApiController
   def show
     @client = Client.find(params[:project_id])
     render json: @client
+  end
+
+  def client_params
+    params.require(:client).permit(:project_id, :name, :email)
   end
 
 end

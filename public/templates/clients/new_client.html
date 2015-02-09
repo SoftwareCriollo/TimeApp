@@ -5,19 +5,21 @@
 </div>
 <section id='client'>
   <div class='new-client'>
-    <form method="post" novalidate ng-submit="controller.newClient()" name="newClientForm">
+    <form method="post" novalidate ng-submit="ctrl.SaveClient()" name="formClients">
       <div class="fields">
         <div class="field-form">
-          <input type="text" name="name" ng-model="controller.clients.client_name" placeholder="Client Name" />
+          <input type="text" name="name" ng-model="ctrl.client.name" placeholder="Client Name" required/>
+          <span ng-show="formClients.name.$error.required  && formClients.name.$dirty">The Name is required.</span>
         </div>
         <div class="field-form">
-          <input type="email" name="email" ng-model="controller.clients.client_email" placeholder="E-mail Address" />
+          <input type="email" name="email" ng-model="ctrl.client.email" placeholder="E-mail Address" required/>
+          <span ng-show="formClients.email.$error.required  && formClients.email.$dirty">The E-mail is required.</span>
         </div>
         <div class="field-form">
-          <input type="text" name="git" ng-model="controller.clients.client_git" placeholder="Git Url" />
+          <input type="text" name="git" ng-model="ctrl.client.git" placeholder="Git Url" />
         </div>
         <div class="field-form">
-          <input type="text" name="ssh" ng-model="controller.clients.client_ssh" placeholder="SSH" />
+          <input type="text" name="ssh" ng-model="ctrl.client.ssh" placeholder="SSH" />
         </div>
       </div>
       <input type="submit" value="SAVE" class="btn-primary save-new-client" />
