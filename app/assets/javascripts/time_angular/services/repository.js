@@ -50,7 +50,7 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
         this.route = '/api/projects/'+projectId+'/clients';
       };
 
-      this.show = function(success_callback){
+      this.findClient = function(success_callback){
         if( this.projectId === undefined)
           console.error("You must set projectId");
         else
@@ -58,8 +58,6 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
       };
 
       this.saveClient = function(client,success_callback,error_callback){
-        console.log("is in the create function");
-        console.dir(client);
         repository.post(this.route, {"client":client}, success_callback, error_callback);
       };
       

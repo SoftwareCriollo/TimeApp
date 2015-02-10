@@ -14,6 +14,10 @@
     this.client = new TimeApp.Client({project_id: projectId});
     clientsRepository.setProjectId(this.project.id);
 
+    clientsRepository.findClient(function(){
+
+    });
+
     this.SaveClient = function(){
       this.client.project_id = projectId;
       clientsRepository.saveClient(controller.client.toJsonToServer(), function() {
