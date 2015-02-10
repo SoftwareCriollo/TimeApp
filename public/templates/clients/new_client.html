@@ -1,11 +1,11 @@
-<div ng-include="'templates/clients/new_client_box_right.html'" class="text-right box-float-right new-client-box-right"></div>
+<div ng-include="'templates/clients/client_box_right.html'" class="text-right box-float-right client-box-right"></div>
 <div class="box-title">
-  <h1 class="title">NEW CLIENT</h1>
+  <h1 class="title">{{ctrl.project.name}}</h1>
   <hr class="underline" />
 </div>
 <section id='client'>
   <div class='new-client'>
-    <form method="post" novalidate ng-submit="ctrl.SaveClient()" name="formClients">
+    <form name="formClients" ng-submit="ctrl.SaveClient()" >
       <div class="fields">
         <div class="field-form">
           <input type="text" name="name" ng-model="ctrl.client.name" placeholder="Client Name" required/>
@@ -14,6 +14,7 @@
         <div class="field-form">
           <input type="email" name="email" ng-model="ctrl.client.email" placeholder="E-mail Address" required/>
           <span ng-show="formClients.email.$error.required  && formClients.email.$dirty">The E-mail is required.</span>
+          <span ng-show="formClients.email.$error.email">The E-mail format is invalid.</span>
         </div>
         <div class="field-form">
           <input type="text" name="git" ng-model="ctrl.client.git" placeholder="Git Url" />
@@ -22,7 +23,10 @@
           <input type="text" name="ssh" ng-model="ctrl.client.ssh" placeholder="SSH" />
         </div>
       </div>
-      <input type="submit" value="SAVE" class="btn-primary save-new-client" />
+      <input type="submit" value="SAVE" class="btn-primary save-new-client" ng-class="{ disabled: formClients.$invalid }" ng-disabled="formClients.$invalid"/>
+      <div style="clear:both;"></div>
+      <span class="ng-valid" ng-show="ctrl.success">The iteration was registrated successfully.</span>
+      <span class="ng-invalid ng-dirty" ng-show="ctrl.error">An error has occurred when the operation was in progress.</span>
     </form>
   </div>
 </section>

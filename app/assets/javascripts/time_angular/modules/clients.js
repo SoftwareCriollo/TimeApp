@@ -25,10 +25,7 @@
     };
 
     this.clearForm = function(){
-      this.client.name = '';
-      this.client.email = '';
-      this.client.git = '';
-      this.client.ssh = '';
+      location.reload();
     };
 
 
