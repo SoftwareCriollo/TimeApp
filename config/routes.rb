@@ -12,7 +12,7 @@ Rails.application.routes.draw do
           get 'timelogs'
         end
       end
-      resources :clients, only: [:create, :index] 
+      resources :clients, only: [:create, :index, :update] 
     end
     resources :timelogs, only: [:create,:index]
   end

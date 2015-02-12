@@ -17,7 +17,6 @@
     clientsRepository.findClient(function(client, status, headers, config){
       if(client.name==null)
       {
-        console.dir(client);
         controller.new_client = false;
         console.log("The client is no registrated.");
       }
@@ -25,6 +24,8 @@
       {
         controller.new_client = true;
         console.log("Client: " + client.name);
+
+        controller.client = client;
       }
 
     });
@@ -41,6 +42,10 @@
 
     this.clearForm = function(){
       location.reload();
+    };
+
+    this.editClient = function(){
+      controller.new_client = false;
     };
 
   }]);

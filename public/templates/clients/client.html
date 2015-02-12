@@ -5,12 +5,39 @@
 </div>
 <section id='client' ng-show="ctrl.new_client">
   <article class='info-client'>
-    <a href class="img-edit float-right"><img src="images/edit.png"/></a>
+    <a href class="img-edit float-right" ng-click="ctrl.editClient()" ><img src="images/edit.png"/></a>
     <div class="box-center-text">
-      <div class="name-client">Corey Black</div>
-      <div class="email-client">corey@greenlightgroups.com</div>
-      <div class="git-client">Git Url: https://github.com/softwarecriollo/group-collet</div>
-      <div class="ssh-client">SSH: db:4f:b0:88:d6:d7:85:ba:cb:6e:7d:a7:42:a4:66:db</div>
+      <div class="name-client">{{ctrl.client.name}}</div>
+      <div class="email-client">{{ctrl.client.email}}</div>
+      <div class="git-client">Git Url: {{ctrl.client.name}}</div>
+      <div class="ssh-client">SSH: {{ctrl.client.name}}</div>
     </div>
   </article>
+</section>
+<section id='client_new' ng-show="!ctrl.new_client">
+  <div class='new-client'>
+    <form name="formClients" ng-submit="ctrl.SaveClient()" >
+      <div class="fields">
+        <div class="field-form">
+          <input type="text" name="name" ng-model="ctrl.client.name" placeholder="Client Name" required/>
+          <span ng-show="formClients.name.$error.required  && formClients.name.$dirty">The Name is required.</span>
+        </div>
+        <div class="field-form">
+          <input type="email" name="email" ng-model="ctrl.client.email" placeholder="E-mail Address" required/>
+          <span ng-show="formClients.email.$error.required  && formClients.email.$dirty">The E-mail is required.</span>
+          <span ng-show="formClients.email.$error.email">The E-mail format is invalid.</span>
+        </div>
+        <div class="field-form">
+          <input type="text" name="git" ng-model="ctrl.client.git" placeholder="Git Url" />
+        </div>
+        <div class="field-form">
+          <input type="text" name="ssh" ng-model="ctrl.client.ssh" placeholder="SSH" />
+        </div>
+      </div>
+      <input type="submit" value="SAVE" class="btn-primary save-new-client" ng-class="{ disabled: formClients.$invalid }" ng-disabled="formClients.$invalid"/>
+      <div style="clear:both;"></div>
+      <span class="ng-valid" ng-show="ctrl.success">The iteration was registrated successfully.</span>
+      <span class="ng-invalid ng-dirty" ng-show="ctrl.error">An error has occurred when the operation was in progress.</span>
+    </form>
+  </div>
 </section>
