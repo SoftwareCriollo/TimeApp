@@ -57,7 +57,7 @@
       })
       .when('/projects/:projectId/client', {
         templateUrl: "templates/clients/client.html",
-        controller: 'InfoClientsController',
+        controller: 'ClientsController',
         controllerAs: 'ctrl'
       })
       .when('/projects/:projectId/new_client', {

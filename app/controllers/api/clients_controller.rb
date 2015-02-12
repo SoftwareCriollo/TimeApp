@@ -9,6 +9,11 @@ class Api::ClientsController <  ApiController
     end
   end
 
+  def index
+    @client = Client.find_or_initialize_by(project_id: params[:project_id])
+    render json: @client
+  end
+
   def client_params
     params.require(:client).permit(:project_id, :name, :email, :git, :ssh)
   end

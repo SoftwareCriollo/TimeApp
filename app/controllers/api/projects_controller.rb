@@ -6,11 +6,6 @@ class Api::ProjectsController < ApiAuthenticatedController
     render json: boards
   end
 
-  def clients
-    @client = Client.where(proyect_id: params[:proyect_id] ).first 
-    render json: @client
-  end
-
   def cards
     cards = project_manager.cards_by_board(params[:id])
     render json: cards

@@ -12,9 +12,20 @@
 
     this.project = projectCache.findProject(projectId);
     this.client = new TimeApp.Client({project_id: projectId});
-    clientsRepository.setProjectId(this.project.id);
+    clientsRepository.setProjectId(projectId);
 
-    clientsRepository.findClient(function(){
+    clientsRepository.findClient(function(client, status, headers, config){
+      if(client.name==null)
+      {
+        console.dir(client);
+        controller.new_client = false;
+        console.log("The client is no registrated.");
+      }
+      else
+      {
+        controller.new_client = true;
+        console.log("Client: " + client.name);
+      }
 
     });
 
@@ -31,18 +42,6 @@
     this.clearForm = function(){
       location.reload();
     };
-
-
-  }]);
-
-  app.controller('InfoClientsController',['$http','$routeParams','CurrentUser','ProjectCache','CardsCache', function($http,$routeParams, currentUser,projectCache,cardsCache){
-
-    currentUser.isPendingAuth();
-
-    var controller = this;
-
-    var projectId = $routeParams.projectId;
-    this.project = projectCache.findProject(projectId);
 
   }]);
 
