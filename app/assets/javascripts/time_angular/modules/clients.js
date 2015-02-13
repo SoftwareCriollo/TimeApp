@@ -17,11 +17,14 @@
       if(client.name==null)
       {
         $location.path('/projects/'+projectId+'/new_client');
+
         console.log("The client is no registrated.");
       }
       else
       {
-        console.log("Client: " + client.name);
+        console.log("Client: " + client.name + " " + client._id.$oid);
+        clientsRepository.setClientId(client._id.$oid);
+
         controller.client = client;
       }
 
@@ -42,7 +45,13 @@
       }
       else
       {
-        
+        clientsRepository.updateClient(controller.client, function() {
+          $location.path('/projects/'+projectId+'/client');
+          controller.clearForm();
+        },
+        function() {
+          controller.error=true;      
+        });
       }
     };
 
