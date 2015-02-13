@@ -3,7 +3,7 @@
   <h1 class="title">{{controller.project.name}}</h1>
   <hr class="underline" />
 </div>
-<section id='client' ng-show="ctrl.new_client">
+<section id='client'>
   <article class='info-client'>
     <a href class="img-edit float-right" ng-click="ctrl.editClient()" ><img src="images/edit.png"/></a>
     <div class="box-center-text">
@@ -14,7 +14,7 @@
     </div>
   </article>
 </section>
-<section id='client_new' ng-show="!ctrl.new_client">
+<!--section id='client_new'>
   <div class='new-client'>
     <form name="formClients" ng-submit="ctrl.SaveClient()" >
       <div class="fields">
@@ -40,4 +40,4 @@
       <span class="ng-invalid ng-dirty" ng-show="ctrl.error">An error has occurred when the operation was in progress.</span>
     </form>
   </div>
-</section>
+</section-->
