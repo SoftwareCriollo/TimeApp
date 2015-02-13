@@ -16,23 +16,22 @@
     clientsRepository.findClient(function(client, status, headers, config){
       if(client.name==null)
       {
+        this.client = new TimeApp.Client();
         $location.path('/projects/'+projectId+'/new_client');
-
-        console.log("The client is no registrated.");
       }
       else
       {
-        console.log("Client: " + client.name + " " + client._id.$oid);
         clientsRepository.setClientId(client._id.$oid);
-
-        controller.client = client;
+        controller.client  = new TimeApp.Client(client);
       }
 
     });
 
     this.SaveClient = function(){
+      console.log(this.client.project_id);
       if(this.client.project_id==null)
-      { 
+      {
+      console.log("create"); 
         this.client.project_id = projectId;
         clientsRepository.saveClient(controller.client.toJsonToServer(), function() {
           $location.path('/projects/'+projectId+'/client');
@@ -41,11 +40,11 @@
         function() {
           controller.error=true;      
         });
-        
       }
       else
       {
-        clientsRepository.updateClient(controller.client, function() {
+        console.log("update");
+        clientsRepository.updateClient(controller.client.toJsonToServer(), function() {
           $location.path('/projects/'+projectId+'/client');
           controller.clearForm();
         },

@@ -16,15 +16,15 @@ class Api::ClientsController <  ApiController
 
   def update 
     @client = Client.find(params[:id])
-    if @client.update_attributes(client_params) 
-      render json: @client, status: :updated
+    if @client.update_attributes(client_params)
+      render json: @client
     else
-      render json: @client.errors.messages, status: :unprocessable_entity
+      render json: @client.errors.messages
     end
   end
 
   def client_params
-    params.require(:client).permit(:project_id, :name, :email, :git, :ssh)
+    params.require(:client).permit(:project_id, :name, :email, :git, :ssh, :email)
   end
 
 

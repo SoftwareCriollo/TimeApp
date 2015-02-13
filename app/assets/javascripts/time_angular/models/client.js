@@ -6,6 +6,8 @@
     this.email = attributes.email;
     this.git = attributes.git;
     this.ssh = attributes.ssh;
+    this.project_id = attributes.project_id;
+    
   
     this.toJsonToServer = function() {
       return {
