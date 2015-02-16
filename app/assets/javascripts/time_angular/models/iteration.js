@@ -2,6 +2,8 @@
   window.TimeApp =  window.TimeApp || {};
   var Iteration = function(attributes){
     attributes = attributes || {} 
+    if(attributes["_id"])
+      this.id = attributes["_id"]["$oid"];
     this.project_id = attributes.project_id;
     this.time = attributes.time;
     this.note = attributes.note;

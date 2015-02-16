@@ -35,7 +35,7 @@
 
   }]);
 
-  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser', 'IterationsCache', function(iterationsRepository,$routeParams, currentUser, iterationsCache){
+  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser', 'IterationsCache','TimeLoggerRepository', function(iterationsRepository,$routeParams, currentUser, iterationsCache,timeLoggerRepository){
     currentUser.isPendingAuth();
   
     var controller = this;
@@ -43,23 +43,35 @@
 
     iterationsRepository.setIterationId(iterationId);
     this.timelogs = [];
+    this.timelog = undefined;
   
-    iterationsRepository.entries(function(timelogs, status, headers, config){
-      controller.timelogs = timelogs;
-      if (timelogs.length==0)
-        controller.emptyiteration =true;
+    this.gettingEntries = function(){
+      iterationsRepository.entries(function(timelogs, status, headers, config){
+        controller.timelogs = timelogs;
+      });
+    };
 
-    });
+    this.gettingEntries();
 
-    this.editTimeEntry = function(n)
-    {
-      this.timelog = new TimeApp.TimeLogger();
+    
+    this.hasTimelogs = function(){
+      return timelogs.length > 0
+    }
+    
+    this.isEditing = function(timelog){
+      return this.timelog == timelog;
     }
 
-    this.EditTimelog = function()
-    {
-      console.dir(controller.timelog);
-      
+
+    this.editTimeEntry = function(timelog) {
+      this.timelog = timelog;
+    }
+
+    this.editTimelog = function() {
+      timeLoggerRepository.edit(this.timelog,function(){
+        controller.gettingEntries();
+        controller.timelog = undefined;
+      });
     }
    
    

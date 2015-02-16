@@ -164,7 +164,6 @@
   width: 42.5%
   margin-left: 15px
   display: table
-  position: absolute
   form
     background: none
     .field-form
@@ -174,9 +173,6 @@
       margin: 10px 0
     .field-up
       width: 53%
-    input[type='text'],
-    textarea
-      padding: 0 20px
     textarea
       height: 110px
       padding-top: 20px
@@ -185,19 +181,7 @@
     input[type='submit']
       height: 42px
       padding: 0 30px
-    [placeholder]
-      &::-webkit-input-placeholder
-        color: $color-placeholder-secondary
-        font-style: $font-style-primary
-      &:-moz-placeholder
-        color: $color-placeholder-secondary
-        font-style: $font-style-primary
-      &::-moz-placeholder
-        color: $color-placeholder-secondary
-        font-style: $font-style-primary
-      &:-ms-input-placeholder
-        color: $color-placeholder-secondary
-        font-style: $font-style-primary
+
 
 .ng-invalid.ng-dirty, .ng-invalid-required.ng-dirty
   p,span

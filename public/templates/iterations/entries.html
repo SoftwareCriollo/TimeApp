@@ -32,43 +32,43 @@
       </a>
     </div>
   </div>
-  <div ng-hide="ctrl.emptyiteration">
   <article ng-repeat="day in daysWeek">
     <div class="date-iteration date-single-iteration">
       {{day.name}}, 12/{{9+$index}} - <p>6 hours</p>
     </div>
-    <div ng-repeat="timelog in ctrl.timelogs" class="entry-time-iterations entry-time-iterations-{{n}}">
-      <div class="card-iteration card-iterarion-{{n}}">
+    <div ng-repeat="timelog in ctrl.timelogs" class="entry-time-iterations">
+      <div class="card-iteration">
         <div class="list">
-          <a ng-click="ctrl.editTimeEntry(n)" class="img-edit img-edit edit-entry-{{n}}"><img src="images/edit.png"/></a>
+          <a ng-click="ctrl.editTimeEntry(timelog)" class="img-edit" ng-hide="ctrl.isEditing(timelog)">
+            <img src="images/edit.png"/>
+          </a>
           <div class="name-task">{{timelog.task_name}}</div>
-          <div class="note-task">Notes: <a href> {{timelog.comments}}</a> </div>
+          <div class="note-task">Notes: <a href> {{timelog.comment}}</a> </div>
           <div class="list-name-task">
-            <img src="images/circle.png" />
-            DONE
+            <img src="images/circle.png" /> DONE
           </div>
           <div class="box-hours">
             <div class="box-silver"><img src="images/clock-silver.png"/>{{timelog.time}} HOURS</div>
           </div>
         </div>
       </div>
-      <div class="editTimeEntries entry-time-{{n}} hide">
-        <form method="post" name="formEditTimeEntries" ng-submit="ctrl.EditTimelog()">
-          <div class="form-time-entries">
-            <div class="field-form field-up">
-              <input type="number" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
-            </div>
-            <div class="field-form field-down">
-              <textarea rows="4" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
-            </div>
+    </div>
+    <div class="editTimeEntries" ng-show='ctrl.timelog'>
+      <form method="post" name="formEditTimeEntries" ng-submit="ctrl.editTimelog()">
+        <div class="form-time-entries">
+          <div class="field-form field-up">
+            <input type="number" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
           </div>
-          <input type="submit" value="SAVE" class="btn-primary" />
-        </form>
-      </div>
+          <div class="field-form field-down">
+            <textarea rows="4" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
+          </div>
+        </div>
+        <input type="submit" value="SAVE" class="btn-primary" />
+      </form>
     </div>
   </article>
-  </div>
-  <div ng-show="ctrl.emptyiteration">
+
+  <div ng-hide="ctrl.hasTimelogs()">
     <p>The iteration has no entries.</p>
   </div>
 </section>
