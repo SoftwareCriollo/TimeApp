@@ -9,7 +9,7 @@
   </button>
   <div class="float-right url-to-share">Url to Share: <a href>softwarecriollo.com/greenliht/12081212</a></div>
 </div>
-<section ng-init="daysWeek = [{name:'monday'}, {name:'tuesday'}, {name:'wednesday'}, {name:'thursday'}, {name:'friday'}]" class="container-new-iteration">
+<section class="container-new-iteration">
   <div class="section-up-iteration">
     <div class="float-left section-change-iteration">
       <a href>
@@ -32,9 +32,9 @@
       </a>
     </div>
   </div>
-  <article ng-repeat="day in daysWeek">
+  <article ng-repeat="(date,timelogs) in ctrl.timelogsGroup">
     <div class="date-iteration date-single-iteration">
-      {{day.name}}, 12/{{9+$index}} - <p>6 hours</p>
+      {{ date | date:'EEEE, MM/dd' }} - <p>{{ }}
     </div>
     <div ng-repeat="timelog in ctrl.timelogs" class="entry-time-iterations">
       <div class="card-iteration">

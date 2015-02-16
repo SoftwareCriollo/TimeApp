@@ -42,12 +42,14 @@
     var iterationId = $routeParams.iterationId;
 
     iterationsRepository.setIterationId(iterationId);
-    this.timelogs = [];
-    this.timelog = undefined;
+    this.timelogsGroup = [];
+    this.timelogsGroup = undefined;
   
     this.gettingEntries = function(){
       iterationsRepository.entries(function(timelogs, status, headers, config){
-        controller.timelogs = timelogs;
+        var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');
+        controller.timelogs = timesGrouped;
+	console.log(timesGrouped);
       });
     };
 
@@ -55,7 +57,7 @@
 
     
     this.hasTimelogs = function(){
-      return timelogs.length > 0
+      return this.timelogs.length > 0
     }
     
     this.isEditing = function(timelog){
