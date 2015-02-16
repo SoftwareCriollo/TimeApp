@@ -1,14 +1,26 @@
 (function(){
   window.TimeApp = window.TimeApp || {};
-  var clients = window.TimeApp;
-  clients = function(attributes){
+  var Client = function(attributes){
     attributes = attributes || {};
-    this.client_name = attributes.client_name;
-    this.client_email = attributes.client_email;
-    this.client_git = attributes.client_git;
-    this.client_ssh = attributes.client_ssh;
-
+    this.name = attributes.name;
+    this.email = attributes.email;
+    this.git = attributes.git;
+    this.ssh = attributes.ssh;
+    this.project_id = attributes.project_id;
+    
+  
+    this.toJsonToServer = function() {
+      return {
+        'project_id': this.project_id,
+        'name': this.name,
+        'email': this.email,
+        'git': this.git,
+        'ssh' : this.ssh
+      };
+    }
 
   };
+
+  window.TimeApp.Client = Client;
 })();
 

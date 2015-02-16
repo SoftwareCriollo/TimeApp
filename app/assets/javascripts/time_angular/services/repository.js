@@ -40,6 +40,41 @@
       return this;
     }]);
 
+
+$provide.factory('ClientsRepository',["Repository",function(repository) {
+      this.route = undefined;
+      this.projectId = undefined;
+      this.clientId = undefined;
+
+      this.setProjectId = function(projectId){
+        this.projectId = projectId;
+        this.route = '/api/projects/'+projectId+'/clients';
+      };
+
+      this.setClientId = function(clientId){
+        this.clientId = clientId;
+        this.route = '/api/projects/'+this.projectId+'/clients/'+clientId;
+      };
+
+      this.findClient = function(success_callback){
+        if( this.projectId === undefined)
+          console.error("You must set projectId");
+        else
+          repository.get(this.route,success_callback);
+      };
+
+      this.saveClient = function(client,success_callback,error_callback){
+        repository.post(this.route, {"client":client}, success_callback, error_callback);
+      };
+
+      this.updateClient = function(client,success_callback,error_callback){
+        repository.patch(this.route, {"client":client}, success_callback, error_callback);
+      };
+      
+      return this;
+    }]);
+
+
     $provide.factory('IterationsRepository',["Repository",function(repository) {
       this.route_shallow = '/api/iterations';
       this.route = undefined;

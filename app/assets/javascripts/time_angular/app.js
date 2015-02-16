@@ -55,15 +55,15 @@
         controller: 'TimelogsController',
         controllerAs: 'ctrl'
       })
-      .when('/clients/:projectId/client', {
+      .when('/projects/:projectId/client', {
         templateUrl: "templates/clients/client.html",
-        controller: 'InfoClientsController',
-        controllerAs: 'controller'
+        controller: 'ClientsController',
+        controllerAs: 'ctrl'
       })
-      .when('/clients/new_client', {
+      .when('/projects/:projectId/new_client', {
         templateUrl: "templates/clients/new_client.html",
         controller: 'ClientsController',
-        controllerAs: 'controller'
+        controllerAs: 'ctrl'
       })
       .when('/performance', {
         templateUrl: 'templates/performance/index.html',

@@ -1,16 +1,16 @@
 <div ng-include="'templates/clients/client_box_right.html'" class="text-right box-float-right client-box-right"></div>
 <div class="box-title">
-  <h1 class="title">{{controller.project.name}}</h1>
+  <h1 class="title">{{ctrl.project.name}}</h1>
   <hr class="underline" />
 </div>
 <section id='client'>
   <article class='info-client'>
-    <a href class="img-edit float-right"><img src="images/edit.png"/></a>
+    <a href class="img-edit float-right" ng-click="ctrl.editClient()" ><img src="images/edit.png"/></a>
     <div class="box-center-text">
-      <div class="name-client">Corey Black</div>
-      <div class="email-client">corey@greenlightgroups.com</div>
-      <div class="git-client">Git Url: https://github.com/softwarecriollo/group-collet</div>
-      <div class="ssh-client">SSH: db:4f:b0:88:d6:d7:85:ba:cb:6e:7d:a7:42:a4:66:db</div>
+      <div class="name-client">{{ctrl.client.name}}</div>
+      <div class="email-client">{{ctrl.client.email}}</div>
+      <div class="git-client">Git Url: {{ctrl.client.git}}</div>
+      <div class="ssh-client">SSH: {{ctrl.client.ssh}}</div>
     </div>
   </article>
 </section>

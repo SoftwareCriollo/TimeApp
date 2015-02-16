@@ -1,51 +1,63 @@
 'use strict';
 (function(){
+  var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-clients',['CacheStore'])
 
-  app.controller('ClientsController',['$http','CurrentUser', function($http, currentUser){
+  app.controller('ClientsController',['ClientsRepository','$routeParams','CurrentUser','ProjectCache','$location', function(clientsRepository,$routeParams, currentUser,projectCache,$location){
 
     currentUser.isPendingAuth();
 
     var controller = this;
+    var projectId = $routeParams.projectId;
 
-    this.clientsArray = [];
+    this.project = projectCache.findProject(projectId);
+    clientsRepository.setProjectId(projectId);
 
-    this.newClient = function() {
-      if (this.clients.client_name && this.clients.client_email && this.clients.client_git && this.clients.client_ssh) {
-         this.addClient();
+    clientsRepository.findClient(function(client, status, headers, config){
+      if(client.name==null)
+      {
+        controller.client = new TimeApp.Client();
+        $location.path('/projects/'+projectId+'/new_client');
+      }
+      else
+      {
+        clientsRepository.setClientId(client._id.$oid);
+        controller.client  = new TimeApp.Client(client);
+      }
+
+    });
+
+    this.SaveClient = function(){
+      if(this.client.project_id==null)
+      {
+        this.client.project_id = projectId;
+        clientsRepository.saveClient(controller.client.toJsonToServer(), function() {
+          $location.path('/projects/'+projectId+'/client');
+          controller.clearForm();
+        },
+        function() {
+          controller.error=true;      
+        });
+      }
+      else
+      {
+        clientsRepository.updateClient(controller.client.toJsonToServer(), function() {
+          $location.path('/projects/'+projectId+'/client');
+          controller.clearForm();
+        },
+        function() {
+          controller.error=true;      
+        });
       }
     };
 
-    this.addClient = function(){
-      var dateClient = {};
-      dateClient.client_name = this.clients.client_name;
-      dateClient.client_email = this.clients.client_email;
-      dateClient.client_git = this.clients.client_git;
-      dateClient.client_ssh = this.clients.client_ssh;
-
-      this.clientsArray.push(dateClient);
-
-      this.resetForm();
+    this.clearForm = function(){
+      location.reload();
     };
 
-    this.resetForm = function(){
-      this.clients.client_name = '';
-      this.clients.client_email = '';
-      this.clients.client_git = '';
-      this.clients.client_ssh = '';
+    this.editClient = function(){
+      $location.path('/projects/'+projectId+'/new_client');
     };
-
-
-  }]);
-
-  app.controller('InfoClientsController',['$http','$routeParams','CurrentUser','ProjectCache','CardsCache', function($http,$routeParams, currentUser,projectCache,cardsCache){
-
-    currentUser.isPendingAuth();
-
-    var controller = this;
-
-    var projectId = $routeParams.projectId;
-    this.project = projectCache.findProject(projectId);
 
   }]);
 
