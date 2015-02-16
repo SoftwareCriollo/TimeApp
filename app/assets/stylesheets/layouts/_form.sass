@@ -39,10 +39,12 @@ input[type='search']
   background-size: 15px
   padding-left: 20px
   
-input[type='text'],input[type='date'], input[type='email'], input[type='password'],input[type='search'], input[type='tel'], input[type='url'],input[type='number']
+
+input[type='text'],input[type='date'], input[type='email'], input[type='password'],input[type='search'], input[type='tel'], input[type='url'],input[type='number'],textarea
   position: relative
   display: block
   width: 100%
+  padding-left: 1em
   &.half-size
     width: 50%
 
@@ -54,5 +56,5 @@ input[type='text'],input[type='date'], input[type='email'], input[type='password
 
 [placeholder]
   &::-webkit-input-placeholder,&:-moz-placeholder,&::-moz-placeholder,&:-ms-input-placeholder  
-    color: $color-placeholder-primary
-    font-style: italic
+    color: $color-placeholder-secondary
+    font-style: $font-style-primary

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :timelogs, only: [:create,:index]
+    resources :timelogs, only: [:create,:index,:update]
   end
   
 #  namespace :api do

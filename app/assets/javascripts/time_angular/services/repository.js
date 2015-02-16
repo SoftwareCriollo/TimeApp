@@ -20,16 +20,17 @@
         repository.post(this.route,{"timelogger":data},success_callback);
       };
 
-      this.edit = function(object,success_callback){        
-        repository.post(this.route,{"timelog":data},success_callback);        
+      this.edit = function(timelog,success_callback){
+        console.log(timelog);
+        repository.patch(this.patchRoute(timelog),{"timelog":timelog},success_callback);        
       };
 
       this.createRoute= function(){
         return this.route;
       };
 
-      this.patchRoute= function(data){
-        return this.route + "/"+data.timelog_id;
+      this.patchRoute= function(timelog){
+        return this.route + "/"+timelog["_id"]["$oid"];
       };
 
       //Timelogger

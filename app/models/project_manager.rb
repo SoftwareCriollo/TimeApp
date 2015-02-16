@@ -61,7 +61,7 @@ class ProjectManager
   end
   
   def organization_name
-    'softwarecriollo'
+    'softwarecriollo2'
   end
 
   def allowed_lists(lists)

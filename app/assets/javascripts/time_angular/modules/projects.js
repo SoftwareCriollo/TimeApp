@@ -41,9 +41,6 @@
       controller.cards = cards;
     });
 
-
-    //Timelogger
-
     this.saveTimeLogger = function(){
       this.timeLogger.project_id = projectId;
       this.timeLogger.project_name = this.project.name;
