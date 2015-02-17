@@ -43,13 +43,14 @@
 
     iterationsRepository.setIterationId(iterationId);
     this.timelogsGroup = [];
-    this.timelogsGroup = undefined;
+    this.timelogs = [];
+    this.timelog = undefined;
   
     this.gettingEntries = function(){
       iterationsRepository.entries(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');
-        controller.timelogs = timesGrouped;
-	console.log(timesGrouped);
+        controller.timelogsGroup = timesGrouped;
+        controller.timelogs = timelogs;
       });
     };
 
@@ -57,6 +58,7 @@
 
     
     this.hasTimelogs = function(){
+      console.log( this.timelogs.length );
       return this.timelogs.length > 0
     }
     
@@ -75,11 +77,10 @@
         controller.timelog = undefined;
       });
     }
-   
-   
+    this.total = function(timelogs){
+      return timelogs.reduce(function(prev, current){ return (prev.time + current.time); })
+    }
   }]);
-
-
 })();
 
 

@@ -21,7 +21,7 @@
       <h3>DECEMBER 8th - 12th</h3>
       <div class="box-total-hours-iteration">
         <img src="images/watch.png"/>
-        7 hours worked
+        {{ctrl.total(ctrl.timelogs)}} hours worked
         <hr class="underline-short-dark"/>
       </div>
     </div>
@@ -34,9 +34,9 @@
   </div>
   <article ng-repeat="(date,timelogs) in ctrl.timelogsGroup">
     <div class="date-iteration date-single-iteration">
-      {{ date | date:'EEEE, MM/dd' }} - <p>{{ }}
+      {{ date | date:'EEEE, MM/dd' }}  <p> {{ ctrl.total(timelogs) }} - hours </p>
     </div>
-    <div ng-repeat="timelog in ctrl.timelogs" class="entry-time-iterations">
+    <div ng-repeat="timelog in timelogs" class="entry-time-iterations">
       <div class="card-iteration">
         <div class="list">
           <a ng-click="ctrl.editTimeEntry(timelog)" class="img-edit" ng-hide="ctrl.isEditing(timelog)">
