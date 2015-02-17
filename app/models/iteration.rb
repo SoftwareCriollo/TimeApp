@@ -11,13 +11,17 @@ class Iteration
   validates_presence_of :start, :time
   validates_numericality_of :time
 
-  has_many :timelogs
+  #has_many :timelogs
 
-  scope :by_project, ->(project_id) { includes(:timelogs).where(:project_id => project_id).order_by(:start.desc) }
+  scope :by_project, ->(project_id) { where(:project_id => project_id).order_by(:start.desc) }
 
   before_create do |iteration|
     prev_iteration = Iteration.current_iteration(iteration.project_id)
     prev_iteration.close_iteration! if prev_iteration
+  end
+
+  def timelogs
+    Timelog.where(iteration_id: self.id)
   end
 
   def self.current_iteration(project)
@@ -39,7 +43,7 @@ class Iteration
   end
 
   def time_worked
-    total_time = timelogs.inject(0.0){|total,timelog| total += timelog.time_for_iteration }
+    total_time = timelogs.inject(0.0){|total,timelog| total += timelog.time_worked }
     total_time.round(2)
   end  
 
