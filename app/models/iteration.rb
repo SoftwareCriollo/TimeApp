@@ -21,7 +21,7 @@ class Iteration
   end
 
   def self.current_iteration(project)
-    where(:project_id => project, :start.lte => DateTime.now ).order_by(:start.desc).limit(1).last
+    where(:project_id => project, :start.lte => DateTime.now ).order_by(:start.desc).limit(1).first
   end
 
   def close_iteration!
