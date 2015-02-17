@@ -10,7 +10,6 @@
     var projectId = $routeParams.projectId;
 
     this.project = projectCache.findProject(projectId);
-    console.dir(this.project);
     this.iteration = new TimeApp.Iteration({project_id: projectId});
 
     iterationsRepository.setProjectId(this.project.id);
@@ -41,21 +40,116 @@
     var controller = this;
     var iterationId = $routeParams.iterationId;
 
-    iterationsRepository.setIterationId(iterationId);
+    var minDate = null;
+    var maxDate = null;
+
+    var currentDate = null;
+
+    var nextWeek = null; 
+
+    var dateStart = null;
+    var dateEnd = null;
+
     this.timelogsGroup = [];
     this.timelogs = [];
     this.timelog = undefined;
-  
-    this.gettingEntries = function(){
+
+    iterationsRepository.findIteration(iterationId, function(iteration, status, headers, config){
+      controller.initialize(iteration);
+    });  
+
+    this.initialize = function(iteration){
+      this.iteration=iteration;
+      minDate = new Date(iteration.start);
+      maxDate = new Date(iteration.end_date || new Date());
+
+      currentDate = minDate;
+
+      this.currentWeekStart = this.calculateInterval(currentDate,1);
+      this.currentWeekEnd = this.calculateInterval(currentDate,7);
+
+      nextWeek = this.calculateWeek(this.currentWeekStart,1); 
+
+      this.nextWeekStart = this.calculateInterval(nextWeek,1);
+      this.nextWeekEnd = this.calculateInterval(nextWeek,7);
+
+      dateStart = this.dateFormat(this.currentWeekStart);
+      dateEnd = this.dateFormat(this.currentWeekEnd);
+
+      this.gettingEntries(dateStart,dateEnd);
+
+      if(this.nextWeekStart < maxDate)
+        this.showNext=true;
+
+    }
+
+    this.gettingEntries = function(dateStart,dateEnd){
+      iterationsRepository.setDates(dateStart, dateEnd);
+      
       iterationsRepository.entries(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');
         controller.timelogsGroup = timesGrouped;
         controller.timelogs = timelogs;
       });
+    }
+
+    this.dateFormat = function(date) {
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth()+1).toString();
+      var dd  = date.getDate().toString();
+      return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
     };
 
-    this.gettingEntries();
+    this.changeNext = function(){
+      this.previousWeekStart = this.currentWeekStart;
+      this.previousWeekEnd = this.currentWeekEnd;
 
+      this.currentWeekStart = this.nextWeekStart;
+      this.currentWeekEnd = this.nextWeekEnd;
+
+      dateStart = this.dateFormat(this.currentWeekStart);
+      dateEnd = this.dateFormat(this.currentWeekEnd);
+
+      this.gettingEntries(dateStart,dateEnd);
+
+      nextWeek = this.calculateWeek(this.currentWeekStart,1); 
+
+      this.nextWeekStart = this.calculateInterval(nextWeek, 1);
+      this.nextWeekEnd = this.calculateInterval(nextWeek, 7);
+      this.showPrevious=true;
+
+      if(this.nextWeekStart > maxDate)
+        this.showNext=false;
+    }
+
+    this.changePrevious = function(){
+      this.nextWeekStart = this.currentWeekStart;
+      this.nextWeekEnd = this.currentWeekEnd;
+
+      this.currentWeekStart = this.previousWeekStart;
+      this.currentWeekEnd = this.previousWeekEnd;
+
+      dateStart = this.dateFormat(this.currentWeekStart);
+      dateEnd = this.dateFormat(this.currentWeekEnd);
+
+      this.gettingEntries(dateStart,dateEnd);
+
+      this.previousWeekStart = this.calculateWeek(this.currentWeekStart,-1);
+      this.previousWeekEnd = this.calculateWeek(this.currentWeekEnd,-1);
+      this.showNext = true;
+
+      if(this.previousWeekStart < minDate)
+        this.showPrevious=false;
+
+    }
+
+    this.calculateInterval = function(date, plus){
+      return new Date(date.setDate(date.getDate() - date.getDay() + plus));
+    }
+
+    this.calculateWeek=function(date, sign){
+      return new Date(date.getTime() + (7*sign) * 24 * 60 * 60 * 1000);
+    }
     
     this.hasTimelogs = function(){
       return this.timelogs.length > 0
@@ -89,6 +183,29 @@
       }
     }
   }]);
+
+  app.filter('dateSuffix', function($filter) {
+    var suffixes = ["th", "st", "nd", "rd"];
+    return function(input) {
+      var dtfilter = $filter('date')(new Date(input), 'MMMM dd');
+      var day = parseInt(dtfilter.slice(-2));
+      var relevantDigits = (day < 30) ? day % 20 : day % 30;
+      var suffix = (relevantDigits <= 3) ? suffixes[relevantDigits] : suffixes[0];
+      return dtfilter.toUpperCase()+suffix;
+    };
+  });
+
+  app.filter('ddSuffix', function($filter) {
+    var suffixes = ["th", "st", "nd", "rd"];
+    return function(input) {
+      var dtfilter = $filter('date')(new Date(input), 'dd');
+      var day = parseInt(dtfilter.slice(-2));
+      var relevantDigits = (day < 30) ? day % 20 : day % 30;
+      var suffix = (relevantDigits <= 3) ? suffixes[relevantDigits] : suffixes[0];
+      return dtfilter+suffix;
+    };
+  });
+
 })();
 
 
