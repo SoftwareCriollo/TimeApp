@@ -11,8 +11,6 @@ class Iteration
   validates_presence_of :start, :time
   validates_numericality_of :time
 
-  #has_many :timelogs
-
   scope :by_project, ->(project_id) { where(:project_id => project_id).order_by(:start.desc) }
 
   before_create do |iteration|

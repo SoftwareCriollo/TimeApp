@@ -16,12 +16,10 @@ class Timelog
   validates_presence_of :trello, :task_id
   validates_numericality_of :time, greater_than: 0
 
-  belongs_to :iteration
-
   scope :last_registered, -> (quantity=1){order_by(:fecha.desc).limit(quantity) }
 
   before_validation do |timelog|
-    timelog.iteration = Iteration.current_iteration(timelog.project_id) if iteration.nil?    
+    timelog.iteration_id = Iteration.current_iteration(timelog.project_id) if iteration.nil?    
     timelog.set_project_name
     timelog.set_task_name
     timelog.set_value_ajust
@@ -31,6 +29,9 @@ class Timelog
     timelog.fecha ||= Date.today
   end
 
+  def iteration 
+    Iteration.where(id: iteration_id)
+  end
 
   def set_project_name
     self.project_name ||= ProjectManager.new.project_name(project_id)
