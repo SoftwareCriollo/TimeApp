@@ -58,27 +58,35 @@
 
     
     this.hasTimelogs = function(){
-      console.log( this.timelogs.length );
       return this.timelogs.length > 0
-    }
+    };
     
     this.isEditing = function(timelog){
       return this.timelog == timelog;
-    }
+    };
 
 
     this.editTimeEntry = function(timelog) {
       this.timelog = timelog;
-    }
+    };
 
     this.editTimelog = function() {
       timeLoggerRepository.edit(this.timelog,function(){
         controller.gettingEntries();
         controller.timelog = undefined;
       });
-    }
+    };
+
     this.total = function(timelogs){
-      return timelogs.reduce(function(prev, current){ return (prev.time + current.time); })
+      if (timelogs.length == 0)
+        return 0;
+      else{
+        var value = 0;
+        for (var i = timelogs.length - 1; i >= 0; i--) {
+          value += timelogs[i].time;
+        };
+        return value;
+      }
     }
   }]);
 })();
