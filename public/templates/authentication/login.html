@@ -4,6 +4,9 @@
     <div class="fields">
       <input type="email" name="email" ng-model="auth.user.email" placeholder="Login" />
       <input type="password" name="password" ng-model="auth.user.password" placeholder="Password" />
+      <div class="alert success" ng-show="alerts.success ng-hide="true"">
+        <div>{{alerts.message}}</div>
+      </div>
     </div>
       <input type="submit" class="btn-primary btn-centered" name="commit" value="LOG IN">
     <div class="login-help">
