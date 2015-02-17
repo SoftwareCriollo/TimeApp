@@ -37,6 +37,11 @@ class MongoidUser
   def apprentice?
     ["mariaalejandra@softwarecriollo.com", "jesus@softwarecriollo.com", "rafael@softwarecriollo.com"].include?(email)
   end
+  def update_password(params)
+    update(params)
+    change_token
+    self.save
+  end
   private
 
   def change_token

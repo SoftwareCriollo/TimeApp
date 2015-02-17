@@ -4,13 +4,14 @@
   <title>TimeApp</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= csrf_meta_tags %>
-  <meta name='Token' content=''>
 </head>
-<body ng-app="timeFrontendApp">
+<body>
   <div class="header">
-    <a href="#/project"><img src="images/logo.svg" alt="logo" /></a>
+    <a href="/#/project"><img src="/images/logo.svg" alt="logo" /></a>
   </div>
-  <div ng-view="" class='container'></div>
+  <div class="container">
+    <%= yield %>  
+  </div>
   <div class="hide">
     <%= javascript_include_tag 'application' %>
   </div>

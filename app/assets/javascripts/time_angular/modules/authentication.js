@@ -15,10 +15,13 @@
       });
     }
     this.user = new TimeApp.User();
-    this.user.email = "test@email.com";
-    this.user.password = "password";
     currentUser.checkAuth();
+  }]);
 
+  app.controller('ForgotController',['$scope','$location','Auth','CurrentUser', function($scope,$location,Auth){
+    var controller = this;
+    this.user = new TimeApp.User();
+    currentUser.checkAuth();
   }]);
 
 })();
