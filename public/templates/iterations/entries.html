@@ -4,14 +4,11 @@
     <h1 class="title"> {{ctrl.project.name}}</h1>
     <hr class="underline" />
   </div>
-  <button class="search-date-range">
-    <a href="#/iterations/search_by_project/">SEARCH BY DATE RANGE</a>
-  </button>
   <div class="float-right url-to-share">Url to Share: <a href>softwarecriollo.com/greenliht/12081212</a></div>
 </div>
 <section class="container-new-iteration">
   <div class="section-up-iteration">
-    <div class="float-left section-change-iteration" ng-show="ctrl.showprevious" ng-click="ctrl.changePrevious()">
+    <div class="float-left section-change-iteration" ng-show="ctrl.showPrevious" ng-click="ctrl.changePrevious()">
       <a href>
         <img src="images/arrow-circle.png"/>
         <p>{{ctrl.previousWeekStart | dateSuffix}} - {{ctrl.previousWeekEnd | ddSuffix}}</p>

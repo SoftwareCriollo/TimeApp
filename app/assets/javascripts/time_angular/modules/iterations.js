@@ -61,9 +61,9 @@
     this.initialize = function(iteration){
       this.iteration=iteration;
       minDate = new Date(iteration.start);
-      maxDate = new Date(iteration.end_date);
+      maxDate = new Date(iteration.end_date || new Date());
 
-      currentDate = new Date(iteration.start);
+      currentDate = minDate;
 
       this.currentWeekStart = this.calculateInterval(currentDate,1);
       this.currentWeekEnd = this.calculateInterval(currentDate,7);
@@ -77,6 +77,9 @@
       dateEnd = this.dateFormat(this.currentWeekEnd);
 
       this.gettingEntries(dateStart,dateEnd);
+
+      if(this.nextWeekStart < maxDate)
+        this.showNext=true;
 
     }
 
@@ -113,10 +116,10 @@
 
       this.nextWeekStart = this.calculateInterval(nextWeek, 1);
       this.nextWeekEnd = this.calculateInterval(nextWeek, 7);
-      this.showprevious=true;
+      this.showPrevious=true;
 
       if(this.nextWeekStart > maxDate)
-        this.shownext=false;
+        this.showNext=false;
     }
 
     this.changePrevious = function(){
@@ -133,10 +136,10 @@
 
       this.previousWeekStart = this.calculateWeek(this.currentWeekStart,-1);
       this.previousWeekEnd = this.calculateWeek(this.currentWeekEnd,-1);
-      this.shownext = true;
+      this.showNext = true;
 
       if(this.previousWeekStart < minDate)
-        this.showprevious=false;
+        this.showPrevious=false;
 
     }
 
