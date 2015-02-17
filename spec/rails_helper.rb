@@ -10,11 +10,10 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.before(:each) do
-    begin
-      DatabaseCleaner.start
-    ensure
-      DatabaseCleaner.clean
-    end
+    Iteration.delete_all
+    User.delete_all
+    Timelog.delete_all
+    Client.delete_all
   end
   config.infer_spec_type_from_file_location!
 end

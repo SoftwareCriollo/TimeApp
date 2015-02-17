@@ -33,17 +33,22 @@ class Iteration
   end
   
   def can_register_hours?
-    time_worked < time 
+    time_for_iteration < time 
   end
 
   def remain_time
-    time - time_worked
+    time - time_for_iteration
   end
 
   def time_worked
     total_time = timelogs.inject(0.0){|total,timelog| total += timelog.time_worked }
     total_time.round(2)
   end  
+  def time_for_iteration
+    total_time = timelogs.inject(0.0){|total,timelog| total += timelog.time_for_iteration }
+    total_time.round(2)
+  end  
+
 
   def as_json(options = nil)
     super(options).merge({time_worked: time_worked})

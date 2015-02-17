@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe Iteration, :type => :model do
+  before do
+    Iteration.delete_all
+    User.delete_all
+    Timelog.delete_all
+    Client.delete_all
+  end
 	it { should respond_to(:start) }
 	it { should respond_to(:end_date) }
 	it { should respond_to(:time) }

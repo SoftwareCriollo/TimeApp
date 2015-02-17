@@ -19,7 +19,8 @@ class Timelog
   scope :last_registered, -> (quantity=1){order_by(:fecha.desc).limit(quantity) }
 
   before_validation do |timelog|
-    timelog.iteration_id = Iteration.current_iteration(timelog.project_id).id if iteration
+    iteration = Iteration.current_iteration(timelog.project_id)
+    timelog.iteration_id = iteration.id if iteration
     timelog.set_project_name
     timelog.set_task_name
     timelog.set_value_ajust
