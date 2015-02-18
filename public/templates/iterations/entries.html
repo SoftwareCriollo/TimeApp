@@ -11,23 +11,23 @@
 </div>
 <section class="container-new-iteration">
   <div class="section-up-iteration">
-    <div class="float-left section-change-iteration">
+    <div class="float-left section-change-iteration" ng-show="ctrl.showprevious" ng-click="ctrl.changePrevious()">
       <a href>
         <img src="images/arrow-circle.png"/>
-        <p>DECEMBER 15th - 19th</p>
+        <p>{{ctrl.previousWeekStart | dateSuffix}} - {{ctrl.previousWeekEnd | ddSuffix}}</p>
       </a>
     </div>
     <div class="box-center-iteration">
-      <h3>DECEMBER 8th - 12th</h3>
+      <h3>{{ctrl.currentWeekStart | dateSuffix}} - {{ctrl.currentWeekEnd | ddSuffix}}</h3>
       <div class="box-total-hours-iteration">
         <img src="images/watch.png"/>
         {{ctrl.total(ctrl.timelogs)}} hours worked
         <hr class="underline-short-dark"/>
       </div>
     </div>
-    <div class="float-right section-change-iteration">
+    <div class="float-right section-change-iteration" ng-show="ctrl.showNext"  ng-click="ctrl.changeNext()">
       <a href>
-        <p>DECEMBER 1th - 5th</p>
+        <p>{{ctrl.nextWeekStart | dateSuffix}} - {{ctrl.nextWeekEnd | ddSuffix}}</p>
         <img class="img-rotate-180" src="images/arrow-circle.png"/>
       </a>
     </div>

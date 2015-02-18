@@ -17,6 +17,7 @@ class Timelog
   validates_numericality_of :time, greater_than: 0
 
   scope :last_registered, -> (quantity=1){order_by(:fecha.desc).limit(quantity) }
+  scope :by_week, -> (date_1,date_2) { where({ :fecha => date_1..date_2 }) }
 
   before_save do |timelog|
     iteration = Iteration.current_iteration(timelog.project_id)

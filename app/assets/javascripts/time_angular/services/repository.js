@@ -98,10 +98,17 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
         repository.post(this.route, {"iteration":iteration}, success_callback, error_callback);
       };
 
-      this.setIterationId = function(iterationId){
+      this.findIteration = function(iterationId, success_callback){
         this.iterationId = iterationId;
-        this.route= "/api/iterations/"+iterationId+"/timelogs";
+        this.route = '/api/iterations/'+iterationId;
+        repository.get(this.route,success_callback);
       };
+
+      this.setDates = function(date_start,date_end){
+        this.date_start = date_start;
+        this.date_end = date_end;
+        this.route= "/api/iterations/"+this.iterationId+"/timelogs/?date_1="+date_start+"&date_2="+date_end;
+      }
 
       this.entries = function(success_callback){
 
