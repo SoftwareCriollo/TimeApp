@@ -12,7 +12,8 @@ class Iteration
   validates_numericality_of :time
 
   scope :by_project, ->(project_id) { where(:project_id => project_id).order_by(:start.desc) }
-
+  scope :closed, -> {where(end_date: nil)}
+  
   before_create do |iteration|
     prev_iteration = Iteration.current_iteration(iteration.project_id)
     prev_iteration.close_iteration! if prev_iteration
@@ -27,7 +28,7 @@ class Iteration
   end
 
   def close_iteration!
-    last_timelog = self.timelogs.last_registered(1).last
+    last_timelog = self.timelogs.last_registered(1).first
     self.end_date = last_timelog.fecha
     self.save
   end
