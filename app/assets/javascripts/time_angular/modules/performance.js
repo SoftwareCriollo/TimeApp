@@ -6,11 +6,13 @@
 
     currentUser.isPendingAuth();
 
-    var controller = this;
-    this.date_end=null;
-    this.date_start=null;
+    var controller = this; 
+    this.end_date = new Date();
+    this.start_date = new Date();
 
     this.projects = projectsCache.projects;
+    this.selectedOption = this.projects[1];
+    console.dir(this.projects);
 
     this.edit = function(idPerformance){
 
@@ -28,6 +30,10 @@
 
       this.lastPerformance = idPerformance;
     };
+
+    this.SeachPerformance = function(){
+
+    }
 
   }]);
 
