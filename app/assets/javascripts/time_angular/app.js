@@ -68,7 +68,7 @@
       .when('/performance', {
         templateUrl: 'templates/performance/index.html',
         controller: 'GeneralPerformanceController',
-        controllerAs: 'controller'
+        controllerAs: 'ctrl'
       })
       .when('/performance/search', {
         templateUrl: 'templates/performance/search.html',

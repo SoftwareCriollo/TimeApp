@@ -1,34 +1,42 @@
-<div ng-include="'templates/performance/general_performance_box_right.html'" class="text-right box-float-right general-performance-box-right"></div>
+<navigatorproject class='navigator-right' project="ctrl.project"></navigatorproject>
 <div class="section-up-performance section-up-title">
-  <div class="box-title title-performance">
-    <h1 class="title"> GENERAL PERFORMANCE</h1>
-    <hr class="underline" />
+  <div class="box-search-performance">
+    <form class="formPerformance" name="formPerformance">
+      <section class="box-search-performance">
+        <form class="formSearchByDate" ng-submit="ctrl.SeachPerformance()">
+          <div class="field-form field-performance float-left">
+            <input type="date" name="start_date" ng-model="ctrl.start_date" placeholder="Start date"/>
+          </div>
+          <div class="field-form field-performance float-left margin-right">
+            <input type="date" name="end_date" ng-model="ctrl.end_date" placeholder="End date"/>
+          </div>
+          <div class="field-form field-performance float-left">
+            <select ng-model="ctrl.project" ng-options="p.id as p.name for p in ctrl.projects">
+               <option value='' disabled selected> All Projects </option> 
+            </select>
+          </div>
+          <div class="field-form field-performance float-left">
+            <select name="team">
+              <option value='' disabled selected>Team member</option>
+            </select>
+          </div>
+          <div class="field-button-performance">
+            <input type="submit" value="SEARCH" class="btn-primary"/>
+          </div>
+        </form>
+      </section>
+    </form>
   </div>
-  <button class="search-date-range">
-    <a href="#/performance/search">SEARCH BY DATE RANGE</a>
-  </button>
 </div>
 <section class="container-new-performance">
   <div class="section-up-performance">
-    <div class="float-left section-change-performance">
-      <a href>
-        <img src="images/arrow-circle.png"/>
-        <p>DECEMBER 15th - 19th</p>
-      </a>
-    </div>
     <div class="box-center-performance">
-      <h3>DECEMBER 8th - 12th</h3>
+      <h3>{{ctrl.start_date | dateSuffix}} - {{ctrl.end_date | ddSuffix}}</h3>
       <div class="box-total-hours-performance">
         <img src="images/watch.png"/>
         37 hours worked
         <hr class="underline-short-dark"/>
       </div>
-    </div>
-    <div class="float-right section-change-performance">
-      <a href>
-        <p>DECEMBER 1th - 5th</p>
-        <img class="img-rotate-180" src="images/arrow-circle.png"/>
-      </a>
     </div>
   </div>
   <article ng-repeat="n in [1,2]">

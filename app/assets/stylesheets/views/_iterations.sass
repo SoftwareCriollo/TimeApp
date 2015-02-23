@@ -95,6 +95,8 @@
 .box-center-iteration,
 .entry-time-iterations
   display: inline-block
+  .disabled
+    visibility: hidden
 
 .section-up-iteration
   width: 100%
@@ -136,7 +138,11 @@
     margin-top: 7px
 
 .box-center-iteration
-  width: 50%
+  width: calc(100% - 26em)
+
+.box-left-iteration,
+.box-right-iteration
+  width: 13em
 
 .box-total-hours-iteration
   margin-bottom: 30px

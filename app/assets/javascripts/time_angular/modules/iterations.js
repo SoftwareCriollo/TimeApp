@@ -17,6 +17,7 @@
 
     iterationsRepository.index(function(iterations, status, headers, config){
       controller.iterations = iterations;
+      console.dir(iterations);
     });
 
     this.SaveIteration = function(){
@@ -34,7 +35,7 @@
 
   }]);
 
-  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser', 'IterationsCache','TimeLoggerRepository', function(iterationsRepository,$routeParams, currentUser, iterationsCache,timeLoggerRepository){
+  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository){
     currentUser.isPendingAuth();
   
     var controller = this;
@@ -56,7 +57,10 @@
 
     iterationsRepository.findIteration(iterationId, function(iteration, status, headers, config){
       controller.initialize(iteration);
-    });  
+      controller.project = projectCache.findProject(iteration.project_id);
+    });
+
+
 
     this.initialize = function(iteration){
       this.iteration=iteration;

@@ -133,12 +133,6 @@
   form
     padding-bottom: 20px
 
-.field-performance
-  display: inline-block
-  width: 20%
-  font-size: 14px
-  margin: 30px 0px 0px 30px
-
 .field-button-performance
   width: 4.5em
   margin: 35px 20px 0px
@@ -148,4 +142,19 @@
     font-size: 0.75em
     margin: 0
 
-
+.field-performance
+  display: inline-block
+  width: 17%
+  font-size: 14px
+  margin: 30px 0px 0px 30px
+  select
+    width: 100%
+    [placeholder]
+      &::-webkit-input-placeholder
+        font-style: $font-style-primary
+      &:-moz-placeholder 
+        font-style: $font-style-primary
+      &::-moz-placeholder 
+        font-style: $font-style-primary
+      &:-ms-input-placeholder
+        font-style: $font-style-primary
