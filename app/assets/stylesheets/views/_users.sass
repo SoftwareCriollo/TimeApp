@@ -1,5 +1,6 @@
 .container-login
   margin-bottom: 100px
+  border-radius: 2px
 
 form.login
   display: block
@@ -8,6 +9,8 @@ form.login
   padding: 57px 45px 40px 45px
   .fields
     margin-bottom: 56px
+    ::-webkit-input-placeholder
+      color: #556270
     input
       display: inline-block
   .field-down
@@ -16,6 +19,9 @@ form.login
 .btn-login,
 .login-help
   text-align: center
+  a
+    &:hover
+      color: #74d5bb
 
 .login-help
   font-weight: $font-museo-weight-normal
