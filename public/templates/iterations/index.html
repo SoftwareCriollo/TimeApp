@@ -30,7 +30,7 @@
   </div>
 </section>
 <hr class="underline-division">
-<section class="show-iterations">
+<section class="show-iterations cards-container">
   <article ng-repeat="iteration in ctrl.iterations" class="iteration">
     <div class='range-date'>
       <div class="range-iteration">{{ iteration.start | dateSuffix }} - {{iteration.end_date ? ( iteration.end_date | dateSuffix ) : "Current" }}</div>

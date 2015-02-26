@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<section id='cards'>
+<section id='cards' class="cards-container">
   <article ng-repeat="card in ctrl.cards" ng-class="{active:ctrl.timeLogger.isSelected(card)}" ng-click="ctrl.timeLogger.toggleTasks(card)" class='card-task' ng-show="!search || ([card.name]|filter:search).length">
     <div class="list">
 
