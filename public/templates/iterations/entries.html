@@ -1,4 +1,4 @@
-<div ng-include="'templates/iterations/iterations_box_right.html'" class="text-right box-float-right iterations-box-right"></div>
+<navigatorproject class='navigator-right' project="ctrl.project" section="'iterations'"></navigatorproject>
 <div class="section-up-iteration section-up-title">
   <div class="box-title title-iteration">
     <h1 class="title"> {{ctrl.project.name}}</h1>
@@ -52,7 +52,7 @@
     </div>
     <div class="editTimeEntries" ng-show='ctrl.timelog'>
       <form method="post" name="formEditTimeEntries" ng-submit="ctrl.editTimelog()">
-        <div class="form-time-entries">
+        <div class="form-time-entries edit-entries">
           <div class="field-form field-up">
             <input type="number" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
           </div>
