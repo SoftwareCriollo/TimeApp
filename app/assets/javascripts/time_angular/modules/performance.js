@@ -2,7 +2,7 @@
 (function(){
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['$http','CurrentUser','ProjectCache', function($http,currentUser,projectsCache){
+  app.controller('GeneralPerformanceController',['$http','CurrentUser','ProjectCache', 'ProjectRepository', function($http,currentUser,projectsCache, projectRepository){
 
     currentUser.isPendingAuth();
 
@@ -11,7 +11,6 @@
     this.start_date = new Date();
 
     this.projects = projectsCache.projects;
-    this.selectedOption = this.projects[1];
     console.dir(this.projects);
 
     this.edit = function(idPerformance){
@@ -31,9 +30,20 @@
       this.lastPerformance = idPerformance;
     };
 
-    this.SeachPerformance = function(){
+    this.dateFormat = function(date) {
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth()+1).toString();
+      var dd  = date.getDate().toString();
+      return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
+    };
 
-    }
+    this.SearchPerformance = function(){
+      projectRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.member);
+      
+      /*projectRepository.get(function(projects, status, headers, config){
+        controller.projects = projects;
+      });*/
+    };
 
   }]);
 

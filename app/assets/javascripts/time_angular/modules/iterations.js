@@ -88,7 +88,7 @@
     }
 
     this.gettingEntries = function(dateStart,dateEnd){
-      iterationsRepository.setDates(dateStart, dateEnd);
+      iterationsRepository.setParameters(dateStart, dateEnd);
       
       iterationsRepository.entries(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');

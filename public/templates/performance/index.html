@@ -1,29 +1,27 @@
 <navigatorproject class='navigator-right' project="ctrl.project"></navigatorproject>
 <div class="section-up-performance section-up-title">
   <div class="box-search-performance">
-    <form class="formPerformance" name="formPerformance">
+    <form class="formPerformance" name="formPerformance" ng-submit="ctrl.SearchPerformance()">
       <section class="box-search-performance">
-        <form class="formSearchByDate" ng-submit="ctrl.SeachPerformance()">
-          <div class="field-form field-performance float-left">
-            <input type="date" name="start_date" ng-model="ctrl.start_date" placeholder="Start date"/>
-          </div>
-          <div class="field-form field-performance float-left margin-right">
-            <input type="date" name="end_date" ng-model="ctrl.end_date" placeholder="End date"/>
-          </div>
-          <div class="field-form field-performance float-left">
-            <select ng-model="ctrl.project" ng-options="p.id as p.name for p in ctrl.projects">
-               <option value='' disabled selected> All Projects </option> 
-            </select>
-          </div>
-          <div class="field-form field-performance float-left">
-            <select name="team">
-              <option value='' disabled selected>Team member</option>
-            </select>
-          </div>
-          <div class="field-button-performance">
-            <input type="submit" value="SEARCH" class="btn-primary"/>
-          </div>
-        </form>
+        <div class="field-form field-performance float-left">
+          <input type="date" name="start_date" ng-model="ctrl.start_date" placeholder="Start date"/>
+        </div>
+        <div class="field-form field-performance float-left margin-right">
+          <input type="date" name="end_date" ng-model="ctrl.end_date" placeholder="End date"/>
+        </div>
+        <div class="field-form field-performance float-left">
+          <select ng-model="ctrl.project" ng-options="p.id as p.name for p in ctrl.projects">
+             <option value='' selected> All Projects </option> 
+          </select>
+        </div>
+        <div class="field-form field-performance float-left">
+          <select name="team">
+            <option value='' selected>All team members</option>
+          </select>
+        </div>
+        <div class="field-button-performance">
+          <input type="submit" value="SEARCH" class="btn-primary"/>
+        </div>
       </section>
     </form>
   </div>
