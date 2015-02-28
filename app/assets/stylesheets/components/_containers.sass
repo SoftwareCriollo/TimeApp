@@ -39,6 +39,12 @@ body
   padding: 1em
   text-align: left
   font-size: 1.25em
+  &:hover
+    border: 1px solid $color-secondary
+    color: $color-secondary !important
+    .list-name-task
+      img
+        content: url('/images/circle-on.png')
 
 .list
   height: 109px
@@ -51,7 +57,7 @@ body
   padding: 0.2em
   &:hover
     border: 1px solid $background-color-card
-    color: $color-titles
+    color: $background-color-card
     cursor: auto
   .name-task,
   .note-task,
