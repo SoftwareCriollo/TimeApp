@@ -83,7 +83,7 @@
       .when('/performance/project/:projectId', {
         templateUrl: 'templates/performance/performance.html',
         controller: 'PerformanceController',
-        controllerAs: 'controller'
+        controllerAs: 'ctrl'
       })
       .otherwise({
         redirectTo: '/projects'
