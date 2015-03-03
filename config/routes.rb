@@ -10,9 +10,10 @@ Rails.application.routes.draw do
       resources :iterations, only: [:create,:index, :show],shallow: true do
         member do
           get 'timelogs'
+          get 'performance'
         end
       end
-      resources :clients, only: [:create, :index, :update] 
+      resources :clients, only: [:create, :index, :update]
     end
     resources :timelogs, only: [:create,:index,:update]
   end

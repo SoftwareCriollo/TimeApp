@@ -2,7 +2,7 @@
 (function(){
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['$http','CurrentUser','ProjectCache', 'ProjectRepository', function($http,currentUser,projectsCache, projectRepository){
+  app.controller('GeneralPerformanceController',['$http','CurrentUser','ProjectCache', 'TimeLoggerRepository', function($http,currentUser,projectsCache, timeLoggerRepository){
 
     currentUser.isPendingAuth();
 
@@ -38,11 +38,14 @@
     };
 
     this.SearchPerformance = function(){
-      projectRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.member);
+      timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.member);
       
-      /*projectRepository.get(function(projects, status, headers, config){
-        controller.projects = projects;
-      });*/
+      timeLoggerRepository.get(function(timelogs, status, headers, config){
+        var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');
+        //var projectsGrouped = new TimeApp.DateGrouper(timesGrouped).group_by('project_id');
+        controller.projectsGroup = timesGrouped;
+        controller.projects = timelogs;
+      });
     };
 
   }]);

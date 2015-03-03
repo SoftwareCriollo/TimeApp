@@ -25,6 +25,24 @@
         repository.patch(this.patchRoute(timelog),{"timelog":timelog},success_callback);        
       };
 
+      this.setParameters = function(date_start,date_end,projectId,memberId){
+        this.route= "/api/timelogs/?";
+        if(date_start)
+          this.route += "&date_1="+date_start;
+        if(date_end)
+          this.route += "&date_2="+date_end;
+        if(projectId)
+          this.route += "&projectId="+projectId;
+        if(memberId)
+          this.route += "&memberId="+memberId;
+
+        console.log(this.route);         
+      }
+
+      this.get = function(success_callback){
+        repository.get(this.route,success_callback);
+      };
+
       this.createRoute= function(){
         return this.route;
       };
@@ -104,18 +122,8 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
         repository.get(this.route,success_callback);
       };
 
-      this.setParameters = function(date_start,date_end,projectId,memberId){
-        this.route= "/api/iterations/"+this.iterationId+"/timelogs/";
-        if(date_start)
-          this.route += "?&date_1="+date_start;
-        if(date_end)
-          this.route += "?&date_2="+date_end;
-        if(projectId)
-          this.route += "?&projectId="+projectId;
-        if(memberId)
-          this.route += "?&memberId="+memberId;
-
-        console.log(this.route);         
+      this.setParameters = function(date_start,date_end){
+        this.route= "/api/iterations/"+this.iterationId+"/timelogs/?date_1="+date_start+"&date_2="+date_end;
       }
 
       this.entries = function(success_callback){

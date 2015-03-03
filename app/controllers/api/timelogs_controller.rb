@@ -18,6 +18,15 @@ class Api::TimelogsController <  ApiAuthenticatedController
     end
   end
 
+  def index
+    if params[:projectId]
+      @timelogs = Timelog.performance(params[:date_1],params[:date_2],params[:projectId])
+    else
+      @timelogs = Timelog.by_week(params[:date_1],params[:date_2])
+    end
+    render json: @timelogs
+  end
+
   def timelog_params
     params.require(:timelog).permit(:time,:comment)
   end
