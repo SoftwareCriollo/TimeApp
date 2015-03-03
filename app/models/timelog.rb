@@ -18,8 +18,8 @@ class Timelog
 
   scope :last_registered, -> (quantity=1){order_by(:fecha.desc).limit(quantity) }
   scope :by_week, -> (date_1,date_2) { where({ :fecha => date_1..date_2 }) }
-  scope :by_project, ->(project_id) { where(:project_id => project_id) }
-  scope :performance, -> (date_1,date_2, project_id) { where({ :fecha => date_1..date_2, :project_id => project_id}) }
+  scope :project_id, ->(project_id) { where(:project_id => project_id) }
+  scope :user_id, ->(user_id) { where(:user_id => user_id) }
 
   before_save do |timelog|
     iteration = Iteration.current_iteration(timelog.project_id)

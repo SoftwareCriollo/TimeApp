@@ -19,11 +19,10 @@ class Api::TimelogsController <  ApiAuthenticatedController
   end
 
   def index
-    if params[:projectId]
-      @timelogs = Timelog.performance(params[:date_1],params[:date_2],params[:projectId])
-    else
-      @timelogs = Timelog.by_week(params[:date_1],params[:date_2])
-    end
+    @timelogs = Timelog.by_week(params[:date_1],params[:date_2])
+    @timelogs = @timelogs.project_id(params[:project_id]) if params[:project_id].present?
+    @timelogs = @timelogs.user_id(params[:user_id]) if params[:user_id].present?
+    
     render json: @timelogs
   end
 
