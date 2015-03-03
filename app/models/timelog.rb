@@ -1,4 +1,5 @@
 class Timelog
+  include Filters
   include Mongoid::Document
 
   field :project_id, type: String
@@ -17,7 +18,7 @@ class Timelog
   validates_numericality_of :time, greater_than: 0
 
   scope :last_registered, -> (quantity=1){order_by(:fecha.desc).limit(quantity) }
-  scope :by_week, -> (date_1,date_2) { where({ :fecha => date_1..date_2 }) }
+  scope :by_range, -> (date_1,date_2) { where({ :fecha => date_1..date_2 }) }
   scope :project_id, ->(project_id) { where(:project_id => project_id) }
   scope :user_id, ->(user_id) { where(:user_id => user_id) }
 

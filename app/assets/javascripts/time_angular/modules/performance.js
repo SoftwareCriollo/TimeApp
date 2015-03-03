@@ -1,5 +1,6 @@
 'use strict';
 (function(){
+  var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
   app.controller('GeneralPerformanceController',['$http','CurrentUser','ProjectCache', 'TimeLoggerRepository', 'UsersRepository', function($http,currentUser,projectsCache, timeLoggerRepository, usersRepository){
@@ -14,7 +15,6 @@
     
     usersRepository.getUsers(function(users, status, headers, config){
       controller.users = users;
-      console.dir(users);
     });
     
     this.edit = function(idPerformance){
@@ -45,10 +45,10 @@
       timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
       
       timeLoggerRepository.get(function(timelogs, status, headers, config){
+        console.dir(timelogs);
         var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');
-        //var projectsGrouped = new TimeApp.DateGrouper(timesGrouped).group_by('project_id');
+        console.dir(timesGrouped);
         controller.projectsGroup = timesGrouped;
-        controller.projects = timelogs;
       });
     };
 
