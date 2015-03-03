@@ -2,7 +2,7 @@
 (function(){
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['$http','CurrentUser','ProjectCache', 'TimeLoggerRepository', function($http,currentUser,projectsCache, timeLoggerRepository){
+  app.controller('GeneralPerformanceController',['$http','CurrentUser','ProjectCache', 'TimeLoggerRepository', 'UsersRepository', function($http,currentUser,projectsCache, timeLoggerRepository, usersRepository){
 
     currentUser.isPendingAuth();
 
@@ -11,8 +11,12 @@
     this.start_date = new Date();
 
     this.projects = projectsCache.projects;
-    console.dir(this.projects);
-
+    
+    usersRepository.getUsers(function(users, status, headers, config){
+      controller.users = users;
+      console.dir(users);
+    });
+    
     this.edit = function(idPerformance){
 
       if(this.lastPerformance){
@@ -38,7 +42,7 @@
     };
 
     this.SearchPerformance = function(){
-      timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.member);
+      timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
       
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');

@@ -13,6 +13,16 @@
       return this;
     }]);
 
+    $provide.factory('UsersRepository',["Repository",function(repository) {
+      this.route = '/api/mongoid_users';
+
+      this.getUsers = function(success_callback){
+        repository.get(this.route,success_callback);
+      };
+      
+      return this;
+    }]);
+
     $provide.factory('TimeLoggerRepository',["Repository",function(repository) {
       this.route = "/api/timelogs";
 

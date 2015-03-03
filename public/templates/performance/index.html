@@ -15,8 +15,8 @@
           </select>
         </div>
         <div class="field-form field-performance float-left">
-          <select name="team">
-            <option value='' selected>All team members</option>
+          <select ng-model="ctrl.user" ng-options="u._id as u.email for u in ctrl.users">
+            <option value='' selected> All team members </option>
           </select>
         </div>
         <div class="field-button-performance">

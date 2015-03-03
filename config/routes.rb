@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resources :clients, only: [:create, :index, :update]
     end
     resources :timelogs, only: [:create,:index,:update]
+    resources :mongoid_users, only: [:index]
   end
   
   namespace :api do
