@@ -1,21 +1,27 @@
-<div ng-include="'templates/performance/general_performance_box_right.html'" class="text-right box-float-right general-performance-box-right"></div>
+<div ng-include="'templates/iterations/iterations_box_right.html'" class="text-right box-float-right iterations-box-right"></div>
 <div class="section-up-performance section-up-title">
-  <div class="box-title title-performance">
-    <h1 class="title"> GENERAL PERFORMANCE</h1>
-    <hr class="underline" />
+  <div class="box-search-performance">
+    <form class="formPerformance" name="formPerformance">
+      <div class="field-form field-performance float-left">
+        <input type="date" name="date_start" placeholder="Date Start" ng-model="ctrl.date_start" date-field />
+      </div>
+      <div class="field-form field-performance float-left margin-right">
+        <input type="date" name="date_end" placeholder="Date End" ng-model="ctrl.date_end" date-field />
+      </div>
+      <div class="field-form field-performance float-left">
+        <select type="text" name="all_projects" placeholder="All Projects" ng-model="ctrl.project"/>
+      </div>
+      <div class="field-form field-performance float-left">
+        <select type="text" name="team_members" placeholder="All team members" ng-model="ctrl.member"/>
+      </div>
+      <div class="field-button-performance">
+        <input type="submit" value="SEARCH" name="commit" class="btn-primary"/>
+      </div>
+    </form>
   </div>
-  <button class="search-date-range">
-    <a href="#/performance/search">SEARCH BY DATE RANGE</a>
-  </button>
 </div>
 <section class="container-new-performance">
   <div class="section-up-performance">
-    <div class="float-left section-change-performance">
-      <a href>
-        <img src="images/arrow-circle.png"/>
-        <p>DECEMBER 15th - 19th</p>
-      </a>
-    </div>
     <div class="box-center-performance">
       <h3>DECEMBER 8th - 12th</h3>
       <div class="box-total-hours-performance">
@@ -23,12 +29,6 @@
         37 hours worked
         <hr class="underline-short-dark"/>
       </div>
-    </div>
-    <div class="float-right section-change-performance">
-      <a href>
-        <p>DECEMBER 1th - 5th</p>
-        <img class="img-rotate-180" src="images/arrow-circle.png"/>
-      </a>
     </div>
   </div>
   <article ng-repeat="n in [1,2]">

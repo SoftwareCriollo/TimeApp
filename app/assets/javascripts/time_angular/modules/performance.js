@@ -7,6 +7,8 @@
     currentUser.isPendingAuth();
 
     var controller = this;
+    this.date_end=null;
+    this.date_start=null;
 
     this.projects = projectsCache.projects;
 
