@@ -8,7 +8,7 @@
 </div>
 <section class="container-new-iteration">
   <div class="section-up-iteration">
-    <div class="float-left section-change-iteration" ng-show="ctrl.showPrevious" ng-click="ctrl.changePrevious()">
+    <div class="float-left section-change-iteration box-left-iteration" ng-class="{ disabled: ctrl.showPrevious }" ng-click="ctrl.changePrevious()">
       <a href>
         <img src="images/arrow-circle.png"/>
         <p>{{ctrl.previousWeekStart | dateSuffix}} - {{ctrl.previousWeekEnd | ddSuffix}}</p>
@@ -22,7 +22,7 @@
         <hr class="underline-short-dark"/>
       </div>
     </div>
-    <div class="float-right section-change-iteration" ng-show="ctrl.showNext"  ng-click="ctrl.changeNext()">
+    <div class="float-right section-change-iteration box-right-iteration" ng-class="{ disabled: !ctrl.showNext}"  ng-click="ctrl.changeNext()">
       <a href>
         <p>{{ctrl.nextWeekStart | dateSuffix}} - {{ctrl.nextWeekEnd | ddSuffix}}</p>
         <img class="img-rotate-180" src="images/arrow-circle.png"/>
