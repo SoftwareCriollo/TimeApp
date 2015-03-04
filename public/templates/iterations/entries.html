@@ -8,7 +8,7 @@
 </div>
 <section class="container-new-iteration">
   <div class="section-up-iteration">
-    <div class="float-left section-change-iteration box-left-iteration" ng-class="{ disabled: ctrl.showPrevious }" ng-click="ctrl.changePrevious()">
+    <div class="float-left section-change-iteration box-left-iteration" ng-class="{ disabled: !ctrl.showPrevious }" ng-click="ctrl.changePrevious()">
       <a href>
         <img src="images/arrow-circle.png"/>
         <p>{{ctrl.previousWeekStart | dateSuffix}} - {{ctrl.previousWeekEnd | ddSuffix}}</p>
