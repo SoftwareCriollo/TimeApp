@@ -46,7 +46,7 @@
       
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         console.dir(timelogs);
-        var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');
+        var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha', 'project_name');
         console.dir(timesGrouped);
         controller.projectsGroup = timesGrouped;
       });
