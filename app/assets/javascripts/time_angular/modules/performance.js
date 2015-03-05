@@ -45,14 +45,20 @@
       timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
       
       timeLoggerRepository.get(function(timelogs, status, headers, config){
-        console.dir(timelogs);
-        var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha', 'project_name');
+        var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');
+        
+        for(var time in timesGrouped)
+        {
+          timesGrouped[time]= new TimeApp.DateGrouper(timesGrouped[time]).group_by('project_name');
+        }
         console.dir(timesGrouped);
         controller.projectsGroup = timesGrouped;
       });
     };
 
   }]);
+
+ 
 
   app.controller('PerformanceController',['$http','$routeParams','CurrentUser','ProjectCache', function($http,$routeParams, currentUser,projectCache){
 
