@@ -91,7 +91,7 @@
       iterationsRepository.setParameters(dateStart, dateEnd);
       
       iterationsRepository.entries(function(timelogs, status, headers, config){
-        var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');
+        var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
         controller.timelogsGroup = timesGrouped;
         controller.timelogs = timelogs;
       });

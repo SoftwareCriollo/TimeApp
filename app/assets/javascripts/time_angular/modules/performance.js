@@ -45,11 +45,11 @@
       timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
       
       timeLoggerRepository.get(function(timelogs, status, headers, config){
-        var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');
+        var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
         
         for(var time in timesGrouped)
         {
-          timesGrouped[time]= new TimeApp.DateGrouper(timesGrouped[time]).group_by('project_name');
+          timesGrouped[time]= new TimeApp.FieldGrouper(timesGrouped[time]).group_by('project_name');
         }
         console.dir(timesGrouped);
         controller.projectsGroup = timesGrouped;
