@@ -32,32 +32,33 @@
       <h3>{{ctrl.start_date | dateSuffix}} - {{ctrl.end_date | ddSuffix}}</h3>
       <div class="box-total-hours-performance">
         <img src="images/watch.png"/>
-        37 hours worked
+        {{ctrl.totalWorked}} hours worked
         <hr class="underline-short-dark"/>
       </div>
     </div>
   </div>
-  <article ng-repeat="n in [1,2]">
+  <article  ng-repeat="(date,projects) in ctrl.projectsGroup">
     <div class="date-performance">
-      MONDAY, 12/8 - <p>TOTAL: 12 hours</p>
+      {{ date | date:'EEEE, MM/dd' }} - <p>TOTAL: {{ctrl.total[date]}} hours</p>
     </div>
-    <div class="activity" ng-repeat="project in controller.projects">
+    <div class="activity" ng-repeat="(name,timelogs) in projects">
       <div class="project-hours-performance">
         <div class="circle">1</div>
-        {{project.name}} - <p>6 hours</p>
+        {{name}} - <p>{{ctrl.sum(timelogs)}} hours</p>
       </div>
-      <div ng-repeat="n in [1,2,3,4]" class="box-performance-edit performance-{{n}}">
+      <div ng-repeat="timelog in timelogs" class="box-performance-edit performance-{{n}}">
+
         <div class="card-performance card-performance-{{n}}">
           <div class="list">
             <a ng-click="controller.edit(n)" class="img-edit img-edit edit-performance-{{n}}"><img src="images/edit.png"/></a>
-            <div class="name-task">Refactoring trips navigation </div>
-            <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
+            <div class="name-task"> {{timelog.task_name}} </div>
+            <div class="note-task">Notes: <a href> {{timelog.comment}}</a> </div>
             <div class="list-name-task">
               <img src="images/circle.png" />
               DONE
             </div>
             <div class="box-hours">
-              <div class="box-silver"><img src="images/clock-silver.png"/>3 HOURS</div>
+              <div class="box-silver"><img src="images/clock-silver.png"/>{{timelog.time}} HOURS</div>
             </div>
           </div>
         </div>

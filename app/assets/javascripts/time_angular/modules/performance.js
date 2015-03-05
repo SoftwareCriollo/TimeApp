@@ -8,6 +8,8 @@
     currentUser.isPendingAuth();
 
     var controller = this; 
+    this.total = {};
+    this.totalWorked =0;
     this.end_date = new Date();
     this.start_date = new Date();
 
@@ -49,11 +51,30 @@
         
         for(var time in timesGrouped)
         {
+          controller.sum(timesGrouped[time],time);
           timesGrouped[time]= new TimeApp.FieldGrouper(timesGrouped[time]).group_by('project_name');
         }
         console.dir(timesGrouped);
         controller.projectsGroup = timesGrouped;
       });
+    };
+
+    this.sum = function(items,date){
+      var sum = 0;
+
+      for (var i = 0; i<items.length; i++){
+        sum += items[i].time;
+      }
+
+      if(date){
+        if(!this.total[date])
+          this.total[date] = 0;
+        
+        this.total[date] += sum;
+        this.totalWorked += sum;
+      }
+
+      return sum;
     };
 
   }]);
