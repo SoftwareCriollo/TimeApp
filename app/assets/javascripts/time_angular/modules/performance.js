@@ -12,6 +12,7 @@
     this.totalWorked =0;
     this.end_date = new Date();
     this.start_date = new Date();
+    this.timelog = undefined;
 
     this.projects = projectsCache.projects;
     
@@ -75,6 +76,23 @@
       }
 
       return sum;
+    };
+
+    this.isEditing = function(timelog){
+      return this.timelog == timelog;
+    };
+
+    this.editTimeEntry = function(timelog) {
+      console.log(timelog._id.$oid);
+      angular.element( document.getElementById(timelog._id.$oid ) ).removeClass("hide");
+      this.timelog=timelog;
+    };
+
+    this.editTimelog = function() {
+      angular.element( document.getElementById(this.timelog._id.$oid ) ).addClass("hide");
+      timeLoggerRepository.edit(this.timelog,function(){
+        controller.timelog = undefined;
+      });
     };
 
   }]);

@@ -31,6 +31,7 @@
       };
 
       this.edit = function(timelog,success_callback){
+        this.route = "/api/timelogs";
         console.log(timelog);
         repository.patch(this.patchRoute(timelog),{"timelog":timelog},success_callback);        
       };
