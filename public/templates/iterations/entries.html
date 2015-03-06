@@ -54,10 +54,10 @@
       <form method="post" name="formEditTimeEntries" ng-submit="ctrl.editTimelog()">
         <div class="form-time-entries edit-entries">
           <div class="field-form field-up">
-            <input type="number" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
+            <input type="number" class="field-entries" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
           </div>
           <div class="field-form field-down">
-            <textarea rows="4" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
+            <textarea rows="4" class="field-entries" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
           </div>
         </div>
         <input type="submit" value="SAVE" class="btn-primary" />
