@@ -8,8 +8,6 @@
     currentUser.isPendingAuth();
 
     var controller = this; 
-    this.total = {};
-    this.totalWorked =0;
     this.end_date = new Date();
     this.start_date = new Date();
     this.timelog = undefined;
@@ -20,22 +18,6 @@
       controller.users = users;
     });
     
-    this.edit = function(idPerformance){
-
-      if(this.lastPerformance){
-        $('.card-performance-' + this.lastPerformance).removeClass("selected"); //add class selected to performance by id, necessary to build the id
-        $('.form-edit-perfotmance-' + this.lastPerformance).addClass("hide");
-        $('.edit-performance-' + this.lastPerformance).removeClass("hide");
-        $('.performance-' + this.lastPerformance).removeClass("margin-show-performance-edit");
-      }
-
-      $('.card-performance-' + idPerformance).addClass("selected"); //add class selected to performance by id, necessary to build the id
-      $('.form-edit-perfotmance-' + idPerformance).removeClass("hide");
-      $('.edit-performance-' + idPerformance).addClass("hide");
-      $('.performance-' + idPerformance).addClass("margin-show-performance-edit");
-
-      this.lastPerformance = idPerformance;
-    };
 
     this.dateFormat = function(date) {
       var yyyy = date.getFullYear().toString();
@@ -45,7 +27,9 @@
     };
 
     this.SearchPerformance = function(){
-      timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
+      this.total = {};
+      this.totalWorked =0;
+      timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,"");
       
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
@@ -83,7 +67,6 @@
     };
 
     this.editTimeEntry = function(timelog) {
-      console.log(timelog._id.$oid);
       angular.element( document.getElementById(timelog._id.$oid ) ).removeClass("hide");
       this.timelog=timelog;
     };
@@ -99,31 +82,121 @@
 
  
 
-  app.controller('PerformanceController',['$http','$routeParams','CurrentUser','ProjectCache', function($http,$routeParams, currentUser,projectCache){
+  app.controller('PerformanceController',['$http','$routeParams','CurrentUser','ProjectCache', 'TimeLoggerRepository', function($http,$routeParams, currentUser,projectCache, timeLoggerRepository){
 
     currentUser.isPendingAuth();
 
     var controller = this;
     var projectId = $routeParams.projectId;
 
+    var minDate = null;
+    var maxDate = null;
+
+    var currentDate = null;
+
+    var nextWeek = null; 
+
+    var dateStart = null;
+    var dateEnd = null;
+    
     this.project = projectCache.findProject(projectId);
 
-    this.edit = function(idPerformance){
+    this.end_date = new Date();
+    this.start_date = new Date();
+    this.timelog = undefined;
 
-      if(this.lastPerformance){
-        $('.card-performance-' + this.lastPerformance).removeClass("selected"); //add class selected to performance by id, necessary to build the id
-        $('.form-edit-perfotmance-' + this.lastPerformance).addClass("hide");
-        $('.edit-performance-' + this.lastPerformance).removeClass("hide");
-        $('.performance-' + this.lastPerformance).removeClass("margin-show-performance-edit");
+
+
+
+    //timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),projectId,this.user);
+    
+    /*timeLoggerRepository.get(function(timelogs, status, headers, config){
+      var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
+      
+      for(var time in timesGrouped)
+      {
+        controller.sum(timesGrouped[time],time);
+        timesGrouped[time]= new TimeApp.FieldGrouper(timesGrouped[time]).group_by('project_name');
       }
+      console.dir(timesGrouped);
+      controller.projectsGroup = timesGrouped;
+    });*/
 
-      $('.card-performance-' + idPerformance).addClass("selected"); //add class selected to performance by id, necessary to build the id
-      $('.form-edit-perfotmance-' + idPerformance).removeClass("hide");
-      $('.edit-performance-' + idPerformance).addClass("hide");
-      $('.performance-' + idPerformance).addClass("margin-show-performance-edit");
+    this.calculateInterval = function(date, plus){
+      return new Date(date.setDate(date.getDate() - date.getDay() + plus));
+    }
 
-      this.lastPerformance = idPerformance;
+    this.calculateWeek=function(date, sign){
+      return new Date(date.getTime() + (7*sign) * 24 * 60 * 60 * 1000);
+    }
+
+
+    this.dateFormat = function(date) {
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth()+1).toString();
+      var dd  = date.getDate().toString();
+      return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
     };
+
+      minDate = new Date();
+      maxDate = new Date();
+
+      currentDate = minDate;
+
+      this.currentWeekStart = this.calculateInterval(currentDate,1);
+      this.currentWeekEnd = this.calculateInterval(currentDate,7);
+
+      nextWeek = this.calculateWeek(this.currentWeekStart,1); 
+
+      this.nextWeekStart = this.calculateInterval(nextWeek,1);
+      this.nextWeekEnd = this.calculateInterval(nextWeek,7);
+
+      dateStart = this.dateFormat(this.currentWeekStart);
+      dateEnd = this.dateFormat(this.currentWeekEnd);
+
+//      if(this.nextWeekStart < maxDate)
+        this.showNext=true;
+
+
+
+  this.changeNext = function(){
+      this.previousWeekStart = this.currentWeekStart;
+      this.previousWeekEnd = this.currentWeekEnd;
+
+      this.currentWeekStart = this.nextWeekStart;
+      this.currentWeekEnd = this.nextWeekEnd;
+
+      dateStart = this.dateFormat(this.currentWeekStart);
+      dateEnd = this.dateFormat(this.currentWeekEnd);
+
+      nextWeek = this.calculateWeek(this.currentWeekStart,1); 
+
+      this.nextWeekStart = this.calculateInterval(nextWeek, 1);
+      this.nextWeekEnd = this.calculateInterval(nextWeek, 7);
+      this.showPrevious=true;
+
+      //if(this.nextWeekStart > maxDate)
+       // this.showNext=false;
+    }
+
+    this.changePrevious = function(){
+      this.nextWeekStart = this.currentWeekStart;
+      this.nextWeekEnd = this.currentWeekEnd;
+
+      this.currentWeekStart = this.previousWeekStart;
+      this.currentWeekEnd = this.previousWeekEnd;
+
+      dateStart = this.dateFormat(this.currentWeekStart);
+      dateEnd = this.dateFormat(this.currentWeekEnd);
+
+      this.previousWeekStart = this.calculateWeek(this.currentWeekStart,-1);
+      this.previousWeekEnd = this.calculateWeek(this.currentWeekEnd,-1);
+      this.showNext = true;
+
+      //if(this.previousWeekStart < minDate)
+       // this.showPrevious=false;
+
+    }
 
   }]);
 
