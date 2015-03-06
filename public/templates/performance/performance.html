@@ -29,22 +29,22 @@
       </a>
     </div>
   </div>
-  <article>
+  <article ng-repeat="(date,projects) in ctrl.projectsGroup">
     <div class="date-performance date-single-performance">
-      MONDAY, 12/8 - <p>6 hours</p>
+      {{ date | date:'EEEE, MM/dd' }} - <p>6 hours</p>
     </div>
-    <div ng-repeat="n in [1,2]" class="box-performance-edit performance-{{n}}">
+    <div ng-repeat="timelogs in projects" class="box-performance-edit performance-{{n}}">
       <div class="card-performance card-performance-{{n}}">
         <div class="list">
           <a ng-click="controller.edit(n)" class="img-edit img-edit edit-performance-{{n}}"><img src="images/edit.png"/></a>
-          <div class="name-task">Refactoring trips navigation </div>
-          <div class="note-task">Notes: <a href> screencast.com/289623985623</a> </div>
+          <div class="name-task"> {{timelogs.task_name}} </div>
+          <div class="note-task">Notes: <a href> {{timelogs.comment}} </a> </div>
           <div class="list-name-task">
             <img src="images/circle.png" />
            DONE
           </div>
           <div class="box-hours">
-            <div class="box-silver"><img src="images/clock-silver.png"/>3.5 HOURS</div>
+            <div class="box-silver"><img src="images/clock-silver.png"/>{{timelogs.time}} HOURS</div>
           </div>
         </div>
       </div>
@@ -63,42 +63,3 @@
       </div>
     </div>
   </article>
-
-  <article ng-repeat="day in daysWeek">
-    <div class="date-performance date-single-performance">
-      {{day.name}}, 12/{{9+$index}}  <p></p>
-    </div>
-    <div class="card-performance">
-      <div class="list">
-        <a href class="img-edit"></a>
-        <div class="name-task">Refactoring trips navigation </div>
-        <div class="note-task"></div>
-        <div class="list-name-task">
-          <img src="images/circle.png" />
-          DONE
-        </div>
-        <div class="box-hours"></div>
-      </div>
-    </div>
-  </article>
-  <hr class="underline-division"/>
-
-  <article>
-    <div class="date-performance date-single-performance">
-      undefined date  <p></p>
-    </div>
-    <div ng-repeat="n in [1,2]" class="card-performance">
-      <div class="list">
-        <a href class="img-edit"></a>
-        <div class="name-task">Refactoring trips navigation </div>
-        <div class="note-task"></div>
-        <div class="list-name-task">
-          <img src="images/circle.png" />
-          DONE
-        </div>
-        <div class="box-hours"></div>
-      </div>
-    </div>
-  </article>
-
-</section>

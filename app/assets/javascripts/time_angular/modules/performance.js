@@ -105,23 +105,6 @@
     this.start_date = new Date();
     this.timelog = undefined;
 
-
-
-
-    //timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),projectId,this.user);
-    
-    /*timeLoggerRepository.get(function(timelogs, status, headers, config){
-      var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
-      
-      for(var time in timesGrouped)
-      {
-        controller.sum(timesGrouped[time],time);
-        timesGrouped[time]= new TimeApp.FieldGrouper(timesGrouped[time]).group_by('project_name');
-      }
-      console.dir(timesGrouped);
-      controller.projectsGroup = timesGrouped;
-    });*/
-
     this.calculateInterval = function(date, plus){
       return new Date(date.setDate(date.getDate() - date.getDay() + plus));
     }
@@ -130,7 +113,6 @@
       return new Date(date.getTime() + (7*sign) * 24 * 60 * 60 * 1000);
     }
 
-
     this.dateFormat = function(date) {
       var yyyy = date.getFullYear().toString();
       var mm = (date.getMonth()+1).toString();
@@ -138,10 +120,11 @@
       return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
     };
 
+
       minDate = new Date();
       maxDate = new Date();
 
-      currentDate = minDate;
+      currentDate = new Date();
 
       this.currentWeekStart = this.calculateInterval(currentDate,1);
       this.currentWeekEnd = this.calculateInterval(currentDate,7);
@@ -157,7 +140,16 @@
 //      if(this.nextWeekStart < maxDate)
         this.showNext=true;
 
+    timeLoggerRepository.setParameters(this.dateFormat(this.currentWeekStart),this.dateFormat(this.currentWeekEnd),projectId,this.user);
 
+
+    timeLoggerRepository.get(function(timelogs, status, headers, config){
+      console.log(timelogs);
+      var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
+      
+      console.dir(timesGrouped);
+      controller.projectsGroup = timesGrouped;
+    });
 
   this.changeNext = function(){
       this.previousWeekStart = this.currentWeekStart;
