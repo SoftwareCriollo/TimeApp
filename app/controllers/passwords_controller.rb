@@ -15,6 +15,6 @@ class PasswordsController < Devise::PasswordsController
   end
 
   def after_sending_reset_password_instructions_path_for(resource_name)
-    "/#/log-in"
+    "/#/log-in/An email was sent to your account. Please confirm to reset your password."
   end
 end
