@@ -32,7 +32,7 @@
 <section class="show-iterations cards-container">
   <article ng-repeat="iteration in ctrl.iterations" class="iteration">
     <div class='range-date'>
-      <div class="range-iteration">{{ iteration.start | dateSuffix }} - {{iteration.end_date ? ( iteration.end_date | dateSuffix ) : "Current" }}</div>
+      <div class="range-iteration">{{ UTCDate(iteration.start) | dateSuffix }} - {{iteration.end_date ? ( UTCDate(iteration.end_date) | dateSuffix ) : "Current" }}</div>
     </div>
     <div class="invoice-data">
       <div class="inv-iteration float-left">Inv#{{ iteration.invoice }}</div>
