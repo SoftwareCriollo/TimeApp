@@ -39,7 +39,6 @@
           ctrl.sum(timesGrouped[time],time);
           timesGrouped[time]= new TimeApp.FieldGrouper(timesGrouped[time]).group_by('project_name');
         }
-        console.dir(timesGrouped);
         ctrl.projectsGroup = timesGrouped;
       });
     };
@@ -86,11 +85,9 @@
 
     currentUser.isPendingAuth();
 
+    this.user=currentUser.getUser();
     var ctrl = this;
     var projectId = $routeParams.projectId;
-
-    var minDate = null;
-    var maxDate = null;
 
     var currentDate = null;
 
@@ -108,9 +105,6 @@
     this.totalWorked = 0;
 
     var inizialize = function () {
-      minDate = new Date();
-      maxDate = new Date();
-
       currentDate = new Date();
 
       ctrl.currentWeekStart = ctrl.calculateInterval(currentDate,1);
@@ -127,10 +121,7 @@
       ctrl.previousWeekStart = ctrl.calculateWeek(ctrl.currentWeekStart,-1);
       ctrl.previousWeekEnd = ctrl.calculateWeek(ctrl.currentWeekEnd,-1);
 
-//      if(this.nextWeekStart < maxDate)
- //       this.showNext=true;
-
-      timeLoggerRepository.setParameters(ctrl.dateFormat(ctrl.currentWeekStart),ctrl.dateFormat(ctrl.currentWeekEnd),projectId,ctrl.user);
+      timeLoggerRepository.setParameters(ctrl.dateFormat(ctrl.currentWeekStart),ctrl.dateFormat(ctrl.currentWeekEnd),projectId,ctrl.user.id);
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
@@ -139,13 +130,14 @@
     } 
 
     this.changeNext = function(){
+      this.totalWorked = 0;
       this.previousWeekStart = this.currentWeekStart;
       this.previousWeekEnd = this.currentWeekEnd;
 
       this.currentWeekStart = this.nextWeekStart;
       this.currentWeekEnd = this.nextWeekEnd;
 
-      timeLoggerRepository.setParameters(this.dateFormat(this.currentWeekStart),this.dateFormat(this.currentWeekEnd),projectId,this.user);
+      timeLoggerRepository.setParameters(this.dateFormat(this.currentWeekStart),this.dateFormat(this.currentWeekEnd),projectId,this.user.id);
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
@@ -159,20 +151,17 @@
 
       this.nextWeekStart = this.calculateInterval(nextWeek, 1);
       this.nextWeekEnd = this.calculateInterval(nextWeek, 7);
-     // this.showPrevious=true;
-
-      //if(this.nextWeekStart > maxDate)
-       // this.showNext=false;
     }
 
     this.changePrevious = function(){
+      this.totalWorked = 0;
       this.nextWeekStart = this.currentWeekStart;
       this.nextWeekEnd = this.currentWeekEnd;
 
       this.currentWeekStart = this.previousWeekStart;
       this.currentWeekEnd = this.previousWeekEnd;
 
-      timeLoggerRepository.setParameters(this.dateFormat(this.currentWeekStart),this.dateFormat(this.currentWeekEnd),projectId,this.user);
+      timeLoggerRepository.setParameters(this.dateFormat(this.currentWeekStart),this.dateFormat(this.currentWeekEnd),projectId,this.user.id);
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
@@ -184,11 +173,6 @@
 
       this.previousWeekStart = this.calculateWeek(this.currentWeekStart,-1);
       this.previousWeekEnd = this.calculateWeek(this.currentWeekEnd,-1);
- //     this.showNext = true;
-
-      //if(this.previousWeekStart < minDate)
-       // this.showPrevious=false;
-
     }
 
     this.sum = function(item,date){

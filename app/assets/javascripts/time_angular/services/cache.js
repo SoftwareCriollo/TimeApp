@@ -79,6 +79,9 @@
           $location.path('/log-in');
         }
       }
+      this.getUser = function(){
+        return currentUser;
+      }
       if( existCache("currentUser") )
         currentUser = new TimeApp.User( loadJsonCache("currentUser") );      
       else
