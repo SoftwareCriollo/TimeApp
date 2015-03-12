@@ -35,7 +35,7 @@
 
   }]);
 
-  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository){
+  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$rootScope', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$rootScope){
     currentUser.isPendingAuth();
   
     var controller = this;
@@ -60,13 +60,10 @@
       controller.project = projectCache.findProject(iteration.project_id);
     });
 
-
-
     this.initialize = function(iteration){
       this.iteration=iteration;
-      minDate = new Date(iteration.start);
-      maxDate = new Date(iteration.end_date || new Date());
-
+      minDate = $rootScope.UTCDate(iteration.start);
+      maxDate = $rootScope.UTCDate(iteration.end_date || new Date());
       currentDate = minDate;
 
       this.currentWeekStart = this.calculateInterval(currentDate,1);
@@ -82,9 +79,8 @@
 
       this.gettingEntries(dateStart,dateEnd);
 
-      if(this.nextWeekStart < maxDate)
+      if(this.nextWeekStart <= maxDate)
         this.showNext=true;
-
     }
 
     this.gettingEntries = function(dateStart,dateEnd){
@@ -94,6 +90,7 @@
         var timesGrouped = new TimeApp.DateGrouper(timelogs).group_by('fecha');
         controller.timelogsGroup = timesGrouped;
         controller.timelogs = timelogs;
+        console.dir(timesGrouped);
       });
     }
 
@@ -122,7 +119,7 @@
       this.nextWeekEnd = this.calculateInterval(nextWeek, 7);
       this.showPrevious=true;
 
-      if(this.nextWeekStart > maxDate)
+      if(this.nextWeekStart >= maxDate)
         this.showNext=false;
     }
 
@@ -142,7 +139,7 @@
       this.previousWeekEnd = this.calculateWeek(this.currentWeekEnd,-1);
       this.showNext = true;
 
-      if(this.previousWeekStart < minDate)
+      if(this.previousWeekStart <= minDate)
         this.showPrevious=false;
 
     }
@@ -207,6 +204,13 @@
       var relevantDigits = (day < 30) ? day % 20 : day % 30;
       var suffix = (relevantDigits <= 3) ? suffixes[relevantDigits] : suffixes[0];
       return dtfilter+suffix;
+    };
+  });
+
+  app.run(function($rootScope) {
+    $rootScope.UTCDate = function(date) {
+      var utcDate = new Date(date);
+      return new Date(utcDate.getUTCFullYear(), utcDate.getUTCMonth(), utcDate.getUTCDate());
     };
   });
 

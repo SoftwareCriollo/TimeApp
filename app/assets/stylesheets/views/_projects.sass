@@ -4,8 +4,9 @@
   vertical-align: top
   display: table-cell
   max-width: 235px
-  height: 100px
+  height: 90px
   white-space: normal
+  line-height: 1.3em
   overflow: visible
 
 .list-name-task
@@ -13,6 +14,12 @@
   text-transform: uppercase
   text-overflow: ellipsis
   overflow: hidden
+  border-top: 1px solid $border-color-secondary
+  padding-top: 10px
+  img
+    position: relative
+    top: 1.4px
+    width: 10px
 
 .section-time-log
   margin-bottom: 100px
@@ -69,6 +76,10 @@
     vertical-align: middle
     background: #FFF
     padding: 1em
+    input
+      font-style: italic
+      &::-webkit-input-placeholder
+        color: $color-font-new
 
   .underline-time-log-v
     margin: 10px
@@ -123,6 +134,7 @@
     background: none
     display: inline-block
     input
+      margin-bottom: -12px
       display: inline-block
       border: none
     [placeholder]

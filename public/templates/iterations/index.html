@@ -1,5 +1,4 @@
 <navigatorproject class='navigator-right' project="ctrl.project" section="'iterations'"></navigatorproject>
-
 <div class="box-title">
   <h1 class="title"> {{ctrl.project.name}}</h1>
   <hr class="underline" />
@@ -30,10 +29,10 @@
   </div>
 </section>
 <hr class="underline-division">
-<section class="show-iterations">
+<section class="show-iterations cards-container">
   <article ng-repeat="iteration in ctrl.iterations" class="iteration">
     <div class='range-date'>
-      <div class="range-iteration">{{ iteration.start }} - {{ iteration.end_date || "Current"}}</div>
+      <div class="range-iteration">{{ UTCDate(iteration.start) | dateSuffix }} - {{iteration.end_date ? ( UTCDate(iteration.end_date) | dateSuffix ) : "Current" }}</div>
     </div>
     <div class="invoice-data">
       <div class="inv-iteration float-left">Inv#{{ iteration.invoice }}</div>

@@ -1,4 +1,4 @@
-<h2>Change your password</h2>
+<h2 class="login-title">Change your password</h2>
 <section class="container-login">
 <% @user ||= resource %>
   <%= simple_form_for(@user, :url => api_change_password_path(params[:reset_password_token]), :html => { :method => :put, class: "login" }) do |f| %>
@@ -8,16 +8,15 @@
         <div><%= @user.errors.full_messages%></div>
       <% end %>
     <% end %>
-    <div class="field">
-      <%= f.label :password, "New password" %><br />
-      <%= f.password_field :password, autofocus: true, placeholder: "Password", autocomplete: "off" %>
-    </div>
+    <div class="fields">
+      <div class="field">
+        <%= f.password_field :password, autofocus: true, placeholder: "New password", autocomplete: "off" %>
+      </div>
 
-    <div class="field">
-      <%= f.label :password_confirmation, "Confirm new password" %><br />
-      <%= f.password_field :password_confirmation,placeholder:"Password confirm", autocomplete: "off" %>
+      <div class="field">
+        <%= f.password_field :password_confirmation,placeholder:"Confirm new password", autocomplete: "off" %>
+      </div>
     </div>
-
     <div class="actions">
       <%= f.submit "Change my password",class: 'btn-primary' %>
     </div>

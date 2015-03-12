@@ -1,5 +1,4 @@
 <navigatorproject class='navigator-right' project="ctrl.project.id" section="'stories'"></navigatorproject>
-
 <div class="section-up-card section-up-title">
   <div class="box-title title-card">
     <h1 class="title">{{ctrl.project.name}}</h1>
@@ -12,17 +11,19 @@
   </div>
 </div>
 
-<section id='cards'>
-  <article ng-repeat="card in ctrl.cards" ng-class="{active:ctrl.timeLogger.isSelected(card)}" ng-click="ctrl.timeLogger.toggleTasks(card)" class='card-task' ng-show="!search || ([card.name]|filter:search).length">
-    <div class="list">
+<section id='cards' class="cards-container">
+  <article ng-repeat="(list_name,cards) in ctrl.cardsGroup">
+    <article ng-repeat="card in cards" ng-class="{active:ctrl.timeLogger.isSelected(card)}" ng-click="ctrl.timeLogger.toggleTasks(card)" class='card-task' ng-show="!search || ([card.name]|filter:search).length">
+      <div class="list">
 
-      <span class='icn-bullet'></span>
-        <div class="name-task">{{card.name}}</div>
-        <div class="list-name-task">
-          <img src="images/circle.png" />
-          {{card.list_name}}
-        </div>
-    </div>
+        <span class='icn-bullet'></span>
+          <div class="name-task">{{card.name}}</div>
+          <div class="list-name-task">
+            <img src="images/circle.png" />
+            {{card.list_name}}
+          </div>
+      </div>
+    </article>
   </article>
 </section>
 

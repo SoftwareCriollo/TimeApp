@@ -1,6 +1,7 @@
 <div ng-include="'templates/authentication/login_box_right.html'" class="text-right box-float-right login-box-right"></div>
 <section class="container-login">
   <form method="post" novalidate ng-submit="auth.signIn()" class='login'>
+    <span ng-if="auth.sended">{{auth.sended}}</span>
     <div class="fields">
       <input type="email" name="email" ng-model="auth.user.email" placeholder="Login" />
       <input type="password" name="password" ng-model="auth.user.password" placeholder="Password" />
@@ -8,7 +9,7 @@
         <div>{{alerts.message}}</div>
       </div>
     </div>
-      <input type="submit" class="btn-primary btn-centered" name="commit" value="LOG IN">
+      <input type="submit" class="btn-primary btn-login btn-centered" name="commit" value="LOG IN">
     <div class="login-help">
       <a href="/mongoid_users/password/new">Forgot password?</a>
     </div>

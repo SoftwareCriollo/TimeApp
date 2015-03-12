@@ -1,10 +1,10 @@
-<div class="buttons-up">
+<div class="buttons-up" ng-cloak>
   <button class="log-out" ng-click="logOut()"> LOG OUT </button>
-  <a class="client-information" href="#/projects/{{project}}/client">CLIENT INFORMATION</a>
+  <a class="client-information" href="#/projects/{{project.id ? project.id : project}}/client">CLIENT INFORMATION</a>
 </div>
 
-<nav>
-  <a ng-class="{active: section=='stories'}" ng-href="#/projects/{{project}}/cards">STORIES</a>
-  <a ng-class="{active: section=='iterations'}" ng-href="#/projects/{{project}}/iterations">ITERATIONS</a> 
-  <a ng-class="{active: section=='performance'}" ng-href="#">PERFORMANCE</a>  
+<nav ng-cloak>
+  <a ng-class="{active: section=='stories'}" ng-href="#/projects/{{project.id ? project.id : project}}/cards">STORIES</a>
+  <a ng-class="{active: section=='iterations'}" ng-href="#/projects/{{project.id ? project.id : project}}/iterations">ITERATIONS</a> 
+  <a ng-class="{active: section=='performance'}" ng-href="#/performance/project/{{project.id ? project.id : project}}">PERFORMANCE</a>  
 </nav>
