@@ -35,6 +35,11 @@
         controller: 'LoginController',
         controllerAs: 'auth'
       })
+      .when('/log-in/:sended', {
+        templateUrl: 'templates/authentication/login.html',
+        controller: 'LoginController',
+        controllerAs: 'auth'
+      })
       .when('/projects', {
         templateUrl: "templates/projects/index.html",
         controller: 'ProjectsController',

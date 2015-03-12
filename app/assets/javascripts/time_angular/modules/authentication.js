@@ -3,8 +3,9 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-authentication',['Devise','CacheStore'])
 
-  app.controller('LoginController',['$scope','$location','Auth','CurrentUser', function($scope,$location,Auth,currentUser){
+  app.controller('LoginController',['$scope','$routeParams','$location','Auth','CurrentUser', function($scope,$routeParams,$location,Auth,currentUser){
     var controller = this;
+    this.sended = $routeParams.sended;
     this.signIn = function(){
       Auth.login(controller.user.credentials()).then(function(user) {
         currentUser.changeUser(user);

@@ -22,7 +22,7 @@ class Timelog
   scope :project_id, ->(project_id) { where(:project_id => project_id) }
   scope :user_id, ->(user_id) { where(:user_id => user_id) }
 
-  before_save do |timelog|
+  before_create do |timelog|
     iteration = Iteration.current_iteration(timelog.project_id)
     timelog.iteration_id = iteration.id if iteration
     timelog.set_project_name

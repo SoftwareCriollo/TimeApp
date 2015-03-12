@@ -53,7 +53,7 @@ class ProjectManager
 
 
   def project_name(project_id)
-    find_board(board_id).name
+    find_board(project_id).name
   end
 
   def task_name(task_id)
