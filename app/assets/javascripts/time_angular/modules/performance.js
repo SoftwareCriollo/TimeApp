@@ -216,6 +216,22 @@
       return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
     };
 
+    this.isEditing = function(timelog){
+      return this.timelog == timelog;
+    };
+
+    this.editTimeEntry = function(timelog) {
+      angular.element( document.getElementById(timelog._id.$oid ) ).removeClass("hide");
+      this.timelog=timelog;
+    };
+
+    this.editTimelog = function() {
+      angular.element( document.getElementById(this.timelog._id.$oid ) ).addClass("hide");
+      timeLoggerRepository.edit(this.timelog,function(){
+        ctrl.timelog = undefined;
+      });
+    };
+
     inizialize();
 
   }]);
