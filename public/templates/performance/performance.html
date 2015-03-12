@@ -8,7 +8,7 @@
 </div>
 <section ng-init="daysWeek = [{name:'tuesday'},{name:'wednesday'},{name:'thursday'},{name:'friday'}]" class="container-new-performance">
   <div class="section-up-performance">
-    <div class="float-left section-change-performance box-left-performance" ng-class="{ disabled: !ctrl.showPrevious }" ng-click="ctrl.changePrevious()">
+    <div class="float-left section-change-performance box-left-performance" ng-click="ctrl.changePrevious()">
       <a href>
         <img src="images/arrow-circle.png"/>
         <p>{{ctrl.previousWeekStart | dateSuffix}} - {{ctrl.previousWeekEnd | ddSuffix}}</p>
@@ -18,11 +18,11 @@
       <h3>{{ctrl.currentWeekStart | dateSuffix}} - {{ctrl.currentWeekEnd | ddSuffix}}</h3>
       <div class="box-total-hours-performance">
         <img src="images/watch.png"/>
-        {{ctrl.total(ctrl.timelogs)}} hours worked
+        {{ctrl.totalWorked}} hours worked
         <hr class="underline-short-dark"/>
       </div>
     </div>
-    <div class="float-right section-change-performance box-right-performance" ng-class="{ disabled: !ctrl.showNext}"  ng-click="ctrl.changeNext()">
+    <div class="float-right section-change-performance box-right-performance"  ng-click="ctrl.changeNext()">
       <a href>
         <p>{{ctrl.nextWeekStart | dateSuffix}} - {{ctrl.nextWeekEnd | ddSuffix}}</p>
         <img class="img-rotate-180" src="images/arrow-circle.png"/>
@@ -31,9 +31,9 @@
   </div>
   <article ng-repeat="(date,projects) in ctrl.projectsGroup">
     <div class="date-performance date-single-performance">
-      {{ date | date:'EEEE, MM/dd' }} - <p>6 hours</p>
+      {{ date | date:'EEEE, MM/dd' }} - <p>{{ctrl.total[date]}} hours</p>
     </div>
-    <div ng-repeat="timelogs in projects" class="box-performance-edit performance-{{n}}">
+    <div ng-repeat="timelogs in projects" class="box-performance-edit performance-{{n}}" ng-init="ctrl.sum(timelogs,date)">
       <div class="card-performance card-performance-{{n}}">
         <div class="list">
           <a ng-click="controller.edit(n)" class="img-edit img-edit edit-performance-{{n}}"><img src="images/edit.png"/></a>
