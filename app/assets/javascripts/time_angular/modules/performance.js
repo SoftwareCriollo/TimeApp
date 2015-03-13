@@ -3,7 +3,7 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'TimeLoggerRepository', 'UsersRepository', function(currentUser,projectsCache, timeLoggerRepository, usersRepository){
+  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'TimeLoggerRepository', 'UsersRepository', function(currentUser, projectsCache, cardsCache, timeLoggerRepository, usersRepository){
 
     currentUser.isPendingAuth();
 
@@ -11,6 +11,7 @@
     this.end_date = new Date();
     this.start_date = new Date();
     this.timelog = undefined;
+    this.cards = {};
 
     this.projects = projectsCache.projects;
     
@@ -77,11 +78,25 @@
       });
     };
 
+    this.getListName = function(timelog){
+      if(!this.cards[timelog.task_name])
+        this.cards[timelog.task_name]="";
+
+      if(this.cards[timelog.task_name]=="")
+      {
+        var card = cardsCache.findCard(timelog.project_id,timelog.task_id);
+        if(card)
+          this.cards[timelog.task_name]=card.list_name;
+        else
+          this.cards[timelog.task_name]="DONE";
+      }
+    };
+
   }]);
 
  
 
-  app.controller('PerformanceController',['$routeParams','CurrentUser','ProjectCache', 'TimeLoggerRepository', function($routeParams, currentUser,projectCache, timeLoggerRepository){
+  app.controller('PerformanceController',['$routeParams','CurrentUser','ProjectCache', 'CardsCache', 'TimeLoggerRepository', function($routeParams, currentUser, projectCache, cardsCache, timeLoggerRepository){
 
     currentUser.isPendingAuth();
 
@@ -102,6 +117,7 @@
     this.start_date = new Date();
     this.timelog = undefined;
     this.total = {};
+    this.cards = {};
     this.totalWorked = 0;
 
     var inizialize = function () {
@@ -216,6 +232,20 @@
       timeLoggerRepository.edit(this.timelog,function(){
         ctrl.timelog = undefined;
       });
+    };
+
+    this.getListName = function(timelog){
+      if(!this.cards[timelog.task_name])
+        this.cards[timelog.task_name]="";
+
+      if(this.cards[timelog.task_name]=="")
+      {
+        var card = cardsCache.findCard(timelog.project_id,timelog.task_id);
+        if(card)
+          this.cards[timelog.task_name]=card.list_name;
+        else
+          this.cards[timelog.task_name]="DONE";
+      }
     };
 
     inizialize();
