@@ -248,16 +248,16 @@
     };
 
     this.getListName = function(timelog){
-      if(!this.cards[timelog.task_name])
-        this.cards[timelog.task_name]="";
+      if(!this.cards[timelog.task_id])
+        this.cards[timelog.task_id]="";
 
-      if(this.cards[timelog.task_name]=="")
+      if(this.cards[timelog.task_id]=="")
       {
         var card = cardsCache.findCard(timelog.project_id,timelog.task_id);
         if(card)
-          this.cards[timelog.task_name]=card.list_name;
+          this.cards[timelog.task_id]=card.list_name;
         else
-          this.cards[timelog.task_name]="DONE";
+          this.cards[timelog.task_id]="DONE";
       }
     };
 
