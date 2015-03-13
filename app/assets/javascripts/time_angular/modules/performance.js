@@ -131,6 +131,7 @@
 
     this.changeNext = function(){
       this.totalWorked = 0;
+      this.total = {};
       this.previousWeekStart = this.currentWeekStart;
       this.previousWeekEnd = this.currentWeekEnd;
 
@@ -155,6 +156,7 @@
 
     this.changePrevious = function(){
       this.totalWorked = 0;
+      this.total = {};
       this.nextWeekStart = this.currentWeekStart;
       this.nextWeekEnd = this.currentWeekEnd;
 
