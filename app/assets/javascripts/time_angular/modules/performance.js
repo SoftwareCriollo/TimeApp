@@ -3,7 +3,7 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'TimeLoggerRepository', 'UsersRepository', function(currentUser, projectsCache, cardsCache, timeLoggerRepository, usersRepository){
+  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository){
 
     currentUser.isPendingAuth();
 
@@ -12,6 +12,7 @@
     this.start_date = new Date();
     this.timelog = undefined;
     this.cards = {};
+    this.totalWorked = 0;
 
     this.projects = projectsCache.projects;
     
@@ -78,17 +79,29 @@
       });
     };
 
-    this.getListName = function(timelog){
-      if(!this.cards[timelog.task_name])
-        this.cards[timelog.task_name]="";
 
-      if(this.cards[timelog.task_name]=="")
+    this.getListName = function(timelog,name){
+
+      if(!this.cards[name])
+      {
+        this.cards[name]={};
+        var projectId=timelog.project_id;
+        cardRepository.setProjectId(projectId);
+        cardRepository.get(function(cards, status, headers, config){
+          cardsCache.saveCards(projectId,cards);
+        });
+      }
+
+      if(!this.cards[name][timelog.task_id])
+        this.cards[name][timelog.task_id]="";
+
+      if(this.cards[name][timelog.task_id]=="")
       {
         var card = cardsCache.findCard(timelog.project_id,timelog.task_id);
         if(card)
-          this.cards[timelog.task_name]=card.list_name;
+          this.cards[name][timelog.task_id]=card.list_name;
         else
-          this.cards[timelog.task_name]="DONE";
+          this.cards[name][timelog.task_id]="DONE";
       }
     };
 
