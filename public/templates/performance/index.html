@@ -49,7 +49,7 @@
       <div ng-repeat="timelog in timelogs" class="box-performance-edit performance-{{n}}">
 
         <div class="card-performance card-performance-{{n}}">
-          <div class="list">
+          <div class="list-performance">
             <a ng-click="ctrl.editTimeEntry(timelog)" class="img-edit" ng-hide="ctrl.isEditing(timelog)"><img src="images/edit.png"/></a>
             <div class="name-task"> {{timelog.task_name}} </div>
             <div class="note-task">Notes: <a href> {{timelog.comment}}</a> </div>
@@ -62,7 +62,7 @@
             </div>
           </div>
         </div>
-        <div id="{{timelog._id.$oid}}" class="editTimeEntries hide">
+        <div id="{{timelog._id.$oid}}" class="edit-entries-performance hide">
           <form method="post" name="formEditTimeEntries" ng-submit="ctrl.editTimelog()">
             <div class="form-time-entries edit-entries">
               <div class="field-form field-up">
