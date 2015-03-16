@@ -44,6 +44,15 @@
         saveJsonCache(project_id+'_cards',new_cards);
       };
 
+      this.findCard = function(project_id,card_id){
+        this.cards = this.loadCards(project_id);
+        for (var i = this.cards.length - 1; i >= 0; i--) {
+          card = this.cards[i];
+          if(card.id == card_id)
+            return card;
+        };
+      };
+
       return this;
     }]);
 
@@ -78,6 +87,9 @@
         if( !this.isAuthenticated()){
           $location.path('/log-in');
         }
+      }
+      this.getUser = function(){
+        return currentUser;
       }
       if( existCache("currentUser") )
         currentUser = new TimeApp.User( loadJsonCache("currentUser") );      

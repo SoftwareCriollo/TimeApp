@@ -42,7 +42,7 @@
   width: 80%
   float: left
   padding-left: 20%
-  margin: 0px 0px 30px
+  margin: 0px 0px 0px
 
 .container-new-performance
   overflow: hidden
@@ -77,9 +77,18 @@
   margin-left: 8px
 
 .box-center-performance
-  width: 50%
-  display: inline
+  width: calc(100% - 26em)
   text-align: center
+  margin-top: 30px
+
+.box-center-general-performance
+  text-align: center
+  margin-top: 30px
+
+.box-left-performance,
+.box-right-performance
+  width: 13em
+  margin-top: 30px
 
 .box-total-hours-performance
   margin-bottom: 30px
@@ -163,3 +172,33 @@
 
 .url-to-share
   margin-top: -29px
+
+.edit-entries-performance
+  width: 60%
+  margin-left: 15px
+  display: table
+  form
+    background: none
+    .field-form
+      background: #FFF
+      border: none
+      height: auto
+      margin: 10px 0
+    .field-up
+      width: 53%
+    .field-entries
+      color: $color-placeholder-secondary
+    textarea
+      height: 110px
+      padding-top: 20px
+    input[type='text']
+      height: 51px
+    input[type='submit']
+      height: 42px
+      padding: 0 30px
+
+.list-performance
+  height: 109px
+  width: 289px
+  display: table-cell
+  max-width: 245px

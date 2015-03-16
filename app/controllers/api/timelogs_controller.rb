@@ -18,6 +18,13 @@ class Api::TimelogsController <  ApiAuthenticatedController
     end
   end
 
+  def index
+    @timelogs = Timelog.by_range(params[:date_1],params[:date_2])
+    @timelogs = @timelogs.filtering_params(params.slice(:project_id, :user_id))
+
+    render json: @timelogs
+  end
+
   def timelog_params
     params.require(:timelog).permit(:time,:comment)
   end

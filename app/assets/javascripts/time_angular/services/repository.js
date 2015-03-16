@@ -9,7 +9,17 @@
 
       this.get = function(success_callback){
         repository.get(this.route,success_callback);
-      } 
+      }
+      return this;
+    }]);
+
+    $provide.factory('UsersRepository',["Repository",function(repository) {
+      this.route = '/api/mongoid_users';
+
+      this.getUsers = function(success_callback){
+        repository.get(this.route,success_callback);
+      };
+      
       return this;
     }]);
 
@@ -21,8 +31,25 @@
       };
 
       this.edit = function(timelog,success_callback){
+        this.route = "/api/timelogs";
         console.log(timelog);
         repository.patch(this.patchRoute(timelog),{"timelog":timelog},success_callback);        
+      };
+
+      this.setParameters = function(date_start,date_end,project_id,user_id){
+        this.route= "/api/timelogs/?";
+        if(date_start)
+          this.route += "&date_1="+date_start;
+        if(date_end)
+          this.route += "&date_2="+date_end;
+        if(project_id)
+          this.route += "&project_id="+project_id;
+        if(user_id)
+          this.route += "&user_id="+user_id;
+      }
+
+      this.get = function(success_callback){
+        repository.get(this.route,success_callback);
       };
 
       this.createRoute= function(){
@@ -104,9 +131,7 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
         repository.get(this.route,success_callback);
       };
 
-      this.setDates = function(date_start,date_end){
-        this.date_start = date_start;
-        this.date_end = date_end;
+      this.setParameters = function(date_start,date_end){
         this.route= "/api/iterations/"+this.iterationId+"/timelogs/?date_1="+date_start+"&date_2="+date_end;
       }
 

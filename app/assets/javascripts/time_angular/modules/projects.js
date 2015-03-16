@@ -38,7 +38,7 @@
 
     cardRepository.get(function(cards, status, headers, config){
       cardsCache.saveCards(projectId,cards);
-      var cardsGrouped = new TimeApp.DateGrouper(cards).group_by('list_name');
+      var cardsGrouped = new TimeApp.FieldGrouper(cards).group_by('list_name');
       controller.cardsGroup = cardsGrouped;
       controller.cards = cards;
     });
