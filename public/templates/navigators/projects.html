@@ -4,7 +4,7 @@
 </div>
 
 <nav ng-cloak>
-  <a ng-class="{active: section=='stories'}" ng-href="#/projects/{{project.id ? project.id : project}}/cards">STORIES</a>
-  <a ng-class="{active: section=='iterations'}" ng-href="#/projects/{{project.id ? project.id : project}}/iterations">ITERATIONS</a> 
-  <a ng-class="{active: section=='performance'}" ng-href="#/performance/project/{{project.id ? project.id : project}}">PERFORMANCE</a>  
+  <a class="general-performance" ng-class="{active: section=='stories'}" ng-href="#/projects/{{project.id ? project.id : project}}/cards">STORIES</a>
+  <a class="general-performance" ng-class="{active: section=='iterations'}" ng-href="#/projects/{{project.id ? project.id : project}}/iterations">ITERATIONS</a> 
+  <a class="general-performance" ng-class="{active: section=='performance'}" ng-href="#/performance/project/{{project.id ? project.id : project}}">PERFORMANCE</a>  
 </nav>
