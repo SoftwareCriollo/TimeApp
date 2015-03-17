@@ -44,7 +44,7 @@
     <div class="activity" ng-repeat="(name,timelogs) in projects">
       <div class="project-hours-performance">
         <div class="circle">1</div>
-        {{name}} - <p>{{ctrl.sum(timelogs)}} hours</p>
+        {{name}} - <p>{{ctrl.sum(timelogs) | number : 1}} hours</p>
       </div>
       <div ng-repeat="timelog in timelogs" class="box-performance-edit performance-{{n}}">
 
@@ -58,7 +58,7 @@
              {{ctrl.cards[name][timelog.task_id]}}
             </div>
             <div class="box-hours">
-              <div class="box-silver"><img src="images/clock-silver.png"/>{{timelog.time}} HOURS</div>
+              <div class="box-silver"><img src="images/clock-silver.png"/>{{timelog.time | number : 1}} HOURS</div>
             </div>
           </div>
         </div>
