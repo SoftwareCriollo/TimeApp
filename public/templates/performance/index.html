@@ -32,19 +32,31 @@
       <h3>{{ctrl.start_date | dateSuffix}} - {{ctrl.end_date | ddSuffix}}</h3>
       <div class="box-total-hours-performance">
         <img src="images/watch.png"/>
-        {{ctrl.totalWorked | number : 1}} hours worked
+        <ng-pluralize count="ctrl.totalWorked | number : 1" 
+            when="{'0': '{}', '1': '{} hour worked', 'other': '{} hours worked'}">
+        </ng-pluralize>
         <hr class="underline-short-dark"/>
       </div>
     </div>
   </div>
   <article  ng-repeat="(date,projects) in ctrl.projectsGroup">
     <div class="date-performance">
-      {{ date | date:'EEEE, MM/dd' }} - <p>TOTAL: {{ctrl.total[date] | number : 1}} hours</p>
+      {{ date | date:'EEEE, MM/dd' }} - 
+      <p>
+        <ng-pluralize count="ctrl.total[date] | number : 1" 
+          when="{'0': '{}', '1': '{} hour', 'other': '{} hours'}">
+        </ng-pluralize>
+      </p>
     </div>
     <div class="activity" ng-repeat="(name,timelogs) in projects">
       <div class="project-hours-performance">
         <div class="circle">1</div>
-        {{name}} - <p>{{ctrl.sum(timelogs) | number : 1}} hours</p>
+        {{name}} - 
+        <p>
+          <ng-pluralize count="ctrl.sum(timelogs) | number : 1" 
+              when="{'0': '{}', '1': '{} hour', 'other': '{} hours'}">
+          </ng-pluralize>
+        </p>
       </div>
       <div ng-repeat="timelog in timelogs" class="box-performance-edit performance-{{n}}">
 
@@ -58,7 +70,11 @@
              {{ctrl.cards[name][timelog.task_id]}}
             </div>
             <div class="box-hours">
-              <div class="box-silver"><img src="images/clock-silver.png"/>{{timelog.time | number : 1}} HOURS</div>
+              <div class="box-silver"><img src="images/clock-silver.png"/>
+                <ng-pluralize count="timelog.time | number : 1" 
+                  when="{'0': '{}', '1': '{} HOUR', 'other': '{} HOURS'}">
+                </ng-pluralize>
+              </div>
             </div>
           </div>
         </div>
@@ -66,7 +82,7 @@
           <form method="post" name="formEditTimeEntries" ng-submit="ctrl.editTimelog()">
             <div class="form-time-entries edit-entries">
               <div class="field-form field-up">
-                <input type="number" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
+                <input type="number" step="0.1 "min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
               </div>
               <div class="field-form field-down">
                 <textarea rows="4" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
