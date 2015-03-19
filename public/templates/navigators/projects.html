@@ -3,8 +3,8 @@
   <a class="client-information" href="#/projects/{{project.id ? project.id : project}}/client">CLIENT INFORMATION</a>
 </div>
 
-<nav ng-cloak>
-  <a class="general-performance" ng-class="{active: section=='stories'}" ng-href="#/projects/{{project.id ? project.id : project}}/cards">STORIES</a>
-  <a class="general-performance" ng-class="{active: section=='iterations'}" ng-href="#/projects/{{project.id ? project.id : project}}/iterations">ITERATIONS</a> 
-  <a class="general-performance" ng-class="{active: section=='performance'}" ng-href="#/performance/project/{{project.id ? project.id : project}}">PERFORMANCE</a>  
+<nav class="general-performance" ng-cloak>
+  <a ng-class="{active: section=='stories'}" ng-href="#/projects/{{project.id ? project.id : project}}/cards">STORIES</a>
+  <a ng-class="{active: section=='iterations'}" ng-href="#/projects/{{project.id ? project.id : project}}/iterations">ITERATIONS</a> 
+  <a ng-class="{active: section=='performance'}" ng-href="#/performance/project/{{project.id ? project.id : project}}">PERFORMANCE</a>  
 </nav>

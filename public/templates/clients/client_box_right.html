@@ -2,8 +2,8 @@
     <button class="log-out"><a href ng-click="controller.logOut()">LOG OUT</a></button>
     <button class="client-information"><a href="#/projects/{{controller.project.id}}/client">CLIENT INFORMATION</a></button>
   </div>
-  <ul>
-  	<li><a class="general-performance" ng-href="#/projects/{{controller.project.id}}/cards">STORIES</a></li>
-  	<li><a class="general-performance" ng-href="#/projects/{{controller.project.id}}/iterations">ITERATIONS</a></li>
-  	<li><a class="general-performance" ng-href="#">PERFORMANCE</a></li>
+  <ul class="general-performance">
+  	<li><a ng-href="#/projects/{{controller.project.id}}/cards">STORIES</a></li>
+  	<li><a ng-href="#/projects/{{controller.project.id}}/iterations">ITERATIONS</a></li>
+  	<li><a ng-href="#">PERFORMANCE</a></li>
   </ul>
