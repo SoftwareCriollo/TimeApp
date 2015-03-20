@@ -36,28 +36,21 @@
         repository.patch(this.patchRoute(timelog),{"timelog":timelog},success_callback);        
       };
 
-      this.setParameters = function(date_start,date_end,project_id,user_id){
-        this.route= "/api/timelogs/?";
-        if(date_start)
-          this.route += "&date_1="+date_start;
-        if(date_end)
-          this.route += "&date_2="+date_end;
-        if(project_id)
-          this.route += "&project_id="+project_id;
-        if(user_id)
-          this.route += "&user_id="+user_id;
-      }
-
-      this.shareParameters = function(date_start,date_end,project_id,user_id){
-        this.route = window.location+"/report/?";
-        if(date_start)
-          this.route += "&date_1="+date_start;
-        if(date_end)
-          this.route += "&date_2="+date_end;
-        if(project_id)
-          this.route += "&project_id="+project_id;
-        if(user_id)
-          this.route += "&user_id="+user_id;
+      this.setParameters = function(urlData){
+        if (urlData['type']=='urlshare'){
+          this.route = window.location+"/report/?";  
+        }else if (urlData["type"]=='form'){
+          this.route= "/api/timelogs/?";  
+        }
+        
+        if(urlData['start_date'])
+          this.route += "&date_1="+urlData['start_date'];
+        if(urlData['end_date'])
+          this.route += "&date_2="+urlData['end_date'];
+        if(urlData['project'])
+          this.route += "&project_id="+urlData['project'];
+        if(urlData['user'])
+          this.route += "&user_id="+urlData['user'];
       }
 
       this.get = function(success_callback){

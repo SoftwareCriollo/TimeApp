@@ -29,7 +29,15 @@
     };
 
     this.setPerformance = function(){
-      timeLoggerRepository.shareParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
+      var urlData = [];
+
+      urlData["start_date"] = this.dateFormat(this.start_date);
+      urlData["end_date"] = this.dateFormat(this.end_date);
+      urlData["project"] = this.project;
+      urlData["user"] = this.user;
+      urlData["type"] = 'urlshare';
+
+      timeLoggerRepository.setParameters(urlData);
       ctrl.urlShare = timeLoggerRepository.route;
       /*
       var login = "";
@@ -40,17 +48,22 @@
           ctrl.urlShare = short_url;
       });
       */
-      timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
+      urlData["type"] = 'form';
+      timeLoggerRepository.setParameters(urlData);
       this.getPerformance();
       ctrl.shortlink = true;
     };
 
     this.UrlToShare = function(){
-      var start_date = $location.search().date_1; 
-      var end_date = $location.search().date_2; 
-      var project = $location.search().project_id; 
-      var user = $location.search().user_id;  
-      timeLoggerRepository.setParameters(start_date,end_date,project,user);
+      var urlData = [];
+
+      urlData["start_date"] = $location.search().date_1; 
+      urlData["end_date"] = $location.search().date_2; 
+      urlData["project"] = $location.search().project_id; 
+      urlData["user"] = $location.search().user_id;  
+      urlData["type"] = 'form';
+      
+      timeLoggerRepository.setParameters(urlData);
       this.getPerformance();
     };
 
