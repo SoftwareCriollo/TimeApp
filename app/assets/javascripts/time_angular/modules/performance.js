@@ -31,11 +31,20 @@
     this.setPerformance = function(){
       timeLoggerRepository.shareParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
       ctrl.urlShare = timeLoggerRepository.route;
+      /*
+      var login = "";
+      var api_key = "";
+      var long_url = ctrl.urlShare;
 
+      this.get_short_url(long_url, login, api_key, function(short_url) {
+          ctrl.urlShare = short_url;
+      });
+      */
       timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
       this.getPerformance();
+      ctrl.shortlink = true;
     };
-    
+
     this.UrlToShare = function(){
       var start_date = $location.search().date_1; 
       var end_date = $location.search().date_2; 
@@ -60,6 +69,20 @@
         ctrl.projectsGroup = timesGrouped;
       });
     };
+
+    this.get_short_url = function(long_url, login, api_key, func){
+      $.getJSON("http://api.bitly.com/v3/shorten?callback=?", 
+        { 
+          "format": "json",
+          "apiKey": api_key,
+          "login": login,
+          "longUrl": long_url
+        },
+        function(response){
+          func(response.data.url);
+        }
+      );
+    }
 
     this.sum = function(items,date){
       var sum = 0;

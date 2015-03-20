@@ -34,7 +34,10 @@
         <img src="images/watch.png"/>
         <p>{{ctrl.totalWorked | number:1 | hours}}</p>
         <hr class="underline-short-dark"/>
-        <a href="{{ctrl.urlShare}}" target="_blank">URL TO SHARE</a>
+        <div ng-show="ctrl.shortlink">
+          <img src="images/url.png"><b>Url to share: </b>
+          <a href="{{ctrl.urlShare}}" target="_blank">{{ctrl.urlShare}}</a>
+        </div>
       </div>
     </div>
   </div>

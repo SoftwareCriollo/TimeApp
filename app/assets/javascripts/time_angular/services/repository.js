@@ -49,7 +49,7 @@
       }
 
       this.shareParameters = function(date_start,date_end,project_id,user_id){
-        this.route= "/#/performance/report/?";
+        this.route = window.location+"/report/?";
         if(date_start)
           this.route += "&date_1="+date_start;
         if(date_end)
