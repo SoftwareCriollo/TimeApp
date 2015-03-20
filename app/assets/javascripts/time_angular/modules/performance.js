@@ -28,10 +28,14 @@
       return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
     };
 
-    this.SearchPerformance = function(){
+    this.setPerformance = function(){
+      timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
+      this.getPerformance();
+    };
+
+    this.getPerformance = function(){
       this.total = {};
       this.totalWorked =0;
-      timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
       
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');

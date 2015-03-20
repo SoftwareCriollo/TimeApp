@@ -1,32 +1,4 @@
-<navigatorproject class='navigator-right' project="ctrl.project"></navigatorproject>
-<div class="section-up-performance section-up-title">
-  <div class="box-search-performance">
-    <form class="formPerformance" name="formPerformance" ng-submit="ctrl.setPerformance()">
-      <section class="box-search-performance">
-        <div class="field-form field-performance float-left">
-          <input type="date" name="start_date" ng-model="ctrl.start_date" placeholder="Start date"/>
-        </div>
-        <div class="field-form field-performance float-left margin-right">
-          <input type="date" name="end_date" ng-model="ctrl.end_date" placeholder="End date"/>
-        </div>
-        <div class="field-form field-performance float-left">
-          <select ng-model="ctrl.project" ng-options="p.id as p.name for p in ctrl.projects">
-             <option value='' selected> All Projects </option> 
-          </select>
-        </div>
-        <div class="field-form field-performance float-left">
-          <select ng-model="ctrl.user" ng-options="u._id.$oid as u.email for u in ctrl.users">
-            <option value='' selected> All team members </option>
-          </select>
-        </div>
-        <div class="field-button-performance">
-          <input type="submit" value="SEARCH" class="btn-primary"/>
-        </div>
-      </section>
-    </form>
-  </div>
-</div>
-<section class="container-new-performance">
+<section class="container-new-performance" ng-init="ctrl.getPerformance()">
   <div class="section-up-performance">
     <div class="box-center-general-performance">
       <h3>{{ctrl.start_date | dateSuffix}} - {{ctrl.end_date | ddSuffix}}</h3>
@@ -34,7 +6,6 @@
         <img src="images/watch.png"/>
         <p>{{ctrl.totalWorked | number:1 | hours}}</p>
         <hr class="underline-short-dark"/>
-        <a href="/#/performance/report">LINK</a>
       </div>
     </div>
   </div>

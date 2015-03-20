@@ -75,6 +75,11 @@
         controller: 'GeneralPerformanceController',
         controllerAs: 'ctrl'
       })
+      .when('/performance/report', {
+        templateUrl: 'templates/performance/report.html',
+        controller: 'GeneralPerformanceController',
+        controllerAs: 'ctrl'
+      })
       .when('/performance/search', {
         templateUrl: 'templates/performance/search.html',
         controller: 'GeneralPerformanceController',
