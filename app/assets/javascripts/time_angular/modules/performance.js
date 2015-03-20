@@ -3,7 +3,7 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository){
+  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository','$location', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, $location){
 
     currentUser.isPendingAuth();
 
@@ -29,7 +29,19 @@
     };
 
     this.setPerformance = function(){
+      timeLoggerRepository.shareParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
+      ctrl.urlShare = timeLoggerRepository.route;
+
       timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,this.user);
+      this.getPerformance();
+    };
+    
+    this.UrlToShare = function(){
+      var start_date = $location.search().date_1; 
+      var end_date = $location.search().date_2; 
+      var project = $location.search().project_id; 
+      var user = $location.search().user_id;  
+      timeLoggerRepository.setParameters(start_date,end_date,project,user);
       this.getPerformance();
     };
 

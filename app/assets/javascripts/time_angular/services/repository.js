@@ -48,6 +48,18 @@
           this.route += "&user_id="+user_id;
       }
 
+      this.shareParameters = function(date_start,date_end,project_id,user_id){
+        this.route= "/#/performance/report/?";
+        if(date_start)
+          this.route += "&date_1="+date_start;
+        if(date_end)
+          this.route += "&date_2="+date_end;
+        if(project_id)
+          this.route += "&project_id="+project_id;
+        if(user_id)
+          this.route += "&user_id="+user_id;
+      }
+
       this.get = function(success_callback){
         repository.get(this.route,success_callback);
       };
