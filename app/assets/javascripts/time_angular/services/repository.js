@@ -36,22 +36,22 @@
         repository.patch(this.patchRoute(timelog),{"timelog":timelog},success_callback);        
       };
 
-      this.setParameters = function(urlData){
-        if (urlData['type']=='urlshare'){
-          this.route = window.location+"/report/?";  
-        }else if (urlData["type"]=='form'){
-          this.route= "/api/timelogs/?";  
+      
+      this.setParameters = function(){
+        this.route= "/api/timelogs/?"; 
+      };
+
+      this.setUrl = function(){
+        this.route = window.location+"/report/?"; 
+      };
+          
+      this.abstractUrlBuilder = function(urlData){
+        var results = [];
+        for(attr in urlData){
+          results.push( attr + "="+urlData[attr]);
         }
-        
-        if(urlData['start_date'])
-          this.route += "&date_1="+urlData['start_date'];
-        if(urlData['end_date'])
-          this.route += "&date_2="+urlData['end_date'];
-        if(urlData['project'])
-          this.route += "&project_id="+urlData['project'];
-        if(urlData['user'])
-          this.route += "&user_id="+urlData['user'];
-      }
+        this.route += results.join('&');
+      };
 
       this.get = function(success_callback){
         repository.get(this.route,success_callback);

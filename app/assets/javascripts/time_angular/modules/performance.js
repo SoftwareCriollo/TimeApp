@@ -31,13 +31,13 @@
     this.setPerformance = function(){
       var urlData = [];
 
-      urlData["start_date"] = this.dateFormat(this.start_date);
-      urlData["end_date"] = this.dateFormat(this.end_date);
-      urlData["project"] = this.project;
-      urlData["user"] = this.user;
-      urlData["type"] = 'urlshare';
+      urlData["date_1"] = this.dateFormat(this.start_date);
+      urlData["date_2"] = this.dateFormat(this.end_date);
+      urlData["project_id"] = this.project;
+      urlData["user_id"] = this.user;
 
-      timeLoggerRepository.setParameters(urlData);
+      timeLoggerRepository.setUrl();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
       ctrl.urlShare = timeLoggerRepository.route;
       /*
       var login = "";
@@ -48,29 +48,31 @@
           ctrl.urlShare = short_url;
       });
       */
-      urlData["type"] = 'form';
-      timeLoggerRepository.setParameters(urlData);
-      this.getPerformance();
+      this.getPerformance(urlData);
       ctrl.shortlink = true;
     };
 
-    this.UrlToShare = function(){
+    this.urlToShare = function(){
       var urlData = [];
 
-      urlData["start_date"] = $location.search().date_1; 
-      urlData["end_date"] = $location.search().date_2; 
-      urlData["project"] = $location.search().project_id; 
-      urlData["user"] = $location.search().user_id;  
-      urlData["type"] = 'form';
-      
-      timeLoggerRepository.setParameters(urlData);
-      this.getPerformance();
+      urlData["date_1"] = $location.search().date_1; 
+      urlData["date_2"] = $location.search().date_2; 
+      urlData["project_id"] = $location.search().project_id; 
+      urlData["user_id"] = $location.search().user_id;
+
+      ctrl.start_date == urlData["date_1"];
+      ctrl.end_date == urlData["date_2"];
+
+      this.getPerformance(urlData);
     };
 
-    this.getPerformance = function(){
+    this.getPerformance = function(urlData){
       this.total = {};
       this.totalWorked =0;
-      
+
+      timeLoggerRepository.setParameters();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
+
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
         
