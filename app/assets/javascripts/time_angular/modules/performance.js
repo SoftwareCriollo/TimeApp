@@ -35,39 +35,16 @@
       urlData["date_2"] = this.dateFormat(this.end_date);
       urlData["project_id"] = this.project;
       urlData["user_id"] = this.user;
-
-      timeLoggerRepository.setUrl();
-      timeLoggerRepository.abstractUrlBuilder(urlData);
-      ctrl.urlShare = timeLoggerRepository.route;
-      /*
-      var login = "";
-      var api_key = "";
-      var long_url = ctrl.urlShare;
-
-      this.get_short_url(long_url, login, api_key, function(short_url) {
-          ctrl.urlShare = short_url;
-      });
-      */
+      
       this.getPerformance(urlData);
-      ctrl.shortlink = true;
-    };
-
-    this.urlToShare = function(){
-      var urlData = [];
-
-      urlData["date_1"] = $location.search().date_1; 
-      urlData["date_2"] = $location.search().date_2; 
-      urlData["project_id"] = $location.search().project_id; 
-      urlData["user_id"] = $location.search().user_id;
-
-      this.getPerformance(urlData);
+      this.setUrlToShare(urlData);
     };
 
     this.getPerformance = function(urlData){
       this.total = {};
       this.totalWorked =0;
 
-      timeLoggerRepository.setParameters();
+      timeLoggerRepository.setPrefixToBackend();
       timeLoggerRepository.abstractUrlBuilder(urlData);
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
@@ -82,7 +59,23 @@
       });
     };
 
-    this.get_short_url = function(long_url, login, api_key, func){
+    this.setUrlToShare = function(urlData){
+      timeLoggerRepository.setPrefixToShare();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
+      ctrl.urlShare = timeLoggerRepository.route;
+      /*
+      var login = "";
+      var api_key = "";
+      var long_url = ctrl.urlShare;
+
+      this.getShortUrl(long_url, login, api_key, function(short_url) {
+          ctrl.urlShare = short_url;
+      });
+      */
+      ctrl.shortlink = true;
+    };
+
+    this.getShortUrl = function(long_url, login, api_key, func){
       $.getJSON("http://api.bitly.com/v3/shorten?callback=?", 
         { 
           "format": "json",
@@ -95,6 +88,17 @@
         }
       );
     }
+
+    this.getUrlToShare = function(){
+      var urlData = [];
+
+      urlData["date_1"] = $location.search().date_1; 
+      urlData["date_2"] = $location.search().date_2; 
+      urlData["project_id"] = $location.search().project_id; 
+      urlData["user_id"] = $location.search().user_id;
+
+      this.getPerformance(urlData);
+    };
 
     this.sum = function(items,date){
       var sum = 0;

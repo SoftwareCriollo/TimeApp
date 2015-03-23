@@ -37,11 +37,11 @@
       };
 
       
-      this.setParameters = function(){
+      this.setPrefixToBackend = function(){
         this.route= "/api/timelogs/?"; 
       };
 
-      this.setUrl = function(){
+      this.setPrefixToShare = function(){
         this.route = window.location+"/report/?"; 
       };
           
