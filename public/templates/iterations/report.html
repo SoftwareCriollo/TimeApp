@@ -1,5 +1,4 @@
-<navigatorproject class='navigator-right' project="ctrl.project" section="'iterations'"></navigatorproject>
-<div class="section-up-iteration section-up-title">
+<div class="section-up-iteration section-up-title entries-report" ng-init="ctrl.getUrlToShare();">
   <div class="box-title title-iteration">
     <h1 class="title"> {{ctrl.project.name}}</h1>
     <hr class="underline" />
@@ -19,8 +18,6 @@
         <img src="images/watch.png"/>
         {{ctrl.total(ctrl.timelogs) | number:1 | hours}}
         <hr class="underline-short-dark"/>
-        <img src="images/url.png"><b>Url to share: </b>
-        <a href="{{ctrl.urlShare}}" target="_blank">{{ctrl.urlShare}}</a>
       </div>
     </div>
     <div class="float-right section-change-iteration box-right-iteration" ng-class="{ disabled: !ctrl.showNext}"  ng-click="ctrl.changeNext()">

@@ -78,7 +78,7 @@
           "longUrl": long_url
         },
         function(response){
-          ctrl.urlShare = response.data.url;
+          //ctrl.urlShare = response.data.url;
           ctrl.shortlink = true;
         });
     } 

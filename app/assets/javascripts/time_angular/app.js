@@ -60,6 +60,11 @@
         controller: 'TimelogsController',
         controllerAs: 'ctrl'
       })
+      .when('/iterations/:iterationId/entries/report', {
+        templateUrl: 'templates/iterations/report.html',
+        controller: 'TimelogsController',
+        controllerAs: 'ctrl'
+      })
       .when('/projects/:projectId/client', {
         templateUrl: "templates/clients/client.html",
         controller: 'ClientsController',

@@ -35,7 +35,7 @@
 
   }]);
 
-  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$rootScope', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$rootScope){
+  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$rootScope', '$location', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$rootScope, $location){
     currentUser.isPendingAuth();
   
     var controller = this;
@@ -83,16 +83,48 @@
         this.showNext=true;
     }
 
-    this.gettingEntries = function(dateStart,dateEnd){
+    this.gettingEntries = function(dateStart, dateEnd){
       iterationsRepository.setParameters(dateStart, dateEnd);
-      
+
       iterationsRepository.entries(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
         controller.timelogsGroup = timesGrouped;
         controller.timelogs = timelogs;
         console.dir(timesGrouped);
       });
+
+      this.setUrlToShare(dateStart, dateEnd);
     }
+
+    this.setUrlToShare = function(dateStart, dateEnd){
+      iterationsRepository.setParametersToShare(dateStart, dateEnd);
+      controller.urlShare = iterationsRepository.route;
+      this.getShortUrl(controller.urlShare);
+    };
+
+    this.getShortUrl = function(url){
+      var long_url = url;
+      var login = "o_32g0fvedmb";
+      var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
+
+      $.getJSON("http://api.bitly.com/v3/shorten?callback=?", { 
+          "format": "json",
+          "apiKey": api_key,
+          "login": login,
+          "longUrl": long_url
+        },
+        function(response){
+          //ctrl.urlShare = response.data.url;
+          this.shortlink = true;
+        });
+    }
+
+    this.getUrlToShare = function(){
+      var dateStart = $location.search().date_1; 
+      var dateEnd = $location.search().date_2; 
+
+      this.gettingEntries(dateStart, dateEnd);
+    };
 
     this.dateFormat = function(date) {
       var yyyy = date.getFullYear().toString();
