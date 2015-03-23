@@ -97,6 +97,9 @@
       urlData["project_id"] = $location.search().project_id; 
       urlData["user_id"] = $location.search().user_id;
 
+      ctrl.start_report = (urlData["date_1"]);
+      ctrl.end_report = (urlData["date_2"]);
+
       this.getPerformance(urlData);
     };
 
