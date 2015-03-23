@@ -63,32 +63,26 @@
       timeLoggerRepository.setPrefixToShare();
       timeLoggerRepository.abstractUrlBuilder(urlData);
       ctrl.urlShare = timeLoggerRepository.route;
-      /*
-      var login = "";
-      var api_key = "";
-      var long_url = ctrl.urlShare;
-
-      this.getShortUrl(long_url, login, api_key, function(short_url) {
-          ctrl.urlShare = short_url;
-      });
-      */
-      ctrl.shortlink = true;
+      this.getShortUrl(ctrl.urlShare);
     };
 
-    this.getShortUrl = function(long_url, login, api_key, func){
-      $.getJSON("http://api.bitly.com/v3/shorten?callback=?", 
-        { 
+    this.getShortUrl = function(url){
+      var long_url = url;
+      var login = "o_32g0fvedmb";
+      var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
+
+      $.getJSON("http://api.bitly.com/v3/shorten?callback=?", { 
           "format": "json",
           "apiKey": api_key,
           "login": login,
           "longUrl": long_url
         },
         function(response){
-          func(response.data.url);
-        }
-      );
-    }
-
+          ctrl.urlShare = response.data.url;
+          ctrl.shortlink = true;
+        });
+    } 
+    
     this.getUrlToShare = function(){
       var urlData = [];
 

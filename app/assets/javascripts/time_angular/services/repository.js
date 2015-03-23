@@ -35,14 +35,14 @@
         console.log(timelog);
         repository.patch(this.patchRoute(timelog),{"timelog":timelog},success_callback);        
       };
-
       
       this.setPrefixToBackend = function(){
         this.route= "/api/timelogs/?"; 
       };
 
       this.setPrefixToShare = function(){
-        this.route = window.location+"/report/?"; 
+        // colocar window.location + /report/?
+        this.route = "http://timeapp.softwarecriollo.com/report/?"; 
       };
           
       this.abstractUrlBuilder = function(urlData){
