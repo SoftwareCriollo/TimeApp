@@ -3,11 +3,15 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository','$location', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, $location){
+  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', '$location', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, $location){
 
     currentUser.isPendingAuth();
 
     var ctrl = this; 
+
+    this.gitRoute = ''
+    this.gitLabProjectId = 0;
+
     this.end_date = new Date();
     this.start_date = new Date();
     this.timelog = undefined;
@@ -35,9 +39,16 @@
       urlData["date_2"] = this.dateFormat(this.end_date);
       urlData["project_id"] = this.project;
       urlData["user_id"] = this.user;
+
+      clientsRepository.setProjectId(this.project);
+      clientsRepository.findClient(function(client, status, headers, config){
+        clientsRepository.setClientId(client._id.$oid);
+        ctrl.gitRoute  = client.git;
+      });
       
       this.getPerformance(urlData);
       this.setUrlToShare(urlData);
+      this.getProjectIdFromGitLab(ctrl.gitRoute);
     };
 
     this.getPerformance = function(urlData){
@@ -95,6 +106,31 @@
       ctrl.end_report = (urlData["date_2"]);
 
       this.getPerformance(urlData);
+    };
+
+    this.getTypeRepository = function(gitRoute){
+      
+    };
+
+    this.getDataFromGitHub = function(gitRoute){
+      $.get("https://api.github.com/repos/manuelm2/rails-one/commits", function(data){
+
+      });
+    };
+
+    this.getProjectIdFromGitLab = function(gitRoute){
+      $.get("http://git.softwarecriollo.com/api/v3/projects?private_token=zsXXHi8sUR_RzJDvp6db", function(data){
+        ctrl.gitLabProjectId = data[0].id;
+        ctrl.getDataFromGitLab(ctrl.gitLabProjectId);
+      });   
+      
+    };
+
+    this.getDataFromGitLab = function(gitLabProjectId){
+      var ulr = 'http://git.softwarecriollo.com/api/v3/projects/'+ ctrl.gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
+      $.get(ulr, function(data, status){
+          alert (data);
+      });
     };
 
     this.sum = function(items,date){
