@@ -187,6 +187,7 @@
 
     var inizialize = function () {
       currentDate = new Date();
+      var urlData = [];
 
       ctrl.currentWeekStart = ctrl.calculateInterval(currentDate,1);
       ctrl.currentWeekEnd = ctrl.calculateInterval(currentDate,7);
@@ -202,7 +203,13 @@
       ctrl.previousWeekStart = ctrl.calculateWeek(ctrl.currentWeekStart,-1);
       ctrl.previousWeekEnd = ctrl.calculateWeek(ctrl.currentWeekEnd,-1);
 
-      timeLoggerRepository.setParameters(ctrl.dateFormat(ctrl.currentWeekStart),ctrl.dateFormat(ctrl.currentWeekEnd),projectId,ctrl.user.id);
+      urlData["date_1"] = ctrl.dateFormat(ctrl.currentWeekStart); 
+      urlData["date_2"] = ctrl.dateFormat(ctrl.currentWeekEnd); 
+      urlData["project_id"] = projectId; 
+      urlData["user_id"] = ctrl.user.id;
+
+      timeLoggerRepository.setPrefixToBackend();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
@@ -213,13 +220,21 @@
     this.changeNext = function(){
       this.totalWorked = 0;
       this.total = {};
+      var urlData = [];
+
       this.previousWeekStart = this.currentWeekStart;
       this.previousWeekEnd = this.currentWeekEnd;
 
       this.currentWeekStart = this.nextWeekStart;
       this.currentWeekEnd = this.nextWeekEnd;
 
-      timeLoggerRepository.setParameters(this.dateFormat(this.currentWeekStart),this.dateFormat(this.currentWeekEnd),projectId,this.user.id);
+      urlData["date_1"] = this.dateFormat(this.currentWeekStart); 
+      urlData["date_2"] = this.dateFormat(this.currentWeekEnd); 
+      urlData["project_id"] = projectId; 
+      urlData["user_id"] = this.user.id;
+
+      timeLoggerRepository.setPrefixToBackend();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
@@ -238,13 +253,21 @@
     this.changePrevious = function(){
       this.totalWorked = 0;
       this.total = {};
+      var urlData = [];
+
       this.nextWeekStart = this.currentWeekStart;
       this.nextWeekEnd = this.currentWeekEnd;
 
       this.currentWeekStart = this.previousWeekStart;
       this.currentWeekEnd = this.previousWeekEnd;
 
-      timeLoggerRepository.setParameters(this.dateFormat(this.currentWeekStart),this.dateFormat(this.currentWeekEnd),projectId,this.user.id);
+      urlData["date_1"] = this.dateFormat(this.currentWeekStart); 
+      urlData["date_2"] = this.dateFormat(this.currentWeekEnd); 
+      urlData["project_id"] = projectId; 
+      urlData["user_id"] = this.user.id;
+
+      timeLoggerRepository.setPrefixToBackend();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');

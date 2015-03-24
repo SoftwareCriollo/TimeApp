@@ -35,18 +35,6 @@
         console.log(timelog);
         repository.patch(this.patchRoute(timelog),{"timelog":timelog},success_callback);        
       };
-
-      this.setParameters = function(date_start,date_end,project_id,user_id){
-        this.route= "/api/timelogs/?";
-        if(date_start)
-          this.route += "&date_1="+date_start;
-        if(date_end)
-          this.route += "&date_2="+date_end;
-        if(project_id)
-          this.route += "&project_id="+project_id;
-        if(user_id)
-          this.route += "&user_id="+user_id;
-      }
       
       this.setPrefixToBackend = function(){
         this.route= "/api/timelogs/?"; 
