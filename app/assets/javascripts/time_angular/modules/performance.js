@@ -49,7 +49,10 @@
       
       this.getPerformance(urlData);
       this.setUrlToShare(urlData);
-      this.getTypeRepository(ctrl.gitRoute);  
+      if (ctrl.gitRoute !== ''){
+        console.log (ctrl.gitRoute);
+        this.getTypeRepository(ctrl.gitRoute);  
+      }
     };
 
     this.getPerformance = function(urlData){
@@ -203,7 +206,7 @@
     };
 
     this.getDate = function(data){
-      var date = data.slice(0, 9);
+      var date = data.slice(0, 10);
       return date;    
     };
 
