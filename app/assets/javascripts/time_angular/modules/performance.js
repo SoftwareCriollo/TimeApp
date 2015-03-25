@@ -133,8 +133,23 @@
     this.getDataFromGitHub = function(gitHubParams){
       var url = "https://api.github.com/repos/" +gitHubParams+ "/commits"
       $.get(url, function(data){
-        ctrl.commits = data;
+        ctrl.buildGitHubJsonData(data);
       });
+    };
+
+    this.buildGitHubJsonData = function(data){
+      var jsonArr = [];
+      var route = '';
+
+      $.each(data, function(key, value) {
+        jsonArr.push({
+          route: value.html_url,
+          title: value.commit.message,
+          date: ctrl.getDate(value.commit.author.date),
+        });
+      });
+
+      ctrl.commits = jsonArr;
     };
 
     this.getProjectIdFromGitLab = function(gitLabRoute, gitLabPrefix){
