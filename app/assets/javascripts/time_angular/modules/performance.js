@@ -43,17 +43,18 @@
 
       clientsRepository.setProjectId(this.project);
       clientsRepository.findClient(function(client, status, headers, config){
-        clientsRepository.setClientId(client._id.$oid);
-        ctrl.gitRoute  = client.git;
+        if (client.git!== ''){
+          ctrl.gitRoute  = client.git; 
+        }
+        ctrl.runPeformance(ctrl.gitRoute, urlData); 
       });
-      
+    };
+
+    this.runPeformance = function(gitRoute, urlData){
       this.getPerformance(urlData);
       this.setUrlToShare(urlData);
-      if (ctrl.gitRoute !== ''){
-        console.log (ctrl.gitRoute);
-        this.getTypeRepository(ctrl.gitRoute);  
-      }
-    };
+      this.getTypeRepository(gitRoute);  
+    }
 
     this.getPerformance = function(urlData){
       this.total = {};
