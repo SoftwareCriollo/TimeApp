@@ -9,8 +9,9 @@
 
     var ctrl = this; 
 
-    this.gitRoute = ''
+    this.gitRoute = '';
     this.gitLabProjectId = 0;
+    ctrl.commits = undefined;
 
     this.end_date = new Date();
     this.start_date = new Date();
@@ -48,6 +49,7 @@
       
       this.getPerformance(urlData);
       this.setUrlToShare(urlData);
+      this.getTypeRepository(ctrl.gitRoute);  
     };
 
     this.getPerformance = function(urlData){
@@ -66,7 +68,6 @@
           timesGrouped[time]= new TimeApp.FieldGrouper(timesGrouped[time]).group_by('project_name');
         }
         ctrl.projectsGroup = timesGrouped;
-        ctrl.getTypeRepository(ctrl.gitRoute);
       });
     };
 
@@ -132,7 +133,7 @@
     this.getDataFromGitHub = function(gitHubParams){
       var url = "https://api.github.com/repos/" +gitHubParams+ "/commits"
       $.get(url, function(data){
-
+        ctrl.commits = data;
       });
     };
 
@@ -141,7 +142,7 @@
       var url = gitLabRoute+"/api/v3/projects?private_token=zsXXHi8sUR_RzJDvp6db"
       $.get(url, function(data){
 
-        $.each(data, function( key, value ) {
+        $.each(data, function(key, value) {
           if (value.path_with_namespace == gitLabPrefix){
             ctrl.gitLabProjectId = value.id 
           }
@@ -156,9 +157,39 @@
 
       var ulr = gitLabRoute+'/api/v3/projects/'+ gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
       $.get(ulr, function(data, status){
-          
+        ctrl.commits = data;  
       });
 
+    };
+
+    this.getDataFromGitLab = function(gitLabRoute, gitLabProjectId){
+
+      var ulr = gitLabRoute+'/api/v3/projects/'+ gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
+      $.get(ulr, function(data, status){
+        ctrl.buildGitLabJsonData(data);  
+      });
+
+    };
+
+    this.buildGitLabJsonData = function(data){
+      var jsonArr = [];
+      var route = '';
+
+      $.each(data, function(key, value) {
+        route = ctrl.gitRoute+'/commit/'+value.id;
+        jsonArr.push({
+          route: route,
+          title: value.title,
+          date: ctrl.getDate(value.created_at),
+        });
+      });
+
+      ctrl.commits = jsonArr;
+    };
+
+    this.getDate = function(data){
+      var date = data.slice(0, 9);
+      return date;    
     };
 
     this.sum = function(items,date){
