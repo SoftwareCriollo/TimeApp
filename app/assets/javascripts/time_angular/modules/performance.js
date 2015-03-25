@@ -48,7 +48,6 @@
       
       this.getPerformance(urlData);
       this.setUrlToShare(urlData);
-      this.getProjectIdFromGitLab(ctrl.gitRoute);
     };
 
     this.getPerformance = function(urlData){
@@ -67,6 +66,7 @@
           timesGrouped[time]= new TimeApp.FieldGrouper(timesGrouped[time]).group_by('project_name');
         }
         ctrl.projectsGroup = timesGrouped;
+        ctrl.getTypeRepository(ctrl.gitRoute);
       });
     };
 
@@ -109,28 +109,56 @@
     };
 
     this.getTypeRepository = function(gitRoute){
+
+      var typeGitLab = gitRoute.search("git.");
+      var typeGitHub = gitRoute.search("github.");
+
+      if (typeGitHub > -1){
+        
+        var gitHubParams = gitRoute.slice(19);
+        this.getDataFromGitHub(gitHubParams);
+
+      }else if (typeGitLab > -1){
+
+        var routeSize = gitRoute.indexOf("com");
+        var gitLabRoute = gitRoute.slice(0, routeSize+3);
+        var gitLabPrefix = gitRoute.slice(routeSize+4);
+        this.getProjectIdFromGitLab(gitLabRoute, gitLabPrefix);
+
+      }
       
     };
 
-    this.getDataFromGitHub = function(gitRoute){
-      $.get("https://api.github.com/repos/manuelm2/rails-one/commits", function(data){
+    this.getDataFromGitHub = function(gitHubParams){
+      var url = "https://api.github.com/repos/" +gitHubParams+ "/commits"
+      $.get(url, function(data){
 
       });
     };
 
-    this.getProjectIdFromGitLab = function(gitRoute){
-      $.get("http://git.softwarecriollo.com/api/v3/projects?private_token=zsXXHi8sUR_RzJDvp6db", function(data){
-        ctrl.gitLabProjectId = data[0].id;
-        ctrl.getDataFromGitLab(ctrl.gitLabProjectId);
+    this.getProjectIdFromGitLab = function(gitLabRoute, gitLabPrefix){
+
+      var url = gitLabRoute+"/api/v3/projects?private_token=zsXXHi8sUR_RzJDvp6db"
+      $.get(url, function(data){
+
+        $.each(data, function( key, value ) {
+          if (value.path_with_namespace == gitLabPrefix){
+            ctrl.gitLabProjectId = value.id 
+          }
+        });
+
+        ctrl.getDataFromGitLab(gitLabRoute, ctrl.gitLabProjectId);
       });   
       
     };
 
-    this.getDataFromGitLab = function(gitLabProjectId){
-      var ulr = 'http://git.softwarecriollo.com/api/v3/projects/'+ ctrl.gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
+    this.getDataFromGitLab = function(gitLabRoute, gitLabProjectId){
+
+      var ulr = gitLabRoute+'/api/v3/projects/'+ gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
       $.get(ulr, function(data, status){
-          alert (data);
+          
       });
+
     };
 
     this.sum = function(items,date){
