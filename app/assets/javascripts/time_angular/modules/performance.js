@@ -100,7 +100,7 @@
     } 
     
     this.getUrlToShare = function(){
-      var urlData = {};
+      var urlData = [];
 
       urlData["date_1"] = $location.search().date_1; 
       urlData["date_2"] = $location.search().date_2; 
@@ -142,11 +142,10 @@
     };
 
     this.buildGitHubJsonData = function(data){
-      var jsonArr = {};
-      var route = '';
+      var jsonArr = [];
 
       $.each(data, function(key, value) {
-        if (this.userEmail == value.commit.author.email) {
+        if (ctrl.userEmail == value.commit.author.email) {
           jsonArr.push({
             route: value.html_url,
             title: value.commit.message,
@@ -178,17 +177,17 @@
 
       var ulr = gitLabRoute+'/api/v3/projects/'+ gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
       $.get(ulr, function(data, status){
-        ctrl.commits = data;  
+        ctrl.buildGitLabJsonData(data);
       });
 
     };
 
     this.buildGitLabJsonData = function(data){
-      var jsonArr = {};
+      var jsonArr = [];
       var route = '';
 
       $.each(data, function(key, value) {
-        if (this.userEmail == value.author_email) {
+        if (ctrl.userEmail == value.author_email) {
           route = ctrl.gitRoute+'/commit/'+value.id;
           jsonArr.push({
             route: route,

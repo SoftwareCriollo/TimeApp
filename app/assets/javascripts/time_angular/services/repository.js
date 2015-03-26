@@ -42,7 +42,6 @@
 
       this.setPrefixToShare = function(){
         this.route = window.location+"/report/?";
-        //this.route = "http://timeapp.softwarecriollo.com/report/?"; 
       };
           
       this.abstractUrlBuilder = function(urlData){
