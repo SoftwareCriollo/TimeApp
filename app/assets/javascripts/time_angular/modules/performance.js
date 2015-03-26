@@ -11,7 +11,8 @@
 
     this.gitRoute = '';
     this.gitLabProjectId = 0;
-    ctrl.commits = undefined;
+    this.commits = undefined;
+    this.userEmail = '';
 
     this.end_date = new Date();
     this.start_date = new Date();
@@ -25,7 +26,6 @@
       ctrl.users = users;
     });
     
-
     this.dateFormat = function(date) {
       var yyyy = date.getFullYear().toString();
       var mm = (date.getMonth()+1).toString();
@@ -34,18 +34,18 @@
     };
 
     this.setPerformance = function(){
-      var urlData = [];
+      var urlData = {};
 
       urlData["date_1"] = this.dateFormat(this.start_date);
       urlData["date_2"] = this.dateFormat(this.end_date);
       urlData["project_id"] = this.project;
       urlData["user_id"] = this.user;
 
+      this.userEmail = $('#user-email option:selected').text();
+
       clientsRepository.setProjectId(this.project);
       clientsRepository.findClient(function(client, status, headers, config){
-        if (client.git!== ''){
-          ctrl.gitRoute  = client.git; 
-        }
+        ctrl.gitRoute  = client.git; 
         ctrl.runPeformance(ctrl.gitRoute, urlData); 
       });
     };
@@ -100,7 +100,7 @@
     } 
     
     this.getUrlToShare = function(){
-      var urlData = [];
+      var urlData = {};
 
       urlData["date_1"] = $location.search().date_1; 
       urlData["date_2"] = $location.search().date_2; 
@@ -142,15 +142,17 @@
     };
 
     this.buildGitHubJsonData = function(data){
-      var jsonArr = [];
+      var jsonArr = {};
       var route = '';
 
       $.each(data, function(key, value) {
-        jsonArr.push({
-          route: value.html_url,
-          title: value.commit.message,
-          date: ctrl.getDate(value.commit.author.date),
-        });
+        if (this.userEmail == value.commit.author.email) {
+          jsonArr.push({
+            route: value.html_url,
+            title: value.commit.message,
+            date: ctrl.getDate(value.commit.author.date),
+          });
+        }
       });
 
       ctrl.commits = jsonArr;
@@ -181,26 +183,19 @@
 
     };
 
-    this.getDataFromGitLab = function(gitLabRoute, gitLabProjectId){
-
-      var ulr = gitLabRoute+'/api/v3/projects/'+ gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
-      $.get(ulr, function(data, status){
-        ctrl.buildGitLabJsonData(data);  
-      });
-
-    };
-
     this.buildGitLabJsonData = function(data){
-      var jsonArr = [];
+      var jsonArr = {};
       var route = '';
 
       $.each(data, function(key, value) {
-        route = ctrl.gitRoute+'/commit/'+value.id;
-        jsonArr.push({
-          route: route,
-          title: value.title,
-          date: ctrl.getDate(value.created_at),
-        });
+        if (this.userEmail == value.author_email) {
+          route = ctrl.gitRoute+'/commit/'+value.id;
+          jsonArr.push({
+            route: route,
+            title: value.title,
+            date: ctrl.getDate(value.created_at),
+          });
+        }
       });
 
       ctrl.commits = jsonArr;
