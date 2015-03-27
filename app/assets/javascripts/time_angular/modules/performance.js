@@ -53,7 +53,9 @@
     this.runPeformance = function(gitRoute, urlData){
       this.getPerformance(urlData);
       this.setUrlToShare(urlData);
-      this.getTypeRepository(gitRoute);  
+      if (gitRoute !== null){
+        this.getTypeRepository(gitRoute);    
+      }
     }
 
     this.getPerformance = function(urlData){
