@@ -1,43 +1,11 @@
-<navigatorproject class='navigator-right' project="ctrl.project"></navigatorproject>
-<div class="section-up-performance section-up-title">
-  <div class="box-search-performance">
-    <form class="formPerformance" name="formPerformance" ng-submit="ctrl.setPerformance()">
-      <section class="box-search-performance">
-        <div class="field-form field-performance float-left">
-          <input type="date" name="start_date" ng-model="ctrl.start_date" placeholder="Start date"/>
-        </div>
-        <div class="field-form field-performance float-left margin-right">
-          <input type="date" name="end_date" ng-model="ctrl.end_date" placeholder="End date"/>
-        </div>
-        <div class="field-form field-performance float-left">
-          <select ng-model="ctrl.project" ng-options="p.id as p.name for p in ctrl.projects">
-             <option value='' selected> All Projects </option> 
-          </select>
-        </div>
-        <div class="field-form field-performance float-left">
-          <select id="user-email" ng-model="ctrl.user" ng-options="u._id.$oid as u.email for u in ctrl.users">
-            <option value='' selected> All team members </option>
-          </select>
-        </div>
-        <div class="field-button-performance">
-          <input type="submit" value="SEARCH" class="btn-primary"/>
-        </div>
-      </section>
-    </form>
-  </div>
-</div>
-<section class="container-new-performance">
+<section class="container-new-performance" ng-init="ctrl.getUrlToShare()">
   <div class="section-up-performance">
     <div class="box-center-general-performance">
-      <h3>{{ctrl.start_date | dateSuffix}} - {{ctrl.end_date | ddSuffix}}</h3>
+      <h3>{{ctrl.start_report | date:'MMMM d'}} - {{ctrl.end_report | date:'d'}}</h3>
       <div class="box-total-hours-performance">
         <img src="images/watch.png"/>
         <p>{{ctrl.totalWorked | number:1 | hours}}</p>
         <hr class="underline-short-dark"/>
-        <div ng-show="ctrl.shortlink">
-          <img src="images/url.png"><b>Url to share: </b>
-          <a href="{{ctrl.urlShare}}" target="_blank">{{ctrl.urlShare}}</a>
-        </div>
       </div>
     </div>
   </div>
@@ -85,8 +53,10 @@
         </div>
       </div>
       <div class="commits">
-        <h3>Commits</h3>
-        <a ng-if="date == item.date" ng-repeat="item in ctrl.commits" href="{{item.route}}" target="_blank">{{item.date}} - {{item.title}}</a>
+        <ul>
+          <li>Github commits</li>
+          <a href ng-repeat="n in [1,2,3]">http://git.softwarecriollo.com/hugo/greenlight/commit/3945ea9xssdf4g58h8h5j6</a>
+        </ul>
       </div>
     </div>
     <hr class="underline-division"/>

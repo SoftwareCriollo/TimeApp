@@ -3,11 +3,17 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository){
+  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', '$location', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, $location){
 
     currentUser.isPendingAuth();
 
     var ctrl = this; 
+
+    this.gitRoute = '';
+    this.gitLabProjectId = 0;
+    this.commits = undefined;
+    this.userEmail = '';
+
     this.end_date = new Date();
     this.start_date = new Date();
     this.timelog = undefined;
@@ -20,7 +26,6 @@
       ctrl.users = users;
     });
     
-
     this.dateFormat = function(date) {
       var yyyy = date.getFullYear().toString();
       var mm = (date.getMonth()+1).toString();
@@ -28,11 +33,38 @@
       return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
     };
 
-    this.SearchPerformance = function(){
+    this.setPerformance = function(){
+      var urlData = {};
+
+      urlData["date_1"] = this.dateFormat(this.start_date);
+      urlData["date_2"] = this.dateFormat(this.end_date);
+      urlData["project_id"] = this.project;
+      urlData["user_id"] = this.user;
+
+      this.userEmail = $('#user-email option:selected').text();
+
+      clientsRepository.setProjectId(this.project);
+      clientsRepository.findClient(function(client, status, headers, config){
+        ctrl.gitRoute  = client.git; 
+        ctrl.runPeformance(ctrl.gitRoute, urlData); 
+      });
+    };
+
+    this.runPeformance = function(gitRoute, urlData){
+      this.getPerformance(urlData);
+      this.setUrlToShare(urlData);
+      if (gitRoute !== null){
+        this.getTypeRepository(gitRoute);    
+      }
+    }
+
+    this.getPerformance = function(urlData){
       this.total = {};
       this.totalWorked =0;
-      timeLoggerRepository.setParameters(this.dateFormat(this.start_date),this.dateFormat(this.end_date),this.project,"");
-      
+
+      timeLoggerRepository.setPrefixToBackend();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
+
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
         
@@ -43,6 +75,136 @@
         }
         ctrl.projectsGroup = timesGrouped;
       });
+    };
+
+    this.setUrlToShare = function(urlData){
+      timeLoggerRepository.setPrefixToShare();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
+      ctrl.urlShare = timeLoggerRepository.route;
+      this.getShortUrl(ctrl.urlShare);
+    };
+
+    this.getShortUrl = function(url){
+      var long_url = url;
+      var login = "o_32g0fvedmb";
+      var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
+
+      $.getJSON("http://api.bitly.com/v3/shorten?callback=?", { 
+          "format": "json",
+          "apiKey": api_key,
+          "login": login,
+          "longUrl": long_url
+        },
+        function(response){
+          ctrl.urlShare = response.data.url;
+          ctrl.shortlink = true;
+        });
+    } 
+    
+    this.getUrlToShare = function(){
+      var urlData = [];
+
+      urlData["date_1"] = $location.search().date_1; 
+      urlData["date_2"] = $location.search().date_2; 
+      urlData["project_id"] = $location.search().project_id; 
+      urlData["user_id"] = $location.search().user_id;
+
+      ctrl.start_report = (urlData["date_1"]);
+      ctrl.end_report = (urlData["date_2"]);
+
+      this.getPerformance(urlData);
+    };
+
+    this.getTypeRepository = function(gitRoute){
+
+      var typeGitLab = gitRoute.search("git.");
+      var typeGitHub = gitRoute.search("github.");
+
+      if (typeGitHub > -1){
+        
+        var gitHubParams = gitRoute.slice(19);
+        this.getDataFromGitHub(gitHubParams);
+
+      }else if (typeGitLab > -1){
+
+        var routeSize = gitRoute.indexOf("com");
+        var gitLabRoute = gitRoute.slice(0, routeSize+3);
+        var gitLabPrefix = gitRoute.slice(routeSize+4);
+        this.getProjectIdFromGitLab(gitLabRoute, gitLabPrefix);
+
+      }
+      
+    };
+
+    this.getDataFromGitHub = function(gitHubParams){
+      var url = "https://api.github.com/repos/" +gitHubParams+ "/commits"
+      $.get(url, function(data){
+        ctrl.buildGitHubJsonData(data);
+      });
+    };
+
+    this.buildGitHubJsonData = function(data){
+      var jsonArr = [];
+
+      $.each(data, function(key, value) {
+        if (ctrl.userEmail == value.commit.author.email) {
+          jsonArr.push({
+            route: value.html_url,
+            title: value.commit.message,
+            date: ctrl.getDate(value.commit.author.date),
+          });
+        }
+      });
+
+      ctrl.commits = jsonArr;
+    };
+
+    this.getProjectIdFromGitLab = function(gitLabRoute, gitLabPrefix){
+
+      var url = gitLabRoute+"/api/v3/projects?private_token=zsXXHi8sUR_RzJDvp6db"
+      $.get(url, function(data){
+
+        $.each(data, function(key, value) {
+          if (value.path_with_namespace == gitLabPrefix){
+            ctrl.gitLabProjectId = value.id 
+          }
+        });
+
+        ctrl.getDataFromGitLab(gitLabRoute, ctrl.gitLabProjectId);
+      });   
+      
+    };
+
+    this.getDataFromGitLab = function(gitLabRoute, gitLabProjectId){
+
+      var ulr = gitLabRoute+'/api/v3/projects/'+ gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
+      $.get(ulr, function(data, status){
+        ctrl.buildGitLabJsonData(data);
+      });
+
+    };
+
+    this.buildGitLabJsonData = function(data){
+      var jsonArr = [];
+      var route = '';
+
+      $.each(data, function(key, value) {
+        if (ctrl.userEmail == value.author_email) {
+          route = ctrl.gitRoute+'/commit/'+value.id;
+          jsonArr.push({
+            route: route,
+            title: value.title,
+            date: ctrl.getDate(value.created_at),
+          });
+        }
+      });
+
+      ctrl.commits = jsonArr;
+    };
+
+    this.getDate = function(data){
+      var date = data.slice(0, 10);
+      return date;    
     };
 
     this.sum = function(items,date){
@@ -135,6 +297,7 @@
 
     var inizialize = function () {
       currentDate = new Date();
+      var urlData = [];
 
       ctrl.currentWeekStart = ctrl.calculateInterval(currentDate,1);
       ctrl.currentWeekEnd = ctrl.calculateInterval(currentDate,7);
@@ -150,7 +313,13 @@
       ctrl.previousWeekStart = ctrl.calculateWeek(ctrl.currentWeekStart,-1);
       ctrl.previousWeekEnd = ctrl.calculateWeek(ctrl.currentWeekEnd,-1);
 
-      timeLoggerRepository.setParameters(ctrl.dateFormat(ctrl.currentWeekStart),ctrl.dateFormat(ctrl.currentWeekEnd),projectId,ctrl.user.id);
+      urlData["date_1"] = ctrl.dateFormat(ctrl.currentWeekStart); 
+      urlData["date_2"] = ctrl.dateFormat(ctrl.currentWeekEnd); 
+      urlData["project_id"] = projectId; 
+      urlData["user_id"] = ctrl.user.id;
+
+      timeLoggerRepository.setPrefixToBackend();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
@@ -161,13 +330,21 @@
     this.changeNext = function(){
       this.totalWorked = 0;
       this.total = {};
+      var urlData = [];
+
       this.previousWeekStart = this.currentWeekStart;
       this.previousWeekEnd = this.currentWeekEnd;
 
       this.currentWeekStart = this.nextWeekStart;
       this.currentWeekEnd = this.nextWeekEnd;
 
-      timeLoggerRepository.setParameters(this.dateFormat(this.currentWeekStart),this.dateFormat(this.currentWeekEnd),projectId,this.user.id);
+      urlData["date_1"] = this.dateFormat(this.currentWeekStart); 
+      urlData["date_2"] = this.dateFormat(this.currentWeekEnd); 
+      urlData["project_id"] = projectId; 
+      urlData["user_id"] = this.user.id;
+
+      timeLoggerRepository.setPrefixToBackend();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
@@ -186,13 +363,21 @@
     this.changePrevious = function(){
       this.totalWorked = 0;
       this.total = {};
+      var urlData = [];
+
       this.nextWeekStart = this.currentWeekStart;
       this.nextWeekEnd = this.currentWeekEnd;
 
       this.currentWeekStart = this.previousWeekStart;
       this.currentWeekEnd = this.previousWeekEnd;
 
-      timeLoggerRepository.setParameters(this.dateFormat(this.currentWeekStart),this.dateFormat(this.currentWeekEnd),projectId,this.user.id);
+      urlData["date_1"] = this.dateFormat(this.currentWeekStart); 
+      urlData["date_2"] = this.dateFormat(this.currentWeekEnd); 
+      urlData["project_id"] = projectId; 
+      urlData["user_id"] = this.user.id;
+
+      timeLoggerRepository.setPrefixToBackend();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');

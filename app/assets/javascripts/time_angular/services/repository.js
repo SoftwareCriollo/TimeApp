@@ -35,18 +35,22 @@
         console.log(timelog);
         repository.patch(this.patchRoute(timelog),{"timelog":timelog},success_callback);        
       };
+      
+      this.setPrefixToBackend = function(){
+        this.route= "/api/timelogs/?"; 
+      };
 
-      this.setParameters = function(date_start,date_end,project_id,user_id){
-        this.route= "/api/timelogs/?";
-        if(date_start)
-          this.route += "&date_1="+date_start;
-        if(date_end)
-          this.route += "&date_2="+date_end;
-        if(project_id)
-          this.route += "&project_id="+project_id;
-        if(user_id)
-          this.route += "&user_id="+user_id;
-      }
+      this.setPrefixToShare = function(){
+        this.route = window.location+"/report/?";
+      };
+          
+      this.abstractUrlBuilder = function(urlData){
+        var results = [];
+        for(attr in urlData){
+          results.push( attr + "="+urlData[attr]);
+        }
+        this.route += results.join('&');
+      };
 
       this.get = function(success_callback){
         repository.get(this.route,success_callback);
@@ -134,6 +138,11 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
       this.setParameters = function(date_start,date_end){
         this.route= "/api/iterations/"+this.iterationId+"/timelogs/?date_1="+date_start+"&date_2="+date_end;
       }
+
+      this.setParametersToShare = function(date_start, date_end){
+        //this.route = "http://timeapp.softwarecriollo.com/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
+        this.route = "http://localhost:3000/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
+      };
 
       this.entries = function(success_callback){
 
