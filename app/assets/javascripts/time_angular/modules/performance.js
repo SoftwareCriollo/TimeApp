@@ -141,7 +141,7 @@
       var since = this.start_date.toISOString();
       var until = this.end_date.toISOString();
 
-      $.get(url,{since: since, until: until, author: this.userEmail}, function(data){
+      $.get(url,{since: since, until: until, author: this.userEmail, per_page: 50000}, function(data){
         ctrl.buildGitHubJsonData(data);
       });
     };
