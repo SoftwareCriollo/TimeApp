@@ -34,7 +34,7 @@
     };
 
     this.setPerformance = function(){
-      var urlData = {};
+      var urlData = [];
 
       urlData["date_1"] = this.dateFormat(this.start_date);
       urlData["date_2"] = this.dateFormat(this.end_date);
@@ -138,7 +138,10 @@
 
     this.getDataFromGitHub = function(gitHubParams){
       var url = "https://api.github.com/repos/" +gitHubParams+ "/commits"
-      $.get(url, function(data){
+      var since = this.start_date.toISOString();
+      var until = this.end_date.toISOString();
+
+      $.get(url,{since: since, until: until, author: this.userEmail, per_page: 50000}, function(data){
         ctrl.buildGitHubJsonData(data);
       });
     };
@@ -147,13 +150,11 @@
       var jsonArr = [];
 
       $.each(data, function(key, value) {
-        if (ctrl.userEmail == value.commit.author.email) {
-          jsonArr.push({
-            route: value.html_url,
-            title: value.commit.message,
-            date: ctrl.getDate(value.commit.author.date),
-          });
-        }
+        jsonArr.push({
+          route: value.html_url,
+          title: value.commit.message,
+          date: ctrl.getDate(value.commit.author.date),
+        });
       });
 
       ctrl.commits = jsonArr;
@@ -178,7 +179,7 @@
     this.getDataFromGitLab = function(gitLabRoute, gitLabProjectId){
 
       var ulr = gitLabRoute+'/api/v3/projects/'+ gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
-      $.get(ulr, function(data, status){
+      $.get(ulr, {per_page: 50000}, function(data, status){
         ctrl.buildGitLabJsonData(data);
       });
 

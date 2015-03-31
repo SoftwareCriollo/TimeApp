@@ -1,7 +1,7 @@
 <section class="container-new-performance" ng-init="ctrl.getUrlToShare()">
   <div class="section-up-performance">
     <div class="box-center-general-performance">
-      <h3>{{ctrl.start_report | date:'MMMM d'}} - {{ctrl.end_report | date:'d'}}</h3>
+      <h3>{{ctrl.start_report | date:'MMMM d'}} - {{ctrl.end_report | date:'MMMM d'}}</h3>
       <div class="box-total-hours-performance">
         <img src="images/watch.png"/>
         <p>{{ctrl.totalWorked | number:1 | hours}}</p>
@@ -53,10 +53,8 @@
         </div>
       </div>
       <div class="commits">
-        <ul>
-          <li>Github commits</li>
-          <a href ng-repeat="n in [1,2,3]">http://git.softwarecriollo.com/hugo/greenlight/commit/3945ea9xssdf4g58h8h5j6</a>
-        </ul>
+        <h3>Commits</h3>
+        <a ng-if="date == item.date" ng-repeat="item in ctrl.commits" href="{{item.route}}" target="_blank">{{item.date}} - {{item.title}}</a>
       </div>
     </div>
     <hr class="underline-division"/>
