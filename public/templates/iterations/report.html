@@ -1,4 +1,4 @@
-<div class="section-up-iteration section-up-title entries-report" ng-init="ctrl.getUrlToShare();">
+<div class="section-up-iteration section-up-title entries-report">
   <div class="box-title title-iteration">
     <h1 class="title"> {{ctrl.project.name}}</h1>
     <hr class="underline" />
@@ -8,7 +8,7 @@
   <div class="section-up-iteration">
     <div class="float-left section-change-iteration box-left-iteration" ng-class="{ disabled: !ctrl.showPrevious }" ng-click="ctrl.changePrevious()">
       <a href>
-        <!-- <img src="images/arrow-circle.png"/> -->
+        <img src="images/arrow-circle.png"/>
         <p>{{ctrl.previousWeekStart | dateSuffix}} - {{ctrl.previousWeekEnd | ddSuffix}}</p>
       </a>
     </div>
@@ -23,7 +23,7 @@
     <div class="float-right section-change-iteration box-right-iteration" ng-class="{ disabled: !ctrl.showNext}"  ng-click="ctrl.changeNext()">
       <a href>
         <p>{{ctrl.nextWeekStart | dateSuffix}} - {{ctrl.nextWeekEnd | ddSuffix}}</p>
-        <!-- <img class="img-rotate-180" src="images/arrow-circle.png"/> -->
+        <img class="img-rotate-180" src="images/arrow-circle.png"/>
       </a>
     </div>
   </div>
