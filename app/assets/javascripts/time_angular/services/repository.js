@@ -140,8 +140,7 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
       }
 
       this.setParametersToShare = function(date_start, date_end){
-        //this.route = "http://timeapp.softwarecriollo.com/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
-        this.route = "http://localhost:3000/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
+        this.route = window.location+"/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
       };
 
       this.entries = function(success_callback){

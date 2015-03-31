@@ -1,7 +1,7 @@
 'use strict';
 (function(){
 
-  angular.module('timeFrontendApp-navigator', [])
+   var app = angular.module('timeFrontendApp-navigator',['Devise','CacheStore'])
   .directive('navigatorproject', function() {
     return {
       restrict: 'E',
@@ -9,6 +9,8 @@
         project: '=project',
         section: '=section'
       },
+      controller: 'NavigatorController',
+      controllerAs: 'ctrl',
       templateUrl: 'templates/navigators/projects.html'
     };
   })
@@ -22,10 +24,16 @@
         return hour+' Hour';  
       }
     }
-  });
+  })
 
-  window.logOut = function(){
-    localstorage.clear();
-    window.location= "/";
-  };
+  app.controller('NavigatorController',['$location', function($location){
+    var controller = this;
+
+    this.logOut = function(){
+      localStorage.clear();
+      window.location= "/log-in";
+      location.reload();
+    };
+  }]);
+  
 })();
