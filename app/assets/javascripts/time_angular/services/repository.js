@@ -89,10 +89,7 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
       };
 
       this.findClient = function(success_callback){
-        if( this.projectId === undefined)
-          console.error("You must set projectId");
-        else
-          repository.get(this.route,success_callback);
+        repository.get(this.route,success_callback);
       };
 
       this.saveClient = function(client,success_callback,error_callback){
@@ -140,8 +137,17 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
       }
 
       this.setParametersToShare = function(date_start, date_end){
-        this.route = window.location+"/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
+        var url = this.getBaseUrl();
+        this.route = url+"/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
       };
+
+      this.getBaseUrl = function(){
+        var pathArray = location.href.split( '/' );
+        var protocol = pathArray[0];
+        var host = pathArray[2];
+        var url = protocol + '//' + host;
+        return url;
+      }
 
       this.entries = function(success_callback){
 

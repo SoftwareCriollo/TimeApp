@@ -194,10 +194,12 @@
 
 
     this.editTimeEntry = function(timelog) {
-      this.timelog = timelog;
+      angular.element( document.getElementById(timelog._id.$oid ) ).removeClass("hide");
+      this.timelog=timelog;
     };
 
     this.editTimelog = function() {
+      angular.element( document.getElementById(this.timelog._id.$oid ) ).addClass("hide");
       timeLoggerRepository.edit(this.timelog,function(){
         controller.gettingEntries();
         controller.timelog = undefined;

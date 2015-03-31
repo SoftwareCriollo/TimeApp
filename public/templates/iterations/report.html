@@ -37,9 +37,6 @@
     <div ng-repeat="timelog in timelogs" class="entry-time-iterations">
       <div class="card-iteration">
         <div class="list">
-          <a ng-click="ctrl.editTimeEntry(timelog)" class="img-edit" ng-hide="ctrl.isEditing(timelog)">
-            <img src="images/edit.png"/>
-          </a>
           <div class="name-task">{{timelog.task_name}}</div>
           <div class="note-task">Notes: <a href> {{timelog.comment}}</a> </div>
           <div class="list-name-task">
@@ -52,19 +49,6 @@
             </div>
         </div>
       </div>
-    </div>
-    <div class="editTimeEntries" ng-show='ctrl.timelog'>
-      <form method="post" name="formEditTimeEntries" ng-submit="ctrl.editTimelog()">
-        <div class="form-time-entries edit-entries">
-          <div class="field-form field-up">
-            <input type="number" step="0.1" class="field-entries" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
-          </div>
-          <div class="field-form field-down">
-            <textarea rows="4" class="field-entries" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
-          </div>
-        </div>
-        <input type="submit" value="SAVE" class="btn-primary" />
-      </form>
     </div>
   </article>
 
