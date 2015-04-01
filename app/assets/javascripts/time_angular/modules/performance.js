@@ -25,6 +25,12 @@
     usersRepository.getUsers(function(users, status, headers, config){
       ctrl.users = users;
     });
+
+    this.logOut = function(){
+      localStorage.clear();
+      window.location= "/log-in";
+      location.reload();
+    };
     
     this.dateFormat = function(date) {
       var yyyy = date.getFullYear().toString();
@@ -286,9 +292,6 @@
 
   app.controller('PerformanceController',['$routeParams','CurrentUser','ProjectCache', 'CardsCache', 'TimeLoggerRepository', function($routeParams, currentUser, projectCache, cardsCache, timeLoggerRepository){
 
-    currentUser.isPendingAuth();
-
-    this.user=currentUser.getUser();
     var ctrl = this;
     var projectId = $routeParams.projectId;
 
@@ -307,6 +310,12 @@
     this.total = {};
     this.cards = {};
     this.totalWorked = 0;
+
+    this.logOut = function(){
+      localStorage.clear();
+      window.location= "/log-in";
+      location.reload();
+    };
 
     var inizialize = function () {
       currentDate = new Date();
@@ -328,8 +337,10 @@
 
       urlData["date_1"] = ctrl.dateFormat(ctrl.currentWeekStart); 
       urlData["date_2"] = ctrl.dateFormat(ctrl.currentWeekEnd); 
-      urlData["project_id"] = projectId; 
-      urlData["user_id"] = ctrl.user.id;
+
+      if (projectId !== undefined && projectId !== null){
+        urlData["project_id"] = projectId; 
+      }
 
       timeLoggerRepository.setPrefixToBackend();
       timeLoggerRepository.abstractUrlBuilder(urlData);
@@ -352,9 +363,11 @@
       this.currentWeekEnd = this.nextWeekEnd;
 
       urlData["date_1"] = this.dateFormat(this.currentWeekStart); 
-      urlData["date_2"] = this.dateFormat(this.currentWeekEnd); 
-      urlData["project_id"] = projectId; 
-      urlData["user_id"] = this.user.id;
+      urlData["date_2"] = this.dateFormat(this.currentWeekEnd);
+
+      if (projectId !== undefined && projectId !== null){
+        urlData["project_id"] = projectId; 
+      } 
 
       timeLoggerRepository.setPrefixToBackend();
       timeLoggerRepository.abstractUrlBuilder(urlData);
@@ -385,9 +398,11 @@
       this.currentWeekEnd = this.previousWeekEnd;
 
       urlData["date_1"] = this.dateFormat(this.currentWeekStart); 
-      urlData["date_2"] = this.dateFormat(this.currentWeekEnd); 
-      urlData["project_id"] = projectId; 
-      urlData["user_id"] = this.user.id;
+      urlData["date_2"] = this.dateFormat(this.currentWeekEnd);
+
+      if (projectId !== undefined && projectId !== null){
+        urlData["project_id"] = projectId; 
+      } 
 
       timeLoggerRepository.setPrefixToBackend();
       timeLoggerRepository.abstractUrlBuilder(urlData);

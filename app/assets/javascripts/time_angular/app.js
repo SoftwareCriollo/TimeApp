@@ -96,6 +96,11 @@
         controller: 'PerformanceController',
         controllerAs: 'controller'
       })
+      .when('/performance/general', {
+        templateUrl: 'templates/performance/general.html',
+        controller: 'PerformanceController',
+        controllerAs: 'ctrl'
+      })
       .when('/performance/project/:projectId', {
         templateUrl: 'templates/performance/performance.html',
         controller: 'PerformanceController',

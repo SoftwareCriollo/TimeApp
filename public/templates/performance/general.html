@@ -1,0 +1,71 @@
+<div ng-include="'templates/performance/logout_box_right.html'" class="text-right box-float-right project-box-right"></div>
+<div class="section-up-performance section-up-title">
+  <div class="box-title title-performance">
+    <h1 class="title"> GENERAL PERFORMANCE </h1>
+    <hr class="underline" />
+  </div>
+  <div class="search-performance"><a href="#/performance">SEARCH BY DATE</a></div>
+</div>
+<section ng-init="daysWeek = [{name:'tuesday'},{name:'wednesday'},{name:'thursday'},{name:'friday'}]" class="container-new-performance">
+  <div class="section-up-performance">
+    <div class="float-left section-change-performance box-left-performance" ng-click="ctrl.changePrevious()">
+      <a href>
+        <img src="images/arrow-circle.png"/>
+        <p>{{ctrl.previousWeekStart | dateSuffix}} - {{ctrl.previousWeekEnd | ddSuffix}}</p>
+      </a>
+    </div>
+    <div class="box-center-performance">
+      <h3>{{ctrl.currentWeekStart | dateSuffix}} - {{ctrl.currentWeekEnd | ddSuffix}}</h3>
+      <div class="box-total-hours-performance">
+        <img src="images/watch.png"/>
+        {{ctrl.totalWorked | number:1 | hours}}
+        <hr class="underline-short-dark"/>
+      </div>
+    </div>
+    <div class="float-right section-change-performance box-right-performance"  ng-click="ctrl.changeNext()">
+      <a href>
+        <p>{{ctrl.nextWeekStart | dateSuffix}} - {{ctrl.nextWeekEnd | ddSuffix}}</p>
+        <img class="img-rotate-180" src="images/arrow-circle.png"/>
+      </a>
+    </div>
+  </div>
+  <article ng-repeat="(date,projects) in ctrl.projectsGroup">
+    <div class="date-performance date-single-performance">
+      {{ date | date:'EEEE, MM/dd' }} - 
+      <p>
+        {{ctrl.total[date] | number:1 | hours}}
+      </p>
+    </div>
+    <div ng-repeat="timelog in projects" class="box-performance-edit performance-{{n}}" ng-init="ctrl.sum(timelog,date)">
+      <div class="card-performance card-performance-{{n}}">
+        <div class="list-performance">
+          <a ng-click="ctrl.editTimeEntry(timelog)" class="img-edit" ng-hide="ctrl.isEditing(timelog)"><img src="images/edit.png"/></a>
+          <div class="name-task"> {{timelog.task_name}} </div>
+          <div class="note-task">Notes: <a href> {{timelog.comment}} </a> </div>
+          <div class="list-name-task" ng-init="ctrl.getListName(timelog)">
+            <img src="images/circle.png" />
+           {{ctrl.cards[timelog.task_id]}}
+          </div>
+          <div class="box-hours">
+            <div class="box-silver">
+              <img src="images/clock-silver.png"/>
+              {{timelog.time | number:1 | hours}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="{{timelog._id.$oid}}" class="edit-entries-performance hide">
+          <form method="post" name="formEditTimeEntries" ng-submit="ctrl.editTimelog()">
+            <div class="form-time-entries edit-entries">
+              <div class="field-form field-up">
+                <input type="number" step="0.1" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
+              </div>
+              <div class="field-form field-down">
+                <textarea rows="4" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
+              </div>
+            </div>
+            <input type="submit" value="SAVE" class="btn-primary" />
+          </form>
+        </div>
+    </div>
+  </article>
