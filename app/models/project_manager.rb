@@ -5,14 +5,14 @@ class ProjectManager
 
   CARDS_ATTRIBUTES= [:id, :name, :url, :list_id]
 
-  ALLOWED_LIST_NAMES= [/doing/i, /to define/i, /done/i ]
+  ALLOWED_LIST_NAMES= [/doing/i, /to define/i, /done/i, /to do/i ]
 
   def initialize
     @organization = find_organization
   end
 
   def boards
-    @organization.boards
+    @organization.boards.select{|board| !board.closed?}
   end
 
   ## Should return array like this
@@ -42,7 +42,7 @@ class ProjectManager
   end
 
   def filter_cards_by_list
-    @board.cards.inject([]) do |result_cards, card| 
+    @board.cards.inject([]) do |result_cards, card|
       if @id_lists.include?(card.list_id)
         result_cards << card
       else
@@ -59,17 +59,17 @@ class ProjectManager
   def task_name(task_id)
     find_card(task_id).name
   end
-  
+
   def organization_name
     'softwarecriollo2'
   end
 
   def allowed_lists(lists)
-    lists.select{|list| allowed_list?(list) } 
+    lists.select{|list| allowed_list?(list) }
   end
 
   def allowed_list?(list)
-    ALLOWED_LIST_NAMES.any?{|name| name.match(list.name) }     
+    ALLOWED_LIST_NAMES.any?{|name| name.match(list.name) }
   end
 
   def get_cards(lists)
