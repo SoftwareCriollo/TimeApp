@@ -11,6 +11,7 @@
     'timeFrontendApp-performance',
     'timeFrontendApp-clients',
     'timeFrontendApp-navigator',
+    'timeFrontendApp-filters',
     'ngMessages',
     'ngResource',
     'ngRoute',

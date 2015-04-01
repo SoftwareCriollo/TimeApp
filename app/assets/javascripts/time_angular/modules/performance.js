@@ -38,16 +38,22 @@
 
       urlData["date_1"] = this.dateFormat(this.start_date);
       urlData["date_2"] = this.dateFormat(this.end_date);
-      urlData["project_id"] = this.project;
-      urlData["user_id"] = this.user;
+
+      if (this.project !== undefined && this.project !== null){
+        urlData["project_id"] = this.project;
+        clientsRepository.setProjectId(this.project);
+        clientsRepository.findClient(function(client, status, headers, config){
+          ctrl.gitRoute  = client.git; 
+        });
+      }
+
+      if (this.user !== undefined && this.user !== null){
+        urlData["user_id"] = this.user;
+      }
 
       this.userEmail = $('#user-email option:selected').text();
 
-      clientsRepository.setProjectId(this.project);
-      clientsRepository.findClient(function(client, status, headers, config){
-        ctrl.gitRoute  = client.git; 
-        ctrl.runPeformance(ctrl.gitRoute, urlData); 
-      });
+      ctrl.runPeformance(ctrl.gitRoute, urlData); 
     };
 
     this.runPeformance = function(gitRoute, urlData){
@@ -106,11 +112,17 @@
 
       urlData["date_1"] = $location.search().date_1; 
       urlData["date_2"] = $location.search().date_2; 
-      urlData["project_id"] = $location.search().project_id; 
-      urlData["user_id"] = $location.search().user_id;
 
-      ctrl.start_report = (urlData["date_1"]);
-      ctrl.end_report = (urlData["date_2"]);
+      var project_id = $location.search().project_id;
+      var user_id = $location.search().user_id;
+
+      if (project_id !== undefined && project_id !== null){
+        urlData["project_id"] = project_id; 
+      }
+
+      if (user_id !== undefined && user_id !== null){
+        urlData["user_id"] = user_id;
+      }
 
       this.getPerformance(urlData);
     };

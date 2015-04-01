@@ -1,7 +1,7 @@
 <section class="container-new-performance" ng-init="ctrl.getUrlToShare()">
   <div class="section-up-performance">
     <div class="box-center-general-performance">
-      <h3>{{ctrl.start_report | date:'MMMM d'}} - {{ctrl.end_report | date:'MMMM d'}}</h3>
+      <h3>{{ctrl.start_date | dateSuffix}} - {{ctrl.end_date | dateSuffix}}</h3>
       <div class="box-total-hours-performance">
         <img src="images/watch.png"/>
         <p>{{ctrl.totalWorked | number:1 | hours}}</p>
