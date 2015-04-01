@@ -9,7 +9,7 @@ RSpec.describe ProjectManager, :type => :model do
   let(:project_manager){ ProjectManager.new }
 
   describe ".boards" do
-    before{ expect_any_instance_of(Trello::Organization).to receive(:boards) }
+    before{ expect_any_instance_of(Trello::Organization).to receive(:boards).and_return([Trello::Board.new]) }
     it { project_manager.boards }
   end
   describe ".cards" do
