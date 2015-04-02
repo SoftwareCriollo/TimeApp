@@ -107,7 +107,7 @@
       var login = "o_32g0fvedmb";
       var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
 
-      $.getJSON("http://api.bitly.com/v3/shorten?callback=?", { 
+      $.getJSON("https://api-ssl.bitly.com/v3/shorten?callback=?", { 
           "format": "json",
           "apiKey": api_key,
           "login": login,
