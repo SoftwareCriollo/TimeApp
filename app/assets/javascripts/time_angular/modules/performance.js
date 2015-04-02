@@ -5,8 +5,10 @@
 
   app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', '$location', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, $location){
 
-    currentUser.isPendingAuth();
-
+    if (/report/.test(window.location)==false){
+      currentUser.isPendingAuth();
+    }
+    
     var ctrl = this; 
 
     this.gitRoute = '';

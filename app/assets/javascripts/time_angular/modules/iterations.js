@@ -36,7 +36,9 @@
   }]);
 
   app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$rootScope', '$location', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$rootScope, $location){
-    currentUser.isPendingAuth();
+    if (/report/.test(window.location)==false){
+      currentUser.isPendingAuth();
+    }
   
     var controller = this;
     var iterationId = $routeParams.iterationId;
