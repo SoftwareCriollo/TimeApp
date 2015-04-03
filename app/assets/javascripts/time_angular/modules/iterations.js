@@ -56,11 +56,18 @@
     this.timelogsGroup = [];
     this.timelogs = [];
     this.timelog = undefined;
+    this.projectName = '';
 
     iterationsRepository.findIteration(iterationId, function(iteration, status, headers, config){
+      controller.findProjectByName(iteration.project_id);
       controller.initialize(iteration);
-      controller.project = projectCache.findProject(iteration.project_id);
     });
+
+    this.findProjectByName = function(projectId){
+      iterationsRepository.findProjectByName(projectId, function(projectName, status, headers, config){
+        controller.projectName = projectName;
+      });
+    }
 
     this.initialize = function(iteration){
       this.iteration=iteration;
@@ -221,34 +228,13 @@
     }
   }]);
 
-  app.filter('dateSuffix', function($filter) {
-    var suffixes = ["th", "st", "nd", "rd"];
-    return function(input) {
-      var dtfilter = $filter('date')(new Date(input), 'MMMM dd');
-      var day = parseInt(dtfilter.slice(-2));
-      var relevantDigits = (day < 30) ? day % 20 : day % 30;
-      var suffix = (relevantDigits <= 3) ? suffixes[relevantDigits] : suffixes[0];
-      return dtfilter.toUpperCase()+suffix;
-    };
-  });
-
-  app.filter('ddSuffix', function($filter) {
-    var suffixes = ["th", "st", "nd", "rd"];
-    return function(input) {
-      var dtfilter = $filter('date')(new Date(input), 'dd');
-      var day = parseInt(dtfilter.slice(-2));
-      var relevantDigits = (day < 30) ? day % 20 : day % 30;
-      var suffix = (relevantDigits <= 3) ? suffixes[relevantDigits] : suffixes[0];
-      return dtfilter+suffix;
-    };
-  });
-
   app.run(function($rootScope) {
     $rootScope.UTCDate = function(date) {
       var utcDate = new Date(date);
       return new Date(utcDate.getUTCFullYear(), utcDate.getUTCMonth(), utcDate.getUTCDate());
     };
   });
+
 
 })();
 

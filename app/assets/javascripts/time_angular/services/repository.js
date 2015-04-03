@@ -132,6 +132,11 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
         repository.get(this.route,success_callback);
       };
 
+      this.findProjectByName = function(projectId, success_callback){
+        this.route = '/api/projects/name/'+projectId;
+        repository.get(this.route,success_callback);
+      };
+
       this.setParameters = function(date_start,date_end){
         this.route= "/api/iterations/"+this.iterationId+"/timelogs/?date_1="+date_start+"&date_2="+date_end;
       }
