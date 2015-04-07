@@ -73,7 +73,7 @@
     }]);
 
 
-$provide.factory('ClientsRepository',["Repository",function(repository) {
+    $provide.factory('ClientsRepository',["Repository",function(repository) {
       this.route = undefined;
       this.projectId = undefined;
       this.clientId = undefined;
@@ -86,6 +86,11 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
       this.setClientId = function(clientId){
         this.clientId = clientId;
         this.route = '/api/projects/'+this.projectId+'/clients/'+clientId;
+      };
+
+      this.findAllClients = function(success_callback){
+        this.route = '/api/clients/';
+        repository.get(this.route,success_callback);
       };
 
       this.findClient = function(success_callback){
