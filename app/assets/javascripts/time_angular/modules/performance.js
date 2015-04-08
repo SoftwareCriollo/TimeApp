@@ -143,13 +143,13 @@
 
     this.getAllUsers = function(urlData){
       if (urlData.user_id){
-        var userId = [];
+        var user = {};
         $.each(ctrl.users, function(key, value) {
           if (urlData.user_id == value._id.$oid){
-            userId = [{email: value.email}]; 
+            user = value;
           }
         });
-        return userId;
+        return [user];
       }else{
         return ctrl.users;
       }  
@@ -157,13 +157,13 @@
 
     this.getAllClients = function(urlData){
       if (urlData.project_id){
-        var gitUrl = [];
+        var client = {};
         $.each(ctrl.clients, function(key, value) {
           if (urlData.project_id == value.project_id){
-            gitUrl = [{git: value.git}]; 
+            client = value; 
           }
         });
-        return gitUrl;
+        return [client];
       }else{
         return ctrl.clients;
       }
@@ -180,11 +180,9 @@
       var gitLabProjectId = '';
       
       $.each(gitData.allClients, function(key, value) {
-
-        gitRoute = value.git;
-        typeGitLab = gitRoute.search("git.");
-
-        if (typeGitLab > -1){
+        if (value.git){
+          gitRoute = value.git;
+          typeGitLab = gitRoute.search("git.");
           routeSize = gitRoute.indexOf("com");
           gitLabRoute = gitRoute.slice(0, routeSize+3);
           gitLabPrefix = gitRoute.slice(routeSize+4);
@@ -195,8 +193,9 @@
             gitLabRoute: gitLabRoute,
             gitLabProjectId: gitLabProjectId,
           });
+        }else{
+          console.log('please insert git url');
         }
-
       });
 
       this.getDataFromGitLab(gitRepository, gitData);
@@ -226,6 +225,9 @@
     this.getDataFromGitLab = function(gitRepository, gitData){
       var commitData = [];
       var route = '';
+
+      console.log(gitRepository);
+      console.log(gitData);
 
       $.each(gitRepository, function(repoKey, repoValue) {
         var ulr = repoValue.gitLabRoute+'/api/v3/projects/'+ repoValue.gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
