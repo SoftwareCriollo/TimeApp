@@ -139,6 +139,9 @@
         urlData.user_id = user_id;
       }
 
+      ctrl.start_date = urlData.date_1;
+      ctrl.end_date = urlData.date_2;
+
       this.getPerformance(urlData);
     };
 
