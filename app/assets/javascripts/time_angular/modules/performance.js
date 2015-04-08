@@ -73,7 +73,6 @@
       var gitData = {};
       gitData = {
         allUsers: ctrl.getAllUsers(urlData),
-        allProjects: ctrl.getAllProjects(urlData),
         allClients: ctrl.getAllClients(urlData),
       };
       ctrl.getTypeRepository(gitData);
@@ -144,23 +143,21 @@
 
     this.getAllUsers = function(urlData){
       if (urlData.user_id){
-        return false;
+        var userId = [];
+        $.each(ctrl.users, function(key, value) {
+          if (urlData.user_id == value._id.$oid){
+            userId = [{email: value.email}]; 
+          }
+        });
+        return userId;
       }else{
         return ctrl.users;
       }  
     };
 
-    this.getAllProjects = function(urlData){
-      if (urlData.project_id){
-        return false
-      }else{
-        return ctrl.projects;
-      }
-    };
-
     this.getAllClients = function(urlData){
       if (urlData.project_id){
-        var gitUrl = '';
+        var gitUrl = [];
         $.each(ctrl.clients, function(key, value) {
           if (urlData.project_id == value.project_id){
             gitUrl = [{git: value.git}]; 
@@ -194,6 +191,7 @@
           gitLabProjectId = ctrl.getProjectIdFromGitLab(gitLabRoute, gitLabPrefix);
 
           gitRepository.push({
+            gitlabrepo: gitRoute.replace('.git',''),
             gitLabRoute: gitLabRoute,
             gitLabProjectId: gitLabProjectId,
           });
@@ -202,7 +200,6 @@
       });
 
       this.getDataFromGitLab(gitRepository, gitData);
-
     };
 
     this.getProjectIdFromGitLab = function(gitLabRoute, gitLabPrefix){
@@ -224,38 +221,33 @@
       });
 
       return projectId;
-
     };
 
     this.getDataFromGitLab = function(gitRepository, gitData){
-      var jsonArr = [];
-      var route = ''
+      var commitData = [];
+      var route = '';
 
-      console.log(gitRepository)
-      console.log(gitData)
-      console.log(gitData.allUsers.email)
-
-      $.each(gitRepository, function(key, value) {
-        var ulr = value.gitLabRoute+'/api/v3/projects/'+ value.gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
+      $.each(gitRepository, function(repoKey, repoValue) {
+        var ulr = repoValue.gitLabRoute+'/api/v3/projects/'+ repoValue.gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
        
         $.get(ulr, {per_page: 50000}, function(data, status){
-          $.each(data, function(key, value) {
-            if (gitData.allUsers.email == value.author_email) {
-              route = ctrl.gitRoute+'/commit/'+value.id;
-              jsonArr.push({
-                route: route,
-                title: value.title,
-                date: ctrl.getDate(value.created_at),
-              });
-            }
+          $.each(data, function(gitKey, gitValue) {
+            $.each(gitData.allUsers, function(userKey, userValue) {
+              if (userValue.email == gitValue.author_email) {
+                route = repoValue.gitlabrepo+'/commit/'+gitValue.id;
+                commitData.push({
+                  route: route,
+                  title: gitValue.title,
+                  date: ctrl.getDate(gitValue.created_at),
+                });
+              }
+            });
           });
         });
 
       });
 
-      console.log(jsonArr)
-      ctrl.commits = jsonArr;
-
+      ctrl.commits = commitData;
     };
 
     this.getDate = function(data){
