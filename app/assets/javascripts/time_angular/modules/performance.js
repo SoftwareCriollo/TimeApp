@@ -95,6 +95,7 @@
         }
         ctrl.projectsGroup = timesGrouped;
       });
+
     };
 
     this.setUrlToShare = function(urlData){
@@ -173,28 +174,25 @@
 
       var gitRepository = [];
       var gitRoute = '';
-      var typeGitLab = '';
       var routeSize = '';
       var gitLabRoute = '';
       var gitLabPrefix = '';
       var gitLabProjectId = '';
       
-      $.each(gitData.allClients, function(key, value) {
-        if (value.git){
-          gitRoute = value.git;
-          typeGitLab = gitRoute.search("git.");
+      $.each(gitData.allClients, function(clientKey, clientValue) {
+        if (clientValue.git){
+          gitRoute = clientValue.git;
           routeSize = gitRoute.indexOf("com");
           gitLabRoute = gitRoute.slice(0, routeSize+3);
           gitLabPrefix = gitRoute.slice(routeSize+4);
           gitLabProjectId = ctrl.getProjectIdFromGitLab(gitLabRoute, gitLabPrefix);
 
           gitRepository.push({
-            gitlabrepo: gitRoute.replace('.git',''),
+            projectId: clientValue.project_id,
+            gitLabRepo: gitRoute.replace('.git',''),
             gitLabRoute: gitLabRoute,
             gitLabProjectId: gitLabProjectId,
           });
-        }else{
-          console.log('please insert git url');
         }
       });
 
@@ -226,18 +224,16 @@
       var commitData = [];
       var route = '';
 
-      console.log(gitRepository);
-      console.log(gitData);
-
       $.each(gitRepository, function(repoKey, repoValue) {
-        var ulr = repoValue.gitLabRoute+'/api/v3/projects/'+ repoValue.gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
+        var url = repoValue.gitLabRoute+'/api/v3/projects/'+ repoValue.gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
        
-        $.get(ulr, {per_page: 50000}, function(data, status){
+        $.get(url, {per_page: 50000}, function(data, status){
           $.each(data, function(gitKey, gitValue) {
             $.each(gitData.allUsers, function(userKey, userValue) {
               if (userValue.email == gitValue.author_email) {
-                route = repoValue.gitlabrepo+'/commit/'+gitValue.id;
+                route = repoValue.gitLabRepo+'/commit/'+gitValue.id;
                 commitData.push({
+                  projectId: repoValue.projectId,
                   route: route,
                   title: gitValue.title,
                   date: ctrl.getDate(gitValue.created_at),
@@ -248,7 +244,6 @@
         });
 
       });
-
       ctrl.commits = commitData;
     };
 
