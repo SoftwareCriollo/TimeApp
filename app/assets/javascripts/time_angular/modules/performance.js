@@ -14,6 +14,7 @@
     this.users = {};
     this.commits = {};
     this.clients = {};
+    this.projects = {};
 
     this.end_date = new Date();
     this.start_date = new Date();
@@ -24,7 +25,7 @@
     projectRepository.get(function(projects, status, headers, config){
       ctrl.projects = projects;
     });
-    
+
     usersRepository.getUsers(function(users, status, headers, config){
       ctrl.users = users;
     });
@@ -81,7 +82,6 @@
         allUsers: ctrl.getAllUsers(urlData),
         allClients: ctrl.getAllClients(urlData),
       };
-      console.log(gitData)
       ctrl.getTypeRepository(gitData);
     }
 
@@ -154,7 +154,6 @@
     };
 
     this.getAllUsers = function(urlData){
-
       if (urlData.user_id){
         var user = {};
         $.each(ctrl.users, function(key, value) {
@@ -169,7 +168,6 @@
     };
 
     this.getAllClients = function(urlData){
-
       if (urlData.project_id){
         var client = {};
         $.each(ctrl.clients, function(key, value) {
@@ -358,7 +356,7 @@
 
     var inizialize = function () {
       currentDate = new Date();
-      var urlData = [];
+      var urlData = {};
 
       ctrl.currentWeekStart = ctrl.calculateInterval(currentDate,1);
       ctrl.currentWeekEnd = ctrl.calculateInterval(currentDate,7);
@@ -374,11 +372,11 @@
       ctrl.previousWeekStart = ctrl.calculateWeek(ctrl.currentWeekStart,-1);
       ctrl.previousWeekEnd = ctrl.calculateWeek(ctrl.currentWeekEnd,-1);
 
-      urlData["date_1"] = ctrl.dateFormat(ctrl.currentWeekStart); 
-      urlData["date_2"] = ctrl.dateFormat(ctrl.currentWeekEnd); 
+      urlData.date_1 = ctrl.dateFormat(ctrl.currentWeekStart); 
+      urlData.date_2 = ctrl.dateFormat(ctrl.currentWeekEnd); 
 
       if (projectId !== undefined && projectId !== null){
-        urlData["project_id"] = projectId; 
+        urlData.project_id = projectId; 
       }
 
       timeLoggerRepository.setPrefixToBackend();
@@ -393,7 +391,7 @@
     this.changeNext = function(){
       this.totalWorked = 0;
       this.total = {};
-      var urlData = [];
+      var urlData = {};
 
       this.previousWeekStart = this.currentWeekStart;
       this.previousWeekEnd = this.currentWeekEnd;
@@ -401,11 +399,11 @@
       this.currentWeekStart = this.nextWeekStart;
       this.currentWeekEnd = this.nextWeekEnd;
 
-      urlData["date_1"] = this.dateFormat(this.currentWeekStart); 
-      urlData["date_2"] = this.dateFormat(this.currentWeekEnd);
+      urlData.date_1 = this.dateFormat(this.currentWeekStart); 
+      urlData.date_2 = this.dateFormat(this.currentWeekEnd);
 
       if (projectId !== undefined && projectId !== null){
-        urlData["project_id"] = projectId; 
+        urlData.project_id = projectId; 
       } 
 
       timeLoggerRepository.setPrefixToBackend();
@@ -428,7 +426,7 @@
     this.changePrevious = function(){
       this.totalWorked = 0;
       this.total = {};
-      var urlData = [];
+      var urlData = {};
 
       this.nextWeekStart = this.currentWeekStart;
       this.nextWeekEnd = this.currentWeekEnd;
@@ -436,11 +434,11 @@
       this.currentWeekStart = this.previousWeekStart;
       this.currentWeekEnd = this.previousWeekEnd;
 
-      urlData["date_1"] = this.dateFormat(this.currentWeekStart); 
-      urlData["date_2"] = this.dateFormat(this.currentWeekEnd);
+      urlData.date_1 = this.dateFormat(this.currentWeekStart); 
+      urlData.date_2 = this.dateFormat(this.currentWeekEnd);
 
       if (projectId !== undefined && projectId !== null){
-        urlData["project_id"] = projectId; 
+        urlData.project_id = projectId; 
       } 
 
       timeLoggerRepository.setPrefixToBackend();
