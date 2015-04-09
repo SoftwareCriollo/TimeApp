@@ -6,6 +6,9 @@
         <img src="images/watch.png"/>
         <p>{{ctrl.totalWorked | number:1 | hours}}</p>
         <hr class="underline-short-dark"/>
+        <div class="loading-spinner" data-loading>
+          <img src="images/ajax-loader.gif" />
+        </div>
       </div>
     </div>
   </div>
@@ -40,7 +43,7 @@
       </div>
       <div class="commits">
         <h3>Commits</h3>
-        <a ng-if="date == item.date" ng-repeat="item in ctrl.commits" href="{{item.route}}" target="_blank">{{item.date}} - {{item.title}}</a>
+        <a ng-if="date == item.date && timelogs[0].project_id == item.projectId" ng-repeat="item in ctrl.commits" href="{{item.route}}" target="_blank">{{item.date}} - {{item.title}}</a>
       </div>
     </div>
     <hr class="underline-division"/>

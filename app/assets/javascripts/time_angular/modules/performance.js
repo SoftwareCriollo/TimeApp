@@ -3,7 +3,7 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', '$location', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, $location){
+  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', 'ProjectRepository', '$location', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, projectRepository, $location){
 
     if (/report/.test(window.location)==false){
       currentUser.isPendingAuth();
@@ -11,19 +11,19 @@
     
     var ctrl = this; 
 
-    this.gitRoute = '';
-    this.gitLabProjectId = 0;
-    this.commits = undefined;
-    this.clients = undefined;
-    this.userEmail = '';
+    this.users = {};
+    this.commits = {};
+    this.clients = {};
 
     this.end_date = new Date();
     this.start_date = new Date();
-    this.timelog = undefined;
+    this.timelog = {};
     this.cards = {};
     this.totalWorked = 0;
 
-    this.projects = projectsCache.projects;
+    projectRepository.get(function(projects, status, headers, config){
+      ctrl.projects = projects;
+    });
     
     usersRepository.getUsers(function(users, status, headers, config){
       ctrl.users = users;
@@ -75,6 +75,7 @@
         allUsers: ctrl.getAllUsers(urlData),
         allClients: ctrl.getAllClients(urlData),
       };
+      console.log(gitData)
       ctrl.getTypeRepository(gitData);
     }
 
@@ -142,10 +143,11 @@
       ctrl.start_date = urlData.date_1;
       ctrl.end_date = urlData.date_2;
 
-      this.getPerformance(urlData);
+      ctrl.runPeformance(urlData); 
     };
 
     this.getAllUsers = function(urlData){
+
       if (urlData.user_id){
         var user = {};
         $.each(ctrl.users, function(key, value) {
@@ -160,6 +162,7 @@
     };
 
     this.getAllClients = function(urlData){
+
       if (urlData.project_id){
         var client = {};
         $.each(ctrl.clients, function(key, value) {
@@ -205,7 +208,7 @@
     this.getProjectIdFromGitLab = function(gitLabRoute, gitLabPrefix){
       var url = gitLabRoute+"/api/v3/projects?private_token=zsXXHi8sUR_RzJDvp6db"
       var projectId = 0;
-      
+
       $.ajax({
         url: url,
         type: 'get',
