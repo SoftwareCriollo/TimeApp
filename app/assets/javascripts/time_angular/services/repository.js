@@ -10,6 +10,12 @@
       this.get = function(success_callback){
         repository.get(this.route,success_callback);
       }
+
+      this.findProjectByName = function(projectId, success_callback){
+        this.route = '/api/projects/name/'+projectId;
+        repository.get(this.route,success_callback);
+      };
+
       return this;
     }]);
 

@@ -46,6 +46,12 @@
       return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
     };
 
+    this.findProjectByName = function(projectId){
+      projectRepository.findProjectByName(projectId, function(projectName, status, headers, config){
+        ctrl.projectName = projectName;
+      });
+    }
+
     this.setPerformance = function(){
       var urlData = {};
 
@@ -133,6 +139,7 @@
       var user_id = $location.search().user_id;
 
       if (project_id !== undefined && project_id !== null){
+        ctrl.projectName = ctrl.findProjectByName(project_id)
         urlData.project_id = project_id; 
       }
 
