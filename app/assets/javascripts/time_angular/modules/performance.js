@@ -121,7 +121,7 @@
         });
     } 
     
-    this.getUrlToShare = function(){
+    this.getDataFromUrl = function(){
       var urlData = {};
 
       urlData.date_1 = $location.search().date_1; 
@@ -142,7 +142,47 @@
       ctrl.start_date = urlData.date_1;
       ctrl.end_date = urlData.date_2;
 
-      ctrl.runPeformance(urlData); 
+      ctrl.getDataFromServer(urlData); 
+    };
+
+    this.getDataFromServer = function(urlData){
+      projectRepository.get(function(projects, status, headers, config){
+        var gitData = {}
+        ctrl.projects = projects;
+
+        usersRepository.getUsers(function(users, status, headers, config){
+          if (urlData.user_id){
+            var user = {};
+            $.each(users, function(key, value) {
+              if (urlData.user_id == value._id.$oid){
+                ctrl.users = value;
+              }
+            });
+          }else{
+            ctrl.users = users;
+          }
+          clientsRepository.findAllClients(function(clients, status, headers, config){
+            if (urlData.project_id){
+              var client = {};
+              $.each(clients, function(key, value) {
+                if (urlData.project_id == value.project_id){
+                  ctrl.clients = value; 
+                }
+              });
+            }else{
+              ctrl.clients = clients; 
+            }
+          });
+        });
+
+        gitData = {
+          allUsers: ctrl.users,
+          allClients: ctrl.clients,
+        };
+        
+        ctrl.getPerformance(urlData);
+        ctrl.getTypeRepository(gitData);
+      });
     };
 
     this.getAllUsers = function(urlData){
@@ -174,7 +214,7 @@
     };
 
     this.getTypeRepository = function(gitData){
-
+      console.log(gitData)
       var gitRepository = [];
       var gitRoute = '';
       var routeSize = '';
