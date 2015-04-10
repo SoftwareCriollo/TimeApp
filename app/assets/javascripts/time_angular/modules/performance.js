@@ -3,7 +3,7 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', 'ProjectRepository', '$location', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, projectRepository, $location){
+  app.controller('GeneralPerformanceController',['CurrentUser', 'ProjectCache', 'UsersCache', 'ClientsCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', 'ProjectRepository', '$location', function(currentUser, projectsCache, usersCache, clientsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, projectRepository, $location){
 
     if (/report/.test(window.location)==false){
       currentUser.isPendingAuth();
@@ -22,17 +22,9 @@
     this.cards = {};
     this.totalWorked = 0;
 
-    projectRepository.get(function(projects, status, headers, config){
-      ctrl.projects = projects;
-    });
-
-    usersRepository.getUsers(function(users, status, headers, config){
-      ctrl.users = users;
-    });
-
-    clientsRepository.findAllClients(function(clients, status, headers, config){
-      ctrl.clients = clients;
-    });
+    this.projects = projectsCache.projects;
+    this.users = usersCache.users;
+    this.clients = clientsCache.clients;
 
     this.logOut = function(){
       localStorage.clear();
