@@ -3,7 +3,7 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['CurrentUser', 'ProjectCache', 'UsersCache', 'ClientsCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', 'ProjectRepository', '$location', function(currentUser, projectsCache, usersCache, clientsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, projectRepository, $location){
+  app.controller('GeneralPerformanceController',['CurrentUser', 'ProjectCache', 'ClientsCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', 'ProjectRepository', '$location', function(currentUser, projectsCache, clientsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, projectRepository, $location){
 
     if (/report/.test(window.location)==false){
       currentUser.isPendingAuth();
@@ -23,8 +23,12 @@
     this.totalWorked = 0;
 
     this.projects = projectsCache.projects;
-    this.users = usersCache.users;
+
     this.clients = clientsCache.clients;
+
+    usersRepository.getUsers(function(users, status, headers, config){
+      ctrl.users = users;
+    });
 
     this.logOut = function(){
       localStorage.clear();
@@ -71,8 +75,8 @@
     this.initGitData = function(urlData){
       var gitData = {};
       gitData = {
-        allUsers: ctrl.getAllUsers(urlData),
-        allClients: ctrl.getAllClients(urlData),
+        allUsers: ctrl.getUsersFromCache(urlData),
+        allClients: ctrl.getClientsFromCache(urlData),
       };
       ctrl.getTypeRepository(gitData);
     }
@@ -146,46 +150,45 @@
     };
 
     this.getDataFromServer = function(urlData){
-      projectRepository.get(function(projects, status, headers, config){
-        var gitData = {}
-        ctrl.projects = projects;
 
-        usersRepository.getUsers(function(users, status, headers, config){
-          if (urlData.user_id){
-            var user = {};
-            $.each(users, function(key, value) {
-              if (urlData.user_id == value._id.$oid){
-                ctrl.users = value;
+      ctrl.getProjectsFromServer();
+
+      usersRepository.getUsers(function(users, status, headers, config){
+        if (urlData.user_id){
+          $.each(users, function(key, value) {
+            if (urlData.user_id == value._id.$oid){
+              ctrl.users = [value];
+            }
+          });
+        }else{
+          ctrl.users = users;
+        }  
+
+        clientsRepository.findAllClients(function(clients, status, headers, config){
+          if (urlData.project_id){
+            $.each(clients, function(key, value) {
+              if (urlData.project_id == value.project_id){
+                ctrl.clients = [value]; 
               }
             });
           }else{
-            ctrl.users = users;
+            ctrl.clients = clients;
           }
-          clientsRepository.findAllClients(function(clients, status, headers, config){
-            if (urlData.project_id){
-              var client = {};
-              $.each(clients, function(key, value) {
-                if (urlData.project_id == value.project_id){
-                  ctrl.clients = value; 
-                }
-              });
-            }else{
-              ctrl.clients = clients; 
-            }
-          });
+
+          var gitData = {
+            allUsers: ctrl.users,
+            allClients: ctrl.clients,
+          };
+
+          ctrl.getPerformance(urlData);
+          ctrl.getTypeRepository(gitData);
         });
 
-        gitData = {
-          allUsers: ctrl.users,
-          allClients: ctrl.clients,
-        };
-        
-        ctrl.getPerformance(urlData);
-        ctrl.getTypeRepository(gitData);
       });
+
     };
 
-    this.getAllUsers = function(urlData){
+    this.getUsersFromCache = function(urlData){
       if (urlData.user_id){
         var user = {};
         $.each(ctrl.users, function(key, value) {
@@ -199,7 +202,7 @@
       }  
     };
 
-    this.getAllClients = function(urlData){
+    this.getClientsFromCache = function(urlData){
       if (urlData.project_id){
         var client = {};
         $.each(ctrl.clients, function(key, value) {
@@ -213,8 +216,13 @@
       }
     };
 
+    this.getProjectsFromServer = function(urlData){
+      projectRepository.get(function(projects, status, headers, config){
+        ctrl.projects = projects;
+      });
+    };
+
     this.getTypeRepository = function(gitData){
-      console.log(gitData)
       var gitRepository = [];
       var gitRoute = '';
       var routeSize = '';

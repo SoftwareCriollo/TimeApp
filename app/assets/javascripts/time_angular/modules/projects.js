@@ -3,7 +3,7 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-projects',["timeFrontendApp-navigator",'CacheStore','Repository'])
 
-  app.controller('ProjectsController',['ProjectRepository','UsersRepository','ClientsRepository','CurrentUser','ProjectCache','UsersCache','ClientsCache', function(projectRepository,usersRepository,clientsRepository,currentUser,projectsCache,usersCache,clientsCache){
+  app.controller('ProjectsController',['ProjectRepository','UsersRepository','ClientsRepository','CurrentUser','ProjectCache', 'ClientsCache', function(projectRepository,usersRepository,clientsRepository,currentUser,projectsCache,clientsCache){
 
     this.logOut = function(){ // function to "log out" the user, clear all the local storage
       localStorage.clear();
@@ -19,10 +19,6 @@
     });
 
     this.projects = projectsCache.projects;
-
-    usersRepository.getUsers(function(users, status, headers, config){
-      usersCache.saveUsers(users);
-    });
 
     clientsRepository.findAllClients(function(clients, status, headers, config){
       clientsCache.saveClients(clients);

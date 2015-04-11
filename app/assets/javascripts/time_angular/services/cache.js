@@ -56,26 +56,6 @@
       return this;
     }]);
 
-    $provide.factory('UsersCache',[function() {
-      this.loadUsers = function(){
-        return loadJsonCache('users') || [];
-      };
-
-      this.saveUsers = function(new_users){
-        saveJsonCache('users',new_users);
-      };      
-      this.findUser = function(user_id){
-        this.users = this.loadUsers();
-        for (var i = this.users.length - 1; i >= 0; i--) {
-          user = this.users[i];
-          if(user._id.$oid == users_id)
-            return user;
-        };
-      };
-      this.users = this.loadUsers();    
-      return this;
-    }]);
-
     $provide.factory('ClientsCache',[function() {
       this.loadClients = function(){
         return loadJsonCache('clients') || [];
