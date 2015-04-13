@@ -12,7 +12,7 @@
       }
 
       this.findProjectByName = function(projectId, success_callback){
-        this.route = '/api/projects/name/'+projectId;
+        this.route = "/api/projects/"+projectId;
         repository.get(this.route,success_callback);
       };
 
@@ -23,6 +23,11 @@
       this.route = '/api/mongoid_users';
 
       this.getUsers = function(success_callback){
+        repository.get(this.route,success_callback);
+      };
+
+      this.findUser = function(userId, success_callback){
+        this.route = '/api/mongoid_users/'+userId
         repository.get(this.route,success_callback);
       };
       

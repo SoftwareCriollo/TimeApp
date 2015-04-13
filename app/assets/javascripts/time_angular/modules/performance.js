@@ -45,12 +45,6 @@
       return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
     };
 
-    this.findProjectByName = function(projectId){
-      projectRepository.findProjectByName(projectId, function(projectName, status, headers, config){
-        ctrl.projectName = projectName;
-      });
-    }
-
     this.setPerformance = function(){
       var urlData = {};
 
@@ -137,19 +131,40 @@
       var user_id = $location.search().user_id;
 
       if (project_id !== undefined && project_id !== null){
-        ctrl.projectName = ctrl.findProjectByName(project_id)
         urlData.project_id = project_id; 
       }
 
       if (user_id !== undefined && user_id !== null){
         urlData.user_id = user_id;
+        
       }
 
+      ctrl.getDataFromServer(urlData);
+      ctrl.setTitleReport(urlData); 
+    };
+
+    this.setTitleReport = function(urlData){
       ctrl.start_date = urlData.date_1;
       ctrl.end_date = urlData.date_2;
 
-      ctrl.getDataFromServer(urlData); 
-    };
+      ctrl.setTitleReport = '';
+
+      if (urlData.project_id !== undefined && urlData.project_id !== null){
+        projectRepository.findProjectByName(urlData.project_id, function(projectName, status, headers, config){
+          ctrl.setTitleReport += projectName+'  '
+        });
+      }else{
+          ctrl.setTitleReport += 'All Projects  '
+      }
+
+      if (urlData.user_id !== undefined && urlData.user_id !== null){
+        usersRepository.findUser(urlData.user_id, function(user, status, headers, config){
+          ctrl.setTitleReport += user.email+'  '
+        });
+      }else{
+        ctrl.setTitleReport += 'All Users  '
+      }
+    }
 
     this.getDataFromServer = function(urlData){
 

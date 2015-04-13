@@ -21,8 +21,9 @@ Rails.application.routes.draw do
   
   namespace :api do
     post "/change_password/:reset_password_token", to: "change_password#change_password", as: 'change_password'  
-    get "/projects/name/:project_id", to: "projects#name"
+    get "/projects/:project_id", to: "projects#name"
     get "/clients", to: "clients#index"
+    get "/mongoid_users/:user_id", to: "mongoid_users#find_user"
   end
 
   devise_for :mongoid_users,controllers: {
