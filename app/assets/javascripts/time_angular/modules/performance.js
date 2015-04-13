@@ -7,6 +7,8 @@
 
     if (/report/.test(window.location)==false){
       currentUser.isPendingAuth();
+    }else{
+      $('div.header a').removeAttr('href');
     }
     
     var ctrl = this; 
