@@ -1,9 +1,10 @@
-<navigatorproject class='navigator-right' project="ctrl.project" section="'performance'"></navigatorproject>
+<div ng-include="'templates/performance/logout_box_right.html'" class="text-right box-float-right project-box-right"></div>
 <div class="section-up-performance section-up-title">
   <div class="box-title title-performance">
-    <h1 class="title"> {{ctrl.project.name}}</h1>
+    <h1 class="title"> GENERAL PERFORMANCE </h1>
     <hr class="underline" />
   </div>
+  <div class="search-performance"><a href="#/performance">SEARCH BY DATE</a></div>
 </div>
 <section ng-init="daysWeek = [{name:'tuesday'},{name:'wednesday'},{name:'thursday'},{name:'friday'}]" class="container-new-performance">
   <div class="section-up-performance">

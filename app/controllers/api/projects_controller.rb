@@ -11,6 +11,11 @@ class Api::ProjectsController < ApiAuthenticatedController
     render json: cards
   end
 
+  def name
+    project = project_manager.project_name(params[:project_id])
+    render json: project.to_json
+  end
+
   private
 
   def project_manager

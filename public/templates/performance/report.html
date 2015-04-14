@@ -1,11 +1,16 @@
-<section class="container-new-performance" ng-init="ctrl.getUrlToShare()">
+<section class="container-new-performance" ng-init="ctrl.getDataFromUrl()">
   <div class="section-up-performance">
     <div class="box-center-general-performance">
-      <h3>{{ctrl.start_report | date:'MMMM d'}} - {{ctrl.end_report | date:'MMMM d'}}</h3>
+      <h2 class="title"> {{ctrl.setTitleReport}}</h2>
+      <hr class="underline" />
+      <h3>{{ctrl.start_date | date:'MMMM d'}} - {{ctrl.end_date | date:'MMMM d'}}</h3>
       <div class="box-total-hours-performance">
         <img src="images/watch.png"/>
         <p>{{ctrl.totalWorked | number:1 | hours}}</p>
         <hr class="underline-short-dark"/>
+        <div class="loading-spinner" data-loading>
+          <img src="images/ajax-loader.gif" />
+        </div>
       </div>
     </div>
   </div>
@@ -24,7 +29,6 @@
 
         <div class="card-performance card-performance-{{n}}">
           <div class="list-performance">
-            <a ng-click="ctrl.editTimeEntry(timelog)" class="img-edit" ng-hide="ctrl.isEditing(timelog)"><img src="images/edit.png"/></a>
             <div class="name-task"> {{timelog.task_name}} </div>
             <div class="note-task">Notes: <a href> {{timelog.comment}}</a> </div>
             <div class="list-name-task" ng-init="ctrl.getListName(timelog, name)">
@@ -38,23 +42,10 @@
             </div>
           </div>
         </div>
-        <div id="{{timelog._id.$oid}}" class="edit-entries-performance hide">
-          <form method="post" name="formEditTimeEntries" ng-submit="ctrl.editTimelog()">
-            <div class="form-time-entries edit-entries">
-              <div class="field-form field-up">
-                <input type="number" step="0.1" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
-              </div>
-              <div class="field-form field-down">
-                <textarea rows="4" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
-              </div>
-            </div>
-            <input type="submit" value="SAVE" class="btn-primary" />
-          </form>
-        </div>
       </div>
       <div class="commits">
         <h3>Commits</h3>
-        <a ng-if="date == item.date" ng-repeat="item in ctrl.commits" href="{{item.route}}" target="_blank">{{item.date}} - {{item.title}}</a>
+        <a ng-if="date == item.date && timelogs[0].project_id == item.projectId" ng-repeat="item in ctrl.commits" href="{{item.route}}" target="_blank">{{item.date}} - {{item.title}}</a>
       </div>
     </div>
     <hr class="underline-division"/>

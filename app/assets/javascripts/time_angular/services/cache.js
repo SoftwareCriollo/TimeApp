@@ -56,7 +56,25 @@
       return this;
     }]);
 
+    $provide.factory('ClientsCache',[function() {
+      this.loadClients = function(){
+        return loadJsonCache('clients') || [];
+      };
 
+      this.saveClients = function(new_clients){
+        saveJsonCache('clients',new_clients);
+      };      
+      this.findClient = function(client_id){
+        this.clients = this.loadClients();
+        for (var i = this.clients.length - 1; i >= 0; i--) {
+          client = this.clients[i];
+          if(client.id == client_id)
+            return client;
+        };
+      };
+      this.clients = this.loadClients();    
+      return this;
+    }]);
 
     $provide.factory('CurrentUser',["$location",function($location) {
       var currentUser;

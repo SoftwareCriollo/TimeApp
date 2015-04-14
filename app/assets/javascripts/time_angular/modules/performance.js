@@ -3,28 +3,40 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
-  app.controller('GeneralPerformanceController',['CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', '$location', function(currentUser, projectsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, $location){
+  app.controller('GeneralPerformanceController',['CurrentUser', 'ProjectCache', 'ClientsCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', 'ProjectRepository', '$location', function(currentUser, projectsCache, clientsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, projectRepository, $location){
 
-    currentUser.isPendingAuth();
-
+    if (/report/.test(window.location)==false){
+      currentUser.isPendingAuth();
+    }else{
+      $('div.header a').removeAttr('href');
+    }
+    
     var ctrl = this; 
 
-    this.gitRoute = '';
-    this.gitLabProjectId = 0;
-    this.commits = undefined;
-    this.userEmail = '';
+    this.users = {};
+    this.commits = {};
+    this.clients = {};
+    this.projects = {};
 
     this.end_date = new Date();
     this.start_date = new Date();
-    this.timelog = undefined;
+    this.timelog = {};
     this.cards = {};
     this.totalWorked = 0;
 
     this.projects = projectsCache.projects;
-    
+
+    this.clients = clientsCache.clients;
+
     usersRepository.getUsers(function(users, status, headers, config){
       ctrl.users = users;
     });
+
+    this.logOut = function(){
+      localStorage.clear();
+      window.location= "/log-in";
+      location.reload();
+    };
     
     this.dateFormat = function(date) {
       var yyyy = date.getFullYear().toString();
@@ -34,28 +46,35 @@
     };
 
     this.setPerformance = function(){
-      var urlData = [];
+      var urlData = {};
 
-      urlData["date_1"] = this.dateFormat(this.start_date);
-      urlData["date_2"] = this.dateFormat(this.end_date);
-      urlData["project_id"] = this.project;
-      urlData["user_id"] = this.user;
+      urlData.date_1 = this.dateFormat(this.start_date);
+      urlData.date_2 = this.dateFormat(this.end_date);
 
-      this.userEmail = $('#user-email option:selected').text();
+      if (this.project !== undefined && this.project !== null){
+        urlData.project_id = this.project;
+      }
 
-      clientsRepository.setProjectId(this.project);
-      clientsRepository.findClient(function(client, status, headers, config){
-        ctrl.gitRoute  = client.git; 
-        ctrl.runPeformance(ctrl.gitRoute, urlData); 
-      });
+      if (this.user !== undefined && this.user !== null){
+        urlData.user_id = this.user;
+      }
+
+      ctrl.runPeformance(urlData); 
     };
 
-    this.runPeformance = function(gitRoute, urlData){
-      this.getPerformance(urlData);
-      this.setUrlToShare(urlData);
-      if (gitRoute !== null){
-        this.getTypeRepository(gitRoute);    
-      }
+    this.runPeformance = function(urlData){
+      ctrl.initGitData(urlData);
+      ctrl.getPerformance(urlData);
+      ctrl.setUrlToShare(urlData); 
+    };
+
+    this.initGitData = function(urlData){
+      var gitData = {}; 
+      gitData = {
+        allUsers: ctrl.filterUsers(ctrl.users, urlData),
+        allClients: ctrl.filterClients(ctrl.clients, urlData),
+      };
+      ctrl.getTypeRepository(gitData);
     }
 
     this.getPerformance = function(urlData){
@@ -75,6 +94,7 @@
         }
         ctrl.projectsGroup = timesGrouped;
       });
+
     };
 
     this.setUrlToShare = function(urlData){
@@ -89,7 +109,7 @@
       var login = "o_32g0fvedmb";
       var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
 
-      $.getJSON("http://api.bitly.com/v3/shorten?callback=?", { 
+      $.getJSON("https://api-ssl.bitly.com/v3/shorten?callback=?", { 
           "format": "json",
           "apiKey": api_key,
           "login": login,
@@ -101,106 +121,185 @@
         });
     } 
     
-    this.getUrlToShare = function(){
-      var urlData = [];
+    this.getDataFromUrl = function(){
+      var urlData = {};
 
-      urlData["date_1"] = $location.search().date_1; 
-      urlData["date_2"] = $location.search().date_2; 
-      urlData["project_id"] = $location.search().project_id; 
-      urlData["user_id"] = $location.search().user_id;
+      urlData.date_1 = $location.search().date_1; 
+      urlData.date_2 = $location.search().date_2; 
 
-      ctrl.start_report = (urlData["date_1"]);
-      ctrl.end_report = (urlData["date_2"]);
+      var project_id = $location.search().project_id;
+      var user_id = $location.search().user_id;
 
-      this.getPerformance(urlData);
-    };
-
-    this.getTypeRepository = function(gitRoute){
-
-      var typeGitLab = gitRoute.search("git.");
-      var typeGitHub = gitRoute.search("github.");
-
-      if (typeGitHub > -1){
-        
-        var gitHubParams = gitRoute.slice(19);
-        this.getDataFromGitHub(gitHubParams);
-
-      }else if (typeGitLab > -1){
-
-        var routeSize = gitRoute.indexOf("com");
-        var gitLabRoute = gitRoute.slice(0, routeSize+3);
-        var gitLabPrefix = gitRoute.slice(routeSize+4);
-        this.getProjectIdFromGitLab(gitLabRoute, gitLabPrefix);
-
+      if (project_id !== undefined && project_id !== null){
+        urlData.project_id = project_id; 
       }
-      
+
+      if (user_id !== undefined && user_id !== null){
+        urlData.user_id = user_id;
+        
+      }
+
+      ctrl.getDataFromServer(urlData);
+      ctrl.setTitleReport(urlData); 
     };
 
-    this.getDataFromGitHub = function(gitHubParams){
-      var url = "https://api.github.com/repos/" +gitHubParams+ "/commits"
-      var since = this.start_date.toISOString();
-      var until = this.end_date.toISOString();
+    this.setTitleReport = function(urlData){
+      ctrl.start_date = urlData.date_1;
+      ctrl.end_date = urlData.date_2;
 
-      $.get(url,{since: since, until: until, author: this.userEmail, per_page: 50000}, function(data){
-        ctrl.buildGitHubJsonData(data);
-      });
-    };
+      ctrl.setTitleReport = '';
 
-    this.buildGitHubJsonData = function(data){
-      var jsonArr = [];
-
-      $.each(data, function(key, value) {
-        jsonArr.push({
-          route: value.html_url,
-          title: value.commit.message,
-          date: ctrl.getDate(value.commit.author.date),
+      if (urlData.project_id !== undefined && urlData.project_id !== null){
+        projectRepository.findProjectByName(urlData.project_id, function(projectName, status, headers, config){
+          ctrl.setTitleReport += projectName+'  '
         });
+      }else{
+          ctrl.setTitleReport += 'All Projects  '
+      }
+
+      if (urlData.user_id !== undefined && urlData.user_id !== null){
+        usersRepository.findUser(urlData.user_id, function(user, status, headers, config){
+          ctrl.setTitleReport += user.email+'  '
+        });
+      }else{
+        ctrl.setTitleReport += 'All Users  '
+      }
+    }
+
+    this.getDataFromServer = function(urlData){
+
+      ctrl.getProjectsFromServer();
+
+      usersRepository.getUsers(function(users, status, headers, config){
+        var usersData = ctrl.filterUsers(users, urlData)
+
+        clientsRepository.findAllClients(function(clients, status, headers, config){
+          var clientsData = ctrl.filterClients(clients, urlData)
+
+          var gitData = {
+            allUsers: usersData,
+            allClients: clientsData,
+          };
+
+          ctrl.getPerformance(urlData);
+          ctrl.getTypeRepository(gitData);
+        });
+
       });
 
-      ctrl.commits = jsonArr;
     };
 
-    this.getProjectIdFromGitLab = function(gitLabRoute, gitLabPrefix){
-
-      var url = gitLabRoute+"/api/v3/projects?private_token=zsXXHi8sUR_RzJDvp6db"
-      $.get(url, function(data){
-
-        $.each(data, function(key, value) {
-          if (value.path_with_namespace == gitLabPrefix){
-            ctrl.gitLabProjectId = value.id 
+    this.filterUsers = function(users, urlData){
+      if (urlData.user_id){
+        var user = {};
+        $.each(users, function(key, value) {
+          if (urlData.user_id == value._id.$oid){
+            user = value;
           }
         });
-
-        ctrl.getDataFromGitLab(gitLabRoute, ctrl.gitLabProjectId);
-      });   
-      
+        return [user];
+      }else{
+        return users;
+      }  
     };
 
-    this.getDataFromGitLab = function(gitLabRoute, gitLabProjectId){
+    this.filterClients = function(clients, urlData){
+      console.log(clients)
+      console.log(urlData)
+      if (urlData.project_id){
+        var client = {};
+        $.each(clients, function(key, value) {
+          if (urlData.project_id == value.project_id){
+            client = value; 
+          }
+        });
+        return [client];
+      }else{
+        return clients;
+      }
+    };
 
-      var ulr = gitLabRoute+'/api/v3/projects/'+ gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
-      $.get(ulr, {per_page: 50000}, function(data, status){
-        ctrl.buildGitLabJsonData(data);
+    this.getProjectsFromServer = function(urlData){
+      projectRepository.get(function(projects, status, headers, config){
+        ctrl.projects = projects;
       });
-
     };
 
-    this.buildGitLabJsonData = function(data){
-      var jsonArr = [];
-      var route = '';
+    this.getTypeRepository = function(gitData){
+      console.log(gitData)
+      var gitRepository = [];
+      var gitRoute = '';
+      var routeSize = '';
+      var gitLabRoute = '';
+      var gitLabPrefix = '';
+      var gitLabProjectId = '';
+      
+      $.each(gitData.allClients, function(clientKey, clientValue) {
+        if (clientValue.git){
+          gitRoute = clientValue.git;
+          routeSize = gitRoute.indexOf("com");
+          gitLabRoute = gitRoute.slice(0, routeSize+3);
+          gitLabPrefix = gitRoute.slice(routeSize+4);
+          gitLabProjectId = ctrl.getProjectIdFromGitLab(gitLabRoute, gitLabPrefix);
 
-      $.each(data, function(key, value) {
-        if (ctrl.userEmail == value.author_email) {
-          route = ctrl.gitRoute+'/commit/'+value.id;
-          jsonArr.push({
-            route: route,
-            title: value.title,
-            date: ctrl.getDate(value.created_at),
+          gitRepository.push({
+            projectId: clientValue.project_id,
+            gitLabRepo: gitRoute.replace('.git',''),
+            gitLabRoute: gitLabRoute,
+            gitLabProjectId: gitLabProjectId,
           });
         }
       });
 
-      ctrl.commits = jsonArr;
+      this.getDataFromGitLab(gitRepository, gitData);
+    };
+
+    this.getProjectIdFromGitLab = function(gitLabRoute, gitLabPrefix){
+      var url = gitLabRoute+"/api/v3/projects?private_token=zsXXHi8sUR_RzJDvp6db"
+      var projectId = 0;
+
+      $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function(data) {
+          $.each(data, function(key, value) {
+            if (value.path_with_namespace+'.git' == gitLabPrefix){
+              projectId = value.id; 
+            }
+          });
+        } 
+      });
+
+      return projectId;
+    };
+
+    this.getDataFromGitLab = function(gitRepository, gitData){
+      var commitData = [];
+      var route = '';
+
+      $.each(gitRepository, function(repoKey, repoValue) {
+        var url = repoValue.gitLabRoute+'/api/v3/projects/'+ repoValue.gitLabProjectId + "/repository/commits?private_token=zsXXHi8sUR_RzJDvp6db"
+       
+        $.get(url, {per_page: 50000}, function(data, status){
+          $.each(data, function(gitKey, gitValue) {
+            $.each(gitData.allUsers, function(userKey, userValue) {
+              if (userValue.email == gitValue.author_email) {
+                route = repoValue.gitLabRepo+'/commit/'+gitValue.id;
+                commitData.push({
+                  projectId: repoValue.projectId,
+                  route: route,
+                  title: gitValue.title,
+                  date: ctrl.getDate(gitValue.created_at),
+                });
+              }
+            });
+          });
+        });
+
+      });
+      ctrl.commits = commitData;
     };
 
     this.getDate = function(data){
@@ -274,9 +373,6 @@
 
   app.controller('PerformanceController',['$routeParams','CurrentUser','ProjectCache', 'CardsCache', 'TimeLoggerRepository', function($routeParams, currentUser, projectCache, cardsCache, timeLoggerRepository){
 
-    currentUser.isPendingAuth();
-
-    this.user=currentUser.getUser();
     var ctrl = this;
     var projectId = $routeParams.projectId;
 
@@ -296,9 +392,15 @@
     this.cards = {};
     this.totalWorked = 0;
 
+    this.logOut = function(){
+      localStorage.clear();
+      window.location= "/log-in";
+      location.reload();
+    };
+
     var inizialize = function () {
       currentDate = new Date();
-      var urlData = [];
+      var urlData = {};
 
       ctrl.currentWeekStart = ctrl.calculateInterval(currentDate,1);
       ctrl.currentWeekEnd = ctrl.calculateInterval(currentDate,7);
@@ -314,10 +416,12 @@
       ctrl.previousWeekStart = ctrl.calculateWeek(ctrl.currentWeekStart,-1);
       ctrl.previousWeekEnd = ctrl.calculateWeek(ctrl.currentWeekEnd,-1);
 
-      urlData["date_1"] = ctrl.dateFormat(ctrl.currentWeekStart); 
-      urlData["date_2"] = ctrl.dateFormat(ctrl.currentWeekEnd); 
-      urlData["project_id"] = projectId; 
-      urlData["user_id"] = ctrl.user.id;
+      urlData.date_1 = ctrl.dateFormat(ctrl.currentWeekStart); 
+      urlData.date_2 = ctrl.dateFormat(ctrl.currentWeekEnd); 
+
+      if (projectId !== undefined && projectId !== null){
+        urlData.project_id = projectId; 
+      }
 
       timeLoggerRepository.setPrefixToBackend();
       timeLoggerRepository.abstractUrlBuilder(urlData);
@@ -331,7 +435,7 @@
     this.changeNext = function(){
       this.totalWorked = 0;
       this.total = {};
-      var urlData = [];
+      var urlData = {};
 
       this.previousWeekStart = this.currentWeekStart;
       this.previousWeekEnd = this.currentWeekEnd;
@@ -339,10 +443,12 @@
       this.currentWeekStart = this.nextWeekStart;
       this.currentWeekEnd = this.nextWeekEnd;
 
-      urlData["date_1"] = this.dateFormat(this.currentWeekStart); 
-      urlData["date_2"] = this.dateFormat(this.currentWeekEnd); 
-      urlData["project_id"] = projectId; 
-      urlData["user_id"] = this.user.id;
+      urlData.date_1 = this.dateFormat(this.currentWeekStart); 
+      urlData.date_2 = this.dateFormat(this.currentWeekEnd);
+
+      if (projectId !== undefined && projectId !== null){
+        urlData.project_id = projectId; 
+      } 
 
       timeLoggerRepository.setPrefixToBackend();
       timeLoggerRepository.abstractUrlBuilder(urlData);
@@ -364,7 +470,7 @@
     this.changePrevious = function(){
       this.totalWorked = 0;
       this.total = {};
-      var urlData = [];
+      var urlData = {};
 
       this.nextWeekStart = this.currentWeekStart;
       this.nextWeekEnd = this.currentWeekEnd;
@@ -372,10 +478,12 @@
       this.currentWeekStart = this.previousWeekStart;
       this.currentWeekEnd = this.previousWeekEnd;
 
-      urlData["date_1"] = this.dateFormat(this.currentWeekStart); 
-      urlData["date_2"] = this.dateFormat(this.currentWeekEnd); 
-      urlData["project_id"] = projectId; 
-      urlData["user_id"] = this.user.id;
+      urlData.date_1 = this.dateFormat(this.currentWeekStart); 
+      urlData.date_2 = this.dateFormat(this.currentWeekEnd);
+
+      if (projectId !== undefined && projectId !== null){
+        urlData.project_id = projectId; 
+      } 
 
       timeLoggerRepository.setPrefixToBackend();
       timeLoggerRepository.abstractUrlBuilder(urlData);

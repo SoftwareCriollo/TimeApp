@@ -11,6 +11,7 @@
     'timeFrontendApp-performance',
     'timeFrontendApp-clients',
     'timeFrontendApp-navigator',
+    'timeFrontendApp-filters',
     'ngMessages',
     'ngResource',
     'ngRoute',
@@ -94,6 +95,11 @@
         templateUrl: 'templates/performance/search_by_project.html',
         controller: 'PerformanceController',
         controllerAs: 'controller'
+      })
+      .when('/performance/general', {
+        templateUrl: 'templates/performance/general.html',
+        controller: 'PerformanceController',
+        controllerAs: 'ctrl'
       })
       .when('/performance/project/:projectId', {
         templateUrl: 'templates/performance/performance.html',

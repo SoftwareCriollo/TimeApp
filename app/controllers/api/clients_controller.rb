@@ -10,7 +10,11 @@ class Api::ClientsController <  ApiController
   end
 
   def index
-    @client = Client.find_or_initialize_by(project_id: params[:project_id])
+    if params[:project_id]
+      @client = Client.find_or_initialize_by(project_id: params[:project_id])
+    else
+      @client = Client.where(:git.ne => "", :git.exists => true)
+    end
     render json: @client
   end
 
@@ -22,6 +26,8 @@ class Api::ClientsController <  ApiController
       render json: @client.errors.messages
     end
   end
+
+  private
 
   def client_params
     params.require(:client).permit(:project_id, :name, :email, :git, :ssh, :email)

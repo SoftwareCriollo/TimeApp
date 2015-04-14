@@ -19,8 +19,8 @@ class Timelog
 
   scope :last_registered, -> (quantity=1){order_by(:fecha.desc).limit(quantity) }
   scope :by_range, -> (date_1,date_2) { where({ :fecha => date_1..date_2 }) }
-  scope :project_id, ->(project_id) { where(:project_id => project_id) }
-  scope :user_id, ->(user_id) { where(:user_id => user_id) }
+  scope :by_project, ->(project_id) { where(:project_id => project_id) }
+  scope :by_user, ->(user_id) { where(:user_id => user_id) }
 
   before_create do |timelog|
     iteration = Iteration.current_iteration(timelog.project_id)
@@ -32,6 +32,13 @@ class Timelog
 
   after_initialize do |timelog|
     timelog.fecha ||= Date.today
+  end
+
+  def self.performance(search)
+     timelogs = by_range(search[:date_1],search[:date_2])
+     timelogs = timelogs.by_project(search[:project_id]) if search[:project_id]
+     timelogs = timelogs.by_user(search[:user_id]) if search[:user_id]
+     timelogs
   end
 
   def iteration 

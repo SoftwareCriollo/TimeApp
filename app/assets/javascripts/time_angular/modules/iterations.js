@@ -36,7 +36,9 @@
   }]);
 
   app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$rootScope', '$location', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$rootScope, $location){
-    currentUser.isPendingAuth();
+    if (/report/.test(window.location)==false){
+      currentUser.isPendingAuth();
+    }
   
     var controller = this;
     var iterationId = $routeParams.iterationId;
@@ -54,11 +56,18 @@
     this.timelogsGroup = [];
     this.timelogs = [];
     this.timelog = undefined;
+    this.projectName = '';
 
     iterationsRepository.findIteration(iterationId, function(iteration, status, headers, config){
+      controller.findProjectByName(iteration.project_id);
       controller.initialize(iteration);
-      controller.project = projectCache.findProject(iteration.project_id);
     });
+
+    this.findProjectByName = function(projectId){
+      iterationsRepository.findProjectByName(projectId, function(projectName, status, headers, config){
+        controller.projectName = projectName;
+      });
+    }
 
     this.initialize = function(iteration){
       this.iteration=iteration;
@@ -107,7 +116,7 @@
       var login = "o_32g0fvedmb";
       var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
 
-      $.getJSON("http://api.bitly.com/v3/shorten?callback=?", { 
+      $.getJSON("https://api-ssl.bitly.com/v3/shorten?callback=?", { 
           "format": "json",
           "apiKey": api_key,
           "login": login,
@@ -194,10 +203,12 @@
 
 
     this.editTimeEntry = function(timelog) {
-      this.timelog = timelog;
+      angular.element( document.getElementById(timelog._id.$oid ) ).removeClass("hide");
+      this.timelog=timelog;
     };
 
     this.editTimelog = function() {
+      angular.element( document.getElementById(this.timelog._id.$oid ) ).addClass("hide");
       timeLoggerRepository.edit(this.timelog,function(){
         controller.gettingEntries();
         controller.timelog = undefined;
@@ -217,34 +228,13 @@
     }
   }]);
 
-  app.filter('dateSuffix', function($filter) {
-    var suffixes = ["th", "st", "nd", "rd"];
-    return function(input) {
-      var dtfilter = $filter('date')(new Date(input), 'MMMM dd');
-      var day = parseInt(dtfilter.slice(-2));
-      var relevantDigits = (day < 30) ? day % 20 : day % 30;
-      var suffix = (relevantDigits <= 3) ? suffixes[relevantDigits] : suffixes[0];
-      return dtfilter.toUpperCase()+suffix;
-    };
-  });
-
-  app.filter('ddSuffix', function($filter) {
-    var suffixes = ["th", "st", "nd", "rd"];
-    return function(input) {
-      var dtfilter = $filter('date')(new Date(input), 'dd');
-      var day = parseInt(dtfilter.slice(-2));
-      var relevantDigits = (day < 30) ? day % 20 : day % 30;
-      var suffix = (relevantDigits <= 3) ? suffixes[relevantDigits] : suffixes[0];
-      return dtfilter+suffix;
-    };
-  });
-
   app.run(function($rootScope) {
     $rootScope.UTCDate = function(date) {
       var utcDate = new Date(date);
       return new Date(utcDate.getUTCFullYear(), utcDate.getUTCMonth(), utcDate.getUTCDate());
     };
   });
+
 
 })();
 

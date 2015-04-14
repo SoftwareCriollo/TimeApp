@@ -10,6 +10,12 @@
       this.get = function(success_callback){
         repository.get(this.route,success_callback);
       }
+
+      this.findProjectByName = function(projectId, success_callback){
+        this.route = "/api/projects/"+projectId;
+        repository.get(this.route,success_callback);
+      };
+
       return this;
     }]);
 
@@ -17,6 +23,11 @@
       this.route = '/api/mongoid_users';
 
       this.getUsers = function(success_callback){
+        repository.get(this.route,success_callback);
+      };
+
+      this.findUser = function(userId, success_callback){
+        this.route = '/api/mongoid_users/'+userId
         repository.get(this.route,success_callback);
       };
       
@@ -73,7 +84,7 @@
     }]);
 
 
-$provide.factory('ClientsRepository',["Repository",function(repository) {
+    $provide.factory('ClientsRepository',["Repository",function(repository) {
       this.route = undefined;
       this.projectId = undefined;
       this.clientId = undefined;
@@ -88,11 +99,13 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
         this.route = '/api/projects/'+this.projectId+'/clients/'+clientId;
       };
 
+      this.findAllClients = function(success_callback){
+        this.route = '/api/clients/';
+        repository.get(this.route,success_callback);
+      };
+
       this.findClient = function(success_callback){
-        if( this.projectId === undefined)
-          console.error("You must set projectId");
-        else
-          repository.get(this.route,success_callback);
+        repository.get(this.route,success_callback);
       };
 
       this.saveClient = function(client,success_callback,error_callback){
@@ -135,13 +148,27 @@ $provide.factory('ClientsRepository',["Repository",function(repository) {
         repository.get(this.route,success_callback);
       };
 
+      this.findProjectByName = function(projectId, success_callback){
+        this.route = '/api/projects/name/'+projectId;
+        repository.get(this.route,success_callback);
+      };
+
       this.setParameters = function(date_start,date_end){
         this.route= "/api/iterations/"+this.iterationId+"/timelogs/?date_1="+date_start+"&date_2="+date_end;
       }
 
       this.setParametersToShare = function(date_start, date_end){
-        this.route = window.location+"/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
+        var url = this.getBaseUrl();
+        this.route = url+"/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
       };
+
+      this.getBaseUrl = function(){
+        var pathArray = location.href.split( '/' );
+        var protocol = pathArray[0];
+        var host = pathArray[2];
+        var url = protocol + '//' + host;
+        return url;
+      }
 
       this.entries = function(success_callback){
 

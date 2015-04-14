@@ -1,7 +1,10 @@
 <navigatorproject class='navigator-right' project="ctrl.project" section="'iterations'"></navigatorproject>
 <div class="section-up-iteration section-up-title">
   <div class="box-title title-iteration">
-    <h1 class="title"> {{ctrl.project.name}}</h1>
+    <div class="loading-spinner" data-loading>
+      <img src="images/ajax-loader.gif" />
+    </div>
+    <h1 class="title"> {{ctrl.projectName}}</h1>
     <hr class="underline" />
   </div>
 </div>
@@ -9,7 +12,7 @@
   <div class="section-up-iteration">
     <div class="float-left section-change-iteration box-left-iteration" ng-class="{ disabled: !ctrl.showPrevious }" ng-click="ctrl.changePrevious()">
       <a href>
-        <!-- <img src="images/arrow-circle.png"/> -->
+        <img src="images/arrow-circle.png"/>
         <p>{{ctrl.previousWeekStart | dateSuffix}} - {{ctrl.previousWeekEnd | ddSuffix}}</p>
       </a>
     </div>
@@ -26,7 +29,7 @@
     <div class="float-right section-change-iteration box-right-iteration" ng-class="{ disabled: !ctrl.showNext}"  ng-click="ctrl.changeNext()">
       <a href>
         <p>{{ctrl.nextWeekStart | dateSuffix}} - {{ctrl.nextWeekEnd | ddSuffix}}</p>
-        <!-- <img class="img-rotate-180" src="images/arrow-circle.png"/> -->
+        <img class="img-rotate-180" src="images/arrow-circle.png"/>
       </a>
     </div>
   </div>
@@ -56,18 +59,19 @@
         </div>
       </div>
     </div>
-    <div class="editTimeEntries" ng-show='ctrl.timelog'>
+    <div id="{{timelog._id.$oid}}" class="edit-entries-performance hide">
       <form method="post" name="formEditTimeEntries" ng-submit="ctrl.editTimelog()">
         <div class="form-time-entries edit-entries">
           <div class="field-form field-up">
-            <input type="number" step="0.1" class="field-entries" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
+            <input type="number" step="0.1" min="0" name="time" ng-model="ctrl.timelog.time" placeholder="Hours:" required/>
           </div>
           <div class="field-form field-down">
-            <textarea rows="4" class="field-entries" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
+            <textarea rows="4" cols="50"name="comment" ng-model="ctrl.timelog.comment" placeholder="Notes:" required/>
           </div>
         </div>
-        <input type="submit" value="SAVE" class="btn-primary" />
-      </form>
+          <input type="submit" value="SAVE" class="btn-primary" />
+        </form>
+      </div>
     </div>
   </article>
 

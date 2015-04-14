@@ -1,8 +1,9 @@
 'use strict';
 (function(){
 
-   var app = angular.module('timeFrontendApp-navigator',['Devise','CacheStore'])
-  .directive('navigatorproject', function() {
+  var app = angular.module('timeFrontendApp-navigator',['Devise','CacheStore'])
+
+  app.directive('navigatorproject', function() {
     return {
       restrict: 'E',
       scope: {
@@ -14,21 +15,27 @@
       templateUrl: 'templates/navigators/projects.html'
     };
   })
-  .filter('hours', function(){
-    return function(hour){
-      if (hour>=1 && hour<2){
-        return hour+' Hour';
-      }else if (hour>=2) {
-        return hour+' Hours';  
-      }else if (hour<1) {
-        return hour+' Hour';  
+
+  app.directive('loading', ['$http', function ($http) {
+    return {
+      restrict: 'A',
+      link: function (scope, elm, attrs){
+        scope.isLoading = function () {
+            return $http.pendingRequests.length > 0;
+        };
+
+        scope.$watch(scope.isLoading, function (v){
+          if(v){
+              elm.show();
+          }else{
+              elm.hide();
+          }
+        });
       }
-    }
-  })
+    };
+  }]);
 
   app.controller('NavigatorController',['$location', function($location){
-    var controller = this;
-
     this.logOut = function(){
       localStorage.clear();
       window.location= "/log-in";
