@@ -66,7 +66,7 @@ class Timelog
   end
 
   def time_for_iteration
-    value_ajust
+    value_ajust || time
   end
 
 end
