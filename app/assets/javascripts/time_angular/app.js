@@ -8,6 +8,7 @@
     'timeFrontendApp-authentication',
     'timeFrontendApp-projects',
     'timeFrontendApp-iterations',
+    'timeFrontendApp-generalPerformance',	  
     'timeFrontendApp-performance',
     'timeFrontendApp-clients',
     'timeFrontendApp-navigator',
