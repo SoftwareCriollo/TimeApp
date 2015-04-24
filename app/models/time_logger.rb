@@ -20,11 +20,6 @@ class TimeLogger
     valid? ? save : false
   end
 
-  def config_params
-    @project_id = @attributes[:project_id]
-    @project_name = @attributes[:project_name]
-  end
-
   def save
     @timelogs.map(&:save)
   end
@@ -37,6 +32,11 @@ class TimeLogger
 
 
   private
+
+  def config_params
+    @project_id = @attributes[:project_id]
+    @project_name = @attributes[:project_name]
+  end
 
   def validate_timelogs
     time = 0
