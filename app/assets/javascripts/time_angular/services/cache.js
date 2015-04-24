@@ -40,7 +40,7 @@
         return loadJsonCache(project_id+'_cards') || [];
       };
 
-      this.saveCards = function(project_id, new_cards){
+      this.saveCards = function(project_id, new_cards){ 
         saveJsonCache(project_id+'_cards',new_cards);
       };
 
@@ -51,6 +51,11 @@
           if(card.id == card_id)
             return card;
         };
+      };
+	  
+      this.getCardsByProjectId = function(project_id){
+        this.cards = this.loadCards(project_id);
+		return this.cards;
       };
 
       return this;
