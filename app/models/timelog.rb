@@ -13,6 +13,7 @@ class Timelog
   field :trello, type: Boolean, default: true
   field :iteration_id, type: String
   field :value_ajust, type: Float, default: 0
+  field :due_date, type: Date
 
   validates_presence_of :trello, :task_id
   validates_numericality_of :time, greater_than: 0
@@ -66,7 +67,7 @@ class Timelog
   end
 
   def time_for_iteration
-    value_ajust
+    value_ajust.nil? ? time : (value_ajust > 0 ? value_ajust : time)
   end
 
 end
