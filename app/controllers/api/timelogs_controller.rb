@@ -22,6 +22,11 @@ class Api::TimelogsController <  ApiAuthenticatedController
     @timelogs =  Timelog.performance(params_search)
     render json: @timelogs
   end
+  
+  def get_by_card
+    @timelogs =  Timelog.only(:task_id, :fecha, :time, :value_ajust, :comment).where(:task_id => params[:card_id], :fecha => params[:date_start]..params[:date_end])
+    render json: @timelogs
+  end  
 
   def params_search
     params.permit(:date_1, :date_2, :project_id, :user_id)

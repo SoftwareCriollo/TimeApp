@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     get "/projects/:project_id", to: "projects#name"
     get "/clients", to: "clients#index"
     get "/mongoid_users/:user_id", to: "mongoid_users#find_user"
+    get "/projects/:project_id/card/:card_id/logs", to: "timelogs#get_by_card"    
   end
 
   devise_for :mongoid_users,controllers: {
