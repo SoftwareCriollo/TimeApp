@@ -3,7 +3,7 @@ class ProjectManager
 
   BOARD_ATTRIBUTES= [:id,:name,:url]
 
-  CARDS_ATTRIBUTES= [:id, :name, :url, :list_id]
+  CARDS_ATTRIBUTES= [:id, :name, :url, :list_id, :due]
 
   ALLOWED_LIST_NAMES= [/doing/i, /to define/i, /done/i, /to do/i ]
 
@@ -82,9 +82,11 @@ class ProjectManager
   def find_board(board_id)
     Trello::Board.find(board_id)
   end
+  
   def find_card(card_id)
     Trello::Card.find(card_id)
   end
+  
   def find_organization
     Trello::Organization.find(organization_name)
   end
