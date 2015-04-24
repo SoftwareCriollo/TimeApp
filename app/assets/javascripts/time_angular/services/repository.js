@@ -43,7 +43,6 @@
 
       this.edit = function(timelog,success_callback){
         this.route = "/api/timelogs";
-        console.log(timelog);
         repository.patch(this.patchRoute(timelog),{"timelog":timelog},success_callback);        
       };
       
@@ -181,7 +180,32 @@
       
       return this;
     }]);
-
+	
+    $provide.factory('PerformanceRepository',["Repository",function(repository){
+        this.route = undefined;
+        this.projectId = undefined;
+		this.cardId = undefined;
+		this.dateStart = undefined
+		this.dateEnd = undefined
+		
+        this.setCard = function(projectId, cardId, dateStart, dateEnd){
+          this.projectId = projectId;
+		  this.cardId = cardId;
+		  this.dateStart = dateStart;
+		  this.dateEnd = dateEnd;
+		  
+          this.route = '/api/projects/' + projectId + '/card/' + cardId + '/logs?date_start='+ dateStart + '&date_end=' + dateEnd;
+        };
+		
+        this.get = function(success_callback){
+          if( this.projectId === undefined)
+            console.error("You must set projectId");
+          else
+            repository.get(this.route,success_callback);
+        } 
+        return this;		
+    }]);
+	
     $provide.factory('CardRepository',["Repository",function(repository) {
       this.route = undefined;
       this.projectId = undefined;
@@ -201,8 +225,9 @@
     }]);
     
     $provide.factory('Repository',["$http",'CurrentUser',function($http,currentUser) {
-      this.get = function(route,success_callback,error_callback){
+		this.get = function(route,success_callback,error_callback){
         error_callback = error_callback || function(){}
+        
         $http.get(route, {"headers":this.setHeaders()})
           .success(success_callback)
           .error(function(data, status, headers, config) {
