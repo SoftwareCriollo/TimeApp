@@ -77,25 +77,12 @@
       this.iteration=iteration;
 	  projectId = iteration.project_id;
 	  this.project = projectCache.findProject(projectId);
-      minDate = $rootScope.UTCDate(iteration.start);
-      maxDate = $rootScope.UTCDate(iteration.end_date || new Date());
-      currentDate = minDate;
 
-      this.currentWeekStart = this.calculateInterval(currentDate,1);
-      this.currentWeekEnd = this.calculateInterval(currentDate,700);
-
-      nextWeek = this.calculateWeek(this.currentWeekStart,1); 
-
-      this.nextWeekStart = this.calculateInterval(nextWeek,1);
-      this.nextWeekEnd = this.calculateInterval(nextWeek,700);
-
-      dateStart = this.dateFormat(this.currentWeekStart);
-      dateEnd = this.dateFormat(this.currentWeekEnd);
+      this.currentWeekEnd = $rootScope.UTCDate(iteration.end_date);
+      this.currentWeekStart = $rootScope.UTCDate(iteration.start);
 
       this.gettingEntries(dateStart,dateEnd);
 
-      if(this.nextWeekStart <= maxDate)
-        this.showNext=true;
     }
 
     this.gettingEntries = function(dateStart, dateEnd){

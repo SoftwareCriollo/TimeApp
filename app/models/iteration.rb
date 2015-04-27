@@ -43,8 +43,14 @@ class Iteration
     self.timelogs.order_by(:fecha.asc).first.fecha
   end  
   
+  def update_end_date
+    end_date = last_log_date
+    self.save
+  end
+  
   def last_log_date
-    self.timelogs.order_by(:fecha.asc).last.fecha
+    last = self.timelogs.order_by(:fecha.asc).last
+    last ? last.fecha : DateTime.now
   end   
   
   def can_register_hours?

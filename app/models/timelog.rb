@@ -25,6 +25,7 @@ class Timelog
 
   before_create do |timelog|
     iteration = Iteration.current_iteration(timelog.project_id)
+    iteration.update_end_date 
     timelog.iteration_id = iteration.id if iteration
     timelog.set_project_name
     timelog.set_task_name
