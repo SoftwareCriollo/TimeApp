@@ -9,10 +9,15 @@ class ProjectManager
 
   def initialize
     @organization = find_organization
+    @espcial_board_ids = ["5427061ed62e617fa949b9fb"]
   end
+  
+  def especial_boards
+   @espcial_board_ids.map{|bid| Trello::Board.find(bid)}
+  end  
 
   def boards
-    @organization.boards.select{|board| !board.closed?}
+    @organization.boards.select{|board| !board.closed?}.concat(especial_boards)
   end
 
   ## Should return array like this
