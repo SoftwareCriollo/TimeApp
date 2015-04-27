@@ -35,7 +35,7 @@
 
   }]);
 
-  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$rootScope', '$location', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$rootScope, $location){
+  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$rootScope', '$location', 'ProjectRepository', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$rootScope, $location, projectRepository){
     if (/report/.test(window.location)==false){
       currentUser.isPendingAuth();
     }
@@ -58,21 +58,23 @@
     this.timelog = undefined;
     
 	
-	var projectId = $routeParams.projectId;
-	this.project = projectCache.findProject(projectId);
-	
     iterationsRepository.findIteration(iterationId, function(iteration, status, headers, config){
-      //controller.findProjectByName(iteration.project_id);
       controller.initialize(iteration);
     });
 
-
-
     this.initialize = function(iteration){
       this.iteration=iteration;
-	  projectId = iteration.project_id;
+	  var projectId = iteration.project_id;
 	  this.project = projectCache.findProject(projectId);
-      this.projectName = this.project.name;
+	  
+	  if(this.project){
+		 controller.projectName = project.name;
+	  }else{
+         projectRepository.findProjectByName(projectId, function(pName, status, headers, config){
+           controller.projectName = pName;
+         });	
+	  }
+	  
       this.currentWeekEnd = $rootScope.UTCDate(iteration.end_date);
       this.currentWeekStart = $rootScope.UTCDate(iteration.start);
 
