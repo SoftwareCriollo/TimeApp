@@ -33,6 +33,20 @@ class Iteration
     self.save
   end
   
+  def update_dates
+    self.start = first_log_date
+    self.end_date = last_log_date
+    self.save
+  end  
+  
+  def first_log_date
+    self.timelogs.order_by(:fecha.asc).first.fecha
+  end  
+  
+  def last_log_date
+    self.timelogs.order_by(:fecha.asc).last.fecha
+  end   
+  
   def can_register_hours?
     time_for_iteration < time 
   end

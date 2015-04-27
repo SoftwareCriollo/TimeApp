@@ -11,7 +11,6 @@ class Api::IterationsController <  ApiController
   def timelogs
     @iteration = Iteration.find(params[:id]).timelogs.by_range(params[:date_1],params[:date_2])
     render json: @iteration
-
   end
 
   def show
@@ -21,6 +20,7 @@ class Api::IterationsController <  ApiController
 
   def index
     @iterations = Iteration.by_project(params[:project_id])
+    @iterations.each{|i| i.update_dates}
     render json: @iterations
   end
 

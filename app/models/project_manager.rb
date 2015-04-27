@@ -69,7 +69,8 @@ class ProjectManager
   end
 
   def allowed_list?(list)
-    ALLOWED_LIST_NAMES.any?{|name| name.match(list.name) }
+    #ALLOWED_LIST_NAMES.any?{|name| name.match(list.name) }
+    true
   end
 
   def get_cards(lists)
