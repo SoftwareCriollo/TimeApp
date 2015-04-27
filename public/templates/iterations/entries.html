@@ -10,13 +10,9 @@
 </div>
 <section class="container-new-iteration">
   <div class="section-up-iteration">
-    <div class="float-left section-change-iteration box-left-iteration" ng-class="{ disabled: !ctrl.showPrevious }" ng-click="ctrl.changePrevious()">
-      <a href>
-        <img src="images/arrow-circle.png"/>
-        <p>{{ctrl.previousWeekStart | dateSuffix}} - {{ctrl.previousWeekEnd | ddSuffix}}</p>
-      </a>
+    <div class="float-left section-change-iteration box-left-iteration">
     </div>
-    <div class="box-center-iteration">
+    <div class="box-center-iteration" ng-init="ctrl.getShortUrl()">
       <h3>{{ctrl.currentWeekStart | dateSuffix}} - {{ctrl.currentWeekEnd | ddSuffix}}</h3>
       <div class="box-total-hours-iteration">
         <img src="images/watch.png"/>
@@ -26,13 +22,11 @@
         <a href="{{ctrl.urlShare}}" target="_blank">{{ctrl.urlShare}}</a>
       </div>
     </div>
-    <div class="float-right section-change-iteration box-right-iteration" ng-class="{ disabled: !ctrl.showNext}"  ng-click="ctrl.changeNext()">
-      <a href>
-        <p>{{ctrl.nextWeekStart | dateSuffix}} - {{ctrl.nextWeekEnd | ddSuffix}}</p>
-        <img class="img-rotate-180" src="images/arrow-circle.png"/>
-      </a>
+    <div class="float-right section-change-iteration box-right-iteration" >
     </div>
+	
   </div>
+  
   <article ng-repeat="(date,timelogs) in ctrl.timelogsGroup">
     <div class="date-iteration date-single-iteration">
       {{ date | date:'EEEE, MM/dd' }}  

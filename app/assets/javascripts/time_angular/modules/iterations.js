@@ -56,10 +56,14 @@
     this.timelogsGroup = [];
     this.timelogs = [];
     this.timelog = undefined;
-    this.projectName = '';
-
+    
+	
+	var projectId = $routeParams.projectId;
+	this.project = projectCache.findProject(projectId);
+	
+    this.projectName = project.name;
     iterationsRepository.findIteration(iterationId, function(iteration, status, headers, config){
-      controller.findProjectByName(iteration.project_id);
+      //controller.findProjectByName(iteration.project_id);
       controller.initialize(iteration);
     });
 
@@ -71,17 +75,19 @@
 
     this.initialize = function(iteration){
       this.iteration=iteration;
+	  projectId = iteration.project_id;
+	  this.project = projectCache.findProject(projectId);
       minDate = $rootScope.UTCDate(iteration.start);
       maxDate = $rootScope.UTCDate(iteration.end_date || new Date());
       currentDate = minDate;
 
       this.currentWeekStart = this.calculateInterval(currentDate,1);
-      this.currentWeekEnd = this.calculateInterval(currentDate,7);
+      this.currentWeekEnd = this.calculateInterval(currentDate,700);
 
       nextWeek = this.calculateWeek(this.currentWeekStart,1); 
 
       this.nextWeekStart = this.calculateInterval(nextWeek,1);
-      this.nextWeekEnd = this.calculateInterval(nextWeek,7);
+      this.nextWeekEnd = this.calculateInterval(nextWeek,700);
 
       dateStart = this.dateFormat(this.currentWeekStart);
       dateEnd = this.dateFormat(this.currentWeekEnd);
@@ -99,7 +105,6 @@
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
         controller.timelogsGroup = timesGrouped;
         controller.timelogs = timelogs;
-        console.dir(timesGrouped);
       });
 
       this.setUrlToShare(dateStart, dateEnd);
@@ -123,8 +128,8 @@
           "longUrl": long_url
         },
         function(response){
-          //ctrl.urlShare = response.data.url;
-          this.shortlink = true;
+          controller.urlShare = response.data.url;
+          controller.shortlink = true;
         });
     }
 
@@ -221,7 +226,11 @@
       else{
         var value = 0;
         for (var i = timelogs.length - 1; i >= 0; i--) {
-          value += timelogs[i].time;
+		  if(timelogs[i].value_ajust == 0 || timelogs[i].value_ajust == undefined || timelogs[i].value_ajust == null){
+		  	value += timelogs[i].time;
+		  }else{
+		  	value += timelogs[i].value_ajust;
+		  }
         };
         return value;
       }

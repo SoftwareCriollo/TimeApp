@@ -9,7 +9,7 @@ class Api::IterationsController <  ApiController
   end
 
   def timelogs
-    @iteration = Iteration.find(params[:id]).timelogs.by_range(params[:date_1],params[:date_2])
+    @iteration = Iteration.find(params[:id]).timelogs
     render json: @iteration
   end
 
