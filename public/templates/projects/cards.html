@@ -55,7 +55,7 @@
           </div>
           <div class="form-time-log">
             <input class="half-size" type='number' min="0.0001" required float name="time" placeholder="Hours" ng-model="timelog.time" />
-            <input type="text" name="comment" placeholder="Notes - link to screenshot, screencast" ng-model='timelog.comment'/>
+            <textarea style='line-height: 1.5em; font-size: 17px; padding-top: 10px;' name="comment" placeholder="Notes - link to screenshot, screencast" ng-model='timelog.comment'/></textarea>
           </div>
         </article>
         <input type="submit" value="SAVE" class="btn-primary save-time-log" ng-disabled="!logTimeForm.$valid">
