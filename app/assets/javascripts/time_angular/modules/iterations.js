@@ -61,23 +61,18 @@
 	var projectId = $routeParams.projectId;
 	this.project = projectCache.findProject(projectId);
 	
-    this.projectName = project.name;
     iterationsRepository.findIteration(iterationId, function(iteration, status, headers, config){
       //controller.findProjectByName(iteration.project_id);
       controller.initialize(iteration);
     });
 
-    this.findProjectByName = function(projectId){
-      iterationsRepository.findProjectByName(projectId, function(projectName, status, headers, config){
-        controller.projectName = projectName;
-      });
-    }
+
 
     this.initialize = function(iteration){
       this.iteration=iteration;
 	  projectId = iteration.project_id;
 	  this.project = projectCache.findProject(projectId);
-
+      this.projectName = this.project.name;
       this.currentWeekEnd = $rootScope.UTCDate(iteration.end_date);
       this.currentWeekStart = $rootScope.UTCDate(iteration.start);
 
