@@ -32,7 +32,7 @@
       <h3>{{ctrl.start_date | dateSuffix}} - {{ctrl.end_date | dateSuffix}}</h3>
       <div class="box-total-hours-performance">
         <img src="images/watch.png"/>
-        <p>{{ctrl.totalWorked | number:1 | hours}}</p>
+        <span style='margin-left: 4px; top: -1px; position: relative;'>{{ctrl.totalWorked | number:1 | hours}}</span>		
         <hr class="underline-short-dark"/>
         <div class="loading-spinner" data-loading>
           <img src="images/ajax-loader.gif" />
