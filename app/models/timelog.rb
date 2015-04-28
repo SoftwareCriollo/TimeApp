@@ -60,7 +60,7 @@ class Timelog
   end
 
   def set_value_ajust
-    self.value_ajust = user.apprentice? ? time / 3 : time
+    self.value_ajust = user.time_for_user(time)
   end
 
   def time_worked
