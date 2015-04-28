@@ -314,7 +314,11 @@
 	    if(items[i].value_ajust == 0 || items[i].value_ajust == undefined || items[i].value_ajust == null){
 	  	  sum += items[i].time;
 	    }else{
-	  	  sum += items[i].value_ajust;
+		  if(window.location.hash == "#/performance"){
+		  	sum += items[i].time;
+		  }else{
+		  	sum += items[i].value_ajust;
+		  }   
 	    }		
       }
 
