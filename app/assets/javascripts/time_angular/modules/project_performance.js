@@ -163,6 +163,7 @@
 		 if (dateStart < card.due && card.due < dateEnd) {
 		   
 		   card["hours"] = 0.0;
+		   card["due"] = cleanDate(card["due"]);
 		   performanceRepository.setCard(project_id, card.id, dateStart, dateEnd)
 		   performanceRepository.get(function(timelogs){
 			   angular.forEach(timelogs, function(log, key){
@@ -185,6 +186,10 @@
 	  this.total = total;
 	  this.totalWorked = total["all"];
 	  return this.cards = maincards;
+	}
+	
+	function cleanDate(date){
+	  return date.substring(1, 10);
 	}
 	
 	function useTime(log){
