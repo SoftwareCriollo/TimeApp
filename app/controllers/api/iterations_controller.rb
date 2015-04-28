@@ -20,7 +20,6 @@ class Api::IterationsController <  ApiController
 
   def index
     @iterations = Iteration.by_project(params[:project_id])
-    @iterations.each{|i| i.update_dates}
     render json: @iterations
   end
 
