@@ -17,7 +17,7 @@
         <p ng-show="formIterations.start_date.$error.required  && formIterations.start_date.$dirty">The start date is required.</p>
       </div>
       <div class="field-form field-iterations float-left">
-        <input type="text" name="invoce" ng-model="ctrl.iteration.invoice" placeholder="Invoce #"/>
+        <input type="text" name="invoce" ng-model="ctrl.iteration.invoice" placeholder="Invoice #"/>
       </div>
       <div class="field-button-iterations">
         <input type="submit" value="SAVE" name="commit" class="btn-primary" ng-class="{ disabled: formIterations.$invalid }" ng-disabled="formIterations.$invalid" />
