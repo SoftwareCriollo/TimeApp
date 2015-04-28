@@ -162,7 +162,7 @@
           ctrl.setTitleReport += user.email+'  '
         });
       }else{
-        ctrl.setTitleReport += 'All Users  '
+        ctrl.setTitleReport += ''
       }
     }
 
