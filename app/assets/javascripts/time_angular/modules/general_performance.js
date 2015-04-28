@@ -63,7 +63,7 @@
     };
 
     this.runPeformance = function(urlData){
-      ctrl.initGitData(urlData);
+      //ctrl.initGitData(urlData);
       ctrl.getPerformance(urlData);
       ctrl.setUrlToShare(urlData); 
     };
@@ -139,7 +139,7 @@
         
       }
 
-      ctrl.getDataFromServer(urlData);
+      //ctrl.getDataFromServer(urlData);
       ctrl.setTitleReport(urlData); 
     };
 
@@ -204,8 +204,6 @@
     };
 
     this.filterClients = function(clients, urlData){
-      console.log(clients)
-      console.log(urlData)
       if (urlData.project_id){
         var client = {};
         $.each(clients, function(key, value) {
@@ -251,7 +249,7 @@
         }
       });
 
-      this.getDataFromGitLab(gitRepository, gitData);
+      //this.getDataFromGitLab(gitRepository, gitData);
     };
 
     this.getProjectIdFromGitLab = function(gitLabRoute, gitLabPrefix){

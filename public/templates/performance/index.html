@@ -87,10 +87,6 @@
           </form>
         </div>
       </div>
-      <div class="commits">
-        <h3>Commits</h3>
-        <a ng-if="date == item.date && timelogs[0].project_id == item.projectId" ng-repeat="item in ctrl.commits" href="{{item.route}}" target="_blank">{{item.date}} - {{item.title}}</a>
-      </div>
     </div>
     <hr class="underline-division"/>
   </article>
