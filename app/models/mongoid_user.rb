@@ -22,7 +22,7 @@ class MongoidUser
   field :last_sign_in_at,    type: Time
   field :current_sign_in_ip, type: String
   field :last_sign_in_ip,    type: String
-
+  
   field :token_authentication, type: String
 
   before_save do
@@ -34,9 +34,18 @@ class MongoidUser
     where(token_authentication: token).first
   end
 
-  def apprentice?
-    ["mariaalejandra@softwarecriollo.com", "jesus@softwarecriollo.com", "rafael@softwarecriollo.com"].include?(email)
-  end
+  def time_for_user(time)
+    if ["jhoynerk@softwarecriollo.com"].include?(email)
+      time / 3
+    elsif ["mariaalejandra@softwarecriollo.com"].include?(email)
+      ((time) / 3) * 2
+    elsif ["rafael@softwarecriollo.com", "genesis@softwarecriollo.com"].include?(email)
+      time / 2
+    else
+      time
+    end      
+  end  
+  
   def update_password(params)
     update(params)
     change_token
