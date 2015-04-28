@@ -20,9 +20,6 @@ class ProjectManager
     @organization.boards.select{|board| !board.closed?}.concat(especial_boards)
   end
 
-  ## Should return array like this
-  ## [ {name:"name card", id: "id_card", list_name: "the name in", list_id: 'id'}]
-
   def cards_by_board(board_id)
     @board = find_board(board_id)
     lists = allowed_lists(@board.lists)

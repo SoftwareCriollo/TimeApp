@@ -311,7 +311,11 @@
       var sum = 0;
 
       for (var i = 0; i<items.length; i++){
-        sum += items[i].time;
+	    if(items[i].value_ajust == 0 || items[i].value_ajust == undefined || items[i].value_ajust == null){
+	  	  sum += items[i].time;
+	    }else{
+	  	  sum += items[i].value_ajust;
+	    }		
       }
 
       if(date){
