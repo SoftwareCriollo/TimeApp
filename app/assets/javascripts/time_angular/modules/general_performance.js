@@ -159,7 +159,7 @@
 
       if (urlData.user_id !== undefined && urlData.user_id !== null){
         usersRepository.findUser(urlData.user_id, function(user, status, headers, config){
-          ctrl.setTitleReport += user.email+'  '
+          ctrl.setTitleReport += ''
         });
       }else{
         ctrl.setTitleReport += ''
