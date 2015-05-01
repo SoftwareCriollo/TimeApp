@@ -103,7 +103,7 @@
       timeLoggerRepository.setPrefixToShare();
       timeLoggerRepository.abstractUrlBuilder(urlData);
       ctrl.urlShare = timeLoggerRepository.route;
-      //ctrl.getShortUrl(ctrl.urlShare);
+      ctrl.getShortUrl(ctrl.urlShare);
     };
 
     this.getShortUrl = function(url){
@@ -118,14 +118,12 @@
           "longUrl": long_url
         },
         function(response){
-			
 			if(response.status_code != 500){
-	            ctrl.urlShare = response.data.url;
-	            ctrl.shortlink = true;	
+	            ctrl.urlShare = response.data.url;	
 			}else{
 				ctrl.urlShare = url;
-				trl.shortlink = true;	
 			}
+			ctrl.shortlink = true;	
         });
     } 
     

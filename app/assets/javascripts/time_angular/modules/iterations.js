@@ -112,8 +112,12 @@
           "longUrl": long_url
         },
         function(response){
-          controller.urlShare = response.data.url;
-          controller.shortlink = true;
+			if(response.status_code != 500){
+	            controller.urlShare = response.data.url;	
+			}else{
+				controller.urlShare = url;	
+			}
+			controller.shortlink = true;
         });
     }
 
