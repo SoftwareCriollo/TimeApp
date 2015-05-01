@@ -23,6 +23,7 @@
     this.timelog = {};
     this.cards = {};
     this.totalWorked = 0;
+	this.urlShare = ""
 
     this.projects = projectsCache.projects;
 
@@ -64,8 +65,9 @@
 
     this.runPeformance = function(urlData){
       //ctrl.initGitData(urlData);
+	  ctrl.setUrlToShare(urlData); 
       ctrl.getPerformance(urlData);
-      ctrl.setUrlToShare(urlData); 
+      
     };
 
     this.initGitData = function(urlData){
@@ -101,7 +103,7 @@
       timeLoggerRepository.setPrefixToShare();
       timeLoggerRepository.abstractUrlBuilder(urlData);
       ctrl.urlShare = timeLoggerRepository.route;
-      this.getShortUrl(ctrl.urlShare);
+      //ctrl.getShortUrl(ctrl.urlShare);
     };
 
     this.getShortUrl = function(url){
@@ -116,8 +118,14 @@
           "longUrl": long_url
         },
         function(response){
-          ctrl.urlShare = response.data.url;
-          ctrl.shortlink = true;
+			
+			if(response.status_code != 500){
+	            ctrl.urlShare = response.data.url;
+	            ctrl.shortlink = true;	
+			}else{
+				ctrl.urlShare = url;
+				trl.shortlink = true;	
+			}
         });
     } 
     
@@ -139,7 +147,7 @@
         
       }
 
-      //ctrl.getDataFromServer(urlData);
+      ctrl.getDataFromServer(urlData);
       ctrl.setTitleReport(urlData); 
     };
 
@@ -224,14 +232,13 @@
     };
 
     this.getTypeRepository = function(gitData){
-      console.log(gitData)
       var gitRepository = [];
       var gitRoute = '';
       var routeSize = '';
       var gitLabRoute = '';
       var gitLabPrefix = '';
       var gitLabProjectId = '';
-      
+      /*
       $.each(gitData.allClients, function(clientKey, clientValue) {
         if (clientValue.git){
           gitRoute = clientValue.git;
@@ -248,7 +255,7 @@
           });
         }
       });
-
+      */
       //this.getDataFromGitLab(gitRepository, gitData);
     };
 
