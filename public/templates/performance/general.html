@@ -37,11 +37,13 @@
       </p>
     </div>
     <div ng-repeat="timelog in projects" class="box-performance-edit performance-{{n}}" ng-init="ctrl.sum(timelog,date)">
-      <div class="card-performance card-performance-{{n}}" ng-class='{fullread: timelog.fullRead}'>
+      <div class="card-performance card-performance-{{n}} fullread">
         <div class="list-performance">
           <a ng-click="ctrl.editTimeEntry(timelog)" class="img-edit" ng-hide="ctrl.isEditing(timelog)"><img src="images/edit.png"/></a>
           <div class="name-task"> {{timelog.task_name}} </div>
-          <div class="note-task" ng-click='ctrl.toggleDisplay(timelog)'>Notes: <a> {{timelog.comment}} </a> </div>
+          <div class="note-task" ng-click='ctrl.toggleDisplay(timelog)' >
+              Notes: <p ng-bind-html='timelog.comment | autolink'></p>
+            </div>
           <div class="list-name-task" ng-init="ctrl.getListName(timelog)">
             <img src="images/circle.png" />
            {{ctrl.cards[timelog.task_id]}}
