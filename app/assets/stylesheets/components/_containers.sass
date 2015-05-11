@@ -56,6 +56,7 @@ body
 
 .card-performance
   @extend .card-task
+  vertical-align: top
   padding: 0.2em
   &:hover
     border: 1px solid $background-color-card
@@ -75,6 +76,7 @@ body
     overflow: hidden
     display: inline-block
   .note-task
+    vertical-align: top
     padding-bottom: 15px
     border-bottom: 1px solid $border-color-tertiary
     font-size: 0.6em
@@ -105,6 +107,18 @@ body
     width: 30%
     img
       width: 12px
+  &.fullread
+    height: calc(150px + 2.4em)
+    .note-task
+      a
+        width: calc(100% - 4em) !important
+        white-space: pre-line
+        max-height: 5em
+        display: inline-block
+        overflow-y: scroll
+        text-overflow: inherit
+
+
 
 .card-iteration
   @extend .card-performance

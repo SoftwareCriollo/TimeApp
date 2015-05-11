@@ -29,10 +29,10 @@
       </div>
       <div ng-repeat="timelog in timelogs" class="box-performance-edit performance-{{n}}">
 
-        <div class="card-performance card-performance-{{n}}">
+        <div class="card-performance card-performance-{{n}}" ng-class='{fullread: timelog.fullRead}'>
           <div class="list-performance">
             <div class="name-task"> {{timelog.task_name}} </div>
-            <div class="note-task">Notes: <a href> {{timelog.comment}}</a> </div>
+            <div class="note-task" ng-click='ctrl.toggleDisplay(timelog)'>Notes: <a href> {{timelog.comment}}</a> </div>
             <div class="list-name-task" ng-init="ctrl.getListName(timelog, name)">
               <img src="images/circle.png" />
              {{ctrl.cards[name][timelog.task_id]}}
