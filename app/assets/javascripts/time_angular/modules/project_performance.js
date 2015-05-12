@@ -27,6 +27,9 @@
       window.location= "/log-in";
       location.reload();
     };
+    this.toggleDisplay = function(timelog){
+      timelog.fullRead = !timelog.fullRead;
+    }
 
     var inizialize = function () {
       currentDate = new Date();
@@ -199,5 +202,5 @@
     inizialize();
 
   }]);
-
+  
 })();

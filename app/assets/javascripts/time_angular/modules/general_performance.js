@@ -33,6 +33,10 @@
       ctrl.users = users;
     });
 
+    this.toggleDisplay = function(timelog){
+      timelog.fullRead = !timelog.fullRead;
+    };
+
     this.logOut = function(){
       localStorage.clear();
       window.location= "/log-in";

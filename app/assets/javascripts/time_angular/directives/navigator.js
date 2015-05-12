@@ -42,5 +42,33 @@
       location.reload();
     };
   }]);
-  
+  app.filter('autolink', function(){
+
+    var urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi;
+
+    var normalize = function(arr){
+      var result = {};
+      if(arr == undefined || arr == null){
+        return [];
+      }
+      for (var i = 0, l = arr.length; i < l; i++) {
+        if (!result.hasOwnProperty(arr[i])) {
+          result[arr[i]] = arr[i];
+        }
+      }
+      return result;
+    };
+
+    return function(text, target){
+      if (text == null || text == undefined){
+        return text ;
+      }
+      angular.forEach(normalize(text.match(urlPattern)), function(url) {
+
+        text = text.replace(new RegExp(url, 'g'), '<a target="' + target + '" href="'+ url + '">' + url +'</a>');
+      });
+      return text;
+    };
+
+  });
 })();
