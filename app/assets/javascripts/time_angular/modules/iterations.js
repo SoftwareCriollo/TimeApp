@@ -214,11 +214,12 @@
       else{
         var value = 0;
         for (var i = timelogs.length - 1; i >= 0; i--) {
-		  if(timelogs[i].value_ajust == 0 || timelogs[i].value_ajust == undefined || timelogs[i].value_ajust == null){
-		  	value += timelogs[i].time;
-		  }else{
-		  	value += timelogs[i].value_ajust;
-		  }
+		  value += timelogs[i].time;
+		  //if(timelogs[i].value_ajust == 0 || timelogs[i].value_ajust == undefined || timelogs[i].value_ajust == null){
+		  //	
+		  //}else{
+		  //	value += timelogs[i].value_ajust;
+		  //}
         };
         return value;
       }
