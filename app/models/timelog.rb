@@ -1,7 +1,8 @@
 class Timelog
   include Filters
   include Mongoid::Document
-
+  include Mongoid::Timestamps
+  
   field :project_id, type: String
   field :project_name, type: String
   field :task_id, type: String
