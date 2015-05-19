@@ -17,7 +17,6 @@
 
     iterationsRepository.index(function(iterations, status, headers, config){
       controller.iterations = iterations;
-      console.dir(iterations);
     });
 
     this.SaveIteration = function(){
@@ -27,6 +26,22 @@
       function() {
         controller.error=true;      
       });
+    };
+
+    this.isEditing = function(iteration){
+      return this.iteration == iteration;
+    };
+
+    this.editTimeIteration = function(iteration) {
+      angular.element( document.getElementById(iteration._id.$oid ) ).removeClass("hide");
+      this.iteration=iteration;
+    };
+
+    this.editIteration = function() {
+      angular.element( document.getElementById(this.iteration._id.$oid ) ).addClass("hide");
+      //iterationsRepository.edit(this.iteration,function(){
+       // ctrl.iteration = undefined;
+      //});
     };
 
     this.clearForm = function(){
