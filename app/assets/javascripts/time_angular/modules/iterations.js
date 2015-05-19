@@ -11,6 +11,7 @@
 
     this.project = projectCache.findProject(projectId);
     this.iteration = new TimeApp.Iteration({project_id: projectId});
+    this.iterationEdit = new TimeApp.Iteration({project_id: projectId});
 
     iterationsRepository.setProjectId(this.project.id);
     this.iterations = [];
@@ -29,18 +30,20 @@
     };
 
     this.isEditing = function(iteration){
-      return this.iteration == iteration;
+      return this.iterationEdit == iteration;
     };
 
     this.editTimeIteration = function(iteration) {
-      angular.element( document.getElementById(iteration._id.$oid ) ).removeClass("hide");
-      this.iteration=iteration;
+      angular.element( document.getElementById('edit-'+iteration._id.$oid ) ).removeClass("hide");
+      $('#'+iteration._id.$oid).children(':first').hide();
+      this.iterationEdit=iteration;
     };
 
     this.editIteration = function() {
-      angular.element( document.getElementById(this.iteration._id.$oid ) ).addClass("hide");
+      angular.element( document.getElementById('edit-'+this.iterationEdit._id.$oid ) ).addClass("hide");
+      $('#'+this.iterationEdit._id.$oid).children(':first').show();
       //iterationsRepository.edit(this.iteration,function(){
-       // ctrl.iteration = undefined;
+       // ctrl.iterationEdit = undefined;
       //});
     };
 

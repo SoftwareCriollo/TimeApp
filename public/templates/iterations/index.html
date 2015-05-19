@@ -30,7 +30,8 @@
 </section>
 <hr class="underline-division">
 <section class="show-iterations cards-container">
-  <article ng-repeat="iteration in ctrl.iterations" class="iteration" data-iteration-id="{{ iteration._id.$oid }}">
+  <article ng-repeat="iteration in ctrl.iterations" class="iteration entry-time-iterations" id="{{ iteration._id.$oid }}">
+
     <div>
       <a ng-click="ctrl.editTimeIteration(iteration)" class="iteration-edit" ng-hide="ctrl.isEditing(iteration)">
         <img src="images/edit.png"/>
@@ -54,12 +55,12 @@
         </div>
         <a class="link-show-iteration float-right" href="#/iterations/{{iteration._id.$oid}}/entries">VIEW TIME ENTRIES</a>
       </div>
-    </div> 
-    <div id="{{iteration._id.$oid}}" class="edit-entries-performance hide">
+    </div>
+    <div id="edit-{{iteration._id.$oid}}" class="edit-iterations-performance hide">
       <form method="post" name="formEditTimeIterations" ng-submit="ctrl.editIteration()">
         <div class="form-time-entries edit-entries">
           <div class="field-form field-up">
-            <input type="number" step="0.1" min="0" name="time"  placeholder="Amount of hours:" required/>
+            <input type="number" step="0.1" min="0" name="time" placeholder="Amount of hours:" required/>
           </div>
           <div class="field-form field-down">
             <input type="date" name="start_date"  placeholder="Start date" required date-field />
