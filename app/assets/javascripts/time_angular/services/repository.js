@@ -142,8 +142,8 @@
       };
 
       this.edit = function(iteration,success_callback){
-        this.route = "/api/iterations";
-        repository.patch(this.patchRoute(iteration),{"iteration":iteration},success_callback);        
+        this.route = "/api/iterations/"+iteration["_id"]["$oid"];
+        repository.patch(this.route,{"iteration":iteration},success_callback);        
       };
 
       this.findIteration = function(iterationId, success_callback){

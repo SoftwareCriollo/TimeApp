@@ -6,7 +6,7 @@
   app.controller('IterationsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache','IterationsCache', function(iterationsRepository,$routeParams, currentUser,projectCache,iterationsCache){
     currentUser.isPendingAuth();
 
-    var controller = this;
+    var ctrl = this;
     var projectId = $routeParams.projectId;
 
     this.project = projectCache.findProject(projectId);
@@ -17,15 +17,15 @@
     this.iterations = [];
 
     iterationsRepository.index(function(iterations, status, headers, config){
-      controller.iterations = iterations;
+      ctrl.iterations = iterations;
     });
 
     this.SaveIteration = function(){
-      iterationsRepository.saveIterations(controller.iteration.toJsonToServer(), function() {
-        controller.clearForm();
+      iterationsRepository.saveIterations(ctrl.iteration.toJsonToServer(), function() {
+        ctrl.clearForm();
       },
       function() {
-        controller.error=true;      
+        ctrl.error=true;      
       });
     };
 
@@ -34,17 +34,22 @@
     };
 
     this.editTimeIteration = function(iteration) {
-      angular.element( document.getElementById('edit-'+iteration._id.$oid ) ).removeClass("hide");
+      $('#'+iteration._id.$oid ).find('#edit').removeClass("hide");
       $('#'+iteration._id.$oid).children(':first').hide();
+      console.log(iteration);
+      console.log('start: '+iteration.start);
+      var parts = iteration.start.split('-') ? iteration.start.split('-') : null;
+      iteration.start = parts ? new Date(parts[0], parts[1]-1, parts[2]) : iteration.start;
       this.iterationEdit=iteration;
     };
 
     this.editIteration = function() {
-      angular.element( document.getElementById('edit-'+this.iterationEdit._id.$oid ) ).addClass("hide");
+      $('#'+this.iterationEdit._id.$oid ).find('#edit').addClass("hide");
       $('#'+this.iterationEdit._id.$oid).children(':first').show();
-      //iterationsRepository.edit(this.iteration,function(){
-       // ctrl.iterationEdit = undefined;
-      //});
+      iterationsRepository.edit(this.iterationEdit,function(){
+        ctrl.iteration = ctrl.iterationEdit;
+        ctrl.iterationEdit = undefined;
+      });
     };
 
     this.clearForm = function(){
@@ -88,9 +93,9 @@
 	  if(this.project){
 		 controller.projectName = project.name;
 	  }else{
-         projectRepository.findProjectByName(projectId, function(pName, status, headers, config){
-           controller.projectName = pName;
-         });	
+      projectRepository.findProjectByName(projectId, function(pName, status, headers, config){
+        controller.projectName = pName;
+      });	
 	  }
 	  
       this.currentWeekEnd = $rootScope.UTCDate(iteration.end_date);
@@ -214,12 +219,12 @@
 
 
     this.editTimeEntry = function(timelog) {
-      angular.element( document.getElementById(timelog._id.$oid ) ).removeClass("hide");
+      $('#'+timelog._id.$oid ).removeClass("hide");
       this.timelog=timelog;
     };
 
     this.editTimelog = function() {
-      angular.element( document.getElementById(this.timelog._id.$oid ) ).addClass("hide");
+      $('#'+this.timelog._id.$oid).addClass("hide");
       timeLoggerRepository.edit(this.timelog,function(){
         controller.gettingEntries();
         controller.timelog = undefined;
