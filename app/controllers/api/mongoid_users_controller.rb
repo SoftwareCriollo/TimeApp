@@ -1,7 +1,7 @@
 class Api::MongoidUsersController <  ApiController
 
   def index
-    @users = MongoidUser.all
+    @users = MongoidUser.active_users
     render json: @users
   end
 
