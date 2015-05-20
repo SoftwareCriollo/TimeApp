@@ -36,10 +36,10 @@
     this.editTimeIteration = function(iteration) {
       $('#'+iteration._id.$oid ).find('#edit').removeClass("hide");
       $('#'+iteration._id.$oid).children(':first').hide();
-      console.log(iteration);
-      console.log('start: '+iteration.start);
-      var parts = iteration.start.split('-') ? iteration.start.split('-') : null;
-      iteration.start = parts ? new Date(parts[0], parts[1]-1, parts[2]) : iteration.start;
+      if(typeof iteration.start == "string"){
+        var parts = iteration.start.split('-') ? iteration.start.split('-') : null;
+        iteration.start = parts ? new Date(parts[0], parts[1]-1, parts[2]) : iteration.start;
+      }
       this.iterationEdit=iteration;
     };
 
@@ -47,7 +47,6 @@
       $('#'+this.iterationEdit._id.$oid ).find('#edit').addClass("hide");
       $('#'+this.iterationEdit._id.$oid).children(':first').show();
       iterationsRepository.edit(this.iterationEdit,function(){
-        ctrl.iteration = ctrl.iterationEdit;
         ctrl.iterationEdit = undefined;
       });
     };
