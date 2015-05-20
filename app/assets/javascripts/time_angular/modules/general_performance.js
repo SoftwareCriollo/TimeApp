@@ -38,27 +38,30 @@
     });
 
     var inizialize = function () {
-      currentDate = new Date();
-      var urlData = {};
-
-      ctrl.currentWeekStart = ctrl.calculateInterval(currentDate,1);
-      ctrl.currentWeekEnd = ctrl.calculateInterval(currentDate,7);
-
-      nextWeek = ctrl.calculateWeek(ctrl.currentWeekStart,1); 
-
-      ctrl.nextWeekStart = ctrl.calculateInterval(nextWeek,1);
-      ctrl.nextWeekEnd = ctrl.calculateInterval(nextWeek,7);
-
-      dateStart = ctrl.dateFormat(ctrl.currentWeekStart);
-      dateEnd = ctrl.dateFormat(ctrl.currentWeekEnd);
-
-      ctrl.previousWeekStart = ctrl.calculateWeek(ctrl.currentWeekStart,-1);
-      ctrl.previousWeekEnd = ctrl.calculateWeek(ctrl.currentWeekEnd,-1);
-
-      urlData.date_1 = ctrl.dateFormat(ctrl.currentWeekStart); 
-      urlData.date_2 = ctrl.dateFormat(ctrl.currentWeekEnd); 
-
-      ctrl.getPerformance(urlData);
+      if($location.path()=='/performance/general')
+      { 
+        currentDate = new Date();
+        var urlData = {};
+  
+        ctrl.currentWeekStart = ctrl.calculateInterval(currentDate,1);
+        ctrl.currentWeekEnd = ctrl.calculateInterval(currentDate,7);
+  
+        nextWeek = ctrl.calculateWeek(ctrl.currentWeekStart,1); 
+  
+        ctrl.nextWeekStart = ctrl.calculateInterval(nextWeek,1);
+        ctrl.nextWeekEnd = ctrl.calculateInterval(nextWeek,7);
+  
+        dateStart = ctrl.dateFormat(ctrl.currentWeekStart);
+        dateEnd = ctrl.dateFormat(ctrl.currentWeekEnd);
+  
+        ctrl.previousWeekStart = ctrl.calculateWeek(ctrl.currentWeekStart,-1);
+        ctrl.previousWeekEnd = ctrl.calculateWeek(ctrl.currentWeekEnd,-1);
+  
+        urlData.date_1 = ctrl.dateFormat(ctrl.currentWeekStart); 
+        urlData.date_2 = ctrl.dateFormat(ctrl.currentWeekEnd); 
+  
+        ctrl.getPerformance(urlData);
+      }
     } 
 
     this.changeNext = function(){
@@ -413,7 +416,6 @@
         
         this.total[date] += sum;
         this.totalWorked += sum;
-        console.log('totalWorked: '+this.totalWorked);
       }
 
       return sum;
