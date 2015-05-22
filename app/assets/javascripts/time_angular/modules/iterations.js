@@ -57,12 +57,12 @@
 
   }]);
 
-  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$rootScope', '$location', 'ProjectRepository', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$rootScope, $location, projectRepository){
+  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$scope' ,'$rootScope', '$location', 'ProjectRepository', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$scope,$rootScope, $location, projectRepository){
     if (/report/.test(window.location)==false){
       currentUser.isPendingAuth();
     }
   
-    var controller = this;
+    var ctrl = this;
     var iterationId = $routeParams.iterationId;
 
     var minDate = null;
@@ -77,11 +77,10 @@
 
     this.timelogsGroup = [];
     this.timelogs = [];
-    this.timelog = undefined;
-    
+    this.timelog = undefined;    
 	
     iterationsRepository.findIteration(iterationId, function(iteration, status, headers, config){
-      controller.initialize(iteration);
+      ctrl.initialize(iteration);
     });
 
     this.initialize = function(iteration){
@@ -90,10 +89,10 @@
 	  this.project = projectCache.findProject(projectId);
 	  
 	  if(this.project){
-		 controller.projectName = project.name;
+		  ctrl.projectName = project.name;
 	  }else{
       projectRepository.findProjectByName(projectId, function(pName, status, headers, config){
-        controller.projectName = pName;
+        ctrl.projectName = pName;
       });	
 	  }
 	  
@@ -109,8 +108,8 @@
 
       iterationsRepository.entries(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
-        controller.timelogsGroup = timesGrouped;
-        controller.timelogs = timelogs;
+        ctrl.timelogsGroup = timesGrouped;
+        ctrl.timelogs = timelogs;
       });
 
       this.setUrlToShare(dateStart, dateEnd);
@@ -118,8 +117,8 @@
 
     this.setUrlToShare = function(dateStart, dateEnd){
       iterationsRepository.setParametersToShare(dateStart, dateEnd);
-      controller.urlShare = iterationsRepository.route;
-      this.getShortUrl(controller.urlShare);
+      $scope.urlShare = "";
+      this.getShortUrl(iterationsRepository.route);
     };
 
     this.getShortUrl = function(url){
@@ -134,12 +133,13 @@
           "longUrl": long_url
         },
         function(response){
-			if(response.status_code != 500){
-	            controller.urlShare = response.data.url;	
-			}else{
-				controller.urlShare = url;	
-			}
-			controller.shortlink = true;
+          $scope.urlShare = response.data.url;  
+    			if(response.status_code != 500){
+            $scope.urlShare = response.data.url;	
+            console.log('url: '+$scope.urlShare);
+    			}else{
+            $scope.urlShare = url;	
+    			}
         });
     }
 
@@ -225,8 +225,8 @@
     this.editTimelog = function() {
       $('#'+this.timelog._id.$oid).addClass("hide");
       timeLoggerRepository.edit(this.timelog,function(){
-        controller.gettingEntries();
-        controller.timelog = undefined;
+        ctrl.gettingEntries();
+        ctrl.timelog = undefined;
       });
     };
 
