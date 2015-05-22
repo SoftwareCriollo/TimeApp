@@ -142,12 +142,12 @@
     };
 
     this.editTimeEntry = function(timelog) {
-      angular.element( document.getElementById(timelog._id.$oid ) ).removeClass("hide");
+      $('#'+timelog._id.$oid).removeClass("hide");
       this.timelog=timelog;
     };
 
     this.editTimelog = function() {
-      angular.element( document.getElementById(this.timelog._id.$oid ) ).addClass("hide");
+      $('#'+this.timelog._id.$oid).addClass("hide");
       timeLoggerRepository.edit(this.timelog,function(){
         ctrl.timelog = undefined;
       });
