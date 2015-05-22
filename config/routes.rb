@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       member do
         get :cards
       end
-      resources :iterations, only: [:create,:index, :show],shallow: true do
+      resources :iterations, only: [:create,:index, :show, :update],shallow: true do
         member do
           get 'timelogs'
           get 'performance'

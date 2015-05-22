@@ -6,26 +6,48 @@
   app.controller('IterationsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache','IterationsCache', function(iterationsRepository,$routeParams, currentUser,projectCache,iterationsCache){
     currentUser.isPendingAuth();
 
-    var controller = this;
+    var ctrl = this;
     var projectId = $routeParams.projectId;
 
     this.project = projectCache.findProject(projectId);
     this.iteration = new TimeApp.Iteration({project_id: projectId});
+    this.iterationEdit = new TimeApp.Iteration({project_id: projectId});
 
     iterationsRepository.setProjectId(this.project.id);
     this.iterations = [];
 
     iterationsRepository.index(function(iterations, status, headers, config){
-      controller.iterations = iterations;
-      console.dir(iterations);
+      ctrl.iterations = iterations;
     });
 
     this.SaveIteration = function(){
-      iterationsRepository.saveIterations(controller.iteration.toJsonToServer(), function() {
-        controller.clearForm();
+      iterationsRepository.saveIterations(ctrl.iteration.toJsonToServer(), function() {
+        ctrl.clearForm();
       },
       function() {
-        controller.error=true;      
+        ctrl.error=true;      
+      });
+    };
+
+    this.isEditing = function(iteration){
+      return this.iterationEdit == iteration;
+    };
+
+    this.editTimeIteration = function(iteration) {
+      $('#'+iteration._id.$oid ).find('#edit').removeClass("hide");
+      $('#'+iteration._id.$oid).children(':first').hide();
+      if(typeof iteration.start == "string"){
+        var parts = iteration.start.split('-') ? iteration.start.split('-') : null;
+        iteration.start = parts ? new Date(parts[0], parts[1]-1, parts[2]) : iteration.start;
+      }
+      this.iterationEdit=iteration;
+    };
+
+    this.editIteration = function() {
+      $('#'+this.iterationEdit._id.$oid ).find('#edit').addClass("hide");
+      $('#'+this.iterationEdit._id.$oid).children(':first').show();
+      iterationsRepository.edit(this.iterationEdit,function(){
+        ctrl.iterationEdit = undefined;
       });
     };
 
@@ -35,12 +57,12 @@
 
   }]);
 
-  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$rootScope', '$location', 'ProjectRepository', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$rootScope, $location, projectRepository){
+  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$scope' ,'$rootScope', '$location', 'ProjectRepository', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$scope,$rootScope, $location, projectRepository){
     if (/report/.test(window.location)==false){
       currentUser.isPendingAuth();
     }
   
-    var controller = this;
+    var ctrl = this;
     var iterationId = $routeParams.iterationId;
 
     var minDate = null;
@@ -55,11 +77,10 @@
 
     this.timelogsGroup = [];
     this.timelogs = [];
-    this.timelog = undefined;
-    
+    this.timelog = undefined;    
 	
     iterationsRepository.findIteration(iterationId, function(iteration, status, headers, config){
-      controller.initialize(iteration);
+      ctrl.initialize(iteration);
     });
 
     this.initialize = function(iteration){
@@ -68,11 +89,11 @@
 	  this.project = projectCache.findProject(projectId);
 	  
 	  if(this.project){
-		 controller.projectName = project.name;
+		  ctrl.projectName = project.name;
 	  }else{
-         projectRepository.findProjectByName(projectId, function(pName, status, headers, config){
-           controller.projectName = pName;
-         });	
+      projectRepository.findProjectByName(projectId, function(pName, status, headers, config){
+        ctrl.projectName = pName;
+      });	
 	  }
 	  
       this.currentWeekEnd = $rootScope.UTCDate(iteration.end_date);
@@ -87,8 +108,8 @@
 
       iterationsRepository.entries(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
-        controller.timelogsGroup = timesGrouped;
-        controller.timelogs = timelogs;
+        ctrl.timelogsGroup = timesGrouped;
+        ctrl.timelogs = timelogs;
       });
 
       this.setUrlToShare(dateStart, dateEnd);
@@ -96,29 +117,31 @@
 
     this.setUrlToShare = function(dateStart, dateEnd){
       iterationsRepository.setParametersToShare(dateStart, dateEnd);
-      controller.urlShare = iterationsRepository.route;
-      this.getShortUrl(controller.urlShare);
+      this.getShortUrl(iterationsRepository.route);
     };
 
     this.getShortUrl = function(url){
       var long_url = url;
       var login = "o_32g0fvedmb";
       var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
+      $scope.urlShare = "";  
 
       $.getJSON("https://api-ssl.bitly.com/v3/shorten?callback=?", { 
-          "format": "json",
-          "apiKey": api_key,
-          "login": login,
-          "longUrl": long_url
-        },
-        function(response){
-			if(response.status_code != 500){
-	            controller.urlShare = response.data.url;	
-			}else{
-				controller.urlShare = url;	
-			}
-			controller.shortlink = true;
+        "format": "json",
+        "apiKey": api_key,
+        "login": login,
+        "longUrl": long_url
+      },
+      function(response){
+        
+        $scope.$apply(function(){
+          if(response.status_code != 500){
+            $scope.urlShare = response.data.url;  
+          }else{
+            $scope.urlShare = data.url;  
+          } 
         });
+      });
     }
 
     this.getUrlToShare = function(){
@@ -196,15 +219,15 @@
 
 
     this.editTimeEntry = function(timelog) {
-      angular.element( document.getElementById(timelog._id.$oid ) ).removeClass("hide");
+      $('#'+timelog._id.$oid ).removeClass("hide");
       this.timelog=timelog;
     };
 
     this.editTimelog = function() {
-      angular.element( document.getElementById(this.timelog._id.$oid ) ).addClass("hide");
+      $('#'+this.timelog._id.$oid).addClass("hide");
       timeLoggerRepository.edit(this.timelog,function(){
-        controller.gettingEntries();
-        controller.timelog = undefined;
+        ctrl.gettingEntries();
+        ctrl.timelog = undefined;
       });
     };
 

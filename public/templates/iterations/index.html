@@ -30,18 +30,44 @@
 </section>
 <hr class="underline-division">
 <section class="show-iterations cards-container">
-  <article ng-repeat="iteration in ctrl.iterations" class="iteration" data-iteration-id="{{ iteration._id.$oid }}">
-    <div class='range-date'>
-      <div class="range-iteration">{{ UTCDate(iteration.start) | dateSuffix }} - {{iteration.end_date ? ( UTCDate(iteration.end_date) | dateSuffix ) : "Current" }}</div>
+  <article ng-repeat="iteration in ctrl.iterations" class="iteration entry-time-iterations" id="{{ iteration._id.$oid }}">
+
+    <div>
+      <a ng-click="ctrl.editTimeIteration(iteration)" class="iteration-edit" ng-hide="ctrl.isEditing(iteration)">
+        <img src="images/edit.png"/>
+      </a>
+      <div class='range-date'>
+        <div class="range-iteration">
+          {{ UTCDate(iteration.start) | dateSuffix }} - {{iteration.end_date ? ( UTCDate(iteration.end_date) | dateSuffix ) : "Current" }}
+        </div>
+      </div>
+      <div class="invoice-data">
+        <div class="inv-iteration float-left">
+          Inv#{{ iteration.invoice }}
+        </div>
+        <div class="hours-iteration float-right"> 
+          {{iteration.time_for_iteration}}/ {{ iteration.time }}
+        </div>
+      </div>
+      <div class='invoice-aditiona'>
+        <div class="number-iteration float-left"> 
+          {{ ctrl.iterations.length - $index }} 
+        </div>
+        <a class="link-show-iteration float-right" href="#/iterations/{{iteration._id.$oid}}/entries">VIEW TIME ENTRIES</a>
+      </div>
     </div>
-    <div class="invoice-data">
-      <div class="inv-iteration float-left">Inv#{{ iteration.invoice }}</div>
-      <div class="hours-iteration float-right"> {{iteration.time_for_iteration}}/ {{ iteration.time }}</div>
+    <div id="edit" class="edit-iterations-performance hide">
+      <form method="post" name="formEditTimeIterations" ng-submit="ctrl.editIteration()">
+        <div class="form-time-entries edit-entries">
+          <div class="field-form field-up">
+            <input type="number" step="0.1" min="0" name="time" ng-model="ctrl.iterationEdit.time"placeholder="Amount of hours:" required/>
+          </div>
+          <div class="field-form field-down">
+            <input type="date" name="start_date" ng-model="ctrl.iterationEdit.start" placeholder="Start date" required date-field />
+          </div>
+        </div>
+        <input type="submit" value="SAVE" class="btn-primary" />
+      </form>
     </div>
-    <div class='invoice-aditiona'>
-    <div class="number-iteration float-left"> {{ ctrl.iterations.length - $index }} </div>
-    <a class="link-show-iteration float-right" href="#/iterations/{{iteration._id.$oid}}/entries">VIEW TIME ENTRIES</a>
-      
-    </div> 
   </article>
 </section>

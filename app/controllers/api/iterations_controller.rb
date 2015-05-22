@@ -13,6 +13,15 @@ class Api::IterationsController <  ApiController
     render json: @iteration
   end
 
+  def update
+    @iteration = Iteration.find(params[:id])
+    if @iteration.update(iteration_params)
+      render json: @iteration, status: 201, notice: "Successfully updated Iteration"
+    else
+      render json: @iteration.errors.messages, status: 422
+    end
+  end
+
   def show
     @iteration = Iteration.find(params[:id])
     render json: @iteration
