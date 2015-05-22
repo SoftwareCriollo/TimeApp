@@ -142,13 +142,17 @@
           } 
         });
       });
-    }
+    };
 
     this.getUrlToShare = function(){
       var dateStart = $location.search().date_1; 
       var dateEnd = $location.search().date_2; 
 
       this.gettingEntries(dateStart, dateEnd);
+    };
+
+    this.toggleDisplay = function(timelog){
+      timelog.fullRead = !timelog.fullRead;
     };
 
     this.dateFormat = function(date) {
