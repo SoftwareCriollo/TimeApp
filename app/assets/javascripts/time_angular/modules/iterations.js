@@ -138,7 +138,7 @@
           if(response.status_code != 500){
             $scope.urlShare = response.data.url;  
           }else{
-            $scope.urlShare = data.url;  
+            $scope.urlShare = url;  
           } 
         });
       });
