@@ -117,7 +117,6 @@
 
     this.setUrlToShare = function(dateStart, dateEnd){
       iterationsRepository.setParametersToShare(dateStart, dateEnd);
-      $scope.urlShare = "";
       this.getShortUrl(iterationsRepository.route);
     };
 
@@ -125,22 +124,24 @@
       var long_url = url;
       var login = "o_32g0fvedmb";
       var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
+      $scope.urlShare = "";  
 
       $.getJSON("https://api-ssl.bitly.com/v3/shorten?callback=?", { 
-          "format": "json",
-          "apiKey": api_key,
-          "login": login,
-          "longUrl": long_url
-        },
-        function(response){
-          $scope.urlShare = response.data.url;  
-    			if(response.status_code != 500){
-            $scope.urlShare = response.data.url;	
-            console.log('url: '+$scope.urlShare);
-    			}else{
-            $scope.urlShare = url;	
-    			}
+        "format": "json",
+        "apiKey": api_key,
+        "login": login,
+        "longUrl": long_url
+      },
+      function(response){
+        
+        $scope.$apply(function(){
+          if(response.status_code != 500){
+            $scope.urlShare = response.data.url;  
+          }else{
+            $scope.urlShare = data.url;  
+          } 
         });
+      });
     }
 
     this.getUrlToShare = function(){

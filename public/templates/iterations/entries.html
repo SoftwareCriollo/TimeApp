@@ -19,7 +19,7 @@
         {{ctrl.total(ctrl.timelogs) | number:1 | hours}}
         <hr class="underline-short-dark"/>
         <img src="images/url.png"><b>Url to share: </b>
-        <a href="{{urlShare}}" target="_blank" >{{ urlShare }}</a>
+        <a href="{{urlShare}}" target="_blank" ng-bind="urlShare" ></a>
       </div>
     </div>
     <div class="float-right section-change-iteration box-right-iteration" >
