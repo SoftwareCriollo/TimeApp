@@ -62,8 +62,9 @@
           <div class="field-form field-up">
             <input type="number" step="0.1" min="0" name="time" ng-model="ctrl.iterationEdit.time"placeholder="Amount of hours:" required/>
           </div>
-          <div class="field-form field-down">
+          <div class="field-form fields-down">
             <input type="date" name="start_date" ng-model="ctrl.iterationEdit.start" placeholder="Start date" required date-field />
+            <input type="text" name="invoce" ng-model="ctrl.iterationEdit.invoice" placeholder="Invoice #"/>
           </div>
         </div>
         <input type="submit" value="SAVE" class="btn-primary" />

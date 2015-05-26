@@ -99,7 +99,7 @@
       })
       .when('/performance/general', {
         templateUrl: 'templates/performance/general.html',
-        controller: 'PerformanceController',
+        controller: 'GeneralPerformanceController',
         controllerAs: 'ctrl'
       })
       .when('/performance/project/:projectId', {

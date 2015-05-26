@@ -44,7 +44,7 @@
       </div>
     </div>
   </div>
-  <article  ng-repeat="(date,projects) in ctrl.projectsGroup">
+  <article ng-repeat="(date,projects) in ctrl.projectsGroup">
     <div class="date-performance">
       {{ date | date:'EEEE, MM/dd' }} - 
       <p>{{ctrl.total[date] | number:1 | hours}}</p>
