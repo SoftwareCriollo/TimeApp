@@ -5,7 +5,7 @@
 
   app.controller('GeneralPerformanceController',['CurrentUser', 'ProjectCache', 'ClientsCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', 'ProjectRepository', '$location', function(currentUser, projectsCache, clientsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, projectRepository, $location){
 
-    if (/report/.test(window.location)==false){
+    if (window.location.href.indexOf("report")==-1){
       currentUser.isPendingAuth();
     }else{
       $('div.header a').removeAttr('href');
