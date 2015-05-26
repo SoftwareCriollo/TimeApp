@@ -187,28 +187,28 @@
     }]);
 	
     $provide.factory('PerformanceRepository',["Repository",function(repository){
-        this.route = undefined;
-        this.projectId = undefined;
-		this.cardId = undefined;
-		this.dateStart = undefined
-		this.dateEnd = undefined
+      this.route = undefined;
+      this.projectId = undefined;
+  		this.cardId = undefined;
+  		this.dateStart = undefined
+  		this.dateEnd = undefined
 		
-        this.setCard = function(projectId, cardId, dateStart, dateEnd){
-          this.projectId = projectId;
-		  this.cardId = cardId;
-		  this.dateStart = dateStart;
-		  this.dateEnd = dateEnd;
-		  
-          this.route = '/api/projects/' + projectId + '/card/' + cardId + '/logs?date_start='+ dateStart + '&date_end=' + dateEnd;
-        };
+      this.setCard = function(projectId, cardId, dateStart, dateEnd){
+        this.projectId = projectId;
+  		  this.cardId = cardId;
+  		  this.dateStart = dateStart;
+  		  this.dateEnd = dateEnd;
+  		  
+        this.route = '/api/projects/' + projectId + '/card/' + cardId + '/logs?date_start='+ dateStart + '&date_end=' + dateEnd;
+      };
 		
-        this.get = function(success_callback){
-          if( this.projectId === undefined)
-            console.error("You must set projectId");
-          else
-            repository.get(this.route,success_callback);
-        } 
-        return this;		
+      this.get = function(success_callback){
+        if( this.projectId === undefined)
+          console.error("You must set projectId");
+        else
+          repository.get(this.route,success_callback);
+      } 
+      return this;		
     }]);
 	
     $provide.factory('CardRepository',["Repository",function(repository) {

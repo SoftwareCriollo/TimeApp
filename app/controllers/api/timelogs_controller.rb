@@ -1,4 +1,5 @@
 class Api::TimelogsController <  ApiAuthenticatedController
+  skip_before_action :restrict_access, :only => [:index]
 
   def create
     @timelogs = TimeLogger.new(current_user)

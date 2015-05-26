@@ -5,13 +5,17 @@
 
   app.controller('GeneralPerformanceController',['CurrentUser', 'ProjectCache', 'ClientsCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', 'ProjectRepository', '$location', function(currentUser, projectsCache, clientsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, projectRepository, $location){
 
-    if (/report/.test(window.location)==false){
+    if (window.location.href.indexOf("report")==-1){
       currentUser.isPendingAuth();
     }else{
       $('div.header a').removeAttr('href');
     }
     
     var ctrl = this; 
+    var currentDate = null;
+    var nextWeek = null; 
+    var dateStart = null;
+    var dateEnd = null;
 
     this.users = {};
     this.commits = {};
@@ -23,7 +27,7 @@
     this.timelog = {};
     this.cards = {};
     this.totalWorked = 0;
-	this.urlShare = ""
+	  this.urlShare = ""
 
     this.projects = projectsCache.projects;
 
@@ -32,6 +36,87 @@
     usersRepository.getUsers(function(users, status, headers, config){
       ctrl.users = users;
     });
+
+    var inizialize = function () {
+      if($location.path()=='/performance/general')
+      { 
+        currentDate = new Date();
+        var urlData = {};
+  
+        ctrl.currentWeekStart = ctrl.calculateInterval(currentDate,1);
+        ctrl.currentWeekEnd = ctrl.calculateInterval(currentDate,7);
+  
+        nextWeek = ctrl.calculateWeek(ctrl.currentWeekStart,1); 
+  
+        ctrl.nextWeekStart = ctrl.calculateInterval(nextWeek,1);
+        ctrl.nextWeekEnd = ctrl.calculateInterval(nextWeek,7);
+  
+        dateStart = ctrl.dateFormat(ctrl.currentWeekStart);
+        dateEnd = ctrl.dateFormat(ctrl.currentWeekEnd);
+  
+        ctrl.previousWeekStart = ctrl.calculateWeek(ctrl.currentWeekStart,-1);
+        ctrl.previousWeekEnd = ctrl.calculateWeek(ctrl.currentWeekEnd,-1);
+  
+        urlData.date_1 = ctrl.dateFormat(ctrl.currentWeekStart); 
+        urlData.date_2 = ctrl.dateFormat(ctrl.currentWeekEnd); 
+  
+        ctrl.getPerformance(urlData);
+      }
+    } 
+
+    this.changeNext = function(){
+      var urlData = {};
+
+      this.previousWeekStart = this.currentWeekStart;
+      this.previousWeekEnd = this.currentWeekEnd;
+
+      this.currentWeekStart = this.nextWeekStart;
+      this.currentWeekEnd = this.nextWeekEnd;
+
+      urlData.date_1 = this.dateFormat(this.currentWeekStart); 
+      urlData.date_2 = this.dateFormat(this.currentWeekEnd);
+
+      ctrl.getPerformance(urlData);
+
+      dateStart = this.dateFormat(this.currentWeekStart);
+      dateEnd = this.dateFormat(this.currentWeekEnd);
+
+      nextWeek = this.calculateWeek(this.currentWeekStart,1); 
+
+      this.nextWeekStart = this.calculateInterval(nextWeek, 1);
+      this.nextWeekEnd = this.calculateInterval(nextWeek, 7);
+    
+    }
+
+    this.changePrevious = function(){
+      var urlData = {};
+
+      this.nextWeekStart = this.currentWeekStart;
+      this.nextWeekEnd = this.currentWeekEnd;
+
+      this.currentWeekStart = this.previousWeekStart;
+      this.currentWeekEnd = this.previousWeekEnd;
+
+      urlData.date_1 = this.dateFormat(this.currentWeekStart); 
+      urlData.date_2 = this.dateFormat(this.currentWeekEnd);
+
+      ctrl.getPerformance(urlData);
+
+      dateStart = this.dateFormat(this.currentWeekStart);
+      dateEnd = this.dateFormat(this.currentWeekEnd);
+
+      this.previousWeekStart = this.calculateWeek(this.currentWeekStart,-1);
+      this.previousWeekEnd = this.calculateWeek(this.currentWeekEnd,-1);
+    }
+
+
+    this.calculateInterval = function(date, plus){
+      return new Date(date.setDate(date.getDate() - date.getDay() + plus));
+    }
+
+    this.calculateWeek=function(date, sign){
+      return new Date(date.getTime() + (7*sign) * 24 * 60 * 60 * 1000);
+    }
 
     this.toggleDisplay = function(timelog){
       timelog.fullRead = !timelog.fullRead;
@@ -69,7 +154,7 @@
 
     this.runPeformance = function(urlData){
       //ctrl.initGitData(urlData);
-	  ctrl.setUrlToShare(urlData); 
+	    ctrl.setUrlToShare(urlData); 
       ctrl.getPerformance(urlData);
       
     };
@@ -92,7 +177,7 @@
 
       timeLoggerRepository.get(function(timelogs, status, headers, config){
         var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
-        
+
         for(var time in timesGrouped)
         {
           ctrl.sum(timesGrouped[time],time);
@@ -377,6 +462,8 @@
           this.cards[name][timelog.task_id]="DONE";
       }
     };
+
+    inizialize();
 
   }]);
 
