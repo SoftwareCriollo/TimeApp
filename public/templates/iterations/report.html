@@ -30,10 +30,12 @@
       </p>
     </div>
     <div ng-repeat="timelog in timelogs" class="entry-time-iterations">
-      <div class="card-iteration">
+      <div class="card-iteration fullread">
         <div class="list">
           <div class="name-task">{{timelog.task_name}}</div>
-          <div class="note-task">Notes: <a href> {{timelog.comment}}</a> </div>
+          <div class="note-task" ng-click='ctrl.toggleDisplay(timelog)' >
+              Notes: <p ng-bind-html='timelog.comment | autolink'></p>
+            </div>
           <div class="list-name-task">
             <img src="images/circle.png" /> DONE
           </div>
