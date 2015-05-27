@@ -4,7 +4,7 @@
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
 
-  app.controller('PerformanceController',['$routeParams','CurrentUser','ProjectCache', 'CardsCache', 'TimeLoggerRepository', 'PerformanceRepository', function($routeParams, currentUser, projectCache, cardsCache, timeLoggerRepository, performanceRepository){
+  app.controller('PerformanceController',['$routeParams','CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'PerformanceRepository', function($routeParams, currentUser, projectCache, cardsCache, cardRepository, timeLoggerRepository, performanceRepository){
 
     var ctrl = this;
     var projectId = $routeParams.projectId;
@@ -51,11 +51,7 @@
 
       urlData.date_1 = ctrl.dateFormat(ctrl.currentWeekStart); 
       urlData.date_2 = ctrl.dateFormat(ctrl.currentWeekEnd); 
-
-      if (projectId !== undefined && projectId !== null){
-        urlData.project_id = projectId; 
-      }
-
+      
       ctrl.getPerformance(urlData);
     } 
 
@@ -73,10 +69,6 @@
 
       urlData.date_1 = this.dateFormat(this.currentWeekStart); 
       urlData.date_2 = this.dateFormat(this.currentWeekEnd);
-
-      if (projectId !== undefined && projectId !== null){
-        urlData.project_id = projectId; 
-      } 
 
       ctrl.getPerformance(urlData);
 
@@ -105,10 +97,6 @@
 
       ctrl.getPerformance(urlData);
 
-      if (projectId !== undefined && projectId !== null){
-        urlData.project_id = projectId; 
-      } 
-	  
       dateStart = this.dateFormat(this.currentWeekStart);
       dateEnd = this.dateFormat(this.currentWeekEnd);
 
@@ -119,6 +107,8 @@
     this.getPerformance = function(urlData){
       this.total = {};
       this.totalWorked =0;
+
+      urlData.project_id = projectId;
 
       ctrl.setUrlToShare(urlData);
 

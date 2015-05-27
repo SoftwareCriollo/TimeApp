@@ -42,7 +42,7 @@
           {{ctrl.sum(timelogs) | number:1 | hours}}
         </p>
       </div>
-  	  <div class="box-performance-edit performance-" ng-repeat="card in value">
+  	  <div class="box-performance-edit performance-" ng-repeat="timelog in timelogs">
         <div class="card-performance card-performance-{{n}}" >
           <div class="list-performance">
             <div class="name-task"> {{timelog.task_name}} </div>
