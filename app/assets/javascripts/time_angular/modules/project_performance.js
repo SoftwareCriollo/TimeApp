@@ -4,7 +4,7 @@
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
 
-  app.controller('PerformanceController',['$routeParams','CurrentUser','ProjectCache', 'CardsCache', 'TimeLoggerRepository', 'PerformanceRepository', function($routeParams, currentUser, projectCache, cardsCache, timeLoggerRepository, performanceRepository){
+  app.controller('PerformanceController',['$routeParams', '$location','CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'PerformanceRepository', function($routeParams, $location, currentUser, projectCache, cardsCache, cardRepository, timeLoggerRepository, performanceRepository){
 
     var ctrl = this;
     var projectId = $routeParams.projectId;
@@ -21,6 +21,7 @@
     this.total = {};
     this.cards = {};
     this.totalWorked = 0;
+    this.general = false;
 
     this.logOut = function(){
       localStorage.clear();
@@ -34,6 +35,9 @@
     var inizialize = function () {
       currentDate = new Date();
       var urlData = {};
+
+      if($location.path()=='/performance/general')
+        ctrl.general = true;
 
       ctrl.currentWeekStart = ctrl.calculateInterval(currentDate,1);
       ctrl.currentWeekEnd = ctrl.calculateInterval(currentDate,7);
@@ -51,19 +55,10 @@
 
       urlData.date_1 = ctrl.dateFormat(ctrl.currentWeekStart); 
       urlData.date_2 = ctrl.dateFormat(ctrl.currentWeekEnd); 
-
-      if (projectId !== undefined && projectId !== null){
-        urlData.project_id = projectId; 
-      }
-
-      timeLoggerRepository.setPrefixToBackend();
-      timeLoggerRepository.abstractUrlBuilder(urlData);
-
-      timeLoggerRepository.get(function(timelogs, status, headers, config){
-        var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
-        ctrl.projectsGroup = timesGrouped;
-      });
+      
+      ctrl.getPerformance(urlData);
     } 
+
 
     this.changeNext = function(){
       this.totalWorked = 0;
@@ -79,9 +74,7 @@
       urlData.date_1 = this.dateFormat(this.currentWeekStart); 
       urlData.date_2 = this.dateFormat(this.currentWeekEnd);
 
-      if (projectId !== undefined && projectId !== null){
-        urlData.project_id = projectId; 
-      } 
+      ctrl.getPerformance(urlData);
 
       dateStart = this.dateFormat(this.currentWeekStart);
       dateEnd = this.dateFormat(this.currentWeekEnd);
@@ -90,8 +83,6 @@
 
       this.nextWeekStart = this.calculateInterval(nextWeek, 1);
       this.nextWeekEnd = this.calculateInterval(nextWeek, 7);
-	  
-	  this.loadCards(projectId);
     }
 
     this.changePrevious = function(){
@@ -108,17 +99,68 @@
       urlData.date_1 = this.dateFormat(this.currentWeekStart); 
       urlData.date_2 = this.dateFormat(this.currentWeekEnd);
 
-      if (projectId !== undefined && projectId !== null){
-        urlData.project_id = projectId; 
-      } 
-	  
+      ctrl.getPerformance(urlData);
+
       dateStart = this.dateFormat(this.currentWeekStart);
       dateEnd = this.dateFormat(this.currentWeekEnd);
 
       this.previousWeekStart = this.calculateWeek(this.currentWeekStart,-1);
       this.previousWeekEnd = this.calculateWeek(this.currentWeekEnd,-1);
-	  
-	  this.loadCards(projectId);
+    }
+
+    this.getPerformance = function(urlData){
+      this.total = {};
+      this.totalWorked =0;
+      ctrl.projectsGroup = undefined;
+
+      if(!ctrl.general)
+        urlData.project_id = projectId;
+
+      ctrl.setUrlToShare(urlData);
+
+      timeLoggerRepository.setPrefixToBackend();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
+
+      timeLoggerRepository.get(function(timelogs, status, headers, config){
+        var timesGrouped = new TimeApp.FieldGrouper(timelogs).group_by('fecha');
+
+        for(var time in timesGrouped)
+        {
+          ctrl.sum(timesGrouped[time],time);
+          if(ctrl.general)
+            timesGrouped[time]= new TimeApp.FieldGrouper(timesGrouped[time]).group_by('project_name');
+        }
+        ctrl.projectsGroup = timesGrouped;
+      });
+
+    };
+
+    this.setUrlToShare = function(urlData){
+      timeLoggerRepository.setPrefixToShare();
+      timeLoggerRepository.abstractUrlBuilder(urlData);
+      ctrl.urlShare = timeLoggerRepository.route;
+      ctrl.getShortUrl(ctrl.urlShare);
+    };
+
+    this.getShortUrl = function(url){
+      var long_url = url;
+      var login = "o_32g0fvedmb";
+      var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
+
+      $.getJSON("https://api-ssl.bitly.com/v3/shorten?callback=?", { 
+          "format": "json",
+          "apiKey": api_key,
+          "login": login,
+          "longUrl": long_url
+        },
+        function(response){
+      if(response.status_code != 500){
+        ctrl.urlShare = response.data.url;  
+      }else{
+        ctrl.urlShare = url;
+      }
+      ctrl.shortlink = true;  
+        });
     }
 
 
@@ -153,43 +195,52 @@
       });
     };
 
-    this.getListName = function(timelog){
+    this.getListName = function(timelog,name){
+
+      if(!this.cards[name])
+      {
+        this.cards[name]={};
+        var projectId=timelog.project_id;
+        cardRepository.setProjectId(projectId);
+        cardRepository.get(function(cards, status, headers, config){  
+          cardsCache.saveCards(projectId,cards);
+        });
+      }
+
+      if(!this.cards[name][timelog.task_id])
+        this.cards[name][timelog.task_id]="";
+
+      if(this.cards[name][timelog.task_id]=="")
+      {
+        var card = cardsCache.findCard(timelog.project_id,timelog.task_id);
+        if(card)
+          this.cards[name][timelog.task_id]=card.list_name;
+        else
+          this.cards[name][timelog.task_id]="DONE";
+      }
     };
 	
-	
-	this.loadCards = function(project_id){
-	  var maincards = []
-	  var total = {}
-	  total["all"] = 0
-	  var cachedCards = cardsCache.getCardsByProjectId(project_id)
-	  angular.forEach(cachedCards, function(card, key) {
-		 if (dateStart < card.due && card.due < dateEnd) {
-		   
-		   card["hours"] = 0.0;
-		   card["due"] = cleanDate(card["due"]);
-		   performanceRepository.setCard(project_id, card.id, dateStart, dateEnd)
-		   performanceRepository.get(function(timelogs){
-			   angular.forEach(timelogs, function(log, key){
-				 if(useTime(log)){
-				   card["hours"] += parseFloat(log.time);
-				 }else{
-			   	   card["hours"] += parseFloat(log.value_ajust);
-				 }
-			   });
-	           if(!total[card.due])
-	             total[card.due] = 0;
-	           total[card.due] += card["hours"];
-	           total["all"] += card["hours"];
-		   });
-		   
-		   this.push(card);
+    this.sum = function(items,date){
+      var sum = 0;
 
-		 }
-	  }, maincards);
-	  this.total = total;
-	  this.totalWorked = total["all"];
-	  return this.cards = maincards;
-	}
+      for (var i = 0; i<items.length; i++){
+      if(items[i].value_ajust == 0 || items[i].value_ajust == undefined || items[i].value_ajust == null){
+        sum += items[i].time;
+      }else{
+      sum += items[i].time;
+      }   
+      }
+
+      if(date){
+        if(!this.total[date])
+          this.total[date] = 0;
+        
+        this.total[date] += sum;
+        this.totalWorked += sum;
+      }
+
+      return sum;
+    };
 	
 	function cleanDate(date){
 	  return date.substring(1, 10);

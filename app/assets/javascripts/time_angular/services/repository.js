@@ -51,9 +51,9 @@
       };
 
       this.setPrefixToShare = function(){
-        this.route = window.location+"/report/?";
+        this.route = window.location.origin+"/#/performance/report/?";
       };
-          
+
       this.abstractUrlBuilder = function(urlData){
         var results = [];
         for(attr in urlData){
@@ -162,17 +162,8 @@
       }
 
       this.setParametersToShare = function(date_start, date_end){
-        var url = this.getBaseUrl();
-        this.route = url+"/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
+        this.route = window.location.origin+"/#/iterations/"+this.iterationId+"/entries/report/?date_1="+date_start+"&date_2="+date_end;
       };
-
-      this.getBaseUrl = function(){
-        var pathArray = location.href.split( '/' );
-        var protocol = pathArray[0];
-        var host = pathArray[2];
-        var url = protocol + '//' + host;
-        return url;
-      }
 
       this.entries = function(success_callback){
 
