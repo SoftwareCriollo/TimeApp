@@ -4,7 +4,7 @@
   var app = angular.module('timeFrontendApp-performance',['CacheStore'])
 
 
-  app.controller('PerformanceController',['$routeParams','CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'PerformanceRepository', function($routeParams, currentUser, projectCache, cardsCache, cardRepository, timeLoggerRepository, performanceRepository){
+  app.controller('PerformanceController',['$routeParams', '$location','CurrentUser','ProjectCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'PerformanceRepository', function($routeParams, $location, currentUser, projectCache, cardsCache, cardRepository, timeLoggerRepository, performanceRepository){
 
     var ctrl = this;
     var projectId = $routeParams.projectId;
@@ -21,6 +21,7 @@
     this.total = {};
     this.cards = {};
     this.totalWorked = 0;
+    this.general = false;
 
     this.logOut = function(){
       localStorage.clear();
@@ -34,6 +35,9 @@
     var inizialize = function () {
       currentDate = new Date();
       var urlData = {};
+
+      if($location.path()=='/performance/general')
+        ctrl.general = true;
 
       ctrl.currentWeekStart = ctrl.calculateInterval(currentDate,1);
       ctrl.currentWeekEnd = ctrl.calculateInterval(currentDate,7);
@@ -108,7 +112,11 @@
       this.total = {};
       this.totalWorked =0;
 
-      urlData.project_id = projectId;
+      if(!ctrl.general)
+      {
+        console.log('entro');
+        urlData.project_id = projectId;
+      }
 
       ctrl.setUrlToShare(urlData);
 
@@ -121,8 +129,10 @@
         for(var time in timesGrouped)
         {
           ctrl.sum(timesGrouped[time],time);
+          if(ctrl.general)
+            timesGrouped[time]= new TimeApp.FieldGrouper(timesGrouped[time]).group_by('project_name');
         }
-        ctrl.timesGrouped = timesGrouped;
+        ctrl.projectsGroup = timesGrouped;
       });
 
     };
