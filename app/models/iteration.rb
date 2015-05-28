@@ -9,8 +9,8 @@ class Iteration
   field :invoice, type: Integer
 
   validates_presence_of :start, :time
-  validates_numericality_of :time
-
+  validates_numericality_of :time, :greater_than => 1.0
+  
   scope :by_project, ->(project_id) { where(:project_id => project_id).order_by(:start.desc) }
   scope :closed, -> {where(end_date: nil)}
   
