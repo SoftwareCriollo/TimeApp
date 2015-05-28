@@ -111,6 +111,7 @@
     this.getPerformance = function(urlData){
       this.total = {};
       this.totalWorked =0;
+      ctrl.projectsGroup = undefined;
 
       if(!ctrl.general)
         urlData.project_id = projectId;
