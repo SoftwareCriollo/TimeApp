@@ -113,10 +113,7 @@
       this.totalWorked =0;
 
       if(!ctrl.general)
-      {
-        console.log('entro');
         urlData.project_id = projectId;
-      }
 
       ctrl.setUrlToShare(urlData);
 
@@ -157,7 +154,7 @@
         },
         function(response){
       if(response.status_code != 500){
-              ctrl.urlShare = response.data.url;  
+        ctrl.urlShare = response.data.url;  
       }else{
         ctrl.urlShare = url;
       }
