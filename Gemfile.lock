@@ -157,6 +157,8 @@ GEM
       websocket-driver (>= 0.2.0)
     polyamorous (1.1.0)
       activerecord (>= 3.0)
+    pony (1.11)
+      mail (>= 2.0)
     puma (2.11.0)
       rack (>= 1.1, < 2.0)
     quiet_assets (1.1.0)
@@ -287,6 +289,7 @@ DEPENDENCIES
   launchy
   mongoid
   poltergeist
+  pony
   puma
   quiet_assets
   rails (= 4.1.8)
