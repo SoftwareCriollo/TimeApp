@@ -1,0 +1,7 @@
+<h1 style="text-align: center;">
+  List of Votes
+</h1>
+
+<% @votes.each do |vote| %>
+	<p style="text-align: center;"><%= vote.vote %> <%= vote.client.email %> <%= vote.created_at.strftime("%d/%m") %></p>
+<% end %>
