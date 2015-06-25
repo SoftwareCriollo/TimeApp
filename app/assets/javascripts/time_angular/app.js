@@ -77,6 +77,11 @@
         controller: 'ClientsController',
         controllerAs: 'ctrl'
       })
+      .when('/timeline/project/:projectId', {
+        templateUrl: 'templates/timeline/project.html',
+        controller: 'TimelineController',
+        controllerAs: 'ctrl'
+      })
       .when('/performance', {
         templateUrl: 'templates/performance/index.html',
         controller: 'GeneralPerformanceController',

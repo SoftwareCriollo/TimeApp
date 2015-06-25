@@ -70,5 +70,17 @@
     };
 
   }]);
+
+  app.controller('TimelineController',['$routeParams','ProjectCache', function($routeParams,projectCache){
+
+    var controller = this;
+    var projectId = $routeParams.projectId;
+
+    this.project = projectCache.findProject(projectId);
+    var file = 'assets/time_angular/timeline/me.co';
+    this.Paint = new TimeApp.Paint(file);
+
+  }]);
+
 })();
 
