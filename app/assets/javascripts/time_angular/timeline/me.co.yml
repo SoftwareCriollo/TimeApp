@@ -12,28 +12,24 @@
 
 - month: July
 - iteration:
-    hours: 02/07/2015
-    tasks:
-      - task: Rewrite acceptance test in full supplier
-      - task: https://trello.com/c/61bEzNEt/207-rewrite-acceptance-test-in-full-supplier
+    date: 02/07/2015
+    url: https://trello.com/c/61bEzNEt/207-rewrite-acceptance-test-in-full-supplier
+    name: Rewrite acceptance test in full supplier
 - iteration:
-    hours: 05/07/2015
-    tasks:
-      - task: Documentation: how  to import data in the app
-      - task: https://trello.com/c/d2Uq9kDh/199-documentation-how-to-import-data-in-the-app
+    date: 05/07/2015
+    url: https://trello.com/c/d2Uq9kDh/199-documentation-how-to-import-data-in-the-app
+    name: Documentation: how  to import data in the app
 - month: July
 - iteration:
-    hours: 12/07/2015
-    tasks:
-      - task: Trip > Over view - Contacts
-      - task: https://trello.com/c/x0TAk03P/170-trip-over-view-contacts
+    date: 12/07/2015
+    url: https://trello.com/c/x0TAk03P/170-trip-over-view-contacts
+    name: Trip > Over view - Contacts
 - iteration:
-    hours: 15/07/2015
-    tasks:
-      - task: As a user i need create a change request type Delete
-      - task: https://trello.com/c/FYuZ1cwV/83-as-a-user-i-need-create-a-change-request-type-delete
+    date: 15/07/2015
+    url: https://trello.com/c/FYuZ1cwV/83-as-a-user-i-need-create-a-change-request-type-delete
+    name: As a user i need create a change request type Delete
 - iteration:
-    hours: 15/07/2015
-    tasks:
-      - task: UI Bug: Supplier Full View'
-      - task: https://trello.com/c/KqChaMSa/202-ui-bug-supplier-full-view
+    date: 15/07/2015
+    url: https://trello.com/c/KqChaMSa/202-ui-bug-supplier-full-view
+    name: UI Bug: Supplier Full View'
+

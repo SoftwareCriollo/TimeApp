@@ -24,8 +24,6 @@ gem 'quiet_assets', group: :development
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
-gem 'json'
-
 group :production, :staging do
   gem "rails_12factor"
   gem "rails_stdout_logging"

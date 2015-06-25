@@ -88,11 +88,12 @@
 
     $firstContainer = createFirstContainer(strSide);
     $secondContainer = createSecondContainer(strSide);
-    $title = createTitle(configYML[index].iteration.hours);
-    $tasks = createTasks(index);
+    $title = createTitle(configYML[index].iteration.date);
+    //$tasks = createTasks(index);
+    $descriptionContainer = createDescriptionContainer(index);
 
     $secondContainer.append($title);
-    $secondContainer.append($tasks);
+    $secondContainer.append($descriptionContainer);
 
     return $firstContainer.append($secondContainer);
   };
@@ -113,11 +114,24 @@
   };
 
   /**
-   * @return String <h4>Iteration #1 - 40 hours</h4>
+   * @return String <h4>Iteration #1 - 25/06/2015</h4>
    */
-  var createTitle = function(hours) {
+  var createTitle = function(date) {
     number = number + 1;
-    return $("<h4>", {text: "Iteration #"+number+" - "+hours+" hours"});
+    return $("<h4>", {text: "Iteration #"+number+" - "+date});
+  };
+
+  var createDescriptionContainer = function(index) {
+    url = configYML[index].iteration.url;
+    name = configYML[index].iteration.name;
+
+    $p = $("<p>");
+    $ul = $("<ul>");
+
+    $ul.append($("<li>", {text: name}));
+    $ul.append($("<li>", {}).append($("<a>", { href: url }).text(url)));
+
+    return $p.append($ul);
   };
 
   /**
@@ -126,12 +140,17 @@
   var createTasks = function(index) {
     count = configYML[index].iteration.tasks.length;
     tasks = configYML[index].iteration.tasks;
+    url = configYML[index].iteration.url;
+
     $p = $("<p>");
     $ul = $("<ul>");
 
     for(i=0; i<count; i++) {
       $ul.append($("<li>", {text: tasks[i].task}));
     }
+
+    $ul.append($("<li>", {})
+       .append($("<a>", { href: url }).text(url)));
 
     return $p.append($ul);
   };

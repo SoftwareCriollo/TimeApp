@@ -1,3 +1,6 @@
+require 'json'
+require 'yaml'
+
 class ProjectManager
   include Serializer
 
@@ -9,7 +12,8 @@ class ProjectManager
 
   def initialize
     @organization = find_organization
-    @espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
+    #@espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
+    @espcial_board_ids = [] #[Opensublet]
   end
 
   def especial_boards
@@ -33,6 +37,43 @@ class ProjectManager
 
   def cards_by_board_due(board_id)
     CardsByWeek.new(cards_by_board(board_id)).process
+    cards = cards_by_board(board_id).select{|card| card[:due] }
+    cardssorted = cards.sort_by {|card| card[:due]}
+  end
+
+  def cards_by_week(board_id)
+    thisweek = Date.today.cweek
+    lastweek = thisweek - 1
+    cards = cards_by_board_due(board_id)
+    cards.select do |card|
+      date = card[:due].to_date
+      date.cweek
+      card unless (date.cweek < lastweek)
+    end
+  end
+
+  def cards_to_json(board_id)
+    the_cards = []
+    #iteration = {}
+    iteration = []
+
+    cards_by_week(board_id).each { |card|
+      #iteration["date"] = card[:due].strftime("%m/%d/%Y")
+      #iteration["url"] = card[:url]
+      #iteration["name"] = card[:name]
+
+      
+      iteration.push("date", card[:due].strftime("%m/%d/%Y"))
+      iteration.push("url", card[:url])
+      iteration.push("name", card[:name])
+
+
+      #the_cards["month"] = card[:due].strftime("%B")
+      the_cards.push("month", card[:due].strftime("%B"))
+      the_cards.push("iteration", iteration)
+      #the_cards["iteration"] = iterations
+    }
+    puts the_cards
   end
 
   def boards_serialized
