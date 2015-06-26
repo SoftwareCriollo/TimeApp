@@ -47,9 +47,14 @@ class ProjectManager
     cards = cards_by_board_due(board_id)
     cards.select do |card|
       date = card[:due].to_date
-      date.cweek
       card unless (date.cweek < lastweek)
     end
+  end
+
+  def tasks_grouped(board_id)
+    grouped = cards_by_week(board_id).group_by { |card|
+      card[:due].to_date.cweek
+    }
   end
 
   def cards_to_json(board_id)
