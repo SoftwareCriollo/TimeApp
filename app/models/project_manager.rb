@@ -54,19 +54,18 @@ class ProjectManager
 
   def cards_to_json(board_id)
     cards = []
-    iteration = {}
 
     cards_by_week(board_id).each { |card|
       card_hash = {}
+      card_iteration = {}
       card_hash["id"] = card[:id]
+      card_hash["month"] = card[:due].strftime("%B")
 
-      iteration["date"] = card[:due].strftime("%m/%d/%Y")
-      iteration["url"] = card[:url]
-      iteration["name"] = card[:name]
+      card_iteration["due"] = card[:due].strftime("%m/%d/%Y")
+      card_iteration["url"] = card[:url]
+      card_iteration["name"] = card[:name]
 
-      card_hash.store("month", card[:due].strftime("%B"))
-      card_hash.store("iteration", iteration)
-
+      card_hash["iteration"] = card_iteration
       cards.push(card_hash)
     }
     cards.to_json
