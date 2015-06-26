@@ -9,12 +9,12 @@ class ProjectManager
 
   def initialize
     @organization = find_organization
-    @espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
+    @espcial_board_ids = [] #[Opensublet]
   end
-  
+
   def especial_boards
    @espcial_board_ids.map{|bid| Trello::Board.find(bid)}
-  end  
+  end
 
   def boards
     @organization.boards.select{|board| !board.closed?}.concat(especial_boards)
@@ -29,6 +29,68 @@ class ProjectManager
     end
     @id_lists = @lists_hash.keys
     add_name_list_to_cards
+  end
+
+  def cards_by_board_due(board_id)
+    cards = cards_by_board(board_id).select{|card| card[:due] }
+    cardssorted = cards.sort_by {|card| card[:due]}
+    #cardssorted.each do |card| 
+     #puts card[:due].class
+     #date = card[:due].to_date
+     #puts date.cweek
+     #puts card[:due].cweek
+    #end
+  end
+
+  def cards_by_week(board_id)
+    thisweek = Date.today.cweek
+    lastweek = thisweek - 1
+    cards = cards_by_board_due(board_id)
+    cards.select do |card|
+      date = card[:due].to_date
+      date.cweek
+      card unless (date.cweek < lastweek)
+    end
+  end
+
+  def cards_format(board_id)
+    cards = cards_by_week(board_id).each do |card|
+      #month = card[:due].mon
+      #card[:month] = month
+      #iteration = {}
+      #date = card[:due]
+      #url = card[:url]
+      #name = card[:name]
+      #iteration[:date] = date
+      #iteration[:url] = url
+      #iteration[:name] = name
+      #card[:iteration] = iteration
+      #card.delete(:due)
+      #card.delete(:url)
+      #card.delete(:name)
+      the_cards = {}
+      iteration = {}
+
+      cards_by_week(board_id).each { |card|
+      iteration.store("date", card[:due])
+      iteration.store("url", card[:url])
+      iteration.store("name", card[:name])
+      the_cards.store("month", card[:due].strftime("%B"))
+      the_cards.store("iteration", iteration)
+      }
+
+    puts the_cards
+    end
+  end
+
+
+  def cards_to_json(board_id)
+    cards = cards_by_week(board_id)
+    cards.to_json
+  end
+
+  def cards_to_json(board_id)
+    cards = cards_by_week(board_id)
   end
 
   def boards_serialized
