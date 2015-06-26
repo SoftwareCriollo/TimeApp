@@ -54,7 +54,7 @@ class ProjectManager
 
   def cards_to_json(board_id)
     cards = []
-    iteration = []
+    iteration = {}
 
     cards_by_week(board_id).each { |card|
       card_hash = {}
@@ -66,6 +66,7 @@ class ProjectManager
 
       card_hash.store("month", card[:due].strftime("%B"))
       card_hash.store("iteration", iteration)
+
       cards.push(card_hash)
     }
     cards.to_json
