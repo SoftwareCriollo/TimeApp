@@ -53,27 +53,22 @@ class ProjectManager
   end
 
   def cards_to_json(board_id)
-    the_cards = []
-    #iteration = {}
+    cards = []
     iteration = []
 
     cards_by_week(board_id).each { |card|
-      #iteration["date"] = card[:due].strftime("%m/%d/%Y")
-      #iteration["url"] = card[:url]
-      #iteration["name"] = card[:name]
+      card_hash = {}
+      card_hash["id"] = card[:id]
 
-      
-      iteration.push("date", card[:due].strftime("%m/%d/%Y"))
-      iteration.push("url", card[:url])
-      iteration.push("name", card[:name])
+      iteration["date"] = card[:due].strftime("%m/%d/%Y")
+      iteration["url"] = card[:url]
+      iteration["name"] = card[:name]
 
-
-      #the_cards["month"] = card[:due].strftime("%B")
-      the_cards.push("month", card[:due].strftime("%B"))
-      the_cards.push("iteration", iteration)
-      #the_cards["iteration"] = iterations
+      card_hash.store("month", card[:due].strftime("%B"))
+      card_hash.store("iteration", iteration)
+      cards.push(card_hash)
     }
-    puts the_cards
+    cards.to_json
   end
 
   def boards_serialized
