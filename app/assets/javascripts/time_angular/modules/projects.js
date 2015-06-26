@@ -78,7 +78,7 @@
 
     this.project = projectCache.findProject(projectId);
     var file = 'assets/time_angular/timeline/me.co';
-    this.Paint = new TimeApp.Paint(file);
+    this.paint = new TimeApp.Paint(file);
 
   }]);
 
