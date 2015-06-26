@@ -34,12 +34,6 @@ class ProjectManager
   def cards_by_board_due(board_id)
     cards = cards_by_board(board_id).select{|card| card[:due] }
     cardssorted = cards.sort_by {|card| card[:due]}
-    #cardssorted.each do |card| 
-     #puts card[:due].class
-     #date = card[:due].to_date
-     #puts date.cweek
-     #puts card[:due].cweek
-    #end
   end
 
   def cards_by_week(board_id)
@@ -53,45 +47,28 @@ class ProjectManager
     end
   end
 
-  def cards_format(board_id)
-    cards = cards_by_week(board_id).each do |card|
-      #month = card[:due].mon
-      #card[:month] = month
-      #iteration = {}
-      #date = card[:due]
-      #url = card[:url]
-      #name = card[:name]
-      #iteration[:date] = date
-      #iteration[:url] = url
-      #iteration[:name] = name
-      #card[:iteration] = iteration
-      #card.delete(:due)
-      #card.delete(:url)
-      #card.delete(:name)
-      the_cards = {}
-      iteration = {}
-
-      cards_by_week(board_id).each { |card|
-      iteration.store("date", card[:due])
-      iteration.store("url", card[:url])
-      iteration.store("name", card[:name])
-      the_cards.store("month", card[:due].strftime("%B"))
-      the_cards.store("iteration", iteration)
-      }
-
-    puts the_cards
-    end
-  end
-
-
   def cards_to_json(board_id)
-    cards = cards_by_week(board_id)
-    cards.to_json
+    cards = []
+    iteration = {}
+
+    cards_by_week(board_id).each { |card|
+      card_hash = {}
+      card_hash["id"] = card[:id]
+
+      iteration["date"] = card[:due].strftime("%m/%d/%Y")
+      iteration["url"] = card[:url]
+      iteration["name"] = card[:name]
+
+      card_hash.store("month", card[:due].strftime("%B"))
+      card_hash.store("iteration", iteration)
+      cards.push(card_hash)
+    }
+
+    cards
   end
 
-  def cards_to_json(board_id)
-    cards = cards_by_week(board_id)
-  end
+
+
 
   def boards_serialized
     arrays_object(boards,BOARD_ATTRIBUTES)
