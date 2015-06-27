@@ -9,7 +9,7 @@ class ProjectManager
 
   def initialize
     @organization = find_organization
-    @espcial_board_ids = [] #[Opensublet]
+    @espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
   end
 
   def especial_boards
@@ -32,39 +32,7 @@ class ProjectManager
   end
 
   def cards_by_board_due(board_id)
-    cards = cards_by_board(board_id).select{|card| card[:due] }
-    cardssorted = cards.sort_by {|card| card[:due]}
-  end
-
-  def cards_by_week(board_id)
-    thisweek = Date.today.cweek
-    lastweek = thisweek - 1
-    cards = cards_by_board_due(board_id)
-    cards.select do |card|
-      date = card[:due].to_date
-      date.cweek
-      card unless (date.cweek < lastweek)
-    end
-  end
-
-  def cards_to_json(board_id)
-    cards = []
-
-    cards_by_week(board_id).each { |card|
-      card_hash = {}
-      card_iteration = {}
-      card_hash["id"] = card[:id]
-      card_hash["month"] = card[:due].strftime("%B")
-
-      card_iteration["due"] = card[:due].strftime("%m/%d/%Y")
-      card_iteration["url"] = card[:url]
-      card_iteration["name"] = card[:name]
-
-      card_hash["iteration"] = card_iteration
-      cards.push(card_hash)
-    }
-
-    cards
+    CardsByWeek.new(cards_by_board(board_id)).process
   end
 
   def boards_serialized
@@ -88,7 +56,6 @@ class ProjectManager
       end
     end
   end
-
 
   def project_name(project_id)
     find_board(project_id).name
@@ -121,11 +88,11 @@ class ProjectManager
   def find_board(board_id)
     Trello::Board.find(board_id)
   end
-  
+
   def find_card(card_id)
     Trello::Card.find(card_id)
   end
-  
+
   def find_organization
     Trello::Organization.find(organization_name)
   end
