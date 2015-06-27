@@ -77,8 +77,8 @@
     var projectId = $routeParams.projectId;
 
     this.project = projectCache.findProject(projectId);
-    var file = 'assets/time_angular/timeline/me.co';
-    this.paint = new TimeApp.Paint(file);
+    var json = '/api/timeline/' + projectId;
+    this.paint = new TimeApp.Paint(json);
 
   }]);
 

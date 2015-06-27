@@ -43,33 +43,24 @@ class ProjectManager
 
   def cards_by_week(board_id)
     thisweek = Date.today.cweek
+    thisyear = Date.today.year
     lastweek = thisweek - 1
     cards = cards_by_board_due(board_id)
     cards.select do |card|
       date = card[:due].to_date
-      card unless (date.cweek < lastweek)
+      year = card[:due].to_date.year
+      if (date.cweek >= lastweek) && (thisyear.equal?(year))
+        card
+      end
     end
   end
 
   def tasks_grouped(board_id)
-    grouped = cards_by_week(board_id).group_by { |card|
-      card[:due].to_date.cweek
-    }
+    cards_by_week(board_id).group_by { |card| Date.commercial(card[:due].to_date.year, card[:due].to_date.cweek) }
   end
 
   def cards_to_json(board_id)
-    cards = []
-
-    cards_by_week(board_id).each { |card|
-      card_hash = {}
-      card_iteration = {}
-      card_hash["id"] = card[:id]
-      card_hash["month"] = card[:due].strftime("%B")
-
-      card_iteration["due"] = card[:due].strftime("%m/%d/%Y")
-      card_iteration["url"] = card[:url]
-      card_iteration["name"] = card[:name]
-
+    card_hash = {}
       card_hash["iteration"] = card_iteration
       cards.push(card_hash)
     }

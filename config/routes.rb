@@ -20,8 +20,9 @@ Rails.application.routes.draw do
     end
     resources :timelogs, only: [:create,:index,:update]
     resources :mongoid_users, only: [:index]
+    get('/timeline/:project_id', to: 'timeline#index')
   end
-  
+
   namespace :api do
     post "/change_password/:reset_password_token", to: "change_password#change_password", as: 'change_password'
     get "/projects/:project_id", to: "projects#name"

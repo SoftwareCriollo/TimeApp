@@ -1,10 +1,6 @@
 (function(){
   window.TimeApp = window.TimeApp || {};
   var flag = true;
-  var number = 0;
-  //var file = setFile();
-
-  var configYML;
 
   var Timeline = function(attributes) {
     attributes = attributes || {};
@@ -12,33 +8,24 @@
     this.project_name = attributes.project_name;
   };
 
-  var setFile = function() {
-    hash = (location.hash).substr(1);
+  var Paint = function(url) {
+      $.getJSON( url, function( data ) {
+          $firstMonth = createMonth(data.first_month);
+          $(".timeline").append($firstMonth);
 
-    if (hash === "") {
-      return 'me.co';
-    } else {
-      return hash;
-    }
+          createIterations(data.iterations);
+
+          $lastMonth = createMonth(data.last_month);
+          $(".timeline").append($lastMonth);
+      });
   };
 
-  var Paint = function(file) {
-    configYML = YAML.load(file+'.yml');
-    configYML.forEach(loopElements);
-  };
-
-  /**
-   * Loop all Elements in Yaml File
-   */
-  var loopElements = function(element, index, array) {
-    if (configYML[index].month != undefined) {
-      $element = createMonth(configYML[index].month);
-      $(".timeline").append($element);
-    } else if (configYML[index].iteration != undefined) {
-      $element = createIteration(index);
-      $(".timeline").append($element);
-    } else if (configYML[index].title!= undefined){
-      createHeader(element);
+  var createIterations = function(iterations){
+    var number = 0;
+    for(var date in iterations){
+      number = number + 1;
+      $iteration = createIteration(date, iterations[date], number);
+      $(".timeline").append($iteration);
     }
   };
 
@@ -48,7 +35,6 @@
    * modifies a lot of stuff on the website
    */
   var createHeader = function(o) {
-    console.log(o);
     $(".title h1:first").html(o.title);
     $(".subtitle p:first").html(o.subtitle);
     $(".subtitle:nth-child(2) p").html(o.descrition);
@@ -57,8 +43,7 @@
     $(".budget").html(o.budget);
     $(".team").html("");
     o.team.forEach(function(m,i,a){
-      $(".team").append("<p>" + m  + "</p>")
-      console.log(m);
+      $(".team").append("<p>" + m  + "</p>");
     })
   };
 
@@ -83,17 +68,15 @@
   /**
    * @return String
    */
-  var createIteration = function(index) {
+  var createIteration = function(date, index, number) {
     strSide = side();
 
     $firstContainer = createFirstContainer(strSide);
     $secondContainer = createSecondContainer(strSide);
-    $title = createTitle(configYML[index].iteration.date);
-    //$tasks = createTasks(index);
-    $descriptionContainer = createDescriptionContainer(index);
-
+    $title = createTitle(date, number);
+    $tasks = createTasks(index);
     $secondContainer.append($title);
-    $secondContainer.append($descriptionContainer);
+    $secondContainer.append($tasks);
 
     return $firstContainer.append($secondContainer);
   };
@@ -116,41 +99,33 @@
   /**
    * @return String <h4>Iteration #1 - 25/06/2015</h4>
    */
-  var createTitle = function(date) {
-    number = number + 1;
-    return $("<h4>", {text: "Iteration #"+number+" - "+date});
+  var createTitle = function(date, number) {
+    var formattedDate = formatDateMDY (date);
+
+    return $("<h4>", {text: "Iteration #"+number+" - "+formattedDate});
   };
 
-  var createDescriptionContainer = function(index) {
-    url = configYML[index].iteration.url;
-    name = configYML[index].iteration.name;
+  var formatDateMDY = function(date) {
+    var d = new Date(date);
+    var day = d.getDate();
+    var month = d.getMonth() + 1;
+    var year = d.getFullYear();
 
-    $p = $("<p>");
-    $ul = $("<ul>");
-
-    $ul.append($("<li>", {text: name}));
-    $ul.append($("<li>", {}).append($("<a>", { href: url }).text(url)));
-
-    return $p.append($ul);
-  };
+    return month + "/" + day + "/" + year;
+  }
 
   /**
    * @return String <li>Task Description</li>
    */
   var createTasks = function(index) {
-    count = configYML[index].iteration.tasks.length;
-    tasks = configYML[index].iteration.tasks;
-    url = configYML[index].iteration.url;
+    count = index.length;
 
     $p = $("<p>");
     $ul = $("<ul>");
 
     for(i=0; i<count; i++) {
-      $ul.append($("<li>", {text: tasks[i].task}));
+      $ul.append($("<li>", {text: index[i].name}));
     }
-
-    $ul.append($("<li>", {})
-       .append($("<a>", { href: url }).text(url)));
 
     return $p.append($ul);
   };
