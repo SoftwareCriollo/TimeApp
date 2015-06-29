@@ -43,9 +43,9 @@ class MongoidUser
   end  
 
   def time_for_user(time)
-    if ["jhoynerk@softwarecriollo.com"].include?(email)
+    if ["untercio@sc.com"].include?(email)
       time / 3
-    elsif ["mariaalejandra@softwarecriollo.com"].include?(email)
+    elsif ["dostercios@sc.com"].include?(email)
       ((time) / 3) * 2
     elsif ["rafael@softwarecriollo.com", "genesis@softwarecriollo.com"].include?(email)
       time / 2
