@@ -7,28 +7,20 @@ body {
   background-color: #f6f6f6 !important;
 }
 
-p {
+/*p {
   font-family: 'museosans';
   margin: 0px!important;
   font-size: 13px!important;
-}
+}*/
 
 ul {
     padding-left: 5%;
 }
 
-a {
-    font-size: 13px;
+a.a-timeline {
     color: #5c5b5b;
-}
-
-section {
-  //padding-top: 15px;
-  padding-bottom: 60px;
-  min-height: 100px;
-  //background-color: #F2F2F2;
-  position: relative;
-  z-index: 10;
+    text-decoration: none;
+    font-size: 13px!important;
 }
 
 .title h1 {
@@ -209,7 +201,7 @@ section {
 }
 
 .timeline-panel p {
-  font-size: 12px;
+  font-size: 13px;
   color: #2b2e37;
 }
 
