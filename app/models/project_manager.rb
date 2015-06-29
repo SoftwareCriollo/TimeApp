@@ -37,34 +37,6 @@ class ProjectManager
 
   def cards_by_board_due(board_id)
     CardsByWeek.new(cards_by_board(board_id)).process
-    cards = cards_by_board(board_id).select{|card| card[:due] }
-    cardssorted = cards.sort_by {|card| card[:due]}
-  end
-
-  def cards_by_week(board_id)
-    thisweek = Date.today.cweek
-    thisyear = Date.today.year
-    lastweek = thisweek - 1
-    cards = cards_by_board_due(board_id)
-    cards.select do |card|
-      date = card[:due].to_date
-      year = card[:due].to_date.year
-      if (date.cweek >= lastweek) && (thisyear.equal?(year))
-        card
-      end
-    end
-  end
-
-  def tasks_grouped(board_id)
-    cards_by_week(board_id).group_by { |card| Date.commercial(card[:due].to_date.year, card[:due].to_date.cweek) }
-  end
-
-  def cards_to_json(board_id)
-    card_hash = {}
-      card_hash["iteration"] = card_iteration
-      cards.push(card_hash)
-    }
-    cards.to_json
   end
 
   def boards_serialized

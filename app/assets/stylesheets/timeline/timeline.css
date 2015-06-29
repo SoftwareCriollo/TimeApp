@@ -9,11 +9,17 @@ body {
 
 p {
   font-family: 'museosans';
+  margin: 0px!important;
+  font-size: 13px!important;
+}
+
+ul {
+    padding-left: 5%;
 }
 
 a {
-    font-size: 12px;
-    color: #00bfb2;
+    font-size: 13px;
+    color: #5c5b5b;
 }
 
 section {
@@ -130,6 +136,12 @@ section {
   clear: both;
 }
 
+.timeline-today {
+  margin-bottom: 0px;
+  color: #00bfb2;
+  font-size: 13px;
+}
+
 .month {
   width: 65px;
   height: 65px;
@@ -190,32 +202,10 @@ section {
   float: right;
 }
 
-.timeline-panel.right:hover {
-  margin-left: 0;
-  margin-right: 1%;
-}
-
-.timeline-panel.right:hover:before {
-  margin-right: 47%;
-}
-
 .timeline-panel.right:before {
   border-right: 15px solid #fff;
   right: 0;
   margin-right: 46%;
-}
-
-.timeline-panel:hover {
-  cursor: default;
-  margin-left: 1%;
-}
-
-.timeline-panel:hover:before {
-  margin-left: 47%;
-}
-
-.timeline-panel:hover:after {
-  border: 6px solid transparent;
 }
 
 .timeline-panel p {
@@ -230,4 +220,13 @@ section {
 
 .timeline-panel:hover:after {
   border-color: #31BE6F;
+}
+
+.no-cards-msg {
+  width: 46%;
+  position: relative;
+  background-color: #FFF;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 0 auto;
 }

@@ -14,7 +14,7 @@ class CardsByWeek
   end
 
   def cards_with_due
-     cards.select { |card| card[:due] }
+    cards.select { |card| card[:due] }
   end
 
   def cards_recently
@@ -36,7 +36,8 @@ class CardsByWeek
     Date.today.year
   end
 
-  def firstmonth 
+
+  def firstmonth
     group_by_week.keys.first.strftime('%B')[0..2]
   end
 
@@ -45,10 +46,12 @@ class CardsByWeek
   end
 
   def create_data_structure
-    structure = {}
-    structure ["first_month"] = firstmonth
-    structure ["last_month"] = lastmonth
-    structure ["iterations"] = group_by_week
+    structure= {}
+    unless group_by_week.to_a.empty?
+      structure["first_month"] = firstmonth
+      structure["last_month"] = lastmonth
+      structure["iterations"] = group_by_week
+    end
     structure
   end
 

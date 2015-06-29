@@ -10,14 +10,24 @@
 
   var Paint = function(url) {
       $.getJSON( url, function( data ) {
-          $firstMonth = createMonth(data.first_month);
-          $(".timeline").append($firstMonth);
+          if($.isEmptyObject(data)) {
+              noCardsMsg();
+          } else {
+            $firstMonth = createMonth(data.first_month);
+            $(".timeline").append($firstMonth);
 
-          createIterations(data.iterations);
+            createIterations(data.iterations);
 
-          $lastMonth = createMonth(data.last_month);
-          $(".timeline").append($lastMonth);
+            $lastMonth = createMonth(data.last_month);
+            $(".timeline").append($lastMonth);
+          }
+          $('.loading-spinner').hide();
       });
+  };
+
+  var noCardsMsg = function() {
+    $noCardsMsg = $("<div class='no-cards-msg'>").html("No activities were found for the selected project");
+    $(".timeline").append($noCardsMsg);
   };
 
   var createIterations = function(iterations){
@@ -27,24 +37,6 @@
       $iteration = createIteration(date, iterations[date], number);
       $(".timeline").append($iteration);
     }
-  };
-
-  /**
-   * This function puts info on the page.
-   * returns nothings.
-   * modifies a lot of stuff on the website
-   */
-  var createHeader = function(o) {
-    $(".title h1:first").html(o.title);
-    $(".subtitle p:first").html(o.subtitle);
-    $(".subtitle:nth-child(2) p").html(o.descrition);
-    $(".velocity").html(o.velocity);
-    $(".delivery-date").html(o.delivery);
-    $(".budget").html(o.budget);
-    $(".team").html("");
-    o.team.forEach(function(m,i,a){
-      $(".team").append("<p>" + m  + "</p>");
-    })
   };
 
   /**
@@ -73,9 +65,7 @@
 
     $firstContainer = createFirstContainer(strSide);
     $secondContainer = createSecondContainer(strSide);
-    $title = createTitle(date, number);
     $tasks = createTasks(index);
-    $secondContainer.append($title);
     $secondContainer.append($tasks);
 
     return $firstContainer.append($secondContainer);
@@ -112,7 +102,14 @@
     var year = d.getFullYear();
 
     return month + "/" + day + "/" + year;
-  }
+  };
+
+  var isToday = function(date) {
+    var today = new Date();
+    var cardDate = new Date(date);
+
+    return (today.toDateString() === cardDate.toDateString());
+  };
 
   /**
    * @return String <li>Task Description</li>
@@ -124,7 +121,14 @@
     $ul = $("<ul>");
 
     for(i=0; i<count; i++) {
-      $ul.append($("<li>", {text: index[i].name}));
+      var date = new Date(index[i].due);
+      var text = isToday(date) ? "<label class='timeline-today'>TODAY</label>" : formatDateMDY(date);
+
+      var shortName = index[i].name.trim()
+                                   .substring(0, 62)
+                                   .split(" ")
+                                   .join(" ") + "...";
+      $ul.append($("<li>").append($("<a>", {text: shortName, href: index[i].url})).append(" - " + text));
     }
 
     return $p.append($ul);
