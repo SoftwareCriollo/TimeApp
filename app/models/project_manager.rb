@@ -1,3 +1,6 @@
+require 'json'
+require 'yaml'
+
 class ProjectManager
   include Serializer
 
@@ -9,7 +12,8 @@ class ProjectManager
 
   def initialize
     @organization = find_organization
-    @espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
+    #@espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
+    @espcial_board_ids = [] #[Opensublet]
   end
 
   def especial_boards

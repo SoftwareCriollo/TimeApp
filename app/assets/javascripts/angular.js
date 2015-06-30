@@ -21,6 +21,8 @@
 //= require ./time_angular/services/repository
 //= require ./time_angular/app
 
+//= require ./time_angular/timeline/yaml
+
 // This File is only for angular
 
 // ----------------

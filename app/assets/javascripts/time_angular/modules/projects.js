@@ -70,5 +70,18 @@
     };
 
   }]);
+
+  app.controller('TimelineController',['$routeParams','ProjectCache', function($routeParams,projectCache){
+
+    var controller = this;
+    var projectId = $routeParams.projectId;
+
+    this.project = projectCache.findProject(projectId);
+    var json = '/api/timeline/' + projectId;
+    this.paint = new TimeApp.Paint(json);
+
+
+  }]);
+
 })();
 
