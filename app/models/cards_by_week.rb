@@ -36,13 +36,12 @@ class CardsByWeek
     Date.today.year
   end
 
-
   def firstmonth
-    group_by_week.keys.first.strftime('%B')[0..2]
+    cards_recently.first[:due].to_date.strftime('%B')[0..2]
   end
 
   def lastmonth
-    group_by_week.keys.last.strftime('%B')[0..2]
+    cards_recently.last[:due].to_date.strftime('%B')[0..2] 
   end
 
   def create_data_structure
