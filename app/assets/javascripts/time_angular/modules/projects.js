@@ -80,7 +80,6 @@
     var json = '/api/timeline/' + projectId;
     this.paint = new TimeApp.Paint(json);
 
-
   }]);
 
 })();
