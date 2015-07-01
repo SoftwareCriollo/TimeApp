@@ -207,22 +207,25 @@ a.a-timeline {
 }
 
 .this-week {
-   float: right;
-    width: 46%;
-   padding: 25px 0px;
-   color: #31BE6F;
+  width: 46%;
+  padding: 25px 0px;
+  color: #31BE6F;
 }
 
 .week-left {
-    width: 46%;
+  float: right;
 }
 
-.week-right {
-    width: 13%;
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
 }
 
 .past-week li, .past-week li a {
-   color: #a5a6a6;
+  color: #a5a6a6;
 }
 
 .date {

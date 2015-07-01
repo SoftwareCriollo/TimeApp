@@ -33,21 +33,22 @@
      return Math.ceil(dayOfYear/7)
   };
 
+  var currentWeek = function() {
+      var today = new Date();
+      return today.getWeek();
+  };
+
   var isCurrentWeek = function(date) {
-     var today = new Date();
      var cardDate = new Date(date);
-     var currentWeekNumber = today.getWeek();
      var cardWeekNumber = cardDate.getWeek();
 
-     return (currentWeekNumber == cardWeekNumber ? true : false);
+     return (currentWeek() == cardWeekNumber ? true : false);
   };
 
   var isPastWeek = function(date) {
-     var today = new Date();
      var cardDate = new Date(date);
-     var currentWeekNumber = today.getWeek();
      var cardWeekNumber = cardDate.getWeek();
-     var pastWeek = currentWeekNumber - 1;
+     var pastWeek = currentWeek() - 1;
 
      return (cardWeekNumber == pastWeek ? true : false);
   };
@@ -65,10 +66,9 @@
   };
 
   var createCurrentWeekMsg = function() {
-     strSide = side();
-     console.log(strSide);
+     var weekClass = ($('.current-week').hasClass('left') ? "left" : "right");
 
-     $('.current-week').after($('<div>', {class: 'this-week week-'+strSide.toLowerCase(), text: 'THIS WEEK'}));
+     $('.current-week').after($('<div>', {class: 'this-week week-'+weekClass}).append($('<span>', {class: 'f-'+weekClass, text: 'THIS WEEK'})));
   };
 
   /**
