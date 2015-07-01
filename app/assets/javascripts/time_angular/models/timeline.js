@@ -22,7 +22,34 @@
             $(".timeline").append($lastMonth);
           }
           $('.loading-spinner').hide();
+          createCurrentWeekMsg();
       });
+  };
+
+  Date.prototype.getWeek = function() {
+     var onejan = new Date(this.getFullYear(),0,1);
+     var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
+     var dayOfYear = ((today - onejan + 86400000)/86400000);
+     return Math.ceil(dayOfYear/7)
+  };
+
+  var isCurrentWeek = function(date) {
+     var today = new Date();
+     var cardDate = new Date(date);
+     var currentWeekNumber = today.getWeek();
+     var cardWeekNumber = cardDate.getWeek();
+
+     return (currentWeekNumber == cardWeekNumber ? true : false);
+  };
+
+  var isPastWeek = function(date) {
+     var today = new Date();
+     var cardDate = new Date(date);
+     var currentWeekNumber = today.getWeek();
+     var cardWeekNumber = cardDate.getWeek();
+     var pastWeek = currentWeekNumber - 1;
+
+     return (cardWeekNumber == pastWeek ? true : false);
   };
 
   var noCardsMsg = function() {
@@ -31,12 +58,17 @@
   };
 
   var createIterations = function(iterations){
-    var number = 0;
     for(var date in iterations){
-      number = number + 1;
-      $iteration = createIteration(date, iterations[date], number);
+      $iteration = createIteration(date, iterations[date]);
       $(".timeline").append($iteration);
     }
+  };
+
+  var createCurrentWeekMsg = function() {
+     strSide = side();
+     console.log(strSide);
+
+     $('.current-week').after($('<div>', {class: 'this-week week-'+strSide.toLowerCase(), text: 'THIS WEEK'}));
   };
 
   /**
@@ -60,11 +92,14 @@
   /**
    * @return String
    */
-  var createIteration = function(date, index, number) {
+  var createIteration = function(date, index) {
     strSide = side();
 
+    var current = (isCurrentWeek(date) ? "current-week" : "");
+    var past = (isPastWeek(date) ? "past-week" : "");
+
     $firstContainer = createFirstContainer(strSide);
-    $secondContainer = createSecondContainer(strSide);
+    $secondContainer = createSecondContainer(strSide, current, past);
     $tasks = createTasks(index);
     $secondContainer.append($tasks);
 
@@ -82,8 +117,8 @@
   /**
    * @return String <div class="timeline-panel right left"></div>
    */
-  var createSecondContainer = function(side) {
-    return $("<div>", {class: "timeline-panel "+side.toLowerCase()});
+  var createSecondContainer = function(side, current, past) {
+    return $("<div>", {class: "timeline-panel " + side.toLowerCase() + " " + current.toLowerCase() + " " + past.toLowerCase()});
   };
 
   /**
@@ -119,7 +154,7 @@
 
     $p = $("<p>");
     $ul = $("<ul>");
-
+      //current-week
     for(i=0; i<count; i++) {
       var date = new Date(index[i].due);
       var text = isToday(date) ? "<label class='timeline-today'>TODAY</label>" : formatDateMDY(date);

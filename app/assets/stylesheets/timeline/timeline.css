@@ -18,7 +18,7 @@ ul {
 }
 
 a.a-timeline {
-    color: #5c5b5b;
+    color: #2b2e37;
     text-decoration: none;
     font-size: 13px!important;
 }
@@ -91,9 +91,6 @@ a.a-timeline {
 #history{
   //background-color: #F2F2F2;
 }
-
-
-
 
 .timeline {
   padding: 0;
@@ -180,6 +177,10 @@ a.a-timeline {
   transition: all .3s ease;
 }
 
+.current-week:after {
+  border: 2px solid #31BE6F;
+}
+
 .timeline-panel.left {
   text-align: left;
 }
@@ -205,14 +206,34 @@ a.a-timeline {
   color: #2b2e37;
 }
 
+.this-week {
+   float: right;
+    width: 46%;
+   padding: 25px 0px;
+   color: #31BE6F;
+}
+
+.week-left {
+    width: 46%;
+}
+
+.week-right {
+    width: 13%;
+}
+
+.past-week li, .past-week li a {
+   color: #a5a6a6;
+}
+
 .date {
   display: block;
   font-size: 19px;
 }
 
+/*
 .timeline-panel:hover:after {
   border-color: #31BE6F;
-}
+}*/
 
 .no-cards-msg {
   width: 46%;
