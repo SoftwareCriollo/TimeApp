@@ -246,3 +246,34 @@ a.a-timeline {
   padding: 15px;
   margin: 0 auto;
 }
+
+.section-up-timeline {
+    display: inline-block;
+    width: 100%;
+}
+
+.section-up-timeline .url-to-share {
+    width: 30%;
+    margin: 0px;
+}
+
+.section-up-timeline .url-to-share p {
+    margin: 22px 0px 0px 0px;
+    float: left;
+    font-size: 14px;
+}
+
+.section-up-timeline .url-to-share a {
+    float: left;
+    margin: 22px 0px 0px 5px;
+}
+
+.title-timeline-report {
+    margin: -12px 0px 0px 0px;
+}
+
+.section-up-timeline-report {
+    display: inline-block;
+    width: 100%;
+    margin-top: 40px;
+}

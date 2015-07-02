@@ -9,48 +9,48 @@
   };
 
   var Paint = function(url) {
-      $.getJSON( url, function( data ) {
-          if($.isEmptyObject(data)) {
-              noCardsMsg();
-          } else {
-            $firstMonth = createMonth(data.first_month);
-            $(".timeline").append($firstMonth);
+    $.getJSON( url, function( data ) {
+      if($.isEmptyObject(data)) {
+        noCardsMsg();
+      } else {
+        $firstMonth = createMonth(data.first_month);
+        $(".timeline").append($firstMonth);
 
-            createIterations(data.iterations);
+        createIterations(data.iterations);
 
-            $lastMonth = createMonth(data.last_month);
-            $(".timeline").append($lastMonth);
-          }
-          $('.loading-spinner').hide();
-          createCurrentWeekMsg();
-      });
+        $lastMonth = createMonth(data.last_month);
+        $(".timeline").append($lastMonth);
+      }
+      $('.loading-spinner').hide();
+      createCurrentWeekMsg();
+    });
   };
 
   Date.prototype.getWeek = function() {
-     var onejan = new Date(this.getFullYear(),0,1);
-     var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
-     var dayOfYear = ((today - onejan + 86400000)/86400000);
-     return Math.ceil(dayOfYear/7)
+    var onejan = new Date(this.getFullYear(),0,1);
+    return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
   };
 
   var currentWeek = function() {
-      var today = new Date();
-      return today.getWeek();
+    var today = new Date();
+    return today.getWeek();
+  };
+
+  var cardWeek = function(date) {
+    var d = new Date(date);
+    var cDate = new Date(d.getFullYear(),d.getMonth(),d.getDate());
+
+    return cDate.getWeek();
   };
 
   var isCurrentWeek = function(date) {
-     var cardDate = new Date(date);
-     var cardWeekNumber = cardDate.getWeek();
-
-     return (currentWeek() == cardWeekNumber ? true : false);
+    return (currentWeek() == cardWeek(date) ? true : false);
   };
 
   var isPastWeek = function(date) {
-     var cardDate = new Date(date);
-     var cardWeekNumber = cardDate.getWeek();
-     var pastWeek = currentWeek() - 1;
+    var pastWeek = currentWeek() - 1;
 
-     return (cardWeekNumber == pastWeek ? true : false);
+    return (cardWeek(date) == pastWeek ? true : false);
   };
 
   var noCardsMsg = function() {
@@ -66,9 +66,10 @@
   };
 
   var createCurrentWeekMsg = function() {
-     var weekClass = ($('.current-week').hasClass('left') ? "left" : "right");
+    var weekClass = ($('.current-week').hasClass('left') ? "left" : "right");
 
-     $('.current-week').after($('<div>', {class: 'this-week week-'+weekClass}).append($('<span>', {class: 'f-'+weekClass, text: 'THIS WEEK'})));
+    $('.current-week').after($('<div>', {class: 'this-week week-'+weekClass})
+                      .append($('<span>', {class: 'f-'+weekClass, text: 'THIS WEEK'})));
   };
 
   /**
