@@ -9,20 +9,48 @@
   };
 
   var Paint = function(url) {
-      $.getJSON( url, function( data ) {
-          if($.isEmptyObject(data)) {
-              noCardsMsg();
-          } else {
-            $firstMonth = createMonth(data.first_month);
-            $(".timeline").append($firstMonth);
+    $.getJSON( url, function( data ) {
+      if($.isEmptyObject(data)) {
+        noCardsMsg();
+      } else {
+        $firstMonth = createMonth(data.first_month);
+        $(".timeline").append($firstMonth);
 
-            createIterations(data.iterations);
+        createIterations(data.iterations);
 
-            $lastMonth = createMonth(data.last_month);
-            $(".timeline").append($lastMonth);
-          }
-          $('.loading-spinner').hide();
-      });
+        $lastMonth = createMonth(data.last_month);
+        $(".timeline").append($lastMonth);
+      }
+      $('.loading-spinner').hide();
+      createCurrentWeekMsg();
+    });
+  };
+
+  Date.prototype.getWeek = function() {
+    var onejan = new Date(this.getFullYear(),0,1);
+    return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+  };
+
+  var currentWeek = function() {
+    var today = new Date();
+    return today.getWeek();
+  };
+
+  var cardWeek = function(date) {
+    var d = new Date(date);
+    var cDate = new Date(d.getFullYear(),d.getMonth(),d.getDate());
+
+    return cDate.getWeek();
+  };
+
+  var isCurrentWeek = function(date) {
+    return (currentWeek() == cardWeek(date) ? true : false);
+  };
+
+  var isPastWeek = function(date) {
+    var pastWeek = currentWeek() - 1;
+
+    return (cardWeek(date) == pastWeek ? true : false);
   };
 
   var noCardsMsg = function() {
@@ -31,12 +59,17 @@
   };
 
   var createIterations = function(iterations){
-    var number = 0;
     for(var date in iterations){
-      number = number + 1;
-      $iteration = createIteration(date, iterations[date], number);
+      $iteration = createIteration(date, iterations[date]);
       $(".timeline").append($iteration);
     }
+  };
+
+  var createCurrentWeekMsg = function() {
+    var weekClass = ($('.current-week').hasClass('left') ? "left" : "right");
+
+    $('.current-week').after($('<div>', {class: 'this-week week-'+weekClass})
+                      .append($('<span>', {class: 'f-'+weekClass, text: 'THIS WEEK'})));
   };
 
   /**
@@ -60,11 +93,14 @@
   /**
    * @return String
    */
-  var createIteration = function(date, index, number) {
+  var createIteration = function(date, index) {
     strSide = side();
 
+    var current = (isCurrentWeek(date) ? "current-week" : "");
+    var past = (isPastWeek(date) ? "past-week" : "");
+
     $firstContainer = createFirstContainer(strSide);
-    $secondContainer = createSecondContainer(strSide);
+    $secondContainer = createSecondContainer(strSide, current, past);
     $tasks = createTasks(index);
     $secondContainer.append($tasks);
 
@@ -82,8 +118,8 @@
   /**
    * @return String <div class="timeline-panel right left"></div>
    */
-  var createSecondContainer = function(side) {
-    return $("<div>", {class: "timeline-panel "+side.toLowerCase()});
+  var createSecondContainer = function(side, current, past) {
+    return $("<div>", {class: "timeline-panel " + side.toLowerCase() + " " + current.toLowerCase() + " " + past.toLowerCase()});
   };
 
   /**
@@ -119,7 +155,7 @@
 
     $p = $("<p>");
     $ul = $("<ul>");
-
+      //current-week
     for(i=0; i<count; i++) {
       var date = new Date(index[i].due);
       var text = isToday(date) ? "<label class='timeline-today'>TODAY</label>" : formatDateMDY(date);

@@ -80,6 +80,38 @@
     var json = '/api/timeline/' + projectId;
     this.paint = new TimeApp.Paint(json);
 
+    this.setPrefixToShare = function(){
+      this.route = window.location.origin+"/#/timeline/report/" + projectId;
+    };
+
+    this.setUrlToShare = function(){
+      this.setPrefixToShare();
+      controller.urlShare = this.route;
+      controller.getShortUrl(controller.urlShare);
+    };
+
+    this.getShortUrl = function(url){
+      var long_url = url;
+      var login = "o_32g0fvedmb";
+      var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
+
+      $.getJSON("https://api-ssl.bitly.com/v3/shorten?callback=?", {
+          "format": "json",
+          "apiKey": api_key,
+          "login": login,
+          "longUrl": long_url
+        },
+        function(response){
+          if(response.status_code != 500){
+            controller.urlShare = response.data.url;
+          }else{
+            controller.urlShare = url;
+          }
+          controller.shortlink = true;
+        });
+    };
+
+    this.setUrlToShare();
 
   }]);
 

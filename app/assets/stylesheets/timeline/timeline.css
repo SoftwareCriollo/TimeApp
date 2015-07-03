@@ -18,7 +18,7 @@ ul {
 }
 
 a.a-timeline {
-    color: #5c5b5b;
+    color: #2b2e37;
     text-decoration: none;
     font-size: 13px!important;
 }
@@ -91,9 +91,6 @@ a.a-timeline {
 #history{
   //background-color: #F2F2F2;
 }
-
-
-
 
 .timeline {
   padding: 0;
@@ -180,6 +177,10 @@ a.a-timeline {
   transition: all .3s ease;
 }
 
+.current-week:after {
+  border: 2px solid #31BE6F;
+}
+
 .timeline-panel.left {
   text-align: left;
 }
@@ -205,14 +206,37 @@ a.a-timeline {
   color: #2b2e37;
 }
 
+.this-week {
+  width: 46%;
+  padding: 25px 0px;
+  color: #31BE6F;
+}
+
+.week-left {
+  float: right;
+}
+
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
+}
+
+.past-week li, .past-week li a {
+  color: #a5a6a6;
+}
+
 .date {
   display: block;
   font-size: 19px;
 }
 
+/*
 .timeline-panel:hover:after {
   border-color: #31BE6F;
-}
+}*/
 
 .no-cards-msg {
   width: 46%;
@@ -221,4 +245,35 @@ a.a-timeline {
   border-radius: 5px;
   padding: 15px;
   margin: 0 auto;
+}
+
+.section-up-timeline {
+    display: inline-block;
+    width: 100%;
+}
+
+.section-up-timeline .url-to-share {
+    width: 30%;
+    margin: 0px;
+}
+
+.section-up-timeline .url-to-share p {
+    margin: 22px 0px 0px 0px;
+    float: left;
+    font-size: 14px;
+}
+
+.section-up-timeline .url-to-share a {
+    float: left;
+    margin: 22px 0px 0px 5px;
+}
+
+.title-timeline-report {
+    margin: -12px 0px 0px 0px;
+}
+
+.section-up-timeline-report {
+    display: inline-block;
+    width: 100%;
+    margin-top: 40px;
 }

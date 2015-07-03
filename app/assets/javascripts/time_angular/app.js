@@ -82,6 +82,11 @@
         controller: 'TimelineController',
         controllerAs: 'ctrl'
       })
+      .when('/timeline/report/:projectId', {
+        templateUrl: 'templates/timeline/report.html',
+        controller: 'TimelineController',
+        controllerAs: 'ctrl'
+      })
       .when('/performance', {
         templateUrl: 'templates/performance/index.html',
         controller: 'GeneralPerformanceController',
