@@ -1,0 +1,10 @@
+<div class="buttons-up" ng-cloak>
+    <button class="log-out"  ng-click="ctrl.logOut()"> LOG OUT </button>
+    <a class="client-information" href="#/projects/{{ctrl.project.id}}/client">CLIENT INFORMATION</a>
+</div>
+
+<nav class="general-performance" ng-cloak>
+    <a ng-href="#/projects/{{ctrl.project.id}}/cards">STORIES</a>
+    <a ng-href="#/projects/{{ctrl.project.id}}/iterations">ITERATIONS</a>
+    <a class="active" ng-href="#/timeline/project/{{ctrl.project.id}}">TIMELINE</a>
+</nav>

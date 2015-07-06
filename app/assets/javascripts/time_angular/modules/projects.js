@@ -73,7 +73,7 @@
 
   app.controller('TimelineController',['$routeParams','ProjectCache', function($routeParams,projectCache){
 
-    var controller = this;
+    var ctrl = this;
     var projectId = $routeParams.projectId;
 
     this.project = projectCache.findProject(projectId);
@@ -86,8 +86,8 @@
 
     this.setUrlToShare = function(){
       this.setPrefixToShare();
-      controller.urlShare = this.route;
-      controller.getShortUrl(controller.urlShare);
+      ctrl.urlShare = this.route;
+      ctrl.getShortUrl(ctrl.urlShare);
     };
 
     this.getShortUrl = function(url){
@@ -103,11 +103,11 @@
         },
         function(response){
           if(response.status_code != 500){
-            controller.urlShare = response.data.url;
+            ctrl.urlShare = response.data.url;
           }else{
-            controller.urlShare = url;
+            ctrl.urlShare = url;
           }
-          controller.shortlink = true;
+          ctrl.shortlink = true;
         });
     };
 
