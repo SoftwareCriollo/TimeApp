@@ -1,3 +1,6 @@
+require 'json'
+require 'yaml'
+
 class ProjectManager
   include Serializer
 
@@ -9,12 +12,13 @@ class ProjectManager
 
   def initialize
     @organization = find_organization
-    @espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
+    #@espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
+    @espcial_board_ids = [] #[Opensublet]
   end
-  
+
   def especial_boards
    @espcial_board_ids.map{|bid| Trello::Board.find(bid)}
-  end  
+  end
 
   def boards
     @organization.boards.select{|board| !board.closed?}.concat(especial_boards)
@@ -29,6 +33,10 @@ class ProjectManager
     end
     @id_lists = @lists_hash.keys
     add_name_list_to_cards
+  end
+
+  def cards_by_board_due(board_id)
+    CardsByWeek.new(cards_by_board(board_id)).process
   end
 
   def boards_serialized
@@ -52,7 +60,6 @@ class ProjectManager
       end
     end
   end
-
 
   def project_name(project_id)
     find_board(project_id).name
@@ -85,11 +92,11 @@ class ProjectManager
   def find_board(board_id)
     Trello::Board.find(board_id)
   end
-  
+
   def find_card(card_id)
     Trello::Card.find(card_id)
   end
-  
+
   def find_organization
     Trello::Organization.find(organization_name)
   end

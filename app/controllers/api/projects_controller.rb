@@ -12,6 +12,11 @@ class Api::ProjectsController < ApiAuthenticatedController
     render json: cards
   end
 
+  def cards_with_date
+    cards = project_manager.cards_by_week(params[:id])
+    render json: cards
+  end
+
   def name
     project = project_manager.project_name(params[:project_id])
     render json: project.to_json

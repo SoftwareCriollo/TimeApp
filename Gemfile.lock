@@ -284,6 +284,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_girl_rails
+  json
   launchy
   mongoid
   poltergeist

@@ -70,5 +70,50 @@
     };
 
   }]);
+
+  app.controller('TimelineController',['$routeParams','ProjectCache', function($routeParams,projectCache){
+
+    var ctrl = this;
+    var projectId = $routeParams.projectId;
+
+    this.project = projectCache.findProject(projectId);
+    var json = '/api/timeline/' + projectId;
+    this.paint = new TimeApp.Paint(json);
+
+    this.setPrefixToShare = function(){
+      this.route = window.location.origin+"/#/timeline/report/" + projectId;
+    };
+
+    this.setUrlToShare = function(){
+      this.setPrefixToShare();
+      ctrl.urlShare = this.route;
+      ctrl.getShortUrl(ctrl.urlShare);
+    };
+
+    this.getShortUrl = function(url){
+      var long_url = url;
+      var login = "o_32g0fvedmb";
+      var api_key = "R_00527cbbec5e4ac6afec3245e4a01039";
+
+      $.getJSON("https://api-ssl.bitly.com/v3/shorten?callback=?", {
+          "format": "json",
+          "apiKey": api_key,
+          "login": login,
+          "longUrl": long_url
+        },
+        function(response){
+          if(response.status_code != 500){
+            ctrl.urlShare = response.data.url;
+          }else{
+            ctrl.urlShare = url;
+          }
+          ctrl.shortlink = true;
+        });
+    };
+
+    this.setUrlToShare();
+
+  }]);
+
 })();
 
