@@ -23,6 +23,7 @@
       }
       $('.loading-spinner').hide();
       createCurrentWeekMsg();
+      createLastWeekMsg();
     });
   };
 
@@ -72,6 +73,13 @@
                       .append($('<span>', {class: 'f-'+weekClass, text: 'THIS WEEK'})));
   };
 
+  var createLastWeekMsg = function() {
+    var weekClass = ($('.last-week').hasClass('left') ? "left" : "right");
+
+    $('.last-week').after($('<div>', {class: 'last-week-tag week-'+weekClass})
+                   .append($('<span>', {class: 'f-'+weekClass, text: 'LAST WEEK'})));
+    };
+
   /**
    * Return the side of the boxes
    * @return String
@@ -97,7 +105,7 @@
     strSide = side();
 
     var current = (isCurrentWeek(date) ? "current-week" : "");
-    var past = (isPastWeek(date) ? "past-week" : "");
+    var past = (isPastWeek(date) ? "last-week" : "");
 
     $firstContainer = createFirstContainer(strSide);
     $secondContainer = createSecondContainer(strSide, current, past);
@@ -155,7 +163,7 @@
 
     $p = $("<p>");
     $ul = $("<ul>");
-      //current-week
+
     for(i=0; i<count; i++) {
       var date = new Date(index[i].due);
       var text = isToday(date) ? "<label class='timeline-today'>TODAY</label>" : formatDateMDY(date);
