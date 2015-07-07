@@ -71,10 +71,14 @@
 
   }]);
 
-  app.controller('TimelineController',['$routeParams','ProjectCache', function($routeParams,projectCache){
+  app.controller('TimelineController',['$routeParams','ProjectCache', 'ProjectRepository', function($routeParams, projectCache, projectRepository){
 
     var ctrl = this;
     var projectId = $routeParams.projectId;
+
+    projectRepository.findProjectByName(projectId, function(projectName, status, headers, config){
+      ctrl.project_name = projectName;
+    });
 
     this.project = projectCache.findProject(projectId);
     var json = '/api/timeline/' + projectId;
