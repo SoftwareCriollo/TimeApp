@@ -1,0 +1,35 @@
+-
+  title: Sample Project
+  subtitle: Sample Project short Description
+  descrition: longer decription about the project
+  velocity: 30 hours per week until project is completed.
+  delivery: Late October 2014.
+  budget: Approximate total
+  team:
+    - 1 Sr Designer/ UX / Project Manager . Point of contact.
+    - 1 Engineer. Integration. Programing. HTML CSS.
+    - 1 Jr Q/A.
+
+- month: July
+- iteration:
+    date: 02/07/2015
+    url: https://trello.com/c/61bEzNEt/207-rewrite-acceptance-test-in-full-supplier
+    name: Rewrite acceptance test in full supplier
+- iteration:
+    date: 05/07/2015
+    url: https://trello.com/c/d2Uq9kDh/199-documentation-how-to-import-data-in-the-app
+    name: Documentation: how  to import data in the app
+- month: July
+- iteration:
+    date: 12/07/2015
+    url: https://trello.com/c/x0TAk03P/170-trip-over-view-contacts
+    name: Trip > Over view - Contacts
+- iteration:
+    date: 15/07/2015
+    url: https://trello.com/c/FYuZ1cwV/83-as-a-user-i-need-create-a-change-request-type-delete
+    name: As a user i need create a change request type Delete
+- iteration:
+    date: 15/07/2015
+    url: https://trello.com/c/KqChaMSa/202-ui-bug-supplier-full-view
+    name: UI Bug: Supplier Full View'
+
