@@ -21,7 +21,6 @@ a.a-timeline {
   color: #2b2e37;
   text-decoration: none;
   font-size: 13px!important;
-  line-height: 18px;
 }
 
 .title h1 {
@@ -89,6 +88,12 @@ a.a-timeline {
 /* =Timeline
 -------------------------------------------------------------- */
 
+@media only screen and (max-width: 40em) {
+    a.a-timeline {
+        line-height: 20px;
+    }
+}
+
 #history{
   //background-color: #F2F2F2;
 }
@@ -115,6 +120,10 @@ a.a-timeline {
 .timeline > li {
   position: relative;
   margin-bottom: 25px;
+}
+
+.timeline ul li {
+  margin-bottom: 12px;
 }
 
 .timeline > li:before, .timeline > li:after {
@@ -208,24 +217,24 @@ a.a-timeline {
 }
 
 .this-week {
-  width: 7%;
+  width: 10%;
   padding: 25px 0px;
   color: #00bfb2;
 }
 
 .last-week-tag {
-  width: 7%;
+  width: 10%;
   padding: 25px 0px;
   color: #a5a6a6;
 }
 
 .week-left {
   float: right;
-  margin-right: 40%!important;
+  margin-right: 37%!important;
 }
 
 .week-right {
-  margin-left: 40%!important;
+  margin-left: 37%!important;
 }
 
 .f-left {
