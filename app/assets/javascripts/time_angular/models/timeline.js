@@ -172,7 +172,7 @@
                                    .substring(0, 62)
                                    .split(" ")
                                    .join(" ") + "...";
-      $ul.append($("<li>").append($("<a>", {text: shortName, href: index[i].url}).addClass("a-timeline")).append(" - " + text));
+      $ul.append($("<li>").append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline")).append(" - " + text));
     }
 
     return $p.append($ul);
