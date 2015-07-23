@@ -40,11 +40,14 @@ class ProjectManager
   end
 
   def all_cards
-   # boards.map(&:cards).flatten
     c1 = []
     cards = boards.map(&:cards)
+    #cards = boards.map { |p| {id: p.id, name: p.name, due: p.cards} }
+
     cards.each do |card|
-      c2 = card.map(&:attributes)
+     # c2 = card.map(&:attributes)
+      #, board_name: project_name(c.board_id)
+      c2 = card.map { |c| {id: c.id, name: c.name, due: c.due, url: c.url, board_id: c.board_id, member_ids: c.member_ids} }
       c1 += c2
     end
     CardsByWeek.new(c1).process

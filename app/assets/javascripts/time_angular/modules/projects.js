@@ -91,7 +91,7 @@
         };
     } else {
         json = '/api/timeline/';
-        this.paint = new TimeApp.Paint(json);
+        this.paint = new TimeApp.Paint(json, projectRepository);
 
         this.setPrefixToShare = function () {
             this.route = window.location.origin + "/#/timeline/report/";
