@@ -12,7 +12,8 @@ class ProjectManager
 
   def initialize
     @organization = find_organization
-    @espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
+    #@espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
+    @espcial_board_ids = [] #[Opensublet]
   end
 
   def especial_boards
@@ -36,6 +37,17 @@ class ProjectManager
 
   def cards_by_board_due(board_id)
     CardsByWeek.new(cards_by_board(board_id)).process
+  end
+
+  def all_cards
+   # boards.map(&:cards).flatten
+    c1 = []
+    cards = boards.map(&:cards)
+    cards.each do |card|
+      c2 = card.map(&:attributes)
+      c1 += c2
+    end
+    CardsByWeek.new(c1).process
   end
 
   def boards_serialized

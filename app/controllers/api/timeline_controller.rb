@@ -5,6 +5,11 @@ class Api::TimelineController < ApiController
    render json: cards
  end
 
+ def all_timeline
+   cards = project_manager.all_cards
+   render json: cards
+ end
+
  private
 
  def project_manager

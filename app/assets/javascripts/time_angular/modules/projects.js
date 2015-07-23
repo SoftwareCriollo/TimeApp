@@ -75,18 +75,28 @@
 
     var ctrl = this;
     var projectId = $routeParams.projectId;
+    var json;
 
-    projectRepository.findProjectByName(projectId, function(projectName, status, headers, config){
-      ctrl.project_name = projectName;
-    });
+    if(projectId != null) {
+        projectRepository.findProjectByName(projectId, function (projectName, status, headers, config) {
+            ctrl.project_name = projectName;
+        });
 
-    this.project = projectCache.findProject(projectId);
-    var json = '/api/timeline/' + projectId;
-    this.paint = new TimeApp.Paint(json);
+        this.project = projectCache.findProject(projectId);
+        json = '/api/timeline/' + projectId;
+        this.paint = new TimeApp.Paint(json);
 
-    this.setPrefixToShare = function(){
-      this.route = window.location.origin+"/#/timeline/report/" + projectId;
-    };
+        this.setPrefixToShare = function () {
+            this.route = window.location.origin + "/#/timeline/report/" + projectId;
+        };
+    } else {
+        json = '/api/timeline/';
+        this.paint = new TimeApp.Paint(json);
+
+        this.setPrefixToShare = function () {
+            this.route = window.location.origin + "/#/timeline/report/";
+        };
+    }
 
     this.setUrlToShare = function(){
       this.setPrefixToShare();
