@@ -24,6 +24,10 @@ class ProjectManager
     @organization.boards.select{|board| !board.closed?}.concat(especial_boards)
   end
 
+  def find_member(member_id)
+    Trello::Member.find(member_id).username
+  end
+
   def cards_by_board(board_id)
     @board = find_board(board_id)
     lists = allowed_lists(@board.lists)
@@ -47,14 +51,31 @@ class ProjectManager
       all_boards[b.id] = b.name
     end
 
+    all_members = {}
+    @organization.members.each do |m|
+      all_members[m.id] = m.username
+    end
+
+    puts all_members
+
     cards.each do |card|
      # c2 = card.map(&:attributes)
-      #puts card.map{ |b| project_name(b.board_id) }
-      c2 = card.map { |c| {id: c.id, name: c.name, due: c.due, url: c.url, board_id: c.board_id, board_name: all_boards[c.board_id], member_ids: c.member_ids} }
+
+      c2 = card.map { |c| {
+          id: c.id,
+          name: c.name,
+          due: c.due,
+          url: c.url,
+          board_id: c.board_id,
+          board_name: all_boards[c.board_id],
+          member_ids: c.member_ids #member_ids.map { |m| all_members[m] }
+        }
+      }
       c1 += c2
     end
     CardsByWeek.new(c1).process
   end
+
 
   def boards_serialized
     arrays_object(boards,BOARD_ATTRIBUTES)

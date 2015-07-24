@@ -172,13 +172,23 @@
   };
 
   var createTask = function(index) {
+      var shortName = "";
       var date = new Date(index[i].due);
       var text = isToday(date) ? "<label class='timeline-today'>TODAY</label>" : formatDateMDY(date);
 
-      var shortName = index[i].name.trim()
-              .substring(0, 62)
-              .split(" ")
-              .join(" ") + "...";
+      if(index[i].board_name != null) {
+          shortName = index[i].board_name + ": " +
+                      index[i].name.trim()
+                      .substring(0, 45)
+                      .split(" ")
+                      .join(" ") + "...";
+      } else {
+          shortName = index[i].name.trim()
+                      .substring(0, 62)
+                      .split(" ")
+                      .join(" ") + "...";
+      }
+
       $ul.append($("<li>").append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline")).append(" - " + text));
   };
 
