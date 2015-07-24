@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :timelogs, only: [:create,:index,:update]
     resources :mongoid_users, only: [:index]
     get('/timeline/:project_id', to: 'timeline#index')
+    get('/timeline/member/:member_id', to: 'timeline#member_timeline')
     get('/timeline', to: 'timeline#all_timeline')
   end
 

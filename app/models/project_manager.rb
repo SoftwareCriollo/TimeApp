@@ -25,7 +25,7 @@ class ProjectManager
   end
 
   def find_member(member_id)
-    Trello::Member.find(member_id).username
+    Trello::Member.find(member_id)
   end
 
   def cards_by_board(board_id)
@@ -76,6 +76,10 @@ class ProjectManager
     CardsByWeek.new(c1).process
   end
 
+  def member_cards(member_id)
+    cards = find_member(member_id).cards
+    #CardsByWeek.new(cards).process
+  end
 
   def boards_serialized
     arrays_object(boards,BOARD_ATTRIBUTES)

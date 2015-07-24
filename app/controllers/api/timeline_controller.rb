@@ -10,6 +10,11 @@ class Api::TimelineController < ApiController
    render json: cards
  end
 
+ def member_timeline
+   cards = project_manager.member_cards(params[:member_id])
+   render json: cards
+ end
+
  private
 
  def project_manager
