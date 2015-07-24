@@ -165,17 +165,21 @@
     $ul = $("<ul>");
 
     for(i=0; i<count; i++) {
+      createTask(index);
+    }
+
+    return $p.append($ul);
+  };
+
+  var createTask = function(index) {
       var date = new Date(index[i].due);
       var text = isToday(date) ? "<label class='timeline-today'>TODAY</label>" : formatDateMDY(date);
 
       var shortName = index[i].name.trim()
-                                   .substring(0, 62)
-                                   .split(" ")
-                                   .join(" ") + "...";
+              .substring(0, 62)
+              .split(" ")
+              .join(" ") + "...";
       $ul.append($("<li>").append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline")).append(" - " + text));
-    }
-
-    return $p.append($ul);
   };
 
   window.TimeApp.Timeline = Timeline;
