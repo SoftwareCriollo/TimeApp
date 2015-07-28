@@ -178,18 +178,41 @@
 
       if(index[i].board_name != null) {
           shortName = index[i].board_name + ": " +
-                      index[i].name.trim()
-                      .substring(0, 45)
-                      .split(" ")
-                      .join(" ") + "...";
+              index[i].name.trim()
+                  .substring(0, 45)
+                  .split(" ")
+                  .join(" ") + "...";
+
+          var members = index[i].member_ids;
+
+          if(members.length > 0) {
+              shortName = shortName + " - ";
+          }
+
+          $li = $("<li>");
+          $li.append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline"));
+
+          for(var j=0; j < members.length; j++) {
+            var member = members[j];
+            var separator = "";
+
+            if(j < members.length -1)
+                separator = ", ";
+
+            $li.append($("<a>", {text: member, href: "/timeline/member/" + members[j], target: "_blank"})).append(separator);
+          }
+          $li.append(" - " + text);
+          $ul.append($li);
+
       } else {
           shortName = index[i].name.trim()
                       .substring(0, 62)
                       .split(" ")
                       .join(" ") + "...";
+          $ul.append($("<li>").append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline")).append(" - " + text));
       }
 
-      $ul.append($("<li>").append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline")).append(" - " + text));
+
   };
 
   window.TimeApp.Timeline = Timeline;

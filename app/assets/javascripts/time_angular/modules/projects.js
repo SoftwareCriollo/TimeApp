@@ -90,12 +90,24 @@
             this.route = window.location.origin + "/#/timeline/report/" + projectId;
         };
     } else {
-        json = '/api/timeline/';
-        this.paint = new TimeApp.Paint(json);
 
-        this.setPrefixToShare = function () {
-            this.route = window.location.origin + "/#/timeline/report/";
-        };
+        var memberId = $routeParams.memberId;
+
+        if(memberId != null) {
+            json = '/api/timeline/member/' + memberId;
+            this.paint = new TimeApp.Paint(json);
+
+            this.setPrefixToShare = function () {
+                this.route = window.location.origin + "/#/timeline/report/";
+            };
+        } else {
+            json = '/api/timeline/';
+            this.paint = new TimeApp.Paint(json);
+
+            this.setPrefixToShare = function () {
+                this.route = window.location.origin + "/#/timeline/report/";
+            };
+        }
     }
 
     this.setUrlToShare = function(){

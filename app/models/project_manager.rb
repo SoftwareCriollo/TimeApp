@@ -46,6 +46,7 @@ class ProjectManager
   def all_cards
     c1 = []
     cards = boards.map(&:cards)
+
     all_boards = {}
     boards.each do |b|
       all_boards[b.id] = b.name
@@ -77,8 +78,24 @@ class ProjectManager
   end
 
   def member_cards(member_id)
-    cards = find_member(member_id).cards
-    #CardsByWeek.new(cards).process
+
+    all_boards = {}
+    boards.each do |b|
+      all_boards[b.id] = b.name
+    end
+
+    cards = find_member(member_id).cards.map { |card| {
+        id: card.id,
+        name: card.name,
+        due: card.due,
+        url: card.url,
+        board_id: card.board_id,
+        board_name: all_boards[card.board_id],
+        member_ids: card.member_ids
+      }
+    }
+
+    CardsByWeek.new(cards).process
   end
 
   def boards_serialized

@@ -1,0 +1,20 @@
+<div ng-include="'templates/timeline/all_timeline_box_right.html'" class="navigator-right ng-scope ng-isolate-scope"></div>
+
+<div class="section-up-timeline">
+    <div class="box-title title-card">
+        <h1 class="title"><a href="{{ctrl.project.url}}" target="_blank" style='color: #5c5b5b;font-weight: 500;font-family: "MuseoSans"; text-shadow: 1px 1px #cccccc; text-decoration: none; font-size: 30px !important;'>TIMELINE</a></h1>
+        <div class="loading-spinner">
+            <img src="images/ajax-loader.gif" />
+        </div>
+    </div>
+    <div class="url-to-share">
+        <p>Url to share: </p>
+        <a href="{{ctrl.urlShare}}" target="_blank">{{ ctrl.urlShare | limitTo: 40 }}{{ctrl.urlShare.length > 40 ? '...' : ''}}</a>
+    </div>
+</div>
+
+<section id="timeline" class="container-fluid cards-container">
+    <div class="container">
+        <ul class="timeline"></ul>
+    </div>
+</section>
