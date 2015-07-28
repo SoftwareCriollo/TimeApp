@@ -199,7 +199,7 @@
             if(j < members.length -1)
                 separator = ", ";
 
-            $li.append($("<a>", {text: member, href: "/timeline/member/" + members[j], target: "_blank"})).append(separator);
+            $li.append($("<a>", {text: member, href: "/#/timeline/member/" + members[j], target: "_blank"})).append(separator);
           }
           $li.append(" - " + text);
           $ul.append($li);
