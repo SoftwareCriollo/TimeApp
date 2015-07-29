@@ -270,5 +270,14 @@
       return this;
     }]);
 
+    $provide.factory('MemberRepository',["Repository",function(repository) {
+        this.route = "/api/members";
+        this.findMemberByName = function(memberId, success_callback){
+            this.route = '/api/members/'+memberId;
+            repository.get(this.route,success_callback);
+        };
+        return this;
+    }]);
+
   }]);
 })();

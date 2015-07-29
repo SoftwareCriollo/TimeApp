@@ -71,7 +71,7 @@
 
   }]);
 
-  app.controller('TimelineController',['$routeParams','ProjectCache', 'ProjectRepository', function($routeParams, projectCache, projectRepository){
+  app.controller('TimelineController',['$routeParams','ProjectCache', 'ProjectRepository', 'MemberRepository', function($routeParams, projectCache, projectRepository, memberRepository){
 
     var ctrl = this;
     var projectId = $routeParams.projectId;
@@ -94,6 +94,10 @@
         var memberId = $routeParams.memberId;
 
         if(memberId != null) {
+            memberRepository.findMemberByName(memberId, function (memberName, status, headers, config) {
+                ctrl.memberName = memberName;
+            });
+
             json = '/api/timeline/member/' + memberId;
             this.paint = new TimeApp.Paint(json);
 

@@ -183,7 +183,7 @@
                   .split(" ")
                   .join(" ") + "...";
 
-          var members = index[i].member_ids;
+          var members = index[i].members;
 
           if(members.length > 0) {
               shortName = shortName + " - ";
@@ -193,13 +193,13 @@
           $li.append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline"));
 
           for(var j=0; j < members.length; j++) {
-            var member = members[j];
+            var member = members[j].username;
             var separator = "";
 
             if(j < members.length -1)
                 separator = ", ";
 
-            $li.append($("<a>", {text: member, href: "/#/timeline/member/" + members[j], target: "_blank"})).append(separator);
+            $li.append($("<a>", {text: member, href: "/#/timeline/member/" + members[j].id, target: "_blank"})).append(separator);
           }
           $li.append(" - " + text);
           $ul.append($li);

@@ -43,59 +43,62 @@ class ProjectManager
     CardsByWeek.new(cards_by_board(board_id)).process
   end
 
+  def lastweek
+    Date.today.cweek - 1
+  end
+
+  def current_year
+    Date.today.year
+  end
+
   def all_cards
     c1 = []
-    cards = boards.map(&:cards)
 
-    all_boards = {}
-    boards.each do |b|
-      all_boards[b.id] = b.name
-    end
-
-    all_members = {}
-    @organization.members.each do |m|
-      all_members[m.id] = m.username
-    end
-
-    puts all_members
-
-    cards.each do |card|
-     # c2 = card.map(&:attributes)
-
-      c2 = card.map { |c| {
-          id: c.id,
-          name: c.name,
-          due: c.due,
-          url: c.url,
-          board_id: c.board_id,
-          board_name: all_boards[c.board_id],
-          member_ids: c.member_ids #member_ids.map { |m| all_members[m] }
-        }
-      }
-      c1 += c2
+    boards.each do |board|
+      board.cards.each do |card|
+        if !card.due.nil?
+          if card.due.to_date.cweek >= lastweek && card.due.to_date.year >= current_year
+            c1 << {
+                id: card.id,
+                name: card.name,
+                due: card.due,
+                url: card.url,
+                board_id: board.id,
+                board_name: board.name,
+                members: card.members
+            }
+          end
+        end
+      end
     end
     CardsByWeek.new(c1).process
   end
 
   def member_cards(member_id)
+    c1 = []
 
     all_boards = {}
     boards.each do |b|
       all_boards[b.id] = b.name
     end
 
-    cards = find_member(member_id).cards.map { |card| {
-        id: card.id,
-        name: card.name,
-        due: card.due,
-        url: card.url,
-        board_id: card.board_id,
-        board_name: all_boards[card.board_id],
-        member_ids: card.member_ids
-      }
-    }
+    find_member(member_id).cards.each do |card|
+      if !card.due.nil?
+        if card.due.to_date.cweek >= lastweek && card.due.to_date.year >= current_year
+          c1 << {
+              id: card.id,
+              name: card.name,
+              due: card.due,
+              url: card.url,
+              board_id: card.board_id,
+              board_name: all_boards[card.board_id],
+              members: card.members
+          }
+        end
+      end
+    end
 
-    CardsByWeek.new(cards).process
+    CardsByWeek.new(c1).process
   end
 
   def boards_serialized
