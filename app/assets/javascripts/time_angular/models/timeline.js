@@ -1,7 +1,7 @@
 (function(){
   window.TimeApp = window.TimeApp || {};
   var flag = true;
-  var printMembers = false;
+  var memberId;
 
   var Timeline = function(attributes) {
     attributes = attributes || {};
@@ -9,8 +9,8 @@
     this.project_name = attributes.project_name;
   };
 
-  var Paint = function(url, print) {
-      printMembers = print;
+  var Paint = function(url, member) {
+      memberId = member;
     $.getJSON( url, function( data ) {
       if($.isEmptyObject(data)) {
         noCardsMsg();
@@ -191,20 +191,40 @@
           $li.append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline"));
           $li.append(" - " + due);
 
-          if(printMembers) {
-            for(var j=0; j < members.length; j++) {
-              var member = members[j].username;
-              var separator = "";
+          var isLastMember = false;
+          var isFirstMember = false;
 
-              if(j < members.length -1)
-                separator = ", ";
-
-              if(j == 0)
-                $li.append($("<span>", {text: " - "}));
-
-              $li.append($("<a>", {text: member, href: "/#/timeline/member/" + members[j].id, target: "_blank", class: "timeline-member"})).append(separator);
-            }
+          if(memberId != null) {
+              isLastMember = (members[members.length-1].id == memberId);
+              isFirstMember = (members[0].id == memberId);
           }
+
+          for(var j=0; j < members.length; j++) {
+              if(members[j].id != memberId) {
+                  var member = members[j].username;
+                  var separator = "";
+
+                  if (j < members.length - 1 && !isLastMember)
+                      separator = ", ";
+
+                  if(isFirstMember) {
+                    if(j == 1)
+                        $li.append($("<span>", {text: " - "}));
+                  } else {
+                    if (j == 0)
+                      $li.append($("<span>", {text: " - "}));
+                  }
+                  $li.append($("<a>", {
+                      text: member,
+                      href: "/#/timeline/member/" + members[j].id,
+                      target: "_blank",
+                      class: "timeline-member"
+                  })).append(separator);
+              }
+          }
+
+          //var str = $li.replace(/,\s*$/, "");
+
           $ul.append($li);
       } else {
           shortName = index[i].name.trim()
