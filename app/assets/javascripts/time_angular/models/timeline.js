@@ -1,6 +1,7 @@
 (function(){
   window.TimeApp = window.TimeApp || {};
   var flag = true;
+  var printMembers = false;
 
   var Timeline = function(attributes) {
     attributes = attributes || {};
@@ -8,7 +9,8 @@
     this.project_name = attributes.project_name;
   };
 
-  var Paint = function(url) {
+  var Paint = function(url, print) {
+      printMembers = print;
     $.getJSON( url, function( data ) {
       if($.isEmptyObject(data)) {
         noCardsMsg();
@@ -174,42 +176,42 @@
   var createTask = function(index) {
       var shortName = "";
       var date = new Date(index[i].due);
-      var text = isToday(date) ? "<label class='timeline-today'>TODAY</label>" : formatDateMDY(date);
+      var due = isToday(date) ? "<label class='timeline-today'>TODAY</label>" : "<span>" + formatDateMDY(date) + "</span>";
 
       if(index[i].board_name != null) {
-          shortName = index[i].board_name + ": " +
-              index[i].name.trim()
-                  .substring(0, 45)
-                  .split(" ")
-                  .join(" ") + "...";
+          shortName = index[i].name.trim()
+                      .substring(0, 30)
+                      .split(" ")
+                      .join(" ") + "...";
 
           var members = index[i].members;
 
-          if(members.length > 0) {
-              shortName = shortName + " - ";
-          }
-
           $li = $("<li>");
+          $li.append($("<span>", {text: index[i].board_name + ": "}).addClass("time"));
           $li.append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline"));
+          $li.append(" - " + due);
 
-          for(var j=0; j < members.length; j++) {
-            var member = members[j].username;
-            var separator = "";
+          if(printMembers) {
+            for(var j=0; j < members.length; j++) {
+              var member = members[j].username;
+              var separator = "";
 
-            if(j < members.length -1)
+              if(j < members.length -1)
                 separator = ", ";
 
-            $li.append($("<a>", {text: member, href: "/#/timeline/member/" + members[j].id, target: "_blank"})).append(separator);
-          }
-          $li.append(" - " + text);
-          $ul.append($li);
+              if(j == 0)
+                $li.append($("<span>", {text: " - "}));
 
+              $li.append($("<a>", {text: member, href: "/#/timeline/member/" + members[j].id, target: "_blank", class: "timeline-member"})).append(separator);
+            }
+          }
+          $ul.append($li);
       } else {
           shortName = index[i].name.trim()
                       .substring(0, 62)
                       .split(" ")
                       .join(" ") + "...";
-          $ul.append($("<li>").append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline")).append(" - " + text));
+          $ul.append($("<li>").append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline")).append(" - " + due));
       }
 
 

@@ -84,7 +84,7 @@
 
         this.project = projectCache.findProject(projectId);
         json = '/api/timeline/' + projectId;
-        this.paint = new TimeApp.Paint(json);
+        this.paint = new TimeApp.Paint(json, true);
 
         this.setPrefixToShare = function () {
             this.route = window.location.origin + "/#/timeline/report/" + projectId;
@@ -99,14 +99,14 @@
             });
 
             json = '/api/timeline/member/' + memberId;
-            this.paint = new TimeApp.Paint(json);
+            this.paint = new TimeApp.Paint(json, false);
 
             this.setPrefixToShare = function () {
                 this.route = window.location.origin + "/#/timeline/report/";
             };
         } else {
             json = '/api/timeline/';
-            this.paint = new TimeApp.Paint(json);
+            this.paint = new TimeApp.Paint(json, true);
 
             this.setPrefixToShare = function () {
                 this.route = window.location.origin + "/#/timeline/report/";
