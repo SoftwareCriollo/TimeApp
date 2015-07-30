@@ -47,13 +47,13 @@
   };
 
   var isCurrentWeek = function(date) {
-    return (currentWeek() == cardWeek(date) ? true : false);
+    return (currentWeek() == cardWeek(date));
   };
 
   var isPastWeek = function(date) {
     var pastWeek = currentWeek() - 1;
 
-    return (cardWeek(date) == pastWeek ? true : false);
+    return (cardWeek(date) == pastWeek);
   };
 
   var noCardsMsg = function() {
@@ -69,18 +69,20 @@
   };
 
   var createCurrentWeekMsg = function() {
-    var weekClass = ($('.current-week').hasClass('left') ? "left" : "right");
+    $currentWeek = $('.current-week');
+    var weekClass = ($currentWeek.hasClass('left') ? "left" : "right");
 
-    $('.current-week').after($('<div>', {class: 'this-week week-'+weekClass})
-                      .append($('<span>', {class: 'f-'+weekClass, text: 'THIS WEEK'})));
+    $currentWeek.after($('<div>', {class: 'this-week week-' + weekClass})
+                .append($('<span>', {class: 'f-'+weekClass, text: 'THIS WEEK'})));
   };
 
   var createLastWeekMsg = function() {
-    var weekClass = ($('.last-week').hasClass('left') ? "left" : "right");
+    $lastWeek = $('.last-week');
+    var weekClass = ($lastWeek.hasClass('left') ? "left" : "right");
 
-    $('.last-week').after($('<div>', {class: 'last-week-tag week-'+weekClass})
-                   .append($('<span>', {class: 'f-'+weekClass, text: 'LAST WEEK'})));
-    };
+    $lastWeek.after($('<div>', {class: 'last-week-tag week-' + weekClass})
+             .append($('<span>', {class: 'f-'+weekClass, text: 'LAST WEEK'})));
+  };
 
   /**
    * Return the side of the boxes
@@ -106,11 +108,15 @@
   var createIteration = function(date, index) {
     strSide = side();
 
-    var current = (isCurrentWeek(date) ? "current-week" : "");
-    var past = (isPastWeek(date) ? "last-week" : "");
+    var customClass = "custom-week";
+
+    if(isCurrentWeek(date))
+      customClass = "current-week";
+    else if(isPastWeek(date))
+      customClass = "last-week";
 
     $firstContainer = createFirstContainer(strSide);
-    $secondContainer = createSecondContainer(strSide, current, past);
+    $secondContainer = createSecondContainer(strSide, customClass);
     $tasks = createTasks(index);
     $secondContainer.append($tasks);
 
@@ -128,8 +134,8 @@
   /**
    * @return String <div class="timeline-panel right left"></div>
    */
-  var createSecondContainer = function(side, current, past) {
-    return $("<div>", {class: "timeline-panel " + side.toLowerCase() + " " + current.toLowerCase() + " " + past.toLowerCase()});
+  var createSecondContainer = function(side, customClass) {
+    return $("<div>", {class: "timeline-panel " + side.toLowerCase() + " " + customClass.toLowerCase()});
   };
 
   /**
