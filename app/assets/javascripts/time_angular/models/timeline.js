@@ -25,8 +25,6 @@
         $timeline.append($lastMonth);
       }
       $('.loading-spinner').hide();
-      createCurrentWeekMsg();
-      createLastWeekMsg();
     });
   };
 
@@ -62,27 +60,15 @@
     $(".timeline").append($noCardsMsg);
   };
 
-  var createIterations = function(iterations){
+  /**
+   *
+   * @param iterations
+   */
+  var createIterations = function(iterations) {
     for(var date in iterations){
       $iteration = createIteration(date, iterations[date]);
       $(".timeline").append($iteration);
     }
-  };
-
-  var createCurrentWeekMsg = function() {
-    $currentWeek = $('.current-week');
-    var weekClass = ($currentWeek.hasClass('left') ? "left" : "right");
-
-    $currentWeek.after($('<div>', {class: 'this-week week-' + weekClass})
-                .append($('<span>', {class: 'f-'+weekClass, text: 'THIS WEEK'})));
-  };
-
-  var createLastWeekMsg = function() {
-    $lastWeek = $('.last-week');
-    var weekClass = ($lastWeek.hasClass('left') ? "left" : "right");
-
-    $lastWeek.after($('<div>', {class: 'last-week-tag week-' + weekClass})
-             .append($('<span>', {class: 'f-'+weekClass, text: 'LAST WEEK'})));
   };
 
   /**
@@ -99,35 +85,35 @@
     }
   };
 
+  /**
+   *
+   * @param monthName
+   * @returns String <li class="month">JULY</li>
+   */
   var createMonth = function(monthName) {
     return $("<li>", {text: monthName.toUpperCase(), class: "month"});
   };
 
   /**
-   * @return String
+   *
+   * @param date iteration's date
+   * @param index
+   * @returns String
    */
   var createIteration = function(date, index) {
     strSide = side();
 
-    var customClass = "custom-week";
-
-    if(isCurrentWeek(date))
-      customClass = "current-week";
-    else if(isPastWeek(date))
-      customClass = "last-week";
+    var customClass = (isCurrentWeek(date) ? "current-week" : isPastWeek(date) ? "last-week" : "custom-week");
+    var weekClass = (isCurrentWeek(date) ? "this-week" : isPastWeek(date) ? "last-week-tag" : "custom-week-tag");
+    var message = (isCurrentWeek(date) ? "THIS WEEK" : isPastWeek(date) ? "LAST WEEK" : formatDateMDY(date));
 
     $firstContainer = createFirstContainer(strSide);
     $secondContainer = createSecondContainer(strSide, customClass);
-    $weekContainer = createWeekContainer(strSide, date);
+    $weekContainer = createWeekContainer(strSide, weekClass, message);
     $tasks = createTasks(index);
     $secondContainer.append($tasks);
 
-    if(!isCurrentWeek(date) && !isPastWeek(date))
-      $iteration = $firstContainer.append($secondContainer).append($weekContainer);
-    else
-      $iteration = $firstContainer.append($secondContainer);
-
-    return $iteration;
+    return $firstContainer.append($secondContainer).append($weekContainer);
   };
 
   /**
@@ -145,9 +131,16 @@
     return $("<div>", {class: "timeline-panel " + side.toLowerCase() + " " + customClass.toLowerCase()});
   };
 
-  var createWeekContainer = function(side, date) {
-      $div = $('<div>', {class: 'custom-week-tag week-'+side.toLowerCase()});
-      $span = $('<span>', {class: 'f-'+side.toLowerCase(), text: formatDateMDY(date)});
+  /**
+   *
+   * @param side to print the label
+   * @param weekClass for the label
+   * @param message to print in the label
+   * @returns String <div class="custom-week week-left"></div>
+   */
+  var createWeekContainer = function(side, weekClass, message) {
+      $div = $('<div>', {class: weekClass + ' week-' + side.toLowerCase()});
+      $span = $('<span>', {class: 'f-' + side.toLowerCase(), text: message});
 
       return $div.append($span);
   };
@@ -161,6 +154,11 @@
     return $("<h4>", {text: "Iteration #"+number+" - "+formattedDate});
   };
 
+  /**
+   *
+   * @param date to format
+   * @returns String formatted date: 11/30/2015
+   */
   var formatDateMDY = function(date) {
     var d = new Date(date);
     var day = d.getDate();
@@ -170,6 +168,11 @@
     return month + "/" + day + "/" + year;
   };
 
+  /**
+   *
+   * @param date to validate
+   * @returns {boolean} true if is today, false otherwise
+   */
   var isToday = function(date) {
     var today = new Date();
     var cardDate = new Date(date);
@@ -193,6 +196,10 @@
     return $p.append($ul);
   };
 
+  /**
+   * Create task detail in iteration
+   * @param index
+   */
   var createTask = function(index) {
       var shortName = "";
       var date = new Date(index[i].due);
@@ -215,36 +222,33 @@
           var isFirstMember = false;
 
           if(memberId != null) {
-              isLastMember = (members[members.length-1].id == memberId);
-              isFirstMember = (members[0].id == memberId);
+            isLastMember = (members[members.length-1].id == memberId);
+            isFirstMember = (members[0].id == memberId);
           }
 
           for(var j=0; j < members.length; j++) {
-              if(members[j].id != memberId) {
-                  var member = members[j].username;
-                  var separator = "";
+            if(members[j].id != memberId) {
+              var member = members[j].username;
+              var separator = "";
 
-                  if (j < members.length - 1 && !isLastMember)
-                      separator = ", ";
+              if (j < members.length - 1 && !isLastMember)
+                separator = ", ";
 
-                  if(isFirstMember) {
-                    if(j == 1)
-                        $li.append($("<span>", {text: " - "}));
-                  } else {
-                    if (j == 0)
-                      $li.append($("<span>", {text: " - "}));
-                  }
-                  $li.append($("<a>", {
-                      text: member,
-                      href: "/#/timeline/member/" + members[j].id,
-                      target: "_blank",
-                      class: "timeline-member"
-                  })).append(separator);
+                if(isFirstMember) {
+                  if(j == 1)
+                    $li.append($("<span>", {text: " - "}));
+                } else {
+                  if (j == 0)
+                    $li.append($("<span>", {text: " - "}));
+                }
+                $li.append($("<a>", {
+                    text: member,
+                    href: "/#/timeline/member/" + members[j].id,
+                    target: "_blank",
+                    class: "timeline-member"
+                })).append(separator);
               }
           }
-
-          //var str = $li.replace(/,\s*$/, "");
-
           $ul.append($li);
       } else {
           shortName = index[i].name.trim()
