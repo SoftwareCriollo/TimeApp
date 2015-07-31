@@ -239,6 +239,12 @@ span.time {
   color: #a5a6a6;
 }
 
+.custom-week-tag {
+    width: 10%;
+    padding: 25px 0px;
+    color: #565656;
+}
+
 .week-left {
   float: right;
   margin-right: 37%!important;

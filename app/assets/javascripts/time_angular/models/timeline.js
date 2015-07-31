@@ -15,13 +15,14 @@
       if($.isEmptyObject(data)) {
         noCardsMsg();
       } else {
+        $timeline = $(".timeline");
         $firstMonth = createMonth(data.first_month);
-        $(".timeline").append($firstMonth);
+        $timeline.append($firstMonth);
 
         createIterations(data.iterations);
 
         $lastMonth = createMonth(data.last_month);
-        $(".timeline").append($lastMonth);
+        $timeline.append($lastMonth);
       }
       $('.loading-spinner').hide();
       createCurrentWeekMsg();
@@ -117,10 +118,16 @@
 
     $firstContainer = createFirstContainer(strSide);
     $secondContainer = createSecondContainer(strSide, customClass);
+    $weekContainer = createWeekContainer(strSide, date);
     $tasks = createTasks(index);
     $secondContainer.append($tasks);
 
-    return $firstContainer.append($secondContainer);
+    if(!isCurrentWeek(date) && !isPastWeek(date))
+      $iteration = $firstContainer.append($secondContainer).append($weekContainer);
+    else
+      $iteration = $firstContainer.append($secondContainer);
+
+    return $iteration;
   };
 
   /**
@@ -136,6 +143,13 @@
    */
   var createSecondContainer = function(side, customClass) {
     return $("<div>", {class: "timeline-panel " + side.toLowerCase() + " " + customClass.toLowerCase()});
+  };
+
+  var createWeekContainer = function(side, date) {
+      $div = $('<div>', {class: 'custom-week-tag week-'+side.toLowerCase()});
+      $span = $('<span>', {class: 'f-'+side.toLowerCase(), text: formatDateMDY(date)});
+
+      return $div.append($span);
   };
 
   /**
@@ -239,8 +253,6 @@
                       .join(" ") + "...";
           $ul.append($("<li>").append($("<a>", {text: shortName, href: index[i].url, target: "_blank"}).addClass("a-timeline")).append(" - " + due));
       }
-
-
   };
 
   window.TimeApp.Timeline = Timeline;
