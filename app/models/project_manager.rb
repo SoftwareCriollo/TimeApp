@@ -11,9 +11,9 @@ class ProjectManager
   ALLOWED_LIST_NAMES= [/doing/i, /to define/i, /done/i, /to do/i ]
 
   def initialize
-    @organization = find_organization
-    @espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
-  end
+   @organization = find_organization
+   @espcial_board_ids = [] #[Opensublet]
+ end 
 
   def especial_boards
    @espcial_board_ids.map{|bid| Trello::Board.find(bid)}
