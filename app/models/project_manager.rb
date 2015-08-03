@@ -12,7 +12,7 @@ class ProjectManager
 
   def initialize
    @organization = find_organization
-   @espcial_board_ids = [] #[Opensublet]
+   @espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
  end 
 
   def especial_boards
