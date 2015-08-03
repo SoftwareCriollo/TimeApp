@@ -1,5 +1,5 @@
 class Api::ProjectsController < ApiAuthenticatedController
-  skip_before_action :restrict_access, :only => [:cards, :index]
+  skip_before_action :restrict_access, :only => [:cards, :index, :name]
 #  before_action :project_manager
 
   def index

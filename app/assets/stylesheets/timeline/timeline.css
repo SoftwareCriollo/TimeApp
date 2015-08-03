@@ -18,9 +18,10 @@ ul {
 }
 
 a.a-timeline {
-  color: #2b2e37;
+  color: #535354; /*#2b2e37;*/
   text-decoration: none;
   font-size: 13px!important;
+  font-weight: normal;
 }
 
 .title h1 {
@@ -216,6 +217,16 @@ a.a-timeline {
   color: #2b2e37;
 }
 
+.timeline-member {
+  font-weight: normal;
+  font-size: 13px;
+}
+
+span.time {
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .this-week {
   width: 10%;
   padding: 25px 0px;
@@ -226,6 +237,12 @@ a.a-timeline {
   width: 10%;
   padding: 25px 0px;
   color: #a5a6a6;
+}
+
+.custom-week-tag {
+    width: 10%;
+    padding: 25px 0px;
+    color: #565656;
 }
 
 .week-left {

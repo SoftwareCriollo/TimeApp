@@ -12,8 +12,7 @@ class ProjectManager
 
   def initialize
     @organization = find_organization
-    #@espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
-    @espcial_board_ids = [] #[Opensublet]
+    @espcial_board_ids = ["5427061ed62e617fa949b9fb"] #[Opensublet]
   end
 
   def especial_boards
@@ -22,6 +21,10 @@ class ProjectManager
 
   def boards
     @organization.boards.select{|board| !board.closed?}.concat(especial_boards)
+  end
+
+  def find_member(member_id)
+    Trello::Member.find(member_id)
   end
 
   def cards_by_board(board_id)
@@ -37,6 +40,64 @@ class ProjectManager
 
   def cards_by_board_due(board_id)
     CardsByWeek.new(cards_by_board(board_id)).process
+  end
+
+  def lastweek
+    Date.today.cweek - 1
+  end
+
+  def current_year
+    Date.today.year
+  end
+
+  def all_cards
+    c1 = []
+
+    boards.each do |board|
+      board.cards.each do |card|
+        if !card.due.nil?
+          if card.due.to_date.cweek >= lastweek && card.due.to_date.year >= current_year
+            c1 << {
+                id: card.id,
+                name: card.name,
+                due: card.due,
+                url: card.url,
+                board_id: board.id,
+                board_name: board.name,
+                members: card.members
+            }
+          end
+        end
+      end
+    end
+    CardsByWeek.new(c1).process
+  end
+
+  def member_cards(member_id)
+    c1 = []
+
+    all_boards = {}
+    boards.each do |b|
+      all_boards[b.id] = b.name
+    end
+
+    find_member(member_id).cards.each do |card|
+      if !card.due.nil?
+        if card.due.to_date.cweek >= lastweek && card.due.to_date.year >= current_year
+          c1 << {
+              id: card.id,
+              name: card.name,
+              due: card.due,
+              url: card.url,
+              board_id: card.board_id,
+              board_name: all_boards[card.board_id],
+              members: card.members
+          }
+        end
+      end
+    end
+
+    CardsByWeek.new(c1).process
   end
 
   def boards_serialized

@@ -22,8 +22,11 @@ class MongoidUser
   field :last_sign_in_at,    type: Time
   field :current_sign_in_ip, type: String
   field :last_sign_in_ip,    type: String
+  field :active,             type: Boolean, default: true
   
   field :token_authentication, type: String
+
+  scope :active_users, ->{ where(active: true).all }
 
   before_save do
     change_token
@@ -33,11 +36,16 @@ class MongoidUser
   def self.find_by_access_token(token)
     where(token_authentication: token).first
   end
+  
+  def disable
+    self.active = false
+    self.save
+  end  
 
   def time_for_user(time)
-    if ["jhoynerk@softwarecriollo.com"].include?(email)
+    if ["untercio@sc.com"].include?(email)
       time / 3
-    elsif ["mariaalejandra@softwarecriollo.com"].include?(email)
+    elsif ["dostercios@sc.com"].include?(email)
       ((time) / 3) * 2
     elsif ["rafael@softwarecriollo.com", "genesis@softwarecriollo.com"].include?(email)
       time / 2
