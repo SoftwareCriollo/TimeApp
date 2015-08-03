@@ -329,8 +329,10 @@
         if(!this.total[date])
           this.total[date] = 0;
         
+        
+        
         this.total[date] += sum;
-        this.totalWorked += sum;
+        ctrl.totalWorked += sum;
       }
 
       return sum;

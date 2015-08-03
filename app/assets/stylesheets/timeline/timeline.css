@@ -20,8 +20,9 @@ ul {
 a.a-timeline {
   color: #535354; /*#2b2e37;*/
   text-decoration: none;
-  font-size: 13px!important;
-  font-weight: normal;
+  font-size: 20px !important;
+  word-wrap: break-word;
+  line-height: 1.5em;
 }
 
 .title h1 {
