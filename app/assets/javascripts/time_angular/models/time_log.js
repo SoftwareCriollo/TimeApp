@@ -17,7 +17,7 @@
       return this.timelogs.length > 0;
     };
 
-    this.toggle_addCard = function(card){
+    this.toggleAddCard = function(card){
       var dataTask = {"task_id":card.id, "task_name": card.name };
       this.timelogs.push(dataTask);
     };
