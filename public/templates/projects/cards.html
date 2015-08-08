@@ -16,7 +16,7 @@
 
 <section id='cards' class="cards-container">
   <article ng-repeat="(list_name,cards) in ctrl.cardsGroup">
-    <article ng-repeat="card in cards" ng-class="{active:ctrl.timeLogger.isSelected(card)}" ng-click="ctrl.timeLogger.toggleTasks(card)" class='card-task' ng-show="!search || ([card.name]|filter:search).length">
+    <article ng-repeat="card in cards" ng-class="{active:ctrl.timeLogger.isSelected(card)}" ng-click="ctrl.timeLogger.toggle_addCard(card)" class='card-task' ng-show="!search || ([card.name]|filter:search).length">
       <div class="list">
 
         <span class='icn-bullet'></span>
@@ -45,7 +45,7 @@
       </ul>
       <form method="post" name="logTimeForm" novalidate ng-submit="ctrl.saveTimeLogger()">
         <article ng-repeat="timelog in ctrl.timeLogger.timelogs" class="box-time-log">
-          <div class="section-time-log-left section-left-card">
+          <div class="section-time-log-left section-left-card" ng-click="ctrl.timeLogger.removeCard($index)">
             <div class="card-selected-time-log">
               <p> {{timelog.task_name}}</p>
             </div>
