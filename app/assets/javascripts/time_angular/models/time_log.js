@@ -17,21 +17,14 @@
       return this.timelogs.length > 0;
     };
 
-    this.toggleTasks = function(card){
-      if(this.isSelected(card))
-        this.removeCard(card);
-      else
-        this.addCard(card);
-    };
-
     this.addCard = function(card){
       var dataTask = {"task_id":card.id, "task_name": card.name };
       this.timelogs.push(dataTask);
     };
 
-    this.removeCard = function(card){ //function to remove a card in arrat tasks
-      this.timelogs.splice(this.searchCard(card),1);
-    };
+    this.removeCard = function(index){
+      this.timelogs.splice(index,1);
+    }
 
     this.isSelected = function(card){
       return (this.searchCard(card) >= 0);
