@@ -87,6 +87,16 @@
         controller: 'TimelineController',
         controllerAs: 'ctrl'
       })
+      .when('/timeline/member/:memberId', {
+        templateUrl: 'templates/timeline/member.html',
+        controller: 'TimelineController',
+        controllerAs: 'ctrl'
+      })
+      .when('/timeline', {
+        templateUrl: 'templates/timeline/index.html',
+        controller: 'TimelineController',
+        controllerAs: 'ctrl'
+      })
       .when('/performance', {
         templateUrl: 'templates/performance/index.html',
         controller: 'GeneralPerformanceController',
