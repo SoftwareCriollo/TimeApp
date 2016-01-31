@@ -43,17 +43,7 @@ class MongoidUser
   end  
 
   def time_for_user(time)
-    if ["untercio@sc.com"].include?(email)
-      time / 3
-    elsif ["dostercios@sc.com"].include?(email)
-      ((time) / 3) * 2
-    elsif ["rafael@softwarecriollo.com", "genesis@softwarecriollo.com", "antonieta@softwarecriollo.com"].include?(email)
-      time / 2
-    elsif ["cibeles@softwarecriollo.com"].include?(email)
-      time * 0  
-    else
-      time
-    end      
+    factor_time * time
   end  
   
   def update_password(params)
