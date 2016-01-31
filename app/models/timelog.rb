@@ -71,7 +71,7 @@ class Timelog
   end
 
   def time_for_iteration
-    value_ajust.nil? ? time : (value_ajust > 0 ? value_ajust : time)
+    value_ajust.nil? || value_ajust.zero? ? time : value_ajust
   end
 
 end
