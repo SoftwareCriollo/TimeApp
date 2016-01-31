@@ -16,6 +16,8 @@ class Timelog
   field :value_ajust, type: Float, default: 0
   field :due_date, type: Date
 
+  belongs_to :user, class_name: 'MongoidUser'
+
   validates_presence_of :trello, :task_id
   validates_numericality_of :time, greater_than: 0
 

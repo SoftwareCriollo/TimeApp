@@ -33,6 +33,10 @@ class MongoidUser
     self
   end
 
+  def name
+    email
+  end
+
   def self.find_by_access_token(token)
     where(token_authentication: token).first
   end
