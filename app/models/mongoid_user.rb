@@ -23,8 +23,8 @@ class MongoidUser
   field :current_sign_in_ip, type: String
   field :last_sign_in_ip,    type: String
   field :active,             type: Boolean, default: true
-  
   field :token_authentication, type: String
+  field :factor_time, type: Float, default: 1
 
   scope :active_users, ->{ where(active: true).all }
 

@@ -13,7 +13,13 @@ Bundler.require(*Rails.groups)
 
 module TimeApp
   class Application < Rails::Application
+    config.api_only = false
     config.middleware.use ActionDispatch::Flash
+    config.middleware.insert_after(
+      ActionDispatch::Cookies,
+      ActionDispatch::Session::CookieStore,
+      key: '_namespace_key')
+    config.action_dispatch.cookies_serializer = :json
     config.assets.paths << Rails.root.join("app","assets","typography")
     config.assets.paths << Rails.root.join("vendor","assets","bower_components")
     config.assets.paths << Rails.root.join("vendor","assets","bower_components","bootstrap-sass-official","assets","fonts")
