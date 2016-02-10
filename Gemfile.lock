@@ -1,16 +1,19 @@
 GIT
-  remote: git://github.com/elia/activeadmin-mongoid.git
-  revision: 9b1858441acb1f118e07f04381ed107afee575c8
-  branch: rails4
+  remote: git://github.com/Zhomart/ransack.git
+  revision: e90ffd1ed970372b1df93e23e34ff83289478ed4
+  branch: mongoid
   specs:
-    activeadmin-mongoid (0.2.1)
-      activeadmin (>= 0.6.1, < 2)
-      mongoid (>= 4.0.0.beta1, < 5)
-      rails (~> 4.0)
+    ransack (1.5.1)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      i18n
+      polyamorous (~> 1.1)
 
 GIT
-  remote: git://github.com/gregbell/active_admin.git
-  revision: 2fd42a3502fea1e2b9d523aff5acaf2a1576d19f
+  remote: git@github.com:Zhomart/active_admin.git
+  revision: 4066842942a62e390fabd64657350264c9c3e519
+  branch: mongoid-old
   specs:
     activeadmin (1.0.0.pre)
       arbre (~> 1.0, >= 1.0.2)
@@ -63,9 +66,9 @@ GEM
     autotest-rails (4.2.1)
       ZenTest (~> 4.5)
     bcrypt (3.1.10)
-    bourbon (4.2.0)
+    bourbon (4.2.6)
       sass (~> 3.4)
-      thor
+      thor (~> 0.19)
     bower-rails (0.9.2)
     bson (2.3.0)
     builder (3.2.2)
@@ -106,7 +109,9 @@ GEM
       railties (>= 3.0.0)
     formtastic (3.1.3)
       actionpack (>= 3.2.13)
-    formtastic_i18n (0.1.1)
+    formtastic-bootstrap (3.0.0)
+      formtastic (>= 2.2)
+    formtastic_i18n (0.5.0)
     has_scope (0.6.0)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
@@ -117,13 +122,13 @@ GEM
       has_scope (~> 0.6.0.rc)
       railties (>= 3.2, < 5)
       responders
-    jquery-rails (3.1.2)
+    jquery-rails (3.1.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    jquery-ui-rails (5.0.3)
+    jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (1.8.2)
-    kaminari (0.16.2)
+    kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     launchy (2.4.3)
@@ -155,7 +160,7 @@ GEM
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
-    polyamorous (1.1.0)
+    polyamorous (1.3.0)
       activerecord (>= 3.0)
     puma (2.11.0)
       rack (>= 1.1, < 2.0)
@@ -188,12 +193,6 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
-    ransack (1.6.3)
-      actionpack (>= 3.0)
-      activerecord (>= 3.0)
-      activesupport (>= 3.0)
-      i18n
-      polyamorous (~> 1.1)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
     rest-client (1.7.2)
@@ -224,13 +223,13 @@ GEM
       json
       oauth (~> 0.4.5)
       rest-client (~> 1.7.2)
-    sass (3.4.11)
-    sass-rails (5.0.1)
+    sass (3.4.21)
+    sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
-      tilt (~> 1.1)
+      tilt (>= 1.1, < 3)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
     simple_form (3.1.0)
@@ -275,7 +274,6 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
-  activeadmin-mongoid!
   autotest-rails
   bower-rails
   capybara
@@ -284,6 +282,8 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_girl_rails
+  formtastic
+  formtastic-bootstrap (~> 3.0.0)
   json
   launchy
   mongoid
@@ -295,6 +295,7 @@ DEPENDENCIES
   rails_12factor
   rails_serve_static_assets
   rails_stdout_logging
+  ransack!
   rspec-autotest
   rspec-rails
   ruby-trello

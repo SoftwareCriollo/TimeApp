@@ -8,4 +8,4 @@
 
 #Adding new user
 User.create :email => "test@email.com", :password => "password"
-puts "--> User Added!"
+puts "--> User Added!"AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')

@@ -1,24 +1,8 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  # The secret key used by Devise. Devise uses this key to generate
-  # random tokens. Changing this key will render invalid all existing
-  # confirmation, reset password and unlock tokens in the database.
-  config.secret_key = '3ae425cb4e33f40e03a1f461e26e4d05352739989b63b5da30ca5a338d9b536ee3a3434ac3c2342324de5ed923ae617a7c409600f22bf66dd4928437c0ace200'
-
-  # ==> Mailer Configuration
-  # Configure the e-mail address which will be shown in Devise::Mailer,
-  # note that it will be overwritten if you use your own mailer class
-  # with default "from" parameter.
+  config.secret_key = 'aba597209815c925999f0d2003def18a1d7dc9d7bdafecface1313781bcc89414602f3adaa1f9f87aeade19cb6d7dcc8255367d0571d119170975f4113aec9e0'
   config.mailer_sender = ENV['GMAIL_USERNAME']
-
-  # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
-
-  # ==> ORM configuration
-  # Load and configure the ORM. Supports :active_record (default) and
-  # :mongoid (bson_ext recommended) by default. Other ORMs may be
-  # available as additional gems.
   require 'devise/orm/mongoid'
 
   # ==> Configuration for any authentication mechanism
@@ -59,7 +43,7 @@ Devise.setup do |config|
   # given strategies, for example, `config.http_authenticatable = [:database]` will
   # enable it only for database authentication. The supported strategies are:
   # :database      = Support basic authentication with authentication key + password
-#  config.http_authenticatable = false
+  # config.http_authenticatable = false
 
   # If 401 status code should be returned for AJAX requests. True by default.
   # config.http_authenticatable_on_xhr = true
@@ -79,7 +63,6 @@ Devise.setup do |config|
   # passing skip: :sessions to `devise_for` in your config/routes.rb
   config.skip_session_storage = [:http_auth]
 
-
   # By default, Devise cleans up the CSRF token on authentication to
   # avoid CSRF token fixation attacks. This means that, when using AJAX
   # requests for sign in and sign up, you need to get a new CSRF token
@@ -98,7 +81,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = '713be03478c144543b443bf2c494b35e183e35bf36702f51d3df387ed3f1188fa80f5c1d21f60f1f9d8d8e34cb9efa99d1c1873a5e6cc5437427362e506b8c81'
+  # config.pepper = '680676c1684336879b52990aa3001e4d128339b9007dae630df1d349ea83b08d8b7f12a9adcfa763879c5b75842386c9abecc55f5280c8d053eabd00852eadc2'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -141,7 +124,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 6..128
+  config.password_length = 8..128
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
@@ -225,7 +208,8 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  config.navigational_formats = [:json]
+  # config.navigational_formats = ['*/*', :html]
+  config.navigational_formats = [:json, :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -239,10 +223,10 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
-  config.warden do |manager|
-#    manager.intercept_401 = false
-#    manager.default_strategies(scope: :user).unshift :some_external_strategy
-  end
+  # config.warden do |manager|
+  #   manager.intercept_401 = false
+  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
+  # end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
