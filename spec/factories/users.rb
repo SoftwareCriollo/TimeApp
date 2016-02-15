@@ -4,6 +4,7 @@ FactoryGirl.define do
     password  "password"
     factory :apprentice do
       email "rafael@softwarecriollo.com"
+      factor_time 1/3
     end
   end
 

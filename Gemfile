@@ -15,8 +15,11 @@ gem 'slim'
 
 gem 'simple_form'
 gem 'devise'
-gem 'activeadmin', github: 'gregbell/active_admin'
-gem 'activeadmin-mongoid', github: 'elia/activeadmin-mongoid', branch: 'rails4'
+gem 'ransack',             github: 'Zhomart/ransack', branch: 'mongoid'
+gem 'activeadmin',         git: 'git@github.com:Zhomart/active_admin.git', branch: 'mongoid-old'
+
+gem 'formtastic'
+gem 'formtastic-bootstrap', '~> 3.0.0'
 gem 'ruby-trello'
 
 gem 'bower-rails'

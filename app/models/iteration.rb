@@ -62,18 +62,16 @@ class Iteration
   end
 
   def time_worked
-    total_time = timelogs.inject(0.0){|total,timelog| total += timelog.time_worked }
-    total_time.round(2)
+    timelogs.map(&:time_worked).inject(0.0,:+).round(2)
   end  
   
   def time_for_iteration
-    total_time = timelogs.inject(0.0){|total,timelog| total += timelog.time_for_iteration }
-    total_time.round(2)
+    timelogs.map(&:time_for_iteration).inject(0.0,:+).round(2)
   end  
 
 
-  def as_json(options = nil)
-    super(options).merge({time_for_iteration: time_for_iteration})
+  def as_json(options = {})
+    super({methods: [:time_for_iteration]}.merge(options))
   end
 
 end

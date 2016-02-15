@@ -245,6 +245,7 @@
 
           });
       };
+
       this.patch = function(route,data,success_callback,error_callback){
         error_callback = error_callback || function(){}
         $http.patch(route,data,{"headers":this.setHeaders()})
@@ -257,9 +258,13 @@
 
           });
       };
+
       this.setHeaders = function(params){
         params = params || {}
-        return $.extend(params,{token: currentUser.token()});
+        return $.extend(params,{
+          accept : 'application/json',
+          token: currentUser.token()
+        });
       }
 
       //private functions

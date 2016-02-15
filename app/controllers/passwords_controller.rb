@@ -1,5 +1,5 @@
 class PasswordsController < Devise::PasswordsController
-require 'uri'
+  require 'uri'
   # GET /resource/password/new
   # def new
   #   super
