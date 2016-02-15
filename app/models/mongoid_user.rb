@@ -47,9 +47,9 @@ class MongoidUser
       time / 3
     elsif ["dostercios@sc.com"].include?(email)
       ((time) / 3) * 2
-    elsif ["rafael@softwarecriollo.com", "genesis@softwarecriollo.com", "antonieta@softwarecriollo.com"].include?(email)
+    elsif ["trestercios@sc.com"].include?(email)
       time / 2
-    elsif ["cibeles@softwarecriollo.com"].include?(email)
+    elsif ["cero@sc.com"].include?(email)
       time * 0  
     else
       time
