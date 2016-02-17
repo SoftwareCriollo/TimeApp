@@ -158,11 +158,11 @@ a.a-timeline {
 }
 
 .timeline-panel {
-  width: 46%;
+  width: 42%;
   float: left;
   background-color: #FFF;
   border-radius: 5px;
-  padding: 15px;
+  padding: 15px 0px 15px 15px;
   transition: all .3s ease;
 }
 
@@ -199,7 +199,7 @@ a.a-timeline {
 
 .timeline-panel.left:before {
   left: 0;
-  margin-left: 46%;
+  margin-left: 42%;
   border-left: 15px solid #FFF;
 }
 
@@ -210,7 +210,7 @@ a.a-timeline {
 .timeline-panel.right:before {
   border-right: 15px solid #fff;
   right: 0;
-  margin-right: 46%;
+  margin-right: 42%;
 }
 
 .timeline-panel p {
