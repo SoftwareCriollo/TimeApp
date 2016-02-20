@@ -8,17 +8,15 @@ body
 .container
   width: 96% !important
   margin: 0 auto  
-
+  
 .card
   display: inline-block
   background-color: $background-color-card
   color: $color-font-new !important
   margin: 0.7em
   min-width: 255px
-  width: 30%
   border: 1px solid $background-color-card
   border-radius: 2px
-  height: 150px
   font-weight: $font-museo-weight-normal
   box-shadow: 0 1px 2px #BFBDBD
   @include ellipsis()
@@ -26,6 +24,14 @@ body
     border: 1px solid $background-color-card-hover
     color: $color-link-primary
     cursor: pointer
+  @media screen and (min-width: 1200px)
+    width: 30%
+  @media only screen and (min-width: 770px) and (max-width: 1199px) 
+    width: 40%
+  @media only screen and (min-width: 601px) and (max-width: 769px) 
+    width: 65%
+  @media only screen and (max-width : 600px)
+    width: 80%
 
 .card-project
   @extend .card
@@ -167,4 +173,3 @@ body
 .margin-show-entry-edit,
 .margin-show-performance-edit
   margin-bottom: 276px
-
