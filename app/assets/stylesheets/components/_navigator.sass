@@ -1,8 +1,16 @@
 .navigator-right
-  top: -83px
+ 
+  @media screen and (min-width: 1200px)
+    top: -83px
+    margin-right: 15px
+  @media only screen and (min-width: 770px) and (max-width: 1199px) 
+    top: -83px
+  @media only screen and (min-width: 601px) and (max-width: 769px) 
+    top: -83px
+  @media only screen and (max-width : 600px)
+    top: -50px
   float: right
   position: relative
-  margin-right: 15px
   nav
     margin-top: 10px
     font-size: 0
@@ -32,7 +40,7 @@
   .button-secunday
     background: $background-color-btn-secondary
     float: $float-right
-    padding: 2px 5px
+    padding: 2px 2px
     border: 0
     font-size: 11px
     color: $color-font-primary
