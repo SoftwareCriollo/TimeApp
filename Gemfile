@@ -16,7 +16,7 @@ gem 'slim'
 gem 'simple_form'
 gem 'devise'
 gem 'ransack',             github: 'Zhomart/ransack', branch: 'mongoid'
-gem 'activeadmin',         git: 'git@github.com:Zhomart/active_admin.git', branch: 'mongoid-old'
+gem 'activeadmin',         github: 'Zhomart/active_admin', branch: 'mongoid-old'
 
 gem 'formtastic'
 gem 'formtastic-bootstrap', '~> 3.0.0'
