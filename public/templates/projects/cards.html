@@ -40,7 +40,7 @@
     <section class="section-time-log-funtional">
       <ul class="errors">
         <li ng-repeat='(field,errors) in ctrl.errors'>
-          <ul> <li ng-repeat='error in errors'>{{error}}</li> </ul>
+          <ul class="pd-errors"> <li class="border-error" ng-repeat='error in errors'>{{error}}</li> </ul>
         </li>
       </ul>
       <form method="post" name="logTimeForm" novalidate ng-submit="ctrl.saveTimeLogger()">

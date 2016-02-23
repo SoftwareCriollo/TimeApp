@@ -52,7 +52,7 @@ class TimeLogger
     if iteration.nil?
       errors.add(:project_id, "We don't have a valid iteration")
     elsif !iteration.can_register_hours?
-      errors.add(:project_id, "Can't log more hours")
+      errors.add(:project_id, "Can't log more hours.  Your hours will be logged but they need approved since the iteration. An email will be send to notify the leader to the project")
     end
   end
 

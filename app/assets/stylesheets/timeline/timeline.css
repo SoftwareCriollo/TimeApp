@@ -14,7 +14,7 @@ body {
 }*/
 
 ul {
-    padding-left: 5%;
+    padding-left: 0%;
 }
 
 a.a-timeline {
@@ -162,7 +162,7 @@ a.a-timeline {
   float: left;
   background-color: #FFF;
   border-radius: 5px;
-  padding: 15px 0px 15px 15px;
+  padding: 15px 0px 15px 35px;
   transition: all .3s ease;
 }
 
