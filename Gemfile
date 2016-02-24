@@ -4,19 +4,20 @@ ruby '2.1.2'
 
 gem 'rails', '4.1.8'
 gem 'rails-api'
-
-gem 'mongoid'
+gem 'sass-rails'
+gem 'mongoid', '4.0.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'json'
+gem 'multi_json', '1.5.1'
 
 gem 'puma'
 gem 'slim'
 
 gem 'simple_form'
-gem 'devise'
+gem 'devise', '3.4.1'
 gem 'ransack',             github: 'Zhomart/ransack', branch: 'mongoid'
-gem 'activeadmin',         git: 'git@github.com:Zhomart/active_admin.git', branch: 'mongoid-old'
+gem 'activeadmin',         github: 'Zhomart/active_admin', branch: 'mongoid-old'
 
 gem 'formtastic'
 gem 'formtastic-bootstrap', '~> 3.0.0'
