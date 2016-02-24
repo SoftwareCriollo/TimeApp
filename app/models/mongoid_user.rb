@@ -27,10 +27,15 @@ class MongoidUser
   field :factor_time, type: Float, default: 1
 
   scope :active_users, ->{ where(active: true).all }
-
+  
   before_save do
     change_token
     self
+  end
+  
+  def self.serialize_from_session(key, salt)
+    record = to_adapter.get(key[0].as_json["$oid"])
+    record if record && record.authenticatable_salt == salt
   end
 
   def name
