@@ -1,4 +1,7 @@
 ActiveAdmin.register Timelog do
+
+  permit_params :fecha,:project_id,:project_name,:task_id,:task_name,:comment,:time,:user_id,:fecha,:trello,:iteration_id,:value_ajust,:due_date
+
   filter :created_at
   filter :user
 
