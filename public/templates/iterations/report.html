@@ -32,14 +32,14 @@
     <div ng-repeat="timelog in timelogs" class="entry-time-iterations">
       <div class="card-iteration fullread">
         <div class="list">
-          <div class="name-task">{{timelog.task_name}}
+          <div class="name-task-report">{{timelog.task_name}}
             <div class="invoice-data">
-              <div class="inv-iteration float-left ng-binding">
+              <div class="inv-iteration-report float-left ng-binding">
                 Inv#{{ctrl.iteration.invoice}}
               </div>
             </div>
           </div>
-          <div class="note-task" ng-click='ctrl.toggleDisplay(timelog)' >
+          <div class="note-task-report" ng-click='ctrl.toggleDisplay(timelog)' >
               <strong>Notes:</strong>
               <div> <p ng-bind-html='timelog.comment | autolink'></p></div>
             </div>

@@ -69,18 +69,26 @@ body
     color: $background-color-card
     cursor: auto
   .name-task,
+  .name-task-report,
   .note-task,
+  .note-task-report,
   .list-name-task
     padding-left: 15px
   .list
     max-width: 276px
   .img-edit
     float: right
+  .name-task-report
+    padding-top: 20px
+    height: 70px
+    overflow: hidden
+    display: inline-block
   .name-task
     padding-top: 20px
     height: 83px
     overflow: hidden
     display: inline-block
+  .note-task-report,
   .note-task
     vertical-align: top
     padding-bottom: 15px
@@ -119,6 +127,16 @@ body
       p
         margin: 0
         width: calc(100% - 4em) !important
+        white-space: pre-line
+        display: inline-block
+        overflow-y: scroll
+        text-overflow: inherit
+        max-height: 3em
+        height: 3em
+    .note-task-report
+      p
+        margin: 0
+        width: calc(100% - 0.5em) !important
         white-space: pre-line
         display: inline-block
         overflow-y: scroll
