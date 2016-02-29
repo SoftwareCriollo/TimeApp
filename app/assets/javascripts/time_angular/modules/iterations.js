@@ -3,7 +3,7 @@
   var TimeApp = window.TimeApp;
   var app = angular.module('timeFrontendApp-iterations',['CacheStore','Repository'])
 
-  app.controller('IterationsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache','IterationsCache', function(iterationsRepository,$routeParams, currentUser,projectCache,iterationsCache){
+  app.controller('IterationsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache','IterationsCache', 'CardsCache', 'CardRepository', function(iterationsRepository,$routeParams, currentUser,projectCache,iterationsCache, cardsCache, cardRepository){
     currentUser.isPendingAuth();
 
     var ctrl = this;
@@ -12,6 +12,9 @@
     this.project = projectCache.findProject(projectId);
     this.iteration = new TimeApp.Iteration({project_id: projectId});
     this.iterationEdit = new TimeApp.Iteration({project_id: projectId});
+    this.timelog = undefined;
+    this.total = {};
+    this.cards = {};
 
     iterationsRepository.setProjectId(this.project.id);
     this.iterations = [];
@@ -57,7 +60,7 @@
 
   }]);
 
-  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$scope' ,'$rootScope', '$location', 'ProjectRepository', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$scope,$rootScope, $location, projectRepository){
+  app.controller('TimelogsController',['IterationsRepository','$routeParams','CurrentUser','ProjectCache', 'IterationsCache','TimeLoggerRepository','$scope' ,'CardsCache','CardRepository','$rootScope', '$location', 'ProjectRepository', function(iterationsRepository,$routeParams, currentUser,projectCache, iterationsCache,timeLoggerRepository,$scope,cardsCache,cardRepository,$rootScope, $location, projectRepository){
     if (/report/.test(window.location)==false){
       currentUser.isPendingAuth();
     }
@@ -77,7 +80,11 @@
 
     this.timelogsGroup = [];
     this.timelogs = [];
-    this.timelog = undefined;    
+    this.timelog = undefined;
+    this.total = {};
+    this.cards = {};
+
+
 	
     iterationsRepository.findIteration(iterationId, function(iteration, status, headers, config){
       ctrl.initialize(iteration);
@@ -100,9 +107,32 @@
       this.currentWeekStart = $rootScope.UTCDate(iteration.start);
 
       this.gettingEntries(dateStart,dateEnd);
-
     }
 
+   this.getListName = function(timelog,name){
+
+      if(!this.cards[name])
+      {
+        this.cards[name]={};
+        var projectId=timelog.project_id;
+        cardRepository.setProjectId(projectId);
+        cardRepository.get(function(cards, status, headers, config){  
+          cardsCache.saveCards(projectId,cards);
+        });
+      }
+
+      if(!this.cards[name][timelog.task_id])
+        this.cards[name][timelog.task_id]="";
+
+      if(this.cards[name][timelog.task_id]=="")
+      {
+        var card = cardsCache.findCard(timelog.project_id,timelog.task_id);
+        if(card)
+          this.cards[name][timelog.task_id]=card.list_name;
+        else
+          this.cards[name][timelog.task_id]="DONE";
+      }
+    };
     this.gettingEntries = function(dateStart, dateEnd){
       iterationsRepository.setParameters(dateStart, dateEnd);
 
