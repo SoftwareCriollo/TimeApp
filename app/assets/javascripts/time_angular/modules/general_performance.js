@@ -4,6 +4,12 @@
   var app = angular.module('timeFrontendApp-generalPerformance',['CacheStore'])
 
   app.controller('GeneralPerformanceController',['CurrentUser', 'ProjectCache', 'ClientsCache', 'CardsCache', 'CardRepository', 'TimeLoggerRepository', 'UsersRepository', 'ClientsRepository', 'ProjectRepository', '$location', function(currentUser, projectsCache, clientsCache, cardsCache, cardRepository, timeLoggerRepository, usersRepository, clientsRepository, projectRepository, $location){
+    this.getMonday = function(d) {
+      d = new Date(d);
+      var day = d.getDay(),
+          diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+      return new Date(d.setDate(diff));
+    }
 
     if (window.location.href.indexOf("report")==-1){
       currentUser.isPendingAuth();
@@ -19,7 +25,7 @@
     this.projects = {};
 
     this.end_date = new Date();
-    this.start_date = new Date();
+    this.start_date = this.getMonday(new Date());
     this.timelog = {};
     this.cards = {};
     this.totalWorked = 0;
